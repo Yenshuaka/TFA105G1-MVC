@@ -377,7 +377,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <a class="btn v3" href="<%=request.getContextPath() %>/AddProduct"><i class="ion-plus-round"></i>新增商品 </a>
+                                <a class="btn v3" href="<%=request.getContextPath() %>/MVC/AddProduct"><i class="ion-plus-round"></i>新增商品 </a>
                             </div>
                         </div>
                     </div>
