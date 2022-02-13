@@ -1,3 +1,9 @@
+<%@page import="com.product.product.model.ProductBean"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*, org.springframework.context.ApplicationContext, org.springframework.web.context.WebApplicationContext"%>
+<%@ page import="com.product.product.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -382,7 +388,7 @@
             <div class="dash-content">
                 <div class="container-fluid">
                     <div class="row">
-                        <form action="" method=post enctype="multipart/form-data">
+                        <form action="<%=request.getContextPath() %>/ProductManage" method="post" >
                         <div class="col-md-12">
                             <div class="db-add-list-wrap">
                                 <div class="act-title">
@@ -504,9 +510,9 @@
                                         <!-- <form class="photo-upload"> -->
                                             <div class="form-group">
                                                 <div class="add-listing__input-file-box">
-                                                    <input  type="file" name="file" id="file">
-                                                    <input  type="file" name="file" id="file">
-                                                    <input  type="file" name="file" id="file">
+<!--                                                     <input  type="file" name="file" id="file"> -->
+<!--                                                     <input  type="file" name="file" id="file"> -->
+<!--                                                     <input  type="file" name="file" id="file"> -->
                                                     <!-- <div class="add-listing__input-file-wrap">
                                                         <i class="ion-ios-cloud-upload"></i>
                                                         <p>Click here to upload your images</p>
@@ -523,7 +529,8 @@
                             </div>
                             <div class="add-btn">
                                 <input type="hidden" name="action"	value="insert">
-                                <button type="submit" class="btn v8 mar-top-20">新增商品</button>
+                                <input type="submit" value="新增商品">
+<!--                                 <button type="submit" class="btn v8 mar-top-20">新增商品</button> -->
                             </div>
                         </form>
                             <!-- <div class="db-add-list-wrap">
