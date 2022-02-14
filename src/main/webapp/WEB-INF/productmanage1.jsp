@@ -423,7 +423,7 @@
                                             				}else{ 
                                             					out.write("上架中");
                                             				}; %> 
-                                            			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/PutonGetoff" >
+                                            			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/MVC/PutonGetoff" >
 			     											<% if(list1.get(i).getState()==0) { %>
 			     												<input type="submit" value="上架">
 			     												<input type="hidden" name="action"	value="puton">
