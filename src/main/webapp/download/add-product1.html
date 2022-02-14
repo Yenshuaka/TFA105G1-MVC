@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="css/switcher/skin-aqua.css" media="screen" id="style-colors" />
     <!-- Document Title -->
     <!-- <title>listagram - Directory Listing HTML Template</title> -->
-    <title>行程總覽/新增商品</title>
+    <title>會員專區/後台</title>
 
 </head>
 
@@ -382,7 +382,6 @@
             <div class="dash-content">
                 <div class="container-fluid">
                     <div class="row">
-                        <form action="" method=post enctype="multipart/form-data">
                         <div class="col-md-12">
                             <div class="db-add-list-wrap">
                                 <div class="act-title">
@@ -399,24 +398,15 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>商品分類</label>
-                                                <!--  下面div原本的屬性 class="nice-select filter-input" tabindex="0"-->
-                                                <div ><span class="current">請選擇商品分類:</span>
-                                                    <!-- <ul class="list">
+                                                <div class="nice-select filter-input" tabindex="0"><span class="current">請選擇商品分類</span>
+                                                    <ul class="list">
                                                         <li class="option selected focus">一日遊</li>
                                                         <li class="option">多日遊</li>
                                                         <li class="option">包車</li>
                                                         <li class="option">熱門票卷</li>
-                                                        <li class="option">獨特體驗</li> -->
+                                                        <li class="option">獨特體驗</li>
                                                         <!-- <li class="option">Fitness</li> -->
-                                                    <!-- </ul> -->
-                                                    <select name="producttype">
-                                                        <option>一日遊</option>
-                                                        <option>多日遊</option>
-                                                        <option>包車</option>
-                                                        <option>熱門票卷</option>
-                                                        <option>獨特體驗</option>
-                                        
-                                                    </select>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
@@ -433,63 +423,54 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <!-- <form> -->
+                                            <form>
                                                 <div class="form-group">
                                                     <label for="list_info">商品說明</label>
                                                     <textarea class="form-control" id="list_info" rows="4" placeholder="" name="productintro"></textarea>
                                                 </div>
-                                            <!-- </form> -->
+                                            </form>
                                         </div>
 
                                         <div class="col-md-12">
-                                            <!-- <form> -->
+                                            <form>
                                                 <div class="form-group">
                                                     <label for="list_info">注意事項</label>
-                                                    <textarea class="form-control" id="list_info" rows="4" placeholder="" name="attention"></textarea>
+                                                    <textarea class="form-control" id="list_info" rows="4" placeholder=""></textarea>
                                                 </div>
-                                            <!-- </form> -->
+                                            </form>
                                         </div>
 
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>商品地區</label>
                                                 <div class="filter-checkbox">
-                                                    <input id="check-a" type="checkbox" name="cityid" value="1">
-                                                    <label for="check-a">台北市</label>
-                                                    <input id="check-b" type="checkbox" name="cityid" value="2">
-                                                    <label for="check-b">新北市</label>
-                                                    <input id="check-c" type="checkbox" name="cityid" value="3">
-                                                    <label for="check-c">台中市</label>
-                                                    <input id="check-d" type="checkbox" name="cityid" value="4">
-                                                    <label for="check-d">高雄市</label>
-                                                    <input id="check-f" type="checkbox" name="cityid" value="5">
-                                                    <label for="check-f">台東市</label>
-                                                    <input id="check-e" type="checkbox" name="cityid" value="6">
-                                                    <label for="check-e">花蓮縣</label>
-                                                    <input id="check-g" type="checkbox" name="cityid" value="7">
-                                                    <label for="check-g">彰化縣 </label>
-                                                    <input id="check-h" type="checkbox" name="cityid" value="8">
-                                                    <label for="check-h">台南市 </label>
+                                                    <input id="check-a" type="checkbox" name="check">
+                                                    <label for="check-a">Elevator in building</label>
+                                                    <input id="check-b" type="checkbox" name="check">
+                                                    <label for="check-b">Air Conditioned</label>
+                                                    <input id="check-c" type="checkbox" name="check">
+                                                    <label for="check-c">Free Wi Fi</label>
+                                                    <input id="check-d" type="checkbox" name="check">
+                                                    <label for="check-d">Free Parking on premises</label>
+                                                    <input id="check-f" type="checkbox" name="check">
+                                                    <label for="check-f">Instant Book</label>
+                                                    <input id="check-e" type="checkbox" name="check">
+                                                    <label for="check-e">Pet Friendly </label>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <label>開始日</label>
-                                                    <input type="text" class="form-control filter-input" name="startdate" placeholder="請輸入日期格式: yyyy-MM-dd">
+                                                    <label>Title</label>
+                                                    <input type="text" class="form-control filter-input" placeholder="Title">
                                                 </div>
 
                                                 <div class="col-md-6">
-                                                    <label>結束日</label>
-                                                    <input type="text" class="form-control filter-input" name="enddate" placeholder="請輸入日期格式: yyyy-MM-dd">
+                                                    <label>Icon</label>
+                                                    <input type="text" class="form-control filter-input" placeholder="Icon">
                                                 </div>
-                                                
-                                                <div class="col-md-6">
-                                                    <label>旅行時數</label>
-                                                    <input type="text" class="form-control filter-input" name="traveltime" placeholder="請輸入小時 例如: 18.5">
-                                                </div>
-                                                <!-- <div class="col-md-4">
+                                                <div class="col-md-4">
                                                     <a href="#" class="btn v7 mar-top-20">Add Facts</a>
-                                                </div> -->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -497,36 +478,29 @@
                             </div>
                             <div class="db-add-list-wrap">
                                 <div class="act-title">
-                                    <h5><i class="ion-image"></i> 商品圖片 :</h5>
+                                    <h5><i class="ion-image"></i> Gallery :</h5>
                                 </div>
                                 <div class="db-add-listing">
                                     <div class="form-group">
-                                        <!-- <form class="photo-upload"> -->
+                                        <form class="photo-upload">
                                             <div class="form-group">
                                                 <div class="add-listing__input-file-box">
-                                                    <input  type="file" name="file" id="file">
-                                                    <input  type="file" name="file" id="file">
-                                                    <input  type="file" name="file" id="file">
-                                                    <!-- <div class="add-listing__input-file-wrap">
+                                                    <input class="add-listing__input-file" type="file" name="file" id="file">
+                                                    <div class="add-listing__input-file-wrap">
                                                         <i class="ion-ios-cloud-upload"></i>
                                                         <p>Click here to upload your images</p>
-                                                    </div> -->
+                                                    </div>
                                                 </div>
                                             </div>
-                                        <!-- </form> -->
+                                        </form>
                                     </div>
-                                    <!-- <div class="add-btn">
-                                        <button type="submit" class="btn v8 mar-top-20">新增商品</button>
-                                    </div> -->
+                                    <div class="add-btn">
+                                        <a href="#" class="btn v8 mar-top-20">Add Images</a>
+                                    </div>
                                 </div>
 
                             </div>
-                            <div class="add-btn">
-                                <input type="hidden" name="action"	value="insert">
-                                <button type="submit" class="btn v8 mar-top-20">新增商品</button>
-                            </div>
-                        </form>
-                            <!-- <div class="db-add-list-wrap">
+                            <div class="db-add-list-wrap">
                                 <div class="act-title">
                                     <h5><i class="ion-ios-location"></i> Location/Contacts :</h5>
                                 </div>
@@ -1181,7 +1155,7 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
             <!-- Dashboard Content ends-->
 
             <!--Dashboard footer starts-->
