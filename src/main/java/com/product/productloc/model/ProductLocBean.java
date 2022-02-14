@@ -18,6 +18,7 @@ public class ProductLocBean implements Serializable{
 	
 	@Id
 	@Column(name="LOC_ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer locid;
 	
 	@Column(name="PRODUCT_ID")

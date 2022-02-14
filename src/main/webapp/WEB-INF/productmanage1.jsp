@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="css/switcher/skin-aqua.css" media="screen" id="style-colors" />
     <!-- Document Title -->
     <!-- <title>listagram - Directory Listing HTML Template</title> -->
-    <title>會員專區/後台</title>
+    <title>行程總攬/所有商品</title>
 
 </head>
 
@@ -374,7 +374,7 @@
                                         <ul>
                                             <li class="active"><a href="#">行程總覽</a></li>
                                             <li>所有商品</li>
-                                        </ul>
+                                        </ul>             
                                     </div>
                                 </div>
                                 <a class="btn v3" href="<%=request.getContextPath() %>/MVC/AddProduct"><i class="ion-plus-round"></i>新增商品 </a>
@@ -392,8 +392,10 @@
                         <div class="col-md-12">
                             <div class="invoice-panel">
                                 <div class="act-title">
-                                    <h5>所有商品</h5>
-                                </div>
+                                	<%  List<String> errorMsgs = (List)session.getAttribute("errorMsgsdelete");  %>                          	
+                                    <h5>所有商品&nbsp&nbsp&nbsp&nbsp&nbsp <span style="color:red"><%= errorMsgs==null ? "" : errorMsgs.get(0) %></span></h5>
+                                	<% session.removeAttribute("errorMsgsdelete"); %>
+                                </div>                         
                                 <div class="invoice-body">
                                     <div class="table-responsive">
                                         <table class="invoice-table">
@@ -437,12 +439,12 @@
                                             		</td>
                                                     <td> <%=list1.get(i).getState() %> </td>
                                                     <td>
-                                                    	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/PostManageController" >
+                                                    	<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/ProductManage" >
                                                         	<input type="submit" value="刪除">
 			     											<input type="hidden" name="productid"  value="<%=list1.get(i).getProductid() %>">
 			     											<input type="hidden" name="action" value="delete">
                                                         </FORM>
-                                                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/PostManageController" >
+                                                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ProductManage" >
 			     											<input type="submit" value="修改">
 			     											<input type="hidden" name="productid"  value="<%=list1.get(i).getProductid() %>">
 			     											<input type="hidden" name="action"	value="getOne_For_Update">

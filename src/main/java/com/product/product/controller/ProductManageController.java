@@ -78,4 +78,10 @@ public class ProductManageController {
 		return "add-product1";
 	}
 	
+	
+	@RequestMapping("/UpdateProduct")
+	public String updateProduct() {	
+		return "update-product";
+	}
+	
 }

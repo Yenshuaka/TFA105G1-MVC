@@ -392,7 +392,7 @@
                         <div class="col-md-12">
                             <div class="db-add-list-wrap">
                                 <div class="act-title">
-                                <%  List<String> errorMsgs = (List)session.getAttribute("errorMsgsadd");  %>
+                                <%  List<String> errorMsgs = (List)session.getAttribute("errorMsgsupdate");  %>
                                     <h5><i class="ion-ios-information"></i> 請輸入商品資訊 :&nbsp&nbsp&nbsp&nbsp&nbsp 
                                     <span style="color:red">
                                     	<% if(errorMsgs!=null){
@@ -539,8 +539,8 @@
 
                             </div>
                             <div class="add-btn">
-                                <input type="hidden" name="action"	value="insert">
-                                <input type="submit" value="新增商品">
+                                <input type="hidden" name="action"	value="update">
+                                <input type="submit" value="修改商品">
 <!--                                 <button type="submit" class="btn v8 mar-top-20">新增商品</button> -->
                             </div>
                         </form>
