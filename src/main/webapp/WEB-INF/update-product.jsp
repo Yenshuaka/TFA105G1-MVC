@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="css/switcher/skin-aqua.css" media="screen" id="style-colors" />
     <!-- Document Title -->
     <!-- <title>listagram - Directory Listing HTML Template</title> -->
-    <title>行程總覽/新增商品</title>
+    <title>行程總覽/修改商品</title>
 
 </head>
 
@@ -371,7 +371,7 @@
                                     <div class="breadcrumb-menu text-right sm-left">
                                         <ul>
                                             <li class="active"><a href="#">行程總覽</a></li>
-                                            <li class="active"><a href="#">新增商品</a></li>
+                                            <li class="active"><a href="#">修改商品</a></li>
                                             <!-- <li>My Listings</li> -->
                                         </ul>
                                     </div>
@@ -393,7 +393,7 @@
                             <div class="db-add-list-wrap">
                                 <div class="act-title">
                                 <%  List<String> errorMsgs = (List)session.getAttribute("errorMsgsupdate");  %>
-                                    <h5><i class="ion-ios-information"></i> 請輸入商品資訊 :&nbsp&nbsp&nbsp&nbsp&nbsp 
+                                    <h5><i class="ion-ios-information"></i> 請修改商品資訊 :&nbsp&nbsp&nbsp&nbsp&nbsp 
                                     <span style="color:red">
                                     	<% if(errorMsgs!=null){
                                     		for(int i =0; i < errorMsgs.size(); i++){
