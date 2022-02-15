@@ -24,7 +24,7 @@ public class ProductImgBean implements Serializable{
 	@Column(name="PRODUCT_ID")
 	private Integer productid;
 	
-	@Column(name="PRODUCT_IMG" , insertable = false, updatable = false, columnDefinition = "LONGBLOB")
+	@Column(name="PRODUCT_IMG" , updatable = false, columnDefinition = "LONGBLOB")
 	private byte[] productimg;
 	
 	@Column(name="IMG_NAME")
