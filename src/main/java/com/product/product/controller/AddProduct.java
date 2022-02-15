@@ -290,11 +290,47 @@ public class AddProduct extends HttpServlet {
 					preparedStatement = connection.prepareStatement("delete from PRODUCT_LOC where PRODUCT_ID = ?");
 					preparedStatement.setInt(1, productid);
 					preparedStatement.execute();
+					preparedStatement = connection.prepareStatement("delete from PRODUCT_IMG where PRODUCT_ID = ?");
+					preparedStatement.setInt(1, productid);
+					preparedStatement.execute();
 									
 				}catch (Exception e) {
 					errorMsgs.add(e.getMessage());
 					res.sendRedirect(req.getContextPath()+"/MVC/ProductManageController");
 				}
+				
+				/*************************以下上傳圖片******************************************/
+				
+				
+				Collection<Part> parts = req.getParts();
+				
+				if(parts!=null) {
+				
+					for (Part part : parts) {
+						String filename = getFileNameFromPart(part);
+						if (filename!= null && part.getContentType()!=null) {
+							
+							long size = part.getSize();
+		
+//							 額外測試 InputStream 與 byte[] (幫將來model的VO預作準備)
+							InputStream in = part.getInputStream();
+							byte[] buf = new byte[in.available()];
+							in.read(buf);
+							in.close();
+							
+							ProductImgBean img = new ProductImgBean();
+							img.setProductid(productid);
+							img.setImgname(filename);
+							img.setProductimg(buf);
+							productImgService.insert(img);
+							
+						}
+					}
+				
+				}
+				
+				
+				/*************************以下新增商品地點***************************************/
 				
 				if(cityid!=null) {
 					for(int i = 0; i < cityid.length; i++) {
@@ -371,13 +407,6 @@ public class AddProduct extends HttpServlet {
 						img.setProductimg(buf);
 						productImgService.insert(img);
 						
-						
-																
-						// 額外測試秀圖
-//						out.println("<br><img src=\""+req.getContextPath()+saveDirectory+"/"+filename+"\">");
-//	
-//						out.println();
-//						out.println("</PRE>");
 					}
 				}
 			

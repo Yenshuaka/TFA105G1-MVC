@@ -1,3 +1,4 @@
+<%@page import="java.sql.*, com.product.productimg.*"%>
 <%@page import="com.product.product.model.ProductBean"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -388,7 +389,7 @@
             <div class="dash-content">
                 <div class="container-fluid">
                     <div class="row">
-                        <form action="<%=request.getContextPath() %>/ProductManage" method="post" >
+                        <form action="<%=request.getContextPath() %>/ProductManage" method="post" enctype="multipart/form-data">
                         <div class="col-md-12">
                             <div class="db-add-list-wrap">
                                 <div class="act-title">
@@ -408,7 +409,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                             
-                                            <% ProductBean bean = (ProductBean)session.getAttribute("ProductBean"); %>>
+                                            <% ProductBean bean = (ProductBean)session.getAttribute("ProductBean"); %>
                                                 <label>商品名稱</label>                                             <!-- Hotel Ocean paradise-->
                                                 <input type="text" class="form-control filter-input" placeholder="" name="productname" value="<%= (bean==null)? "" : bean.getProductname()%>">
                                             </div>
@@ -500,7 +501,7 @@
                                                     <label for="check-g">彰化縣 </label>
                                                     <input id="check-h" type="checkbox" name="cityid" value="8" <% if(Arrays.binarySearch(str, "8")>= 0){ out.write("checked='checked'");   } %>>
                                                     <label for="check-h">台南市 </label>
-                                                    <% } else { %>
+                                                    <% } else if(cityids!=null){ %>
                                                     	<input id="check-a" type="checkbox" name="cityid" value="1" <% if(cityids.contains(1)){ out.write("checked='checked'");} %> >
                                                         <label for="check-a">台北市</label>
                                                         <input id="check-b" type="checkbox" name="cityid" value="2" <% if(cityids.contains(2)){ out.write("checked='checked'");} %>>
@@ -517,8 +518,23 @@
                                                         <label for="check-g">彰化縣 </label>
                                                         <input id="check-h" type="checkbox" name="cityid" value="8" <% if(cityids.contains(8)){ out.write("checked='checked'");} %>>
                                                         <label for="check-h">台南市 </label>
-                                                    	
-                                                    	
+                                                    <% } else { %>
+                                                    	<input id="check-a" type="checkbox" name="cityid" value="1">
+                                                        <label for="check-a">台北市</label>
+                                                        <input id="check-b" type="checkbox" name="cityid" value="2">
+                                                        <label for="check-b">新北市</label>
+                                                        <input id="check-c" type="checkbox" name="cityid" value="3">
+                                                        <label for="check-c">台中市</label>
+                                                        <input id="check-d" type="checkbox" name="cityid" value="4">
+                                                        <label for="check-d">高雄市</label>
+                                                        <input id="check-f" type="checkbox" name="cityid" value="5">
+                                                        <label for="check-f">台東市</label>
+                                                        <input id="check-e" type="checkbox" name="cityid" value="6">
+                                                        <label for="check-e">花蓮縣</label>
+                                                        <input id="check-g" type="checkbox" name="cityid" value="7">
+                                                        <label for="check-g">彰化縣 </label>
+                                                        <input id="check-h" type="checkbox" name="cityid" value="8">
+                                                        <label for="check-h">台南市 </label>
                                                     	
                                                     <%} %>
                                                     <% session.removeAttribute("cityid");%>
@@ -552,18 +568,30 @@
                                 <div class="act-title">
                                     <h5><i class="ion-image"></i> 商品圖片 :</h5>
                                 </div>
-                                <img src="images/camp.png" style="width:400px">
-                                <img src="images/camp.png" style="width:400px">
-                                <img src="images/camp.png" style="width:400px">
-                                <img src="images/camp.png" style="width:400px">
+                               	<% 
+                        			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei", "root", "password");
+                        			PreparedStatement ps = connection.prepareStatement("SELECT * FROM PRODUCT_IMG WHERE PRODUCT_ID = ?");
+                        			ps.setInt(1, bean.getProductid());
+                        			ResultSet rSet = ps.executeQuery();
+                        			while (rSet.next()) { int imgid = rSet.getInt(1);
+                        			if(rSet.getBytes(3)!=null){
+                        		%>
+                        				<img src="<%=request.getContextPath() %>/ProductImageReader?imgid=<%=imgid %>" style="width:400px">
+                        				
+                        		<%}} %>
+                               	
+
                                 <div class="db-add-listing">
                                     <div class="form-group">
                                         <!-- <form class="photo-upload"> -->
                                             <div class="form-group">
                                                 <div class="add-listing__input-file-box">
-<!--                                                     <input  type="file" name="file" id="file"> -->
-<!--                                                     <input  type="file" name="file" id="file"> -->
-<!--                                                     <input  type="file" name="file" id="file"> -->
+                                                <h5>如需修改商品資訊，亦請重新上傳商品圖片:</h5>
+                                                    <input  type="file" name="file" id="file">
+                                                    <input  type="file" name="file" id="file">
+                                                    <input  type="file" name="file" id="file">
+                                                    <input  type="file" name="file" id="file">
+                                                    <input  type="file" name="file" id="file">
                                                     <!-- <div class="add-listing__input-file-wrap">
                                                         <i class="ion-ios-cloud-upload"></i>
                                                         <p>Click here to upload your images</p>
@@ -583,8 +611,11 @@
                                 <input type="submit" value="修改商品">
 <!--                                 <button type="submit" class="btn v8 mar-top-20">新增商品</button> -->
                             </div>
+                            <div>
+                            	<a href="<%=request.getContextPath() %>/MVC/ProductManageController">不修改商品，回上一頁</a>
+                            </div>
                         </form>
- 
+ 						
                             <!-- <div class="db-add-list-wrap">
                                 <div class="act-title">
                                     <h5><i class="ion-ios-location"></i> Location/Contacts :</h5>
