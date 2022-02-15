@@ -401,7 +401,7 @@
                                     		}
                                     	} %> 
                                     </span></h5>
-                                    <% session.removeAttribute("errorMsgsadd"); %>
+                                    <% session.removeAttribute("errorMsgsupdate"); %>
                                 </div>
                                 <div class="db-add-listing">
                                     <div class="row">
@@ -427,12 +427,22 @@
                                                         <!-- <li class="option">Fitness</li> -->
                                                     <!-- </ul> -->
                                                     <select name="producttype" value="<%= (bean==null)? "一日遊" : bean.getProducttype()%>" >
-                                                        <option>一日遊</option>
-                                                        <option>多日遊</option>
-                                                        <option>包車</option>
-                                                        <option>熱門票卷</option>
-                                                        <option>獨特體驗</option>
-                                        
+                                                    <% String[] x = {"一日遊", "多日遊", "包車", "熱門票卷", "獨特體驗"}; %>
+                                                    <%   for(int i =0; i<x.length; i++) { %>
+                                                       <% out.write( "<option " ); 
+                                                       	  if(bean!=null){
+	                                                       	  if(x[i].equals(bean.getProducttype())){
+	                                                       		out.write( "selected" );
+	                                                       	  }          
+                                                       	  }
+                                                       	  out.write(">" + x[i] +"</option>");
+                                                       %> 
+<!--                                                         <option>一日遊</option> -->
+<!--                                                         <option>多日遊</option> -->
+<!--                                                         <option>包車</option> -->
+<!--                                                         <option>熱門票卷</option> -->
+<!--                                                         <option>獨特體驗</option> -->
+                                        			<% }; %>
                                                     </select>
                                                 </div>
                                             </div>
@@ -471,22 +481,48 @@
                                             <div class="form-group">
                                                 <label>商品地區</label>
                                                 <div class="filter-checkbox">
-                                                    <input id="check-a" type="checkbox" name="cityid" value="1">
+                                                    <% String[] str = (String[])session.getAttribute("cityid");%>
+                                             		<% List cityids = (List)session.getAttribute("cityids"); %>
+                                             		<% if(str!=null) {%>
+                                                    <input id="check-a" type="checkbox" name="cityid" value="1" <% if(Arrays.binarySearch(str, "1") >= 0){ out.write("checked='checked'");   } %>>
                                                     <label for="check-a">台北市</label>
-                                                    <input id="check-b" type="checkbox" name="cityid" value="2">
+                                                    <input id="check-b" type="checkbox" name="cityid" value="2" <% if(Arrays.binarySearch(str, "2")>= 0){ out.write("checked='checked'");   } %>>
                                                     <label for="check-b">新北市</label>
-                                                    <input id="check-c" type="checkbox" name="cityid" value="3">
+                                                    <input id="check-c" type="checkbox" name="cityid" value="3" <% if(Arrays.binarySearch(str, "3")>= 0){ out.write("checked='checked'");   } %>>
                                                     <label for="check-c">台中市</label>
-                                                    <input id="check-d" type="checkbox" name="cityid" value="4">
+                                                    <input id="check-d" type="checkbox" name="cityid" value="4" <% if(Arrays.binarySearch(str, "4")>= 0){ out.write("checked='checked'");   } %>>
                                                     <label for="check-d">高雄市</label>
-                                                    <input id="check-f" type="checkbox" name="cityid" value="5">
+                                                    <input id="check-f" type="checkbox" name="cityid" value="5" <% if(Arrays.binarySearch(str, "5")>= 0){ out.write("checked='checked'");   } %>>
                                                     <label for="check-f">台東市</label>
-                                                    <input id="check-e" type="checkbox" name="cityid" value="6">
+                                                    <input id="check-e" type="checkbox" name="cityid" value="6" <% if(Arrays.binarySearch(str, "6")>= 0){ out.write("checked='checked'");   } %>>
                                                     <label for="check-e">花蓮縣</label>
-                                                    <input id="check-g" type="checkbox" name="cityid" value="7">
+                                                    <input id="check-g" type="checkbox" name="cityid" value="7" <% if(Arrays.binarySearch(str, "7")>= 0){ out.write("checked='checked'");   } %>>
                                                     <label for="check-g">彰化縣 </label>
-                                                    <input id="check-h" type="checkbox" name="cityid" value="8">
+                                                    <input id="check-h" type="checkbox" name="cityid" value="8" <% if(Arrays.binarySearch(str, "8")>= 0){ out.write("checked='checked'");   } %>>
                                                     <label for="check-h">台南市 </label>
+                                                    <% } else { %>
+                                                    	<input id="check-a" type="checkbox" name="cityid" value="1" <% if(cityids.contains(1)){ out.write("checked='checked'");} %> >
+                                                        <label for="check-a">台北市</label>
+                                                        <input id="check-b" type="checkbox" name="cityid" value="2" <% if(cityids.contains(2)){ out.write("checked='checked'");} %>>
+                                                        <label for="check-b">新北市</label>
+                                                        <input id="check-c" type="checkbox" name="cityid" value="3" <% if(cityids.contains(3)){ out.write("checked='checked'");} %>>
+                                                        <label for="check-c">台中市</label>
+                                                        <input id="check-d" type="checkbox" name="cityid" value="4" <% if(cityids.contains(4)){ out.write("checked='checked'");} %>>
+                                                        <label for="check-d">高雄市</label>
+                                                        <input id="check-f" type="checkbox" name="cityid" value="5" <% if(cityids.contains(5)){ out.write("checked='checked'");} %>>
+                                                        <label for="check-f">台東市</label>
+                                                        <input id="check-e" type="checkbox" name="cityid" value="6" <% if(cityids.contains(6)){ out.write("checked='checked'");} %>>
+                                                        <label for="check-e">花蓮縣</label>
+                                                        <input id="check-g" type="checkbox" name="cityid" value="7" <% if(cityids.contains(7)){ out.write("checked='checked'");} %>>
+                                                        <label for="check-g">彰化縣 </label>
+                                                        <input id="check-h" type="checkbox" name="cityid" value="8" <% if(cityids.contains(8)){ out.write("checked='checked'");} %>>
+                                                        <label for="check-h">台南市 </label>
+                                                    	
+                                                    	
+                                                    	
+                                                    <%} %>
+                                                    <% session.removeAttribute("cityid");%>
+                                                    <% session.removeAttribute("cityids");%>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -516,6 +552,10 @@
                                 <div class="act-title">
                                     <h5><i class="ion-image"></i> 商品圖片 :</h5>
                                 </div>
+                                <img src="images/camp.png" style="width:400px">
+                                <img src="images/camp.png" style="width:400px">
+                                <img src="images/camp.png" style="width:400px">
+                                <img src="images/camp.png" style="width:400px">
                                 <div class="db-add-listing">
                                     <div class="form-group">
                                         <!-- <form class="photo-upload"> -->

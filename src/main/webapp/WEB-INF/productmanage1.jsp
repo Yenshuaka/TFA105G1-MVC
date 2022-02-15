@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="css/switcher/skin-aqua.css" media="screen" id="style-colors" />
     <!-- Document Title -->
     <!-- <title>listagram - Directory Listing HTML Template</title> -->
-    <title>行程總攬/所有商品</title>
+    <title>行程總覽/所有商品</title>
 
 </head>
 

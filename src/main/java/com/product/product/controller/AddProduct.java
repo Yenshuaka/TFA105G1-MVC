@@ -1,21 +1,27 @@
 package com.product.product.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,11 +32,14 @@ import org.springframework.web.context.WebApplicationContext;
 import com.post.model.PostService;
 import com.product.product.model.ProductBean;
 import com.product.product.model.ProductService;
+import com.product.productimg.model.ProductImgBean;
+import com.product.productimg.model.ProductImgService;
 import com.product.productloc.model.ProductLocBean;
 import com.product.productloc.model.ProductLocService;
 
 //QQQQQ
 @WebServlet("/ProductManage")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class AddProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -42,6 +51,7 @@ public class AddProduct extends HttpServlet {
 				(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
 		ProductService productService = context.getBean("productService", ProductService.class);
 		ProductLocService productLocService = context.getBean("productLocService", ProductLocService.class);
+		ProductImgService productImgService = context.getBean("productImgService", ProductImgService.class);
 		
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
@@ -132,11 +142,20 @@ public class AddProduct extends HttpServlet {
 				bean.setTraveltime(traveltime);
 				bean.setState(0);
 				
+				/***************************上傳圖片處理start***************************************/
+				
+				Collection<Part> parts = req.getParts(); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
+				session.setAttribute("parts", parts);
 
+				/***************************上傳圖片處理end***************************************/
+				String[] cityid = req.getParameterValues("cityid");
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					session.setAttribute("ProductBean", bean); // 含有輸入格式錯誤的empVO物件,也存入req
-					
+					if(cityid!=null) {
+						session.setAttribute("cityid", cityid);
+					}
 					res.sendRedirect(req.getContextPath()+"/MVC/AddProduct");
 					return;
 				}
@@ -144,16 +163,12 @@ public class AddProduct extends HttpServlet {
 				/***************************2.開始新增資料***************************************/
 				productService.insert(bean); // 商品資料
 				session.removeAttribute("ProductBean");
-				String[] cityid = req.getParameterValues("cityid");
 				
-				if(cityid!=null) {
-					session.setAttribute("cityid", cityid);		
-					res.sendRedirect(req.getContextPath()+"/ProductManage?action=addloc");
-					return;
-				}else {
-					res.sendRedirect(req.getContextPath()+"/MVC/ProductManageController");
-					return;
-				}
+				
+				session.setAttribute("cityid", cityid);		
+				res.sendRedirect(req.getContextPath()+"/ProductManage?action=addloc");
+				return;
+				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
@@ -250,32 +265,52 @@ public class AddProduct extends HttpServlet {
 				bean.setTraveltime(traveltime);
 				bean.setState(0);
 				
+				String[] cityid = req.getParameterValues("cityid");
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					session.setAttribute("ProductBean", bean); // 含有輸入格式錯誤的empVO物件,也存入req
-					
+					if(cityid!=null) {
+						session.setAttribute("cityid", cityid);
+					}
 					res.sendRedirect(req.getContextPath()+"/MVC/UpdateProduct");
 					return;
 				}
 				
-				/***************************2.開始新增資料***************************************/
+				/***************************2.開始修改資料***************************************/
 				productService.update(bean); // 商品資料
 				session.removeAttribute("ProductBean");
-				String[] cityid = req.getParameterValues("cityid");
+				cityid = req.getParameterValues("cityid");
+				
+				Connection connection;
+				PreparedStatement preparedStatement;
+				
+				try {
+					connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei", "root", "password");
+					preparedStatement = connection.prepareStatement("delete from PRODUCT_LOC where PRODUCT_ID = ?");
+					preparedStatement.setInt(1, productid);
+					preparedStatement.execute();
+									
+				}catch (Exception e) {
+					errorMsgs.add(e.getMessage());
+					res.sendRedirect(req.getContextPath()+"/MVC/ProductManageController");
+				}
 				
 				if(cityid!=null) {
-					session.setAttribute("cityid", cityid);		
-					res.sendRedirect(req.getContextPath()+"/ProductManage?action=addloc");
-					return;
-				}else {
-					res.sendRedirect(req.getContextPath()+"/MVC/ProductManageController");
-					return;
+					for(int i = 0; i < cityid.length; i++) {
+						ProductLocBean bean2 = new ProductLocBean();
+						bean2.setProductid(productid);
+						bean2.setCityid(Integer.valueOf(cityid[i]) );
+						productLocService.insert(bean2);				
+					}
 				}
+				
+				res.sendRedirect(req.getContextPath()+"/MVC/ProductManageController");
+				return;
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				res.sendRedirect(req.getContextPath()+"/MVC/AddProduct");
+				res.sendRedirect(req.getContextPath()+"/MVC/UpdateProduct");
 			}
 		}
 		
@@ -304,13 +339,51 @@ public class AddProduct extends HttpServlet {
 			
 			HttpSession httpSession = req.getSession();
 			String[] cityid = (String[])httpSession.getAttribute("cityid");
-			for(int i = 0; i < cityid.length; i++) {
-				ProductLocBean bean2 = new ProductLocBean();
-				bean2.setProductid(productid);
-				bean2.setCityid(Integer.valueOf(cityid[i]) );
-				productLocService.insert(bean2);				
+			if(cityid!=null) {
+				for(int i = 0; i < cityid.length; i++) {
+					ProductLocBean bean2 = new ProductLocBean();
+					bean2.setProductid(productid);
+					bean2.setCityid(Integer.valueOf(cityid[i]) );
+					productLocService.insert(bean2);				
+				}
 			}
 			
+			
+			Collection<Part> parts = (Collection<Part>) httpSession.getAttribute("parts");
+			
+			if(parts!=null) {
+			
+				for (Part part : parts) {
+					String filename = getFileNameFromPart(part);
+					if (filename!= null && part.getContentType()!=null) {
+						
+						long size = part.getSize();
+	
+//						 額外測試 InputStream 與 byte[] (幫將來model的VO預作準備)
+						InputStream in = part.getInputStream();
+						byte[] buf = new byte[in.available()];
+						in.read(buf);
+						in.close();
+						
+						ProductImgBean img = new ProductImgBean();
+						img.setProductid(productid);
+						img.setImgname(filename);
+						img.setProductimg(buf);
+						productImgService.insert(img);
+						
+						
+																
+						// 額外測試秀圖
+//						out.println("<br><img src=\""+req.getContextPath()+saveDirectory+"/"+filename+"\">");
+//	
+//						out.println();
+//						out.println("</PRE>");
+					}
+				}
+			
+			}
+			
+			httpSession.removeAttribute("cityid");
 			
 			res.sendRedirect(req.getContextPath()+"/MVC/ProductManageController");
 			return;
@@ -374,6 +447,26 @@ public class AddProduct extends HttpServlet {
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				session.setAttribute("ProductBean", bean2);         // 資料庫取出的empVO物件,存入req
+				
+				//找出商品相關地區
+				try {
+					Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei", "root", "password");
+					PreparedStatement preparedStatement = connection.prepareStatement("select CITY_ID from PRODUCT_LOC where PRODUCT_ID = ?");
+					preparedStatement.setInt(1, productid);					
+					ResultSet rSet = preparedStatement.executeQuery();
+					List cityids = new ArrayList();
+						
+					while (rSet.next()) {
+						cityids.add(rSet.getInt(1));					
+					}
+					
+					session.setAttribute("cityids", cityids);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+		
 				res.sendRedirect(req.getContextPath()+"/MVC/UpdateProduct");
 				return;
 
@@ -404,5 +497,17 @@ public class AddProduct extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
+	
+	// 取出上傳的檔案名稱 (因為API未提供method,所以必須自行撰寫)
+		public String getFileNameFromPart(Part part) {
+			String header = part.getHeader("content-disposition");
+			System.out.println("header=" + header); // 測試用
+			String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
+			System.out.println("filename=" + filename); // 測試用
+			if (filename.length() == 0) {
+				return null;
+			}
+			return filename;
+		}
 
 }
