@@ -392,8 +392,8 @@
                         <div class="col-md-12">
                             <div class="invoice-panel">
                                 <div class="act-title">
-                                	<%  List<String> errorMsgs = (List)session.getAttribute("errorMsgsdelete");  %>                          	
-                                    <h5>所有商品&nbsp&nbsp&nbsp&nbsp&nbsp <span style="color:red"><%= errorMsgs==null ? "" : errorMsgs.get(0) %></span></h5>
+                                	<%  List<String> errorMsgsdelete = (List)session.getAttribute("errorMsgsdelete");  %>                          	
+                                    <h5>所有商品&nbsp&nbsp&nbsp&nbsp&nbsp <span style="color:red"></span></h5>
                                 	<% session.removeAttribute("errorMsgsdelete"); %>
                                 </div>                         
                                 <div class="invoice-body">
@@ -440,7 +440,7 @@
                                                     <td> <%=list1.get(i).getState() %> </td>
                                                     <td>
                                                     	<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/ProductManage" >
-                                                        	<input type="submit" value="刪除">
+                                                        	<input type="submit" value="刪除" onclick="clicked(event)">
 			     											<input type="hidden" name="productid"  value="<%=list1.get(i).getProductid() %>">
 			     											<input type="hidden" name="action" value="delete">
                                                         </FORM>
@@ -453,6 +453,15 @@
                                                 </tr>      
                                                 <% } %>
 <%-- 											</c:forEach> --%>
+												<script>          
+													function clicked(e)
+													{
+													    if(!confirm('Are you sure?')) {
+													        e.preventDefault();
+													    }
+													}												
+												</script>
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -493,47 +502,7 @@
     
    <!-- AJAX部分 -->
     <script>
-        function dofirst(){
-            // 先跟畫面產生關聯
-            sellButton = document.getElementById('loadButton');
-            feedback = document.getElementById('feedback');
-
-            // 再建事件聆聽功能
-            loadButton.addEventListener('click',function(){
-                // step 1: 建立 AJAX 物件
-                xhr = new XMLHttpRequest();
-                xhr.addEventListener('readystatechange',callState);
-
-                // step 2: 發出請求並傳送出去
-                
-               	// (1) GET
-               	// let urlSource = './jsp/getParameter.jsp?name=Peter&age=40';
-                // xhr.open('GET', urlSource, true); // if false --> 同步 | true: 非同步
-                // xhr.send();
-                
-             	// (2) POST
-                let urlSource = './jsp/getParameter.jsp';
-                xhr.open('POST', urlSource, true); // if false --> 同步 | true: 非同步
-                xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-                //只有post方法需要以上這行設定跟servlet一樣 可能是因為GET參數只能放在網址不用說也知道是文字
-                //post有可能是上傳檔案
-                xhr.send("name=Stella&age=30");
-            });
-        }
-        
-        function callState(){
-            // step 3: 接收 Server 端傳回來的資料 -- 文字檔
-            
-            if(xhr.readyState == 4){    //readyState: 0 -> 1 -> 2 -> 3 -> 4
-                if(xhr.status == 200){
-                    feedback.innerHTML = xhr.responseText;  // responseText | responseXML
-                }else{
-                	feedback.innerHTML = `${xhr.status}: ${xhr.statusText}`;
-                }
-            }
-            
-        }
-        window.addEventListener('load',dofirst);
+     
     </script>
 </body>
 

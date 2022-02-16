@@ -608,14 +608,21 @@
                             </div>
                             <div class="add-btn">
                                 <input type="hidden" name="action"	value="update">
-                                <input type="submit" value="修改商品">
+                                <input type="submit" value="修改商品" onclick="clicked(event)">
 <!--                                 <button type="submit" class="btn v8 mar-top-20">新增商品</button> -->
                             </div>
                             <div>
                             	<a href="<%=request.getContextPath() %>/MVC/ProductManageController">不修改商品，回上一頁</a>
                             </div>
                         </form>
- 						
+ 						<script>          
+													function clicked(e)
+													{
+													    if(!confirm('Are you sure?')) {
+													        e.preventDefault();
+													    }
+													}												
+						</script>
                             <!-- <div class="db-add-list-wrap">
                                 <div class="act-title">
                                     <h5><i class="ion-ios-location"></i> Location/Contacts :</h5>

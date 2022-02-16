@@ -431,6 +431,7 @@ public class AddProduct extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			HttpSession session = req.getSession();
+			session.removeAttribute("errorMsgsdelete");
 			session.setAttribute("errorMsgsdelete", errorMsgs);
 			
 	
@@ -449,6 +450,7 @@ public class AddProduct extends HttpServlet {
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
+				System.out.println("安 安");
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				res.sendRedirect(req.getContextPath()+"/MVC/ProductManageController");
 				
