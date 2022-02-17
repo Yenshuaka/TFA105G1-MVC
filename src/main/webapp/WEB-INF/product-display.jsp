@@ -745,7 +745,7 @@
 										<div class="col-md-6 no-pad-lr">
 											<div class="trending-title-box">
 												<h4>
-													<a href="single-listing-one.html"><%=list2.get(i).getProductname() %></a>
+													<a href="<%=request.getContextPath() %>/MVC/ProductDetail?productid=<%=list2.get(i).getProductid() %>"><%=list2.get(i).getProductname() %></a>
 												</h4>
 												<div class="customer-review">
 													<div class="rating-summary float-left">
