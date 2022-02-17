@@ -1,14 +1,19 @@
 package com.product.product.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.post.model.PostBean;
@@ -19,6 +24,16 @@ import com.product.product.model.ProductService;
 public class ProductManageController {
 	@Autowired
 	private ProductService productService;
+	
+//	@InitBinder
+//	public void initMethod(WebDataBinder binder) {
+//		binder.registerCustomEditor(java.sql.Date.class, 
+//				new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
+//		
+//		binder.registerCustomEditor(Integer.class, new CustomNumberEditor(Integer.class, true));
+//		
+//		binder.registerCustomEditor(Double.class, new CustomNumberEditor(Double.class, true));
+//	}
 
 	@RequestMapping("/ProductManageController")
 	public String name(String action, HttpSession session, ProductBean bean, Model model) {
@@ -26,7 +41,6 @@ public class ProductManageController {
 		if(action==null) {  //這是select全部的狀況	
 			List<ProductBean> list = productService.select(null);
 			model.addAttribute("list", list);
-			System.out.println("ok");
 			return "productmanage1";
 		}
 		
@@ -44,7 +58,7 @@ public class ProductManageController {
 			ProductBean bean2 = productService.select(bean).get(0);
 			bean2.setState(1);
 			productService.update(bean2);
-			return "redirect:/ProductManageController ";
+			return "redirect:/MVC/ProductManageController ";
 //			return "productmanage1";
 		}else {
 			ProductBean bean = new ProductBean();
@@ -52,7 +66,7 @@ public class ProductManageController {
 			ProductBean bean2 = (ProductBean) productService.select(bean).get(0);
 			bean2.setState(0);
 			productService.update(bean2);
-			return "redirect:/ProductManageController ";
+			return "redirect:/MVC/ProductManageController ";
 //			return "productmanage1";
 		}
 		
@@ -61,12 +75,13 @@ public class ProductManageController {
 	
 	@RequestMapping("/AddProduct")
 	public String addProduct() {	
-		return "db-add-listing";
+		return "add-product1";
 	}
 	
 	
-	
-	
-	
+	@RequestMapping("/UpdateProduct")
+	public String updateProduct() {	
+		return "update-product";
+	}
 	
 }

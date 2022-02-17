@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="css/switcher/skin-aqua.css" media="screen" id="style-colors" />
     <!-- Document Title -->
     <!-- <title>listagram - Directory Listing HTML Template</title> -->
-    <title>會員專區/後台</title>
+    <title>行程總覽/所有商品</title>
 
 </head>
 
@@ -374,7 +374,7 @@
                                         <ul>
                                             <li class="active"><a href="#">行程總覽</a></li>
                                             <li>所有商品</li>
-                                        </ul>
+                                        </ul>             
                                     </div>
                                 </div>
                                 <a class="btn v3" href="<%=request.getContextPath() %>/MVC/AddProduct"><i class="ion-plus-round"></i>新增商品 </a>
@@ -392,8 +392,10 @@
                         <div class="col-md-12">
                             <div class="invoice-panel">
                                 <div class="act-title">
-                                    <h5>所有商品</h5>
-                                </div>
+                                	<%  List<String> errorMsgsdelete = (List)session.getAttribute("errorMsgsdelete");  %>                          	
+                                    <h5>所有商品&nbsp&nbsp&nbsp&nbsp&nbsp <span style="color:red"></span></h5>
+                                	<% session.removeAttribute("errorMsgsdelete"); %>
+                                </div>                         
                                 <div class="invoice-body">
                                     <div class="table-responsive">
                                         <table class="invoice-table">
@@ -423,7 +425,7 @@
                                             				}else{ 
                                             					out.write("上架中");
                                             				}; %> 
-                                            			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/PutonGetoff" >
+                                            			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/MVC/PutonGetoff" >
 			     											<% if(list1.get(i).getState()==0) { %>
 			     												<input type="submit" value="上架">
 			     												<input type="hidden" name="action"	value="puton">
@@ -437,12 +439,12 @@
                                             		</td>
                                                     <td> <%=list1.get(i).getState() %> </td>
                                                     <td>
-                                                    	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/PostManageController" >
-                                                        	<input type="submit" value="刪除">
+                                                    	<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/ProductManage" >
+                                                        	<input type="submit" value="刪除" onclick="clicked(event)">
 			     											<input type="hidden" name="productid"  value="<%=list1.get(i).getProductid() %>">
 			     											<input type="hidden" name="action" value="delete">
                                                         </FORM>
-                                                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/PostManageController" >
+                                                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ProductManage" >
 			     											<input type="submit" value="修改">
 			     											<input type="hidden" name="productid"  value="<%=list1.get(i).getProductid() %>">
 			     											<input type="hidden" name="action"	value="getOne_For_Update">
@@ -451,6 +453,15 @@
                                                 </tr>      
                                                 <% } %>
 <%-- 											</c:forEach> --%>
+												<script>          
+													function clicked(e)
+													{
+													    if(!confirm('Are you sure?')) {
+													        e.preventDefault();
+													    }
+													}												
+												</script>
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -491,47 +502,7 @@
     
    <!-- AJAX部分 -->
     <script>
-        function dofirst(){
-            // 先跟畫面產生關聯
-            sellButton = document.getElementById('loadButton');
-            feedback = document.getElementById('feedback');
-
-            // 再建事件聆聽功能
-            loadButton.addEventListener('click',function(){
-                // step 1: 建立 AJAX 物件
-                xhr = new XMLHttpRequest();
-                xhr.addEventListener('readystatechange',callState);
-
-                // step 2: 發出請求並傳送出去
-                
-               	// (1) GET
-               	// let urlSource = './jsp/getParameter.jsp?name=Peter&age=40';
-                // xhr.open('GET', urlSource, true); // if false --> 同步 | true: 非同步
-                // xhr.send();
-                
-             	// (2) POST
-                let urlSource = './jsp/getParameter.jsp';
-                xhr.open('POST', urlSource, true); // if false --> 同步 | true: 非同步
-                xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-                //只有post方法需要以上這行設定跟servlet一樣 可能是因為GET參數只能放在網址不用說也知道是文字
-                //post有可能是上傳檔案
-                xhr.send("name=Stella&age=30");
-            });
-        }
-        
-        function callState(){
-            // step 3: 接收 Server 端傳回來的資料 -- 文字檔
-            
-            if(xhr.readyState == 4){    //readyState: 0 -> 1 -> 2 -> 3 -> 4
-                if(xhr.status == 200){
-                    feedback.innerHTML = xhr.responseText;  // responseText | responseXML
-                }else{
-                	feedback.innerHTML = `${xhr.status}: ${xhr.statusText}`;
-                }
-            }
-            
-        }
-        window.addEventListener('load',dofirst);
+     
     </script>
 </body>
 

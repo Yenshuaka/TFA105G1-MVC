@@ -24,7 +24,7 @@ import com.post.model.PostService;
 @WebServlet("/Test")
 public class Test extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-//ssss
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		ServletContext applicationContext = this.getServletContext();
