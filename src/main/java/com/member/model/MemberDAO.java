@@ -23,7 +23,7 @@ public class MemberDAO implements MemberDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/test001");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/tfa105g1");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
