@@ -67,7 +67,7 @@
                                                 </ul> -->
                                             </li>
                                             <li class="has-children">
-                                                <a href="#" style="color: white">產品分類</a>
+                                                <a href="<%=request.getContextPath() %>/MVC/ProductDisplayController" style="color: white">產品分類</a>
                                                 <ul class="dropdown">
                                                     <li><a href="about.html">一日遊</a></li>
                                                     <li><a href="contact.html">多日遊</a></li>
