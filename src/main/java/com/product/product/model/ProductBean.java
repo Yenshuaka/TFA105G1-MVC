@@ -123,6 +123,7 @@ public class ProductBean implements Serializable{
 	}
 
 	public String getProductintro() {
+		productintro = productintro.replaceAll("\n", "<br>");
 		return productintro;
 	}
 
@@ -131,6 +132,7 @@ public class ProductBean implements Serializable{
 	}
 
 	public String getAttention() {
+		attention = attention.replaceAll("\n", "<br>");
 		return attention;
 	}
 

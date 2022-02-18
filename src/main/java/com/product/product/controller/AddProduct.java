@@ -92,6 +92,7 @@ public class AddProduct extends HttpServlet {
 				
 				
 				String productintro = req.getParameter("productintro").trim();
+//				productintro = productintro.replaceAll("\n", "<br>");
 				if (productintro == null || productintro.trim().length() == 0) {
 					errorMsgs.add("商品說明請勿空白");
 				}
