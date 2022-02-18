@@ -27,7 +27,7 @@ public class ProductDisplayController {
 	@RequestMapping("/ProductDisplayController")
 	public String displayAll(HttpSession session, String page, Model model) {
 
-	
+		//找出此頁該顯示哪幾筆商品
 		List<ProductBean> list = productService.select(null);
 		if (page == null) {
 			page = "1";
@@ -36,11 +36,22 @@ public class ProductDisplayController {
 		List<ProductBean> list2 = new ArrayList();
 
 		for (int i = (pageindex - 1) * 4; i <= ((pageindex * 4) - 1); i++) {
-			if (list.get(i) != null) {
+			if ((i+1) <= list.size() ) {
 				list2.add(list.get(i));
 			}
 		}
+		
+		
+		//找出總共該有幾頁
+		int totalpage = 0;
+		if(list.size() % 4 == 0) {
+			totalpage = list.size()/4;
+		}else {
+			totalpage = (list.size()/4) + 1;
+		}
+		model.addAttribute("totalpage", totalpage);
 
+		//找出此頁該顯示的圖片們
 		List imgids = new ArrayList();
 		Connection connection;
 		try {
@@ -112,7 +123,14 @@ public class ProductDisplayController {
 	}
 	
 	
+	@RequestMapping("/ShoppingCart")
+	public String shoppingCart(Model model) {
+		
+		List<ProductBean> list = productService.select(null);
+		model.addAttribute("list", list);
 	
+		return "shopping-cart";
+	}
 	
 	
 	

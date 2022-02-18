@@ -6,6 +6,8 @@
 	import="java.util.*, org.springframework.context.ApplicationContext, org.springframework.web.context.WebApplicationContext"%>
 <%@ page
 	import="com.product.product.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
+	
+
 
 <!DOCTYPE html>
 <html dir="ltr" lang="en-US">
@@ -69,7 +71,7 @@
                                                     <li><a href="home-v9.html">Home Hero Fullscreen</a></li>
                                                     <li><a href="home-v10.html">Home Map Fullscreen</a></li>
                                                 </ul> --></li>
-											<li class="has-children"><a href="#"
+											<li class="has-children"><a href="<%=request.getContextPath() %>/MVC/ProductDisplayController"
 												style="color: white">產品分類</a>
 												<ul class="dropdown">
 													<li><a href="about.html">一日遊</a></li>
@@ -267,7 +269,7 @@
 									<input type="text" class="form-control filter-input"
 										id="search-filter" name="search-bar" placeholder="搜尋關鍵字">
 									<!-- <input type="text" class="form-control filter-input" id="location-filter" name="search-bar" placeholder="Location"> -->
-									<select class="filter-input" id="option-select">
+									<select class="filter-input" id="option-select" >
 										<option>產品分類</option>
 										<option>一日遊</option>
 										<option>多日遊</option>
@@ -745,7 +747,7 @@
 										<div class="col-md-6 no-pad-lr">
 											<div class="trending-title-box">
 												<h4>
-													<a href="<%=request.getContextPath() %>/MVC/ProductDetail?productid=<%=list2.get(i).getProductid() %>"><%=list2.get(i).getProductname() %></a>
+													<a href="<%=request.getContextPath() %>/MVC/ProductDetail?productid=<%=list2.get(i).getProductid() %>" target="_blank"><%=list2.get(i).getProductname() %></a>
 												</h4>
 												<div class="customer-review">
 													<div class="rating-summary float-left">
@@ -968,10 +970,16 @@
 										<div class="col-md-8 offset-md-2  col-xs-12 ">
 											<div class="page-num text-center">
 												<ul>
-													<li class="active"><a href="#">1</a></li>
-													<li><a href="#">2</a></li>
-													<li><a href="#">3</a></li>
-													<li><a href="#">4</a></li>
+													<% Integer totalpage = (Integer)request.getAttribute("totalpage");
+														Integer pageaa = Integer.valueOf((String)request.getAttribute("page"));
+														for(int i =1; i<= totalpage; i++){
+													%>	
+													<li <% if(i==pageaa){out.write("class='active'");} %>><a href="<%=request.getContextPath() %>/MVC/ProductDisplayController?page=<%=i %>"><%=i %></a></li>
+													
+													<% } %>
+<!-- 													<li><a href="#">2</a></li> -->
+<!-- 													<li><a href="#">3</a></li> -->
+<!-- 													<li><a href="#">4</a></li> -->
 													<li><a href="#"><i class="ion-ios-arrow-right"></i></a></li>
 												</ul>
 											</div>
