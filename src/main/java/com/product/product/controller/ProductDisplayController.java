@@ -72,4 +72,52 @@ public class ProductDisplayController {
 
 	}
 	
+	
+	@RequestMapping("/ProductDetail")
+	public String productDetail(String productid, Model model) {
+		
+		ProductBean bean = new ProductBean();
+		Integer productidint = Integer.valueOf(productid);
+		bean.setProductid(productidint);
+		List list = (List) productService.select(bean);
+		ProductBean bean2 = (ProductBean) list.get(0);
+		model.addAttribute("ProductBean", bean2);
+		
+		
+		Connection connection;
+		List imgids = new ArrayList<Integer>();
+		try {
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei",
+					"root", "password");
+
+		
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM PRODUCT_IMG where PRODUCT_ID = ? ");
+			ps.setInt(1, productidint);
+			ResultSet rSet = ps.executeQuery();
+			
+			while (rSet.next()) {
+				imgids.add(rSet.getInt(1));
+			}
+				
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("imgids", imgids);
+		
+
+		return "product-detail";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
