@@ -2351,6 +2351,14 @@ ul.list-inline li {
 }
 
 /*----------Form----------*/
+.w-37{
+	width:37%;
+}
+
+.w-81{
+	width:81%;
+}
+
 .nice-select {
     background-color: transparent;
     border-bottom: 1px solid #ddd;

@@ -1,0 +1,30 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+		<aside class="menu-sidebar js-right-sidebar d-block d-lg-none">
+			<div class="logo">
+				<a href="#"> <img src="images/logo-black.png" alt="I'm Logo" />
+				</a>
+			</div>
+			<div class="menu-sidebar__content js-scrollbar2">
+				<div class="account-img">
+					<img src="images/clients/reviewer-4.png" alt="I'm Username" />
+				</div>
+				<h4 class="name">Hello, ${memberVO.email}</h4>
+				<nav class="navbar-sidebar2">
+					<ul class="list-unstyled navbar__list">
+						<li><a href="db-my-profile.jsp"> <i class="ion-ios-person-outline"></i>個人檔案
+						</a></li>
+						<li><a href="#1"> <i class="ion-ios-heart-outline"></i>我的收藏
+						</a></li>
+						<li><a href="#4"> <i class="ion-ios-cart-outline"></i>購物車
+						</a></li>
+						<li><a href="#2"> <i class="ion-ios-printer-outline"></i>訂單管理
+						</a></li>
+						<li><a href="#3"> <i class="ion-ios-gear-outline"></i>修改密碼
+						</a></li>
+						<li><a href="#4"> <i class="ion-ios-upload-outline"></i>Logout
+						</a></li>
+					</ul>
+				</nav>
+			</div>
+		</aside>
