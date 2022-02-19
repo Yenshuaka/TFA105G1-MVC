@@ -16,7 +16,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.post.model.PostBean;
+
 import com.product.product.model.ProductBean;
 import com.product.product.model.ProductService;
 

@@ -29,7 +29,7 @@ import org.hibernate.query.NativeQuery;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.post.model.PostService;
+
 import com.product.product.model.ProductBean;
 import com.product.product.model.ProductService;
 import com.product.productimg.model.ProductImgBean;
