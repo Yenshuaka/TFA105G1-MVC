@@ -49,6 +49,10 @@
 				<value>com.product.productimg.model.ProductImgBean</value>
 				<value>com.product.productloc.model.ProductLocBean</value>
 				<value>com.product.productcomment.model.ProductCommentBean</value>
+				<value>com.order.order.model.OrderBean</value>
+				<value>com.order.orderdetail.model.OrderdetailBean</value>
+				<value>com.order.travelerlist.model.TravelerlistBean</value>
+				
 			</array>
 		</property>
 		<property name="hibernateProperties">
