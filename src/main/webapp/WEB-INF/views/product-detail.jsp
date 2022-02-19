@@ -184,7 +184,7 @@
                                                 </ul> -->
                                             </li>
                                             <li class="has-children">
-                                                <a href="#" style="color: white">登入/註冊</a>
+                                                <a href="#" style="color: white"><%= session.getAttribute("memberid")==null ? "登入/註冊" : "登出" %></a>
                                                 <!-- <ul class="dropdown">
                                                     <li><a href="home-v1.html">Home Tab</a></li>
                                                     <li><a href="home-v2.html">Home Hero</a></li>

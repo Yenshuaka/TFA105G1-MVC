@@ -71,7 +71,7 @@
                                                     <li><a href="home-v9.html">Home Hero Fullscreen</a></li>
                                                     <li><a href="home-v10.html">Home Map Fullscreen</a></li>
                                                 </ul> --></li>
-											<li class="has-children"><a href="<%=request.getContextPath() %>/MVC/ProductDisplayController"
+											<li class="has-children"><a href="<%=request.getContextPath() %>/MVC/ProductDisplayController?refresh=true"
 												style="color: white">產品分類</a>
 												<ul class="dropdown">
 													<li><a href="about.html">一日遊</a></li>
@@ -184,7 +184,7 @@
 
                                                 </ul> --></li>
 											<li class="has-children"><a href="#"
-												style="color: white">登入/註冊</a> <!-- <ul class="dropdown">
+												style="color: white"><%= session.getAttribute("memberid")==null ? "登入/註冊" : "登出" %>  </a> <!-- <ul class="dropdown">
                                                     <li><a href="home-v1.html">Home Tab</a></li>
                                                     <li><a href="home-v2.html">Home Hero</a></li>
                                                     <li><a href="home-v3.html">Home Video</a></li>
@@ -208,7 +208,7 @@
 									</a>
 								</div>
 								<div class="add-list float-right">
-									<a class="btn v8" href="add-listing.html">購物車 <i
+									<a class="btn v8" href="<%=request.getContextPath() %>/MVC/ShoppingCart">購物車 <i
 										class="icofont-shopping-cart">&nbsp3</i></a>
 								</div>
 								<!-- <div class="add-list float-right">
@@ -264,10 +264,10 @@
 							<div class="sidebar-title">
 								<h2>篩選行程</h2>
 							</div>
-							<form>
+							<form method="post" action="<%=request.getContextPath() %>/MVC/ProductFilter">
 								<div class="form-group filter-group">
 									<input type="text" class="form-control filter-input"
-										id="search-filter" name="search-bar" placeholder="搜尋關鍵字">
+										id="search-filter" name="keyword" placeholder="搜尋關鍵字" value="<%=session.getAttribute("keyword")==null ? "" : session.getAttribute("keyword") %>">
 									<!-- <input type="text" class="form-control filter-input" id="location-filter" name="search-bar" placeholder="Location"> -->
 									<select class="filter-input" id="option-select" >
 										<option>產品分類</option>
@@ -286,8 +286,8 @@
 
 									</div>
 									<div>
-										<input id="range33" type="range" min="0" max="194599"
-											value="0" step="10" οninput="change()" οnchange="change()">
+										<input id="range33" type="range" min="0" max="20000" name="price"
+											value="<%=session.getAttribute("price")==null ? "0" : session.getAttribute("price") %>" step="10" οninput="change()" οnchange="change()" style="width:300px">
 									</div>
 
 									<script>
@@ -317,10 +317,10 @@
 														<label for="check-c">1天~2天</label></li>
 													<li><input id="check-d" type="checkbox" name="check">
 														<label for="check-d">大於兩天</label></li>
- 													<li><input id="check-f" type="checkbox" name="check">
-                                                        <label for="check-f">Events</label></li> 
-                                                    <li><input id="check-e" type="checkbox" name="check"> 
-                                                         <label for="check-e">Free Wifi</label></li> 
+<!--  													<li><input id="check-f" type="checkbox" name="check"> -->
+<!--                                                         <label for="check-f">Events</label></li>  -->
+<!--                                                     <li><input id="check-e" type="checkbox" name="check">  -->
+<!--                                                          <label for="check-e">Free Wifi</label></li>  -->
 												</div>
 												<div class="filter-checkbox">
 													<p>依評價篩選</p>
@@ -370,15 +370,24 @@
 													</div>
 												</div>
 												<div class="filter-checkbox">
-													<p>Sort By tags</p>
+													<p>依地區篩選</p>
 													<input id="check-ab" type="checkbox" name="check">
-													<label for="check-ab">Hotel</label> <input id="check-bc"
-														type="checkbox" name="check"> <label
-														for="check-bc">Restaurant</label> <input id="check-cd"
-														type="checkbox" name="check"> <label
-														for="check-cd">sports</label> <input id="check-df"
-														type="checkbox" name="check"> <label
-														for="check-df">travel </label>
+													<label for="check-ab">台北市</label> 
+													<input id="check-bc" type="checkbox" name="check"> 
+													<label for="check-bc">新北市</label> 
+													<input id="check-cd" type="checkbox" name="check"> 
+													<label for="check-cd">台中市</label> 
+													<input id="check-df" type="checkbox" name="check"> 
+													<label for="check-df">高雄市 </label>
+													<input id="check-fg" type="checkbox" name="check">
+													<label for="check-fg">台東市 </label>
+													<input id="check-gh" type="checkbox" name="check">
+													<label for="check-gh">花蓮縣 </label>
+													<input id="check-hi" type="checkbox" name="check">
+													<label for="check-hi">彰化縣 </label>
+													<input id="check-ij" type="checkbox" name="check">
+													<label for="check-ij">台南市 </label>
+								
 												</div>
 											</ul></li>
 <!-- 									</ul> -->
@@ -726,12 +735,12 @@
 									</div>
 									<!-- row結束 -->
 								</div>
-
-
+								
 								<div id="list-view" class="tab-pane active product-list">
-								<%  List<ProductBean> list2 = (List)request.getAttribute("list2");
-									List imgids = 	(List)request.getAttribute("imgids");						
-								%>     
+								<%   List<ProductBean> list2 = (List)request.getAttribute("list2");
+									List imgids = 	(List)request.getAttribute("imgids");
+									if(list2.size()==0){ out.print("<h5>查無資料!</h5>");} 
+							    %>      
 								<%  for(int i=0; i < list2.size();i++){ %>
 								
 								
@@ -786,8 +795,8 @@
 													</div>
 													<div class="trend-right float-right">
 														<div class="trend-open">
-															<i class="ion-clock"></i> Open
-															<p>till 11.00pm</p>
+<!-- 															<i class="ion-clock"></i>  -->
+															<p><strong> TWD &nbsp<%= list2.get(i).getProductprice() %></strong> </p>
 														</div>
 													</div>
 												</div>
@@ -980,7 +989,7 @@
 <!-- 													<li><a href="#">2</a></li> -->
 <!-- 													<li><a href="#">3</a></li> -->
 <!-- 													<li><a href="#">4</a></li> -->
-													<li><a href="#"><i class="ion-ios-arrow-right"></i></a></li>
+<!-- 													<li><a href="#"><i class="ion-ios-arrow-right"></i></a></li> -->
 												</ul>
 											</div>
 										</div>
@@ -1132,6 +1141,13 @@
 	<!--Main js-->
 	<script src="js/main.js"></script>
 	<!--Scripts ends-->
+	
+	<script>
+	window.addEventListener('load', change);
+	
+	
+	</script>
+
 </body>
 
 </html>
