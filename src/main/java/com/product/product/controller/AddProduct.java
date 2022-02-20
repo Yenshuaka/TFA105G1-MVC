@@ -285,15 +285,17 @@ public class AddProduct extends HttpServlet {
 				
 				Connection connection;
 				PreparedStatement preparedStatement;
+
 				
 				try {
 					connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei", "root", "password");
 					preparedStatement = connection.prepareStatement("delete from PRODUCT_LOC where PRODUCT_ID = ?");
 					preparedStatement.setInt(1, productid);
-					preparedStatement.execute();
+					preparedStatement.execute();	
 					preparedStatement = connection.prepareStatement("delete from PRODUCT_IMG where PRODUCT_ID = ?");
 					preparedStatement.setInt(1, productid);
 					preparedStatement.execute();
+					
 									
 				}catch (Exception e) {
 					errorMsgs.add(e.getMessage());

@@ -77,7 +77,7 @@
                         </li>
 
                         <li>
-                            <a href="<%=request.getContextPath() %>/ProductManageController">
+                            <a href="<%=request.getContextPath() %>/MVC/ProductManageController">
                                 <i class="ion-ios-copy-outline"></i>行程總覽</a>
                         </li>
                         <li>
@@ -159,7 +159,7 @@
                                                 </ul> -->
                                             </li>
                                             <li class="has-children">
-                                                <a href="#" style="color: white">產品分類</a>
+                                                <a href="<%=request.getContextPath() %>/MVC/ProductManageController" style="color: white">產品分類</a>
                                                 <ul class="dropdown">
                                                     <li><a href="home-v1.html">一日遊</a></li>
                                                     <li><a href="home-v2.html">多日遊</a></li>
@@ -364,6 +364,7 @@
             <!-- Top header ends-->
 
             <!--Dashboard breadcrumb starts-->
+            
             <div class="dash-breadcrumb">
                 <div class="container-fluid">
                     <div class="row">
@@ -372,12 +373,19 @@
                                 <div class="dash-breadcrumb-left">
                                     <div class="breadcrumb-menu text-right sm-left">
                                         <ul>
-                                            <li class="active"><a href="#">行程總覽</a></li>
-                                            <li>所有商品</li>
+                                            <li class="active"><a href="<%=request.getContextPath() %>/MVC/ProductManageController">行程總覽</a></li>
+                                            <li>所有商品</li>        
                                         </ul>             
                                     </div>
                                 </div>
-                                <a class="btn v3" href="<%=request.getContextPath() %>/MVC/AddProduct"><i class="ion-plus-round"></i>新增商品 </a>
+                                <div>
+                                	<form method="post" action="<%=request.getContextPath() %>/MVC/ProductManageController">
+                              	   		<input type="number" placeholder="請輸入商品編號" name="productid">
+                              	   		<input type="submit" value="搜尋">
+                              	   </form>
+                              	</div>
+                             	   <a class="btn v3" href="<%=request.getContextPath() %>/MVC/AddProduct"><i class="ion-plus-round"></i>新增商品 </a>
+                            
                             </div>
                         </div>
                     </div>
@@ -386,6 +394,7 @@
             <!--Dashboard breadcrumb ends-->
 
             <!-- Dashboard Content starts-->
+          
             <div class="dash-content">
                 <div class="container-fluid">
                     <div class="row">
@@ -404,40 +413,43 @@
                                                     <th>商品編號</th>
                                                     <th>商品名稱</th>
                                                     <th>上架狀態</th>
-                                                    <th>先保留</th>
+                                                    <th>商品價格(TWD)</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             
 <%--                                             <c:forEach var="productBean" items="${list}" > --%>
                                             <% 
-                                            	System.out.println(request.getAttribute("list"));
+                                           	
                                             	List<ProductBean> list1 = (List)request.getAttribute("list");
 //                                             	ProductBean a = (ProductBean)list1.get(0);
-                                            	System.out.println(list1.get(0).getState());
+												if(list1==null || list1.size()==0  ){
+													out.write("<h5 style='color:red'>查無資料!</h5>");
+												}
+                                            	if(list1!=null && list1.size()!=0){
                                             	for(int i=0; i < list1.size();i++){ 
                                             %>
                                                 <tr>  
                                                     <td> <%=list1.get(i).getProductid() %> </td>
                                                     <td> <%=list1.get(i).getProductname() %></td>
-                                                    <td> <% if(list1.get(i).getState()==0) {
+                                                    <td> <span><% if(list1.get(i).getState()==0) {
                                                     			out.write("下架中");
                                             				}else{ 
                                             					out.write("上架中");
-                                            				}; %> 
-                                            			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/MVC/PutonGetoff" >
+                                            				}; %> </span>
+<%--                                             			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/MVC/PutonGetoff" > --%>
 			     											<% if(list1.get(i).getState()==0) { %>
-			     												<input type="submit" value="上架">
+			     												<input type="submit" value="up" class="putongo">
 			     												<input type="hidden" name="action"	value="puton">
 			     											<% }else{ %>
-			     												<input type="submit" value="下架">
+			     												<input type="submit" value="down" class="getoff">
 			     												<input type="hidden" name="action"	value="getoff">
 			     											<% }; %>
 			     											<input type="hidden" name="productid"  value="<%=list1.get(i).getProductid() %>">
 			     			
-			     										</FORM>               				
+<!-- 			     										</FORM>               				 -->
                                             		</td>
-                                                    <td> <%=list1.get(i).getState() %> </td>
+                                                    <td> <%=list1.get(i).getProductprice() %> </td>
                                                     <td>
                                                     	<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/ProductManage" >
                                                         	<input type="submit" value="刪除" onclick="clicked(event)">
@@ -449,9 +461,10 @@
 			     											<input type="hidden" name="productid"  value="<%=list1.get(i).getProductid() %>">
 			     											<input type="hidden" name="action"	value="getOne_For_Update">
 			     										</FORM>
+			     											
                                                     </td>
                                                 </tr>      
-                                                <% } %>
+                                                <% } }%>
 <%-- 											</c:forEach> --%>
 												<script>          
 													function clicked(e)
@@ -498,12 +511,44 @@
     <!-- Main JS-->
     <script src="js/main.js"></script>
     <!-- Dashboard JS-->
-    <script src="js/dashboard.js"></script>
+    <script src="js/dashboard.js"></script>    
     
    <!-- AJAX部分 -->
-    <script>
-     
-    </script>
+   <script src="vendors/jquery/jquery-3.6.0.min.js"></script>
+   <script>
+     	$(document).on('click', '.getoff', function getoff(e){
+            var productid = $(e.target).next().next().val();
+            console.log(productid);
+     		$.ajax({
+                url: 'http://localhost:7080/TFA105G1-MVC3/StateChange',
+                type: 'POST',
+                data: {productid: $(e.target).next().next().val() ,action:$(e.target).val()},
+                dataType: "html",
+                success: function(res){
+                    console.log("成功");
+                    $(e.target).parent().html(res);
+            
+                }
+            });    		
+     	});
+     	
+     	$(document).on('click', '.putongo', function putongo(e){
+            var productid = $(e.target).next().next().val();
+            console.log(productid);
+     		$.ajax({
+                url: 'http://localhost:7080/TFA105G1-MVC3/StateChange',
+                type: 'POST',
+                data: {productid: $(e.target).next().next().val() ,action:$(e.target).val()},
+                dataType: "html",
+                success: function(res){
+                    console.log("成功");
+                    $(e.target).parent().html(res);
+                
+                }
+            });    		
+     	});
+
+   </script>
 </body>
 
 </html>
