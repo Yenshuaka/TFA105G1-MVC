@@ -27,12 +27,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.product.product.model.ProductBean;
 import com.product.product.model.ProductDAOHibernate;
 import com.product.product.model.ProductService;
+import com.product.productcomment.model.ProductCommentBean;
+import com.product.productcomment.model.ProductCommentService;
 
 @Controller
 public class ProductDisplayController {
 
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private ProductCommentService productCommentService;
 	
 	@PersistenceContext
 	private Session session;
@@ -182,6 +187,8 @@ public class ProductDisplayController {
 		
 		Connection connection;
 		List imgids = new ArrayList<Integer>();
+		List<ProductCommentBean> comments = new ArrayList<ProductCommentBean>();
+		
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei",
 					"root", "password");
@@ -194,14 +201,31 @@ public class ProductDisplayController {
 			while (rSet.next()) {
 				imgids.add(rSet.getInt(1));
 			}
+			
+			ps = connection.prepareStatement("SELECT * FROM PRODUCT_COMMENT where PRODUCT_ID = ? ");
+			ps.setInt(1, productidint);
+			ResultSet rSet2 = ps.executeQuery();
+			
+			while (rSet2.next()) { 
+				ProductCommentBean productcomment = new ProductCommentBean();
+				productcomment.setCommentid(rSet2.getInt(1));
+				comments.add(productCommentService.select(productcomment).get(0));
+			}
 				
+			rSet2.close();
+			rSet.close();
+			ps.close();
+			connection.close();
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
+		
 		
 		model.addAttribute("imgids", imgids);
+		model.addAttribute("comments", comments);
 		
 
 		return "product-detail";
