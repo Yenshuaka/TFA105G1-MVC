@@ -71,7 +71,7 @@
                                                     <li><a href="home-v9.html">Home Hero Fullscreen</a></li>
                                                     <li><a href="home-v10.html">Home Map Fullscreen</a></li>
                                                 </ul> --></li>
-											<li class="has-children"><a href="<%=request.getContextPath() %>/MVC/ProductDisplayController?refresh=true"
+											<li class="has-children"><a href="<%=request.getContextPath() %>/MVC/ProductDisplayController"
 												style="color: white">產品分類</a>
 												<ul class="dropdown">
 													<li><a href="about.html">一日遊</a></li>
@@ -264,18 +264,19 @@
 							<div class="sidebar-title">
 								<h2>篩選行程</h2>
 							</div>
-							<form method="post" action="<%=request.getContextPath() %>/MVC/ProductFilter">
+							<form method="post" action="<%=request.getContextPath() %>/MVC/ProductDisplayController">
 								<div class="form-group filter-group">
 									<input type="text" class="form-control filter-input"
-										id="search-filter" name="keyword" placeholder="搜尋關鍵字" value="<%=session.getAttribute("keyword")==null ? "" : session.getAttribute("keyword") %>">
+										id="search-filter" name="keyword" placeholder="搜尋關鍵字" value="<%=request.getAttribute("keyword")==null ? "" : request.getAttribute("keyword") %>">
 									<!-- <input type="text" class="form-control filter-input" id="location-filter" name="search-bar" placeholder="Location"> -->
-									<select class="filter-input" id="option-select" >
+									<% String type = (String)request.getAttribute("type");%>
+									<select class="filter-input" id="option-select" name="type">
 										<option>產品分類</option>
-										<option>一日遊</option>
-										<option>多日遊</option>
-										<option>包車</option>
-										<option>熱門票卷</option>
-										<option>獨特體驗</option>
+										<option <% if(type!=null && "一日遊".equals(type)){out.write("selected");} %>>一日遊</option>
+										<option <% if(type!=null && "多日遊".equals(type)){out.write("selected");} %>>多日遊</option>
+										<option <% if(type!=null && "包車".equals(type)){out.write("selected");} %>>包車</option>
+										<option <% if(type!=null && "熱門票卷".equals(type)){out.write("selected");} %>>熱門票卷</option>
+										<option <% if(type!=null && "獨特體驗".equals(type)){out.write("selected");} %>>獨特體驗</option>
 									</select>
 								</div>
 								<div class="filter-sub-area style1">
@@ -287,7 +288,7 @@
 									</div>
 									<div>
 										<input id="range33" type="range" min="0" max="20000" name="price"
-											value="<%=session.getAttribute("price")==null ? "0" : session.getAttribute("price") %>" step="10" οninput="change()" οnchange="change()" style="width:300px">
+											value="<%=request.getAttribute("price")==null ? "0" : request.getAttribute("price") %>" step="10" οninput="change()" οnchange="change()" style="width:300px">
 									</div>
 
 									<script>
