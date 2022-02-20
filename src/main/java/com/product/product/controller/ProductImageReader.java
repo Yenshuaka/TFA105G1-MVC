@@ -15,10 +15,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.post.model.PostBean;
-import com.post.model.PostDAO;
-import com.post.model.PostDAOHibernate;
-import com.post.model.PostService;
 import com.product.productimg.model.ProductImgBean;
 import com.product.productimg.model.ProductImgService;
 

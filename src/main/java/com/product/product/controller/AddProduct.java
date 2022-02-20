@@ -29,7 +29,7 @@ import org.hibernate.query.NativeQuery;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.post.model.PostService;
+
 import com.product.product.model.ProductBean;
 import com.product.product.model.ProductService;
 import com.product.productimg.model.ProductImgBean;
@@ -92,6 +92,7 @@ public class AddProduct extends HttpServlet {
 				
 				
 				String productintro = req.getParameter("productintro").trim();
+//				productintro = productintro.replaceAll("\n", "<br>");
 				if (productintro == null || productintro.trim().length() == 0) {
 					errorMsgs.add("商品說明請勿空白");
 				}

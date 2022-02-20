@@ -1,10 +1,22 @@
+<<<<<<< HEAD
+=======
+<%@page import="com.order.orderdetail.model.OrderdetailService"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="com.order.orderdetail.model.OrderdetailBean"%>
+>>>>>>> origin/master
 <%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<<<<<<< HEAD
 <%@ page import="java.util.*"%>
 <%@ page
 	import= "web.order.model.* , web.order.model.hibernate.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
+=======
+<%@ page import="java.util.* ,java.sql.*"%>
+<%@ page
+	import="com.order.order.model.*,com.order.orderdetail.model.* , com.order.order.model.hibernate.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
+>>>>>>> origin/master
 <!DOCTYPE html>
 
 <%
@@ -16,6 +28,13 @@ OrderService orderService = new OrderService(orderDAO);
 List<OrderBean> list = orderService.select(null);
 request.setAttribute("list", list);
 
+<<<<<<< HEAD
+=======
+OrderdetailBean bean = new OrderdetailBean();
+OrderdetailDAOHibernate orderdetailDAO = new OrderdetailDAOHibernate(sessionFactory);
+OrderdetailService svc = new OrderdetailService(orderdetailDAO);
+List<OrderdetailBean> list123 = svc.select(null);
+>>>>>>> origin/master
 %>
 
 <html>
@@ -26,10 +45,16 @@ request.setAttribute("list", list);
 <!-- Links -->
 <link rel="icon" type="image/png" href="#" />
 <!-- google fonts-->
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> origin/master
 <link
 	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800"
 	rel="stylesheet">
 <!-- Plugins CSS -->
+<<<<<<< HEAD
 <link href="css/plugin.css" rel="stylesheet" />
 <!-- Perfect scrollbar CSS-->
 <link href="css/perfect-scrollbar.css" rel="stylesheet">
@@ -37,6 +62,21 @@ request.setAttribute("list", list);
 <link href="css/style.css" rel="stylesheet" />
 <!-- Dashboard CSS -->
 <link href="css/dashboard.css" rel="stylesheet" />
+=======
+
+<link href="<%=request.getContextPath()%>/order/css/plugin.css"
+	rel="stylesheet" />
+<!-- Perfect scrollbar CSS-->
+<link
+	href="<%=request.getContextPath()%>/order/css/perfect-scrollbar.css"
+	rel="stylesheet">
+<!-- style CSS -->
+<link href="<%=request.getContextPath()%>/order/css/style.css"
+	rel="stylesheet" />
+<!-- Dashboard CSS -->
+<link href="<%=request.getContextPath()%>/order/css/dashboard.css"
+	rel="stylesheet" />
+>>>>>>> origin/master
 <!--color switcher css-->
 <link rel="stylesheet" href="css/switcher/skin-aqua.css" media="screen"
 	id="style-colors" />
@@ -64,6 +104,7 @@ request.setAttribute("list", list);
 	<div class="page-wrapper">
 
 		<!--Sidebar Menu Starts-->
+<<<<<<< HEAD
 		<aside class="menu-sidebar js-right-sidebar d-block d-lg-none">
 			<div class="logo" style="background-color: rgb(32, 69, 99)">
 				<a href="#"> <img src="images/f.png" alt="Listagram" />
@@ -137,12 +178,16 @@ request.setAttribute("list", list);
 				</nav>
 			</div>
 		</aside>
+=======
+		<%@ include file="file/Sidebar.file"%>
+>>>>>>> origin/master
 		<!--Sidebar Menu ends-->
 
 		<!--Dashboard content Wrapper starts-->
 		<div class="dash-content-wrap">
 
 			<!-- Top header starts-->
+<<<<<<< HEAD
 			<header class="db-top-header"
 				style="background-color: rgb(32, 69, 99)">
 				<div class="container-fluid">
@@ -366,6 +411,10 @@ request.setAttribute("list", list);
 					</div>
 				</div>
 			</header>
+=======
+			<%@ include file="file/Header.file"%>
+<%-- <jsp:include page="<%request.getContextPath()%>/order/file/Sidebar.file" / > --%>
+>>>>>>> origin/master
 			<!-- Top header ends-->
 
 			<!--Dashboard breadcrumb starts-->
@@ -439,6 +488,7 @@ request.setAttribute("list", list);
 											</div>
 										</FORM>
 
+<<<<<<< HEAD
 										<c:forEach var="orderBean" items="${list}">
 
 											<tr>
@@ -472,6 +522,87 @@ request.setAttribute("list", list);
 												<!-- 												</td> -->
 											</tr>
 										</c:forEach>
+=======
+										<%-- 										<c:forEach var="orderBean" items="${list}"> --%>
+										<%
+										for (int i = 0; i < list.size(); i++) {
+										%>
+
+										<tr>
+											<td><%=list.get(i).getOrderid()%></td>
+											<td><%=list.get(i).getMemberid()%></td>
+											<td><%=list.get(i).getOrderdate()%></td>
+											<%
+											int amount = 0;
+											%>
+											<%
+											for (int a = 0; a < list123.size(); a++) {
+
+												if (list.get(i).getOrderid() == list123.get(a).getOrderid()) {
+													amount = amount + list123.get(a).getProductprice();
+
+												}
+											}
+											%>
+											<td><%=amount%></td>
+
+											<%
+											int total = 0;
+											%>
+											<%
+											for (int b = 0; b < list123.size(); b++) {
+												if (list.get(i).getOrderid() == list123.get(b).getOrderid()) {
+													total = total + list123.get(b).getOrderrewardpoints();
+												}
+											}
+											%>
+											<td><%=total%></td>
+
+
+											<td>
+												<FORM METHOD="post"
+													ACTION="<%=request.getContextPath()%>/orderdetail.do"
+													style="margin-bottom: 0px;">
+													<input type="submit" value="明細" class="send"> 
+													<input
+														type="hidden" name="orderid"
+														value="<%=list.get(i).getOrderid()%>"> 
+													<input
+														type="hidden" name="action"
+														value="getOne_For_Orderdetail">
+												</FORM>
+											</td>
+											<!-- 												<td></td> -->
+											<%-- 												<% request.setAttribute("list123",list123);%> --%>
+											<%-- 										<c:forEach var="orderdetailBean" items="${list123}"> --%>
+											<%-- 											<c:if test="${orderBean.orderid==orderdetailBean.orderid}"> --%>
+											<%-- 	                    								${deptVO.deptno}【${deptVO.dname} - ${deptVO.loc}】 --%>
+											<%--                     								</c:if> --%>
+											<%-- 										</c:forEach> --%>
+											<%-- 												<td>${orderBean.orderpriceamount}</td> --%>
+											<%
+											}
+											%>
+
+
+
+
+
+
+
+											<!-- 												<td> -->
+											<!-- 													<FORM METHOD="post" -->
+											<%-- 														ACTION="<%=request.getContextPath()%>/order.do" --%>
+											<!-- 														style="margin-bottom: 0px;"> -->
+											<!-- 														<input type="submit" value="刪除" class="btn v5">  -->
+											<!-- 														<input -->
+											<%-- 															type="hidden" name="orderid" value="${orderBean.orderid}"> --%>
+											<!-- 														<input type="hidden" name="action" value="delete"> -->
+											<!-- 													</FORM> -->
+											<!-- 												</td> -->
+										</tr>
+										<%-- 										</c:forEach> --%>
+>>>>>>> origin/master
 									</table>
 
 

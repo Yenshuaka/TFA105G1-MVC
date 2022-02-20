@@ -1,13 +1,23 @@
+<<<<<<< HEAD
 	<%@page import="web.orderdetail.model.OrderdetailBean"%>
 <%@page import="web.orderdetail.model.OrderdetailService"%>
 <%@page import="web.orderdetail.model.OrderdetailDAOHibernate"%>
+=======
+	<%@page import="com.order.orderdetail.model.OrderdetailBean"%>
+<%@page import="com.order.orderdetail.model.OrderdetailService"%>
+<%@page import="com.order.orderdetail.model.OrderdetailDAOHibernate"%>
+>>>>>>> origin/master
 <%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page
+<<<<<<< HEAD
 	import="web.orderdetail.model.* , web.order.model.hibernate.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
+=======
+	import="com.order.orderdetail.model.* , com.order.order.model.hibernate.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
+>>>>>>> origin/master
 <!DOCTYPE html>
 
 <%
