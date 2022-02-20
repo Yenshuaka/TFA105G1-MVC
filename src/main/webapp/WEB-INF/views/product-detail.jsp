@@ -1,3 +1,4 @@
+<%@page import="com.product.productcomment.model.ProductCommentBean"%>
 <%@ page import="com.product.product.model.ProductBean"%>
 <%@ page import="java.sql.*, com.product.productimg.*"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -603,8 +604,16 @@
                             
                             <!-- 上方為原本的商品評論code 我自己先註解 下方為自己增加的商品評論code -->
                             
+                            <% List<ProductCommentBean> comments = (List<ProductCommentBean>)request.getAttribute("comments");%>
+                            <%	if(comments!=null && comments.size()!=0){ %>
                             <div id="reviews" class="list-details-section mar-top-10">
-                                <h4>商品評論 <span>(15)</span></h4>
+                                <h4>商品評論 <span>(<%=comments.size() %>)</span></h4>
+                                
+                                 
+                                
+                                <%	for(int i =0; i<comments.size(); i++){ %>
+                                
+                                
                                 <div class="review-box">
                                     <ul class="review_wrap">
                                         <li>
@@ -612,17 +621,18 @@
                                                 <div class="reviewer-img">
                                                     <img src="images/clients/reviewer-1.png" class="img-fluid" alt="...">
                                                     <p>Frank Jane</p>
-                                                    <span>35 Reviews</span>
+<!--                                                     <span>35 Reviews</span> -->
                                                 </div>
                                                 <div class="customer-content-wrap">
                                                     <div class="customer-content">
                                                         <div class="customer-review">
-                                                            <h6>Best hotel in the Newyork city</h6>
-                                                            <p>Posted 2 days ago</p>
+                                                            <h6><%=comments.get(i).getCommentcontext() %></h6>
+<!--                                                             <p>Posted 2 days ago</p> -->
+																 <p><%=comments.get(i).getCommenttime() %></p>			
                                                         </div>
-                                                        <div class="customer-rating">5.0</div>
+                                                        <div class="customer-rating"><%=comments.get(i).getScore() %></div>
                                                     </div>
-                                                    <p class="customer-text">I love the hotel here but it is so rare that I get to come here. Tasty Hand-Pulled hotel is the best type of whole in the wall restaurant. The staff are really nice, and you should be seated quickly.
+<!--                                                     <p class="customer-text">I love the hotel here but it is so rare that I get to come here. Tasty Hand-Pulled hotel is the best type of whole in the wall restaurant. The staff are really nice, and you should be seated quickly. -->
                                                     </p>
 
                                                     <div class="like-btn mar-top-40">
@@ -631,7 +641,8 @@
                                                     </div>
                                                 </div>
                                             </div>                                             
-                                </div>
+                                	</div>
+                                	<% } } %>
                             </div>
                             
                             
@@ -786,67 +797,70 @@
                         <div class="listing-sidebar">
                             <div class="sidebar-widget info">
                                 <h3><i class="ion-android-calendar"></i>訂購</h3>
-                                <div class="row">
-                                    <div class="col-md-12 mar-bot-15">
-                                        <div class="nice-select filter-input mar-top-0" tabindex="0"><span class="current">Select Room</span>
-                                            <ul class="list">
-                                                <li class="option selected focus">Standard Single Room </li>
-                                                <li class="option">Deluxe Room</li>
-                                                <li class="option">Signature Room</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mar-bot-15">
-                                        <div id="datepicker-from" class="input-group date" data-date-format="dd-mm-yyyy">
-                                            <input class="form-control" type="text" placeholder="Check In">
-                                            <span class="input-group-addon"><i class="icofont-ui-calendar"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mar-bot-15">
-                                        <div id="datepicker-to" class="input-group date" data-date-format="dd-mm-yyyy">
-                                            <input class="form-control" type="text" placeholder="Check Out">
-                                            <span class="input-group-addon"><i class="icofont-ui-calendar"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mar-bot-15">
-                                        <div class="book-amount">
-                                            <label>Adult</label>
-                                            <div class="input-group">
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="quantity-left-minus btn">
-                                                        <span class="ion-minus"></span>
-                                                    </button>
-                                                </span>
-                                                <input type="text" class="form-control input-number" value="1">
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="quantity-right-plus btn">
-                                                        <span class="ion-plus"></span>
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mar-bot-15">
-                                        <div class="book-amount">
-                                            <label>Children</label>
-                                            <div class="input-group">
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="quantity-left-minus btn">
-                                                        <span class="ion-minus"></span>
-                                                    </button>
-                                                </span>
-                                                <input type="text" class="form-control input-number" value="1">
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="quantity-right-plus btn">
-                                                        <span class="ion-plus"></span>
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+<!--                                 <div class="row"> -->
+<!--                                     <div class="col-md-12 mar-bot-15"> -->
+<!--                                         <div class="nice-select filter-input mar-top-0" tabindex="0"><span class="current">Select Room</span> -->
+<!--                                             <ul class="list"> -->
+<!--                                                 <li class="option selected focus">Standard Single Room </li> -->
+<!--                                                 <li class="option">Deluxe Room</li> -->
+<!--                                                 <li class="option">Signature Room</li> -->
+<!--                                             </ul> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <div class="col-md-6 mar-bot-15"> -->
+<!--                                         <div id="datepicker-from" class="input-group date" data-date-format="dd-mm-yyyy"> -->
+<!--                                             <input class="form-control" type="text" placeholder="Check In"> -->
+<!--                                             <span class="input-group-addon"><i class="icofont-ui-calendar"></i></span> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <div class="col-md-6 mar-bot-15"> -->
+<!--                                         <div id="datepicker-to" class="input-group date" data-date-format="dd-mm-yyyy"> -->
+<!--                                             <input class="form-control" type="text" placeholder="Check Out"> -->
+<!--                                             <span class="input-group-addon"><i class="icofont-ui-calendar"></i></span> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <div class="col-md-6 mar-bot-15"> -->
+<!--                                         <div class="book-amount"> -->
+<!--                                             <label>Adult</label> -->
+<!--                                             <div class="input-group"> -->
+<!--                                                 <span class="input-group-btn"> -->
+<!--                                                     <button type="button" class="quantity-left-minus btn"> -->
+<!--                                                         <span class="ion-minus"></span> -->
+<!--                                                     </button> -->
+<!--                                                 </span> -->
+<!--                                                 <input type="text" class="form-control input-number" value="1"> -->
+<!--                                                 <span class="input-group-btn"> -->
+<!--                                                     <button type="button" class="quantity-right-plus btn"> -->
+<!--                                                         <span class="ion-plus"></span> -->
+<!--                                                     </button> -->
+<!--                                                 </span> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <div class="col-md-6 mar-bot-15"> -->
+<!--                                         <div class="book-amount"> -->
+<!--                                             <label>Children</label> -->
+<!--                                             <div class="input-group"> -->
+<!--                                                 <span class="input-group-btn"> -->
+<!--                                                     <button type="button" class="quantity-left-minus btn"> -->
+<!--                                                         <span class="ion-minus"></span> -->
+<!--                                                     </button> -->
+<!--                                                 </span> -->
+<!--                                                 <input type="text" class="form-control input-number" value="1"> -->
+<!--                                                 <span class="input-group-btn"> -->
+<!--                                                     <button type="button" class="quantity-right-plus btn"> -->
+<!--                                                         <span class="ion-plus"></span> -->
+<!--                                                     </button> -->
+<!--                                                 </span> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
                                 <div class="book-btn text-center">
                                     <a href="booking.html"> 立即訂購</a>
+                                </div>
+                                <div class="book-btn text-center">
+                                    <a href="booking.html"> 加入購物車</a>
                                 </div>
                             </div>
                             <div class="sidebar-widget">
