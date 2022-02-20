@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.* ,java.sql.*"%>
 <%@ page
-	import="com.order.order.model.*,com.order.orderdetail.model.* , com.order.order.model.hibernate.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
+	import="com.order.order.model.*,com.order.orderdetail.model.*, org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
 <!DOCTYPE html>
 
 <html dir="ltr" lang="en-US">

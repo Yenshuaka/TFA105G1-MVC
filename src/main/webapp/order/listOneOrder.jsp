@@ -1,11 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page
-<<<<<<< HEAD
-	import="web.order.model.* , web.order.model.hibernate.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
-=======
-	import="com.order.order.model.* , com.order.order.model.hibernate.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
->>>>>>> origin/master
+	import="com.order.order.model.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
 
 
 <%

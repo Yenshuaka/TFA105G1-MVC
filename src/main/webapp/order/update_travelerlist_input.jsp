@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page
-	import="com.order.travelerlist.model.* , com.order.order.model.hibernate.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
+	import="com.order.travelerlist.model.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
 
 
 <%

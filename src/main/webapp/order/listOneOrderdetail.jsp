@@ -2,19 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page
-<<<<<<< HEAD
-	import="web.orderdetail.model.* , web.order.model.hibernate.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
-
-
-<%
-OrderdetailBean orderdetailBean = (OrderdetailBean) session.getAttribute("orderdetailBean"); //EmpServlet.java(Concroller), 存入req的empVO物件
-=======
-	import="com.order.orderdetail.model.* , com.order.order.model.hibernate.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
+	import="com.order.orderdetail.model.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
 
 
 <%
 // List orderdetailBeans = (List) session.getAttribute("orderdetailBean"); //EmpServlet.java(Concroller), 存入req的empVO物件
->>>>>>> origin/master
 
 // SessionFactory sessionFactory = HibernateUtil.getSessionfactory();
 
@@ -22,12 +14,9 @@ OrderdetailBean orderdetailBean = (OrderdetailBean) session.getAttribute("orderd
 // OrderdetailService orderdetailService = new OrderdetailService(orderdetailDAO);
 
 // List<OrderdetailBean> list = orderdetailService.select(null);
-<<<<<<< HEAD
-=======
 //這裡開始
 // OrderdetailService svc = new OrderdetailService();
 // List<OrderdetailBean> list = orderdetailService.select(null);
->>>>>>> origin/master
 // request.setAttribute("list",list);
 %>
 
@@ -72,11 +61,7 @@ OrderdetailBean orderdetailBean = (OrderdetailBean) session.getAttribute("orderd
 }
 
 table {
-<<<<<<< HEAD
-	width: 600px;
-=======
 	width: 900px;
->>>>>>> origin/master
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -438,42 +423,6 @@ td {
 										<tr>
 											<th>訂單明細編號</th>
 											<th>訂單編號</th>
-<<<<<<< HEAD
-											<th>商品編號</th>
-											<th>商品名稱</th>
-											<th>會員姓</th>
-											<th>會員名</th>
-											<th>旅客人數</th>
-											<th>商品價格</th>
-											<th>回饋點數</th>
-											<th>特殊需求</th>
-											<th>修改</th>
-											<th>刪除</th>
-										</tr>
-										
-<%-- 										<c:forEach var="orderdetailBean" items="${list}"> --%>
-										<tr>
-
-											<td><%=orderdetailBean.getOrderdetailno()%></td>
-											<td><%=orderdetailBean.getOrderid()%></td>
-											<td><%=orderdetailBean.getProductid()%></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td><%=orderdetailBean.getNumberoftraveler()%></td>
-											<td><%=orderdetailBean.getProductprice()%></td>
-											<td><%=orderdetailBean.getOrderrewardpoints()%></td>
-											<td><%=orderdetailBean.getSpecialneeds()%></td>
-											
-											<td>
-													<FORM METHOD="post"
-														ACTION="<%=request.getContextPath()%>/orderdetail.do"
-														style="margin-bottom: 0px;">
-														<input type="submit" value="修改" class="btn v2">
-														 <input type="hidden" name="orderdetailno" value="${orderdetailBean.orderdetailno}">
-														<input type="hidden" name="action"
-															value="getOne_For_Update">
-=======
 											<!-- 											<th>商品編號</th> -->
 											<th>商品名稱</th>
 											<th>姓</th>
@@ -511,23 +460,12 @@ td {
 															value="${orderdetailBean.orderdetailno}"> <input
 															type="hidden" name="action"
 															' value="getOne_For_Travelerlist">
->>>>>>> origin/master
 													</FORM>
 												</td>
 												<td>
 													<FORM METHOD="post"
 														ACTION="<%=request.getContextPath()%>/orderdetail.do"
 														style="margin-bottom: 0px;">
-<<<<<<< HEAD
-														<input type="submit" value="刪除" class="btn v5"> 
-														<input
-															type="hidden" name="orderdetailno" value="${orderdetailBean.orderdetailno}">
-														<input type="hidden" name="action" value="delete">
-													</FORM>
-												</td>
-										</tr>
-<%-- 										</c:forEach> --%>
-=======
 														<input type="submit" value="修改" class="btn v2"> <input
 															type="hidden" name="orderdetailno"
 															value="${orderdetailBean.orderdetailno}"> <input
@@ -546,7 +484,6 @@ td {
 												</td>
 											</tr>
 										</c:forEach>
->>>>>>> origin/master
 									</table>
 
 
