@@ -11,6 +11,7 @@
 	<context:component-scan base-package="com.product.product.controller"></context:component-scan>
 	
 	<mvc:annotation-driven></mvc:annotation-driven>
+	<mvc:resources location="/download/vendors/" mapping="vendors/**"></mvc:resources>
 	<mvc:resources location="/download/css/" mapping="css/**"></mvc:resources>
 	<mvc:resources location="/download/images/" mapping="images/**"></mvc:resources>
 	<mvc:resources location="/download/demo/" mapping="demo/**"></mvc:resources>

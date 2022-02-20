@@ -16,7 +16,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import com.product.product.model.ProductBean;
 import com.product.product.model.ProductService;
 
@@ -36,9 +35,17 @@ public class ProductManageController {
 //	}
 
 	@RequestMapping("/ProductManageController")
-	public String name(String action, HttpSession session, ProductBean bean, Model model) {
-
-		if(action==null) {  //這是select全部的狀況	
+	public String name(String action, HttpSession session, ProductBean bean, 
+			Model model, String productid) {
+		
+		if(productid!=null && productid!="") {
+			
+			ProductBean bean2 = new ProductBean();
+			bean2.setProductid(Integer.valueOf(productid));
+			List<ProductBean> list = productService.select(bean2);
+			model.addAttribute("list", list);
+			return "productmanage1";	
+		}else if(action==null) {  //這是select全部的狀況	
 			List<ProductBean> list = productService.select(null);
 			model.addAttribute("list", list);
 			return "productmanage1";
@@ -83,5 +90,7 @@ public class ProductManageController {
 	public String updateProduct() {	
 		return "update-product";
 	}
+	
+	
 	
 }
