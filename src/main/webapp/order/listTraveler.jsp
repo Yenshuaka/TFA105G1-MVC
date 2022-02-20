@@ -387,7 +387,7 @@ td {
 										<ul>
 											<li class="active"><a href="#">Home</a></li>
 											<li class="active"><a href="listAllOrder.jsp">訂單首頁</a></li>
-											<li class="active"><a href="listOneOrderdetailAfter.jsp">訂單明細</a></li>
+											<li class="active"><a href="listOneOrderdetail.jsp">訂單明細</a></li>
 											<li>團員表</li>
 										</ul>
 									</div>
