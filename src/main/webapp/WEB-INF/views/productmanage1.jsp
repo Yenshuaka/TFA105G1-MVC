@@ -374,7 +374,7 @@
                                     <div class="breadcrumb-menu text-right sm-left">
                                         <ul>
                                             <li class="active"><a href="<%=request.getContextPath() %>/MVC/ProductManageController">行程總覽</a></li>
-                                            <li>所有商品</li>        
+                                            <li>所有商品dsfdsfdsfds</li>        
                                         </ul>             
                                     </div>
                                 </div>
@@ -439,10 +439,10 @@
                                             				}; %> </span>
 <%--                                             			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/MVC/PutonGetoff" > --%>
 			     											<% if(list1.get(i).getState()==0) { %>
-			     												<input type="submit" value="up" class="putongo">
+			     												<button class="puton" onclick='putongo(event)'>上架</button>
 			     												<input type="hidden" name="action"	value="puton">
 			     											<% }else{ %>
-			     												<input type="submit" value="down" class="getoff">
+			     												<button class="getoff" onclick='getoff(event)'>下架</button>
 			     												<input type="hidden" name="action"	value="getoff">
 			     											<% }; %>
 			     											<input type="hidden" name="productid"  value="<%=list1.get(i).getProductid() %>">
@@ -516,13 +516,32 @@
    <!-- AJAX部分 -->
    <script src="vendors/jquery/jquery-3.6.0.min.js"></script>
    <script>
-     	$(document).on('click', '.getoff', function getoff(e){
-            var productid = $(e.target).next().next().val();
-            console.log(productid);
+//      	$(document).on('click', '.getoff', function getoff(e){
+//             var productid = $(e.target).next().next().val();
+//             console.log(productid);
+//      		$.ajax({
+//                 url: 'http://localhost:7080/TFA105G1-MVC3/StateChange',
+//                 type: 'POST',
+//                 data: {productid: $(e.target).next().next().val() ,action:$(e.target).val()},
+//                 dataType: "html",
+//                 success: function(res){
+//                     console.log("成功");
+//                     $(e.target).parent().html(res);
+            
+//                 }
+//             });    		
+//      	});
+     	
+     	function getoff(e){
+//             var productid = $(e.target).next().next().val();
+//             console.log(productid);
      		$.ajax({
-                url: 'http://localhost:7080/TFA105G1-MVC3/StateChange',
+                url: '<%=request.getContextPath() %>/StateChange',
                 type: 'POST',
-                data: {productid: $(e.target).next().next().val() ,action:$(e.target).val()},
+                data: {
+                	productid: $(e.target).next().next().val(),
+                	action: 'down'
+                },
                 dataType: "html",
                 success: function(res){
                     console.log("成功");
@@ -530,15 +549,37 @@
             
                 }
             });    		
-     	});
+     	}
      	
-     	$(document).on('click', '.putongo', function putongo(e){
-            var productid = $(e.target).next().next().val();
-            console.log(productid);
+//      	$(document).on('click', '.putongo', function putongo(e){
+//             var productid = $(e.target).next().next().val();
+//             console.log(productid);
+//      		$.ajax({
+//                 url: 'http://localhost:7080/TFA105G1-MVC3/StateChange',
+//                 type: 'POST',
+//                 data: {
+//                 	productid: $(e.target).next().next().val(),
+//                 	action: 'up'
+//                 },
+//                 dataType: "html",
+//                 success: function(res){
+//                     console.log("成功");
+//                     $(e.target).parent().html(res);
+                
+//                 }
+//             });    		
+//      	});
+     	
+     	function putongo(e){
+//             var productid = $(e.target).next().next().val();
+//             console.log(productid);
      		$.ajax({
-                url: 'http://localhost:7080/TFA105G1-MVC3/StateChange',
+                url: '<%=request.getContextPath() %>/StateChange',
                 type: 'POST',
-                data: {productid: $(e.target).next().next().val() ,action:$(e.target).val()},
+                data: {
+                	productid: $(e.target).next().next().val() ,
+                	action:'up'
+                },
                 dataType: "html",
                 success: function(res){
                     console.log("成功");
@@ -546,7 +587,7 @@
                 
                 }
             });    		
-     	});
+     	}
 
    </script>
 </body>

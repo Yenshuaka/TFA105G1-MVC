@@ -49,7 +49,7 @@ public class StateChange extends HttpServlet {
 			productService.update(bean2);
 			
 			out.write("<span>上架中</span>\r\n"
-					+ "<input type=\"submit\" value=\"down\" class=\"getoff\">\r\n"
+					+ "<button class=\"getoff\" onclick='getoff(event)'>下架</button>\r\n"
 					+ "<input type=\"hidden\" name=\"action\"	value=\"getoff\">\r\n"
 					+ "<input type=\"hidden\" name=\"productid\"  value=\"" +  productid  + "\">");
 			
@@ -62,7 +62,7 @@ public class StateChange extends HttpServlet {
 			productService.update(bean2);
 			
 			out.write("<span>下架中</span>\r\n"
-					+ "<input type=\"submit\" value=\"up\" class=\"puton\">\r\n"
+					+ "<button class=\"puton\" onclick='putongo(event)'>上架</button>\r\n"
 					+ "<input type=\"hidden\" name=\"action\"	value=\"puton\">\r\n"
 					+ "<input type=\"hidden\" name=\"productid\"  value=\"" +  productid  + "\">");
 			
