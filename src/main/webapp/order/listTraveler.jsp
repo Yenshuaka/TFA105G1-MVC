@@ -6,8 +6,6 @@
 
 
 <%
-
-
 // SessionFactory sessionFactory = HibernateUtil.getSessionfactory();
 
 // TravelerlistDAOHibernate travelerlistDAO = new TravelerlistDAOHibernate(sessionFactory);
@@ -15,7 +13,6 @@
 
 // List<TravelerlistBean> list = travelerlistService.select(null);
 // request.setAttribute("list",list);
-	
 %>
 
 <html>
@@ -45,8 +42,9 @@
 <link href="<%=request.getContextPath()%>/order/css/dashboard.css"
 	rel="stylesheet" />
 <!--color switcher css-->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/order/css/switcher/skin-aqua.css" media="screen"
-	id="style-colors" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/order/css/switcher/skin-aqua.css"
+	media="screen" id="style-colors" />
 <!-- Document Title -->
 <!-- <title>listagram - Directory Listing HTML Template</title> -->
 <title>團員表</title>
@@ -106,7 +104,7 @@ td {
 						<li><a class="active" href="db.html"> <i
 								class="ion-ios-gear-outline"></i>首頁公告
 						</a></li>
-						<li><a href="listAllOrder.jsp"> <i
+						<li><a href="<%=request.getContextPath()%>/order.do"> <i
 								class="ion-social-buffer-outline"></i>訂單管理
 						</a></li>
 
@@ -392,7 +390,8 @@ td {
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
 											<li class="active"><a href="#">Home</a></li>
-											<li class="active"><a href="listAllOrder.jsp">訂單首頁</a></li>
+											<li class="active"><a
+												href="<%=request.getContextPath()%>/order.do">訂單首頁</a></li>
 											<li class="active"><a href="listOneOrderdetail.jsp">訂單明細</a></li>
 											<li>團員表</li>
 										</ul>
@@ -463,7 +462,7 @@ td {
 													<FORM METHOD="post"
 														ACTION="<%=request.getContextPath()%>/travelerlist.do"
 														style="margin-bottom: 0px;">
-														<input type="submit" value="刪除" class="btn v5"> <input
+														<input type="submit" value="刪除" class="btn v5"　id="delete"> <input
 															type="hidden" name="travelerlistno"
 															value="${travelerlistBean.travelerlistno}"> <input
 															type="hidden" name="action" value="delete">
@@ -505,10 +504,20 @@ td {
 	<!-- Plugin JS-->
 	<script src="<%=request.getContextPath()%>/order/js/plugin.js"></script>
 	<!--Perfect Scrollbar JS-->
-	<script src="<%=request.getContextPath()%>/order/js/perfect-scrollbar.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/order/js/perfect-scrollbar.min.js"></script>
 	<!-- Main JS-->
 	<script src="<%=request.getContextPath()%>/order/js/main.js"></script>
 	<!-- Dashboard JS-->
 	<script src="<%=request.getContextPath()%>/order/js/dashboard.js"></script>
+
+	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+
+	<script>
+		$("#delete").on("click", function() {
+			var yes = confirm("你確定要刪除嗎?")
+
+		})
+	</script>
 </body>
 </html>

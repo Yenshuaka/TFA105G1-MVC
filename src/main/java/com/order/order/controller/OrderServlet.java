@@ -1,6 +1,7 @@
 package com.order.order.controller;
 //http://localhost:7080/TFA105G1-MVC/MVC/ProductManageController
 import java.io.IOException;
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,6 +21,8 @@ import com.order.order.model.OrderBean;
 import com.order.order.model.OrderService;
 import com.order.orderdetail.model.OrderdetailBean;
 import com.order.orderdetail.model.OrderdetailService;
+import com.order.travelerlist.model.TravelerlistBean;
+import com.order.travelerlist.model.TravelerlistService;
 
 @WebServlet("/order.do")
 public class OrderServlet extends HttpServlet {
@@ -39,7 +42,7 @@ public class OrderServlet extends HttpServlet {
 		
 		OrderService orderService = context.getBean("orderService", OrderService.class);
 		OrderdetailService orderdetailService = context.getBean("orderdetailService",OrderdetailService.class);
-		
+		TravelerlistService travelerlistService = context.getBean("travelerlistService",TravelerlistService.class);
 		
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
@@ -132,48 +135,86 @@ public class OrderServlet extends HttpServlet {
 //		}
 		
 
-//		if ("insert".equals(action)) { // 來自add-post.jsp的請求
-//
-//			try {
-//
+		if ("insert".equals(action)) { // 來自add-post.jsp的請求
+
+			try {
+				//order
 //				Integer memberid = Integer.parseInt(req.getParameter("memberid").trim());
-////				System.out.println(memberid);
 //				Integer orderpriceamount = Integer.parseInt(req.getParameter("orderpriceamount").trim());
-////				System.out.println(orderpriceamount);
 //				Integer usedfunpoints = Integer.parseInt(req.getParameter("usedfunpoints").trim());
-////				System.out.println(usedfunpoints);
-//				LocalDateTime orderdate = LocalDateTime.now();
-////				System.out.println(orderdate);
-//
-//				/*************************** 2.開始新增資料 ***************************************/
-//
-//				OrderBean bean = new OrderBean();
-//				bean.setMemberid(memberid);
-//				bean.setOrderdate(orderdate);
-//				bean.setOrderpriceamount(orderpriceamount);
-//				bean.setUsedfunpoints(usedfunpoints);
-//
-//				orderService.insert(bean);
-//
-//				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				LocalDateTime orderdate = LocalDateTime.now();
+
+				OrderBean bean = new OrderBean();
+				bean.setMemberid(5);
+				bean.setOrderdate(orderdate);
+				bean.setOrderpriceamount(600);
+				bean.setUsedfunpoints(50);
+
+				orderService.insert(bean);
+				
+				///orderdetail
+				
+//				Integer orderid = Integer.parseInt(req.getParameter("orderid").trim());
+				bean.getOrderid();
+//				Integer productid = Integer.parseInt(req.getParameter("productid").trim());
+				Integer numberoftraveler = Integer.parseInt(req.getParameter("numberoftraveler").trim());
+				System.out.println(numberoftraveler);
+				Integer productprice = Integer.parseInt(req.getParameter("productprice").trim());
+//				Integer orderrewardpoints = Integer.parseInt(req.getParameter("orderrewardpoints").trim());
+				String specialneeds = req.getParameter("specialneeds");
+				
+				
+				OrderdetailBean bean2 = new OrderdetailBean();
+				bean2.setOrderid(bean.getOrderid());
+				bean2.setProductid(2);
+				bean2.setOrderrewardpoints(5);
+				bean2.setSpecialneeds(specialneeds);
+				bean2.setNumberoftraveler(numberoftraveler);
+				bean2.setProductprice(500);
+				
+				orderdetailService.insert(bean2);
+				
+				//traveler
+//				Integer travelerlistno = Integer.parseInt(req.getParameter("travelerlistno").trim());
+				String lastname = req.getParameter("lastname");
+				String firstname = req.getParameter("firstname");
+				String gender = req.getParameter("gender");
+				Date birthday = Date.valueOf(req.getParameter("birthday").trim());
+				String idno = req.getParameter("idno");
+				
+				TravelerlistBean bean3 = new TravelerlistBean();
+
+//				bean.setTravelerlistno(travelerlistno);
+				bean3.setOrderdetailno(bean2.getOrderdetailno());
+				bean3.setLastname(lastname);
+				bean3.setFirstname(firstname);
+				bean3.setGender(gender);
+//				bean3.setBirthday(Date.valueOf("1992-03-27"));
+				bean3.setBirthday(birthday);
+				bean3.setIdno(idno);
+
+				travelerlistService.insert(bean3);
+				
+
+				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 //				List<OrderBean> list = orderService.select(bean);//新增完成後，秀出剩餘訂單
 //
 //				HttpSession session = req.getSession();
 //				session.setAttribute("orderBean", list.get(0));//why新增用list.get(0)，但刪除用list就好?
-//
-//				String url = "order/listAllOrder.jsp";
-//				res.sendRedirect(url);
-//
-//				/*************************** 其他可能的錯誤處理 **********************************/
-//			} catch (Exception e) {
-//				e.printStackTrace();
-////				errorMsgs.add(e.getMessage());
-////				RequestDispatcher failureView = req
-////						.getRequestDispatcher("/emp/addEmp.jsp");
-////				failureView.forward(req, res);
-//				System.out.print("新增資料失敗");
-//			}
-//		}
+
+				String url = "order/booking_confirm.jsp";
+				res.sendRedirect(url);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+//				errorMsgs.add(e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/emp/addEmp.jsp");
+//				failureView.forward(req, res);
+				System.out.print("新增資料失敗");
+			}
+		}
 
 //		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
 //

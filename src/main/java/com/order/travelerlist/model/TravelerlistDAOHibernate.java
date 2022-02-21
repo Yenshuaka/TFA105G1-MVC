@@ -28,7 +28,7 @@ public class TravelerlistDAOHibernate implements TravelerlistInterface {
 	@Override
 	public TravelerlistBean insert(TravelerlistBean bean) {
 		if (bean != null) {
-			this.getSession().save(bean);
+			getSession().save(bean);
 			return bean;
 		}
 		return null;
