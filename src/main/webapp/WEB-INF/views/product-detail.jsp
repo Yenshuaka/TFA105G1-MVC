@@ -1,3 +1,6 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Date, com.member.model.*"%>
 <%@page import="com.product.productcomment.model.ProductCommentBean"%>
 <%@ page import="com.product.product.model.ProductBean"%>
 <%@ page import="java.sql.*, com.product.productimg.*"%>
@@ -209,7 +212,7 @@
                                     </a>
                                 </div>
                                 <div class="add-list float-right">
-                                    <a class="btn v8" href="add-listing.html">購物車 <i class="icofont-shopping-cart">&nbsp3</i></a>
+                                    <a class="btn v8" href="<%=request.getContextPath() %>/MVC/ShoppingCart">購物車 <i class="icofont-shopping-cart">&nbsp3</i></a>
                                 </div>
                                 <!-- <div class="add-list float-right">
                                     <a class="btn v8" href="add-listing.html">Add Listing <i class="ion-plus-round"></i></a>
@@ -610,7 +613,7 @@
                                 <h4>商品評論 <span>(<%=comments.size() %>)</span></h4>
                                 
                                  
-                                
+                                <% List<MemberVO> members = (List<MemberVO>)request.getAttribute("members"); %>
                                 <%	for(int i =0; i<comments.size(); i++){ %>
                                 
                                 
@@ -620,15 +623,21 @@
                                             <div class="customer-review_wrap">
                                                 <div class="reviewer-img">
                                                     <img src="images/clients/reviewer-1.png" class="img-fluid" alt="...">
-                                                    <p>Frank Jane</p>
+                                                    <%	for(int j =0; j < members.size(); j++){ 
+                                                    	if (comments.get(i).getMemberid()== members.get(j).getMemberid()){ 
+                                                    		out.write("<p>"+  members.get(j).getNickname()   +"</p>");
+                                                    	
+                                                      } }%>
+<!--                                                     		<p>Frank Jane</p> -->
 <!--                                                     <span>35 Reviews</span> -->
                                                 </div>
                                                 <div class="customer-content-wrap">
                                                     <div class="customer-content">
                                                         <div class="customer-review">
                                                             <h6><%=comments.get(i).getCommentcontext() %></h6>
-<!--                                                             <p>Posted 2 days ago</p> -->
-																 <p><%=comments.get(i).getCommenttime() %></p>			
+<!--                                                             <p>Posted 2 days ago</p> --> 
+																<% DateFormat df = new SimpleDateFormat("yyyy/MM/dd");%>
+																 <p>於&nbsp<%= df.format(comments.get(i).getCommenttime()) %>&nbsp評論</p>			
                                                         </div>
                                                         <div class="customer-rating"><%=comments.get(i).getScore() %></div>
                                                     </div>

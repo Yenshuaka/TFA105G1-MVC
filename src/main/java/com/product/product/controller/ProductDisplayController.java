@@ -24,11 +24,14 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.member.model.MemberService;
+import com.member.model.MemberVO;
 import com.product.product.model.ProductBean;
 import com.product.product.model.ProductDAOHibernate;
 import com.product.product.model.ProductService;
 import com.product.productcomment.model.ProductCommentBean;
 import com.product.productcomment.model.ProductCommentService;
+
 
 @Controller
 public class ProductDisplayController {
@@ -222,6 +225,11 @@ public class ProductDisplayController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+		
+		
+		MemberService memberService = new MemberService();
+		List<MemberVO> members = memberService.getAll();
+		model.addAttribute("members", members);
 		
 		
 		model.addAttribute("imgids", imgids);
