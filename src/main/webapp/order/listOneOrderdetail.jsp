@@ -33,15 +33,15 @@
 	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800"
 	rel="stylesheet">
 <!-- Plugins CSS -->
-<link href="<%=request.getContextPath()%>/plugin.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/order/css/plugin.css" rel="stylesheet" />
 <!-- Perfect scrollbar CSS-->
-<link href="<%=request.getContextPath()%>/perfect-scrollbar.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/order/css/perfect-scrollbar.css" rel="stylesheet">
 <!-- style CSS -->
-<link href="<%=request.getContextPath()%>/style.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/order/css/style.css" rel="stylesheet" />
 <!-- Dashboard CSS -->
-<link href="<%=request.getContextPath()%>/dashboard.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/order/css/dashboard.css" rel="stylesheet" />
 <!--color switcher css-->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/switcher/skin-aqua.css" media="screen"
+<link rel="stylesheet" href="<%=request.getContextPath()%>/order/css/switcher/skin-aqua.css" media="screen"
 	id="style-colors" />
 <!-- Document Title -->
 <!-- <title>listagram - Directory Listing HTML Template</title> -->
@@ -89,7 +89,7 @@ td {
 		<!--Sidebar Menu Starts-->
 		<aside class="menu-sidebar js-right-sidebar d-block d-lg-none">
 			<div class="logo" style="background-color: rgb(32, 69, 99)">
-				<a href="#"> <img src="images/f.png" alt="Listagram" />
+				<a href="#"> <img src="<%=request.getContextPath()%>/order/images/f.png" alt="Listagram" />
 				</a>
 			</div>
 			<div class="menu-sidebar__content js-scrollbar2">
@@ -302,7 +302,7 @@ td {
 							</div>
 						</div>
 						<div class="col-md-3 col-sm-6 col-8">
-							<img src="images/f.png" alt="">
+							<img src="<%=request.getContextPath()%>/order/images/f.png" alt="">
 						</div>
 						<!-- <div class="col-md-3 col-sm-6 col-8">
                             <div class="header-button">
@@ -516,12 +516,12 @@ td {
 
 	</div>
 	<!-- Plugin JS-->
-	<script src="js/plugin.js"></script>
+	<script src="<%=request.getContextPath()%>/order/js/plugin.js"></script>
 	<!--Perfect Scrollbar JS-->
-	<script src="js/perfect-scrollbar.min.js"></script>
+	<script src="<%=request.getContextPath()%>/order/js/perfect-scrollbar.min.js"></script>
 	<!-- Main JS-->
-	<script src="js/main.js"></script>
+	<script src="<%=request.getContextPath()%>/order/js/main.js"></script>
 	<!-- Dashboard JS-->
-	<script src="js/dashboard.js"></script>
+	<script src="<%=request.getContextPath()%>/order/js/dashboard.js"></script>
 </body>
 </html>

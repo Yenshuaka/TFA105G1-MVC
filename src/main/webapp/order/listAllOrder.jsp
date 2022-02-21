@@ -56,7 +56,7 @@
 <link href="<%=request.getContextPath()%>/order/css/dashboard.css"
 	rel="stylesheet" />
 <!--color switcher css-->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/switcher/skin-aqua.css" media="screen"
+<link rel="stylesheet" href="<%=request.getContextPath()%>/order/css/switcher/skin-aqua.css" media="screen"
 	id="style-colors" />
 <!-- Document Title -->
 <!-- <title>listagram - Directory Listing HTML Template</title> -->
@@ -275,13 +275,13 @@
 
 	</div>
 	<!-- Plugin JS-->
-	<script src="js/plugin.js"></script>
+	<script src="<%=request.getContextPath()%>/order/js/plugin.js"></script>
 	<!--Perfect Scrollbar JS-->
-	<script src="js/perfect-scrollbar.min.js"></script>
+	<script src="<%=request.getContextPath()%>/order/js/perfect-scrollbar.min.js"></script>
 	<!-- Main JS-->
-	<script src="js/main.js"></script>
+	<script src="<%=request.getContextPath()%>/order/js/main.js"></script>
 	<!-- Dashboard JS-->
-	<script src="js/dashboard.js"></script>
+	<script src="<%=request.getContextPath()%>/order/js/dashboard.js"></script>
 
 </body>
 </html>
