@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -59,7 +60,10 @@ public class OrderServlet extends HttpServlet {
 			}
 			
 			String url = "order/listAllOrder.jsp";
-			res.sendRedirect(url); 
+//			res.sendRedirect(url); 
+			RequestDispatcher sucessView = req.getRequestDispatcher(url);
+			sucessView.forward(req, res);
+			
 		}
 		
 		

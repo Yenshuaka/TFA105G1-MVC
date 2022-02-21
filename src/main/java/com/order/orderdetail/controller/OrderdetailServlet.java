@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -123,7 +124,9 @@ public class OrderdetailServlet extends HttpServlet {
 				session.setAttribute("list", list);
 
 				String url = "order/listOneOrderdetail.jsp";
-				res.sendRedirect(url);
+//				res.sendRedirect(url);
+				RequestDispatcher sucessView = req.getRequestDispatcher(url);
+				sucessView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
@@ -219,6 +222,10 @@ public class OrderdetailServlet extends HttpServlet {
 		if ("insertAll".equals(action)) { // 來自add-post.jsp的請求
 
 			try {
+				//新增訂單
+				//重導到另一個servlet
+				
+				
 
 				Integer orderid = Integer.parseInt(req.getParameter("orderid").trim());
 				Integer productid = Integer.parseInt(req.getParameter("productid").trim());
