@@ -56,14 +56,14 @@ public class OrderDAOHibernate implements OrderInterface {
 	public OrderBean insert(OrderBean bean) {
 		
 		if(bean!=null) { //bean為要新增的資料
-			OrderBean temp = this.getSession().get(OrderBean.class, bean.getOrderid());//temp為資料庫裡的資料
-			if(temp==null) { //如果沒有資料要insert
+//			OrderBean temp = this.getSession().get(OrderBean.class, bean.getOrderid());//temp為資料庫裡的資料
+//			if(temp==null) { //如果沒有資料要insert
 			//因為我的addOrder.jsp並沒有輸入id的欄位，所以上方兩行不能寫
 			
 			getSession().save(bean);
 				return bean;
 			}
-		}
+		
 		return null;
 	}
 	

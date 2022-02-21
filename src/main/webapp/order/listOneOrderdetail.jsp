@@ -476,7 +476,7 @@ td {
 													<FORM METHOD="post"
 														ACTION="<%=request.getContextPath()%>/orderdetail.do"
 														style="margin-bottom: 0px;">
-														<input type="submit" value="刪除" class="btn v5"> <input
+														<input type="submit" value="刪除" class="btn v5" id="delete"> <input
 															type="hidden" name="orderdetailno"
 															value="${orderdetailBean.orderdetailno}"> <input
 															type="hidden" name="action" value="delete">
@@ -523,5 +523,18 @@ td {
 	<script src="<%=request.getContextPath()%>/order/js/main.js"></script>
 	<!-- Dashboard JS-->
 	<script src="<%=request.getContextPath()%>/order/js/dashboard.js"></script>
+	
+	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+	
+	<script>
+	
+	$("#delete").on("click",function(){
+		var yes = confirm("你確定要刪除嗎?")
+
+	})
+	
+	</script>
+	
+	
 </body>
 </html>

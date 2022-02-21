@@ -274,7 +274,7 @@ public class TravelerlistServlet extends HttpServlet {
 				bean.setLastname(lastname);
 				bean.setFirstname(firstname);
 				bean.setGender(gender);
-				bean.setBirthday(birthday);
+//				bean.setBirthday("1992-03-27");
 				bean.setIdno(idno);
 
 				travelerlistService.update(bean);

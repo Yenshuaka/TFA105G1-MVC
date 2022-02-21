@@ -1,3 +1,4 @@
+<%@page import="com.order.travelerlist.model.TravelerlistBean"%>
 <%@page import="com.order.orderdetail.model.OrderdetailService"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="com.order.orderdetail.model.OrderdetailBean"%>
@@ -37,6 +38,8 @@
 <!-- 21, 39, 34, 47-59, 63-128, 132-162, 166-177, 181-192, 197, 221, 228, 232, 283-293, 239, 245, 257 -->
 <!-- style.css 1575-1585-->
 
+
+
 <body>
 	<!--Preloader starts-->
 	<!-- <div class="preloader js-preloader">
@@ -53,56 +56,58 @@
 			<div class="txt">訂購人資料</div>
 			<hr>
 
-			<div class="row">
-				<div class="col-md-4 col-sm-6 col-xs-12">
-					<div class="form_group">
-						<label>姓氏<span class="require_mark">*</span></label> <br> <input
-							type="text" name="contact_lastName" placeholder="例:王"
-							class="form_control" id="book_last_name" value="王">
-						<div class="tip_text_danger" id="tip_text_danger_first">此欄位必填</div>
-					</div>
-					<div class="form_group">
-						<label>名字<span class="require_mark">*</span></label> <br> <input
-							type="text" name="contact_firstName" placeholder="例:小明"
-							class="form_control" id="book_first_name" value="小明">
-						<div class="tip_text_danger" id="tip_text_danger_last">此欄位必填</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-4 col-sm-6 col-xs-12">
-					<div class="form_group">
-						<label>身分證號碼 <span class="require_mark">*</span><br></label>
-						<br> <input type="text" name="contact_id"
-							class="form_control" id="book_id" value="A1010101010">
-						<div class="tip_text_danger">此欄位必填</div>
-					</div>
-					<div class="form_group">
-						<label>連絡電話<span class="require_mark">*</span><br></label> <br>
-						<input value="0928605223" type="text" name="contact_phone"
-							class="form_control" id="contact_phone">
-						<div class="tip_text_danger">此欄位必填</div>
+			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order.do"
+				style="margin-bottom: 0px;">
+				<div class="row">
+					<div class="col-md-4 col-sm-6 col-xs-12">
+						<div class="form_group">
+							<label>姓氏<span class="require_mark">*</span></label> <br> <input
+								type="text" name="contact_lastName" placeholder="例:王"
+								class="form_control" id="book_last_name" value="王">
+							<div class="tip_text_danger" id="tip_text_danger_first">此欄位必填</div>
+						</div>
+						<div class="form_group">
+							<label>名字<span class="require_mark">*</span></label> <br> <input
+								type="text" name="contact_firstName" placeholder="例:小明"
+								class="form_control" id="book_first_name" value="小明">
+							<div class="tip_text_danger" id="tip_text_danger_last">此欄位必填</div>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="email_move">
-					<label>電子郵件信箱<span class="require_mark">*</span><br></label> <br>
-					<input value="m03272000@gmail.com" type="email"
-						name="contact_email" placeholder="請輸入常用電子郵件信箱"
-						class="form_control_email">
-					<div class="tip_text_danger">請輸入正確的Email的格式！</div>
+
+				<div class="row">
+					<div class="col-md-4 col-sm-6 col-xs-12">
+						<div class="form_group">
+							<label>身分證號碼 <span class="require_mark">*</span><br></label>
+							<br> <input type="text" name="contact_id"
+								class="form_control" id="book_id" value="A1010101010">
+							<div class="tip_text_danger">此欄位必填</div>
+						</div>
+						<div class="form_group">
+							<label>連絡電話<span class="require_mark">*</span><br></label> <br>
+							<input value="0928605223" type="text" name="contact_phone"
+								class="form_control" id="contact_phone">
+							<div class="tip_text_danger">此欄位必填</div>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div class="update_member">
-				<input type="checkbox" id="update_member_id"> 同時更新會員資料
-			</div>
+				<div class="row">
+					<div class="email_move">
+						<label>電子郵件信箱<span class="require_mark">*</span><br></label>
+						<br> <input value="m03272000@gmail.com" type="email"
+							name="contact_email" placeholder="請輸入常用電子郵件信箱"
+							class="form_control_email">
+						<div class="tip_text_danger">請輸入正確的Email的格式！</div>
+					</div>
+				</div>
+				<div class="update_member">
+					<input type="checkbox" id="update_member_id"> 同時更新會員資料
+				</div>
 
 
-			<div>
-				<button class="btn_primary">繼續</button>
-			</div>
+				<div>
+					<button class="btn_primary">繼續</button>
+				</div>
 		</div>
 
 		<div id="traveler_Infor">
@@ -124,36 +129,35 @@
 					</div>
 					<div class="form_group">
 						<label>出生日期 <span class="require_mark">*</span><br></label> <br>
-						<input placeholder="19920101" type="text" name="birthday"
-							class="form_control" id="traveler_birthday" value="19920101"
-							placeholder="西元生日8位數 例:19901231">
+						<input type="text" name="birthday"
+							class="form_control" id="f_date1">
 						<div class="tip_text_danger">此欄位必填</div>
 					</div>
 					<div class="form_group">
 						<label>性別 <span class="require_mark">*</span><br></label> <br>
 						<select name="gender" class="form_control" id="traveler_gender">
 							<!-- 							<option disabled="disabled" selected>請選擇</option> -->
-							<option value="M">男生</option>
-							<option value="F">女生</option>
+							<option value="男">男生</option>
+							<option value="女">女生</option>
 						</select>
 						<div class="tip_text_danger">此欄位必填</div>
 					</div>
 					<div class="form_group">
 						<label>證件號碼(護照/身分證) <span class="require_mark">*</span><br></label>
-						<br> <input type="text" name="id" class="form_control"
+						<br> <input type="text" name="idno" class="form_control"
 							id="traveler_id">
 						<div class="tip_text_danger">此欄位必填</div>
 					</div>
 					<br>
 					<div class="form_group">
 						<label>姓氏<span class="require_mark">*</span><br></label> <br>
-						<input type="text" name="traveler_last_name" class="form_control"
+						<input type="text" name="lastname" class="form_control"
 							id="traveler_last_name">
 						<div class="tip_text_danger">此欄位必填</div>
 					</div>
 					<div class="form_group">
 						<label>名字</label><span class="require_mark">*</span></label> <br> <input
-							type="text" name="traveler_first_name" class="form_control"
+							type="text" name="firstname" class="form_control"
 							id="traveler_first_name">
 						<div class="tip_text_danger">此欄位必填</div>
 					</div>
@@ -190,8 +194,9 @@
 				</div>
 
 				<div class="sub_title">特殊需求備註</div>
-				<textarea id="booking_note" class="note_control" maxlength="900"
-					rows="3" placeholder="此欄位僅限資料備註。不在商品規範內的個人需求，不保證提供。"></textarea>
+				<textarea id="booking_note" name="specialneeds" class="note_control"
+					maxlength="900" rows="3"
+					placeholder="此欄位僅限資料備註。不在商品規範內的個人需求，不保證提供。"></textarea>
 			</div>
 
 			<div class="sub_title_traveler">付款</div>
@@ -261,11 +266,11 @@
 						<div class="inner_block2">
 							<table>
 
-<!-- 								<tr> -->
-<!-- 									<td>訂單編號:</td> -->
-<!-- 									<td><input class="input_add" type="TEXT" name="orderid" -->
-<!-- 										size="45" value="" /></td> -->
-<!-- 								</tr> -->
+								<!-- 								<tr> -->
+								<!-- 									<td>訂單編號:</td> -->
+								<!-- 									<td><input class="input_add" type="TEXT" name="orderid" -->
+								<!-- 										size="45" value="" /></td> -->
+								<!-- 								</tr> -->
 								<tr>
 									<td>商品名稱:</td>
 									<td><input class="input_add" type="TEXT"
@@ -274,7 +279,7 @@
 
 								<tr>
 									<td>出發日期:</td>
-									<td><input class="input_add" name="startname" id="f_date1"
+									<td><input class="input_add" name="startdate" id="f_date1"
 										type="text" value="2021-12-31" /></td>
 
 								</tr>
@@ -295,18 +300,12 @@
 
 			<div class="board2" id="payment_board">
 				<div class="gray_text2">
-					1件商品合計<span class="amount">TWD 992</span>
-
-					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/orderdetail.do"
-						style="margin-bottom: 0px;">
-						<input type="submit" value="確認付款" class="btn_ex1"> <input
-							type="hidden" name="action" value="insertAll">
+					1件商品合計<span class="amount">TWD 992</span> <input type="submit"
+						value="確認付款" class="btn_ex1"> <input type="hidden"
+						name="action" value="insert">
 					</FORM>
 				</div>
 			</div>
-
-
 
 
 			<!--Color switcher ends-->
@@ -321,4 +320,33 @@
 			<!--Scripts ends-->
 </body>
 
+<%
+TravelerlistBean travelerlistBean = new TravelerlistBean();
+java.sql.Date birthday = null;
+try {
+	birthday = travelerlistBean.getBirthday();
+} catch (Exception e) {
+	birthday = new java.sql.Date(System.currentTimeMillis());
+}
+%>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
+
+<script>
+        $.datetimepicker.setLocale('zh');
+        $('#f_date1').datetimepicker({
+	       theme: '',              //theme: 'dark',
+	       timepicker:false,       //timepicker:true,
+	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+		   value: '<%=birthday%> ', // value:   new Date(),
+	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+	//startDate:	            '2017/07/10',  // 起始日
+	//minDate:               '-1970-01-01', // 去除今日(不含)之前
+	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+	});
+</script>
 </html>

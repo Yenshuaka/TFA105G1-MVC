@@ -55,11 +55,11 @@ OrderBean orderBean = (OrderBean) session.getAttribute("orderBean"); //EmpServle
 						<li><a class="active" href="db.html"> <i
 								class="ion-ios-gear-outline"></i>首頁公告
 						</a></li>
-						<li><a href="listAllOrder.jsp"> <i
+						<li><a href="<%=request.getContextPath()%>/order.do"> <i
 								class="ion-social-buffer-outline"></i>訂單管理
 						</a></li>
 
-						<li><a href="listAllOrder.jsp"> <i
+						<li><a href=""> <i
 								class="ion-ios-copy-outline"></i>行程總覽
 						</a></li>
 						<li><a href="db-messages.html"> <i
@@ -340,7 +340,7 @@ OrderBean orderBean = (OrderBean) session.getAttribute("orderBean"); //EmpServle
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
 											<li class="active"><a href="#">Home</a></li>
-											<li class="active"><a href="listAllOrder.jsp">訂單首頁</a></li>
+											<li class="active"><a href="<%=request.getContextPath()%>/order.do">訂單首頁</a></li>
 											<li>訂單修改</li>
 										</ul>
 									</div>

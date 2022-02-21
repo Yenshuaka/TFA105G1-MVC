@@ -26,8 +26,6 @@ public class TravelerlistBean {
 	private String gender;
 	@Column(name = "BIRTHDAY")
 	private Date birthday;
-	
-
 	@Column(name = "ID_NO")
 	private String idno;
 
