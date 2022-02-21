@@ -14,7 +14,7 @@
 						<li><a class="active" href="db.html"> <i
 								class="ion-ios-gear-outline"></i>首頁公告
 						</a></li>
-						<li><a href="listAllOrder.jsp"> <i
+						<li><a href="<%=request.getContextPath()%>/order.do"> <i
 								class="ion-social-buffer-outline"></i>訂單管理
 						</a> <!-- <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>

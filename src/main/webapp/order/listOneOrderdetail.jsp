@@ -33,15 +33,15 @@
 	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800"
 	rel="stylesheet">
 <!-- Plugins CSS -->
-<link href="css/plugin.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/plugin.css" rel="stylesheet" />
 <!-- Perfect scrollbar CSS-->
-<link href="css/perfect-scrollbar.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/perfect-scrollbar.css" rel="stylesheet">
 <!-- style CSS -->
-<link href="css/style.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/style.css" rel="stylesheet" />
 <!-- Dashboard CSS -->
-<link href="css/dashboard.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/dashboard.css" rel="stylesheet" />
 <!--color switcher css-->
-<link rel="stylesheet" href="css/switcher/skin-aqua.css" media="screen"
+<link rel="stylesheet" href="<%=request.getContextPath()%>/switcher/skin-aqua.css" media="screen"
 	id="style-colors" />
 <!-- Document Title -->
 <!-- <title>listagram - Directory Listing HTML Template</title> -->
@@ -102,7 +102,7 @@ td {
 						<li><a class="active" href="db.html"> <i
 								class="ion-ios-gear-outline"></i>首頁公告
 						</a></li>
-						<li><a href="listAllOrder.jsp"> <i
+						<li><a href="<%=request.getContextPath()%>/order.do"> <i
 								class="ion-social-buffer-outline"></i>訂單管理
 						</a></li>
 
@@ -388,7 +388,7 @@ td {
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
 											<li class="active"><a href="#">Home</a></li>
-											<li class="active"><a href="listAllOrder.jsp">訂單首頁</a></li>
+											<li class="active"><a href="<%=request.getContextPath()%>/order.do">訂單首頁</a></li>
 											<li>訂單明細</li>
 										</ul>
 									</div>

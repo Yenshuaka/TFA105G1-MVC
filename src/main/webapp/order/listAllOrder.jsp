@@ -11,18 +11,21 @@
 <!DOCTYPE html>
 
 <%
-SessionFactory sessionFactory = HibernateUtil.getSessionfactory();
+// SessionFactory sessionFactory = HibernateUtil.getSessionfactory();
 
-OrderDAOHibernate orderDAO = new OrderDAOHibernate(sessionFactory);
-OrderService orderService = new OrderService(orderDAO);
+// OrderDAOHibernate orderDAO = new OrderDAOHibernate(sessionFactory);
+// OrderService orderService = new OrderService(orderDAO);
 
-List<OrderBean> list = orderService.select(null);
-request.setAttribute("list", list);
+// List<OrderBean> list = orderService.select(null);
+// request.setAttribute("list", list);
 
-OrderdetailBean bean = new OrderdetailBean();
-OrderdetailDAOHibernate orderdetailDAO = new OrderdetailDAOHibernate(sessionFactory);
-OrderdetailService svc = new OrderdetailService(orderdetailDAO);
-List<OrderdetailBean> list123 = svc.select(null);
+// OrderdetailBean bean = new OrderdetailBean();
+// OrderdetailDAOHibernate orderdetailDAO = new OrderdetailDAOHibernate(sessionFactory);
+// OrderdetailService svc = new OrderdetailService(orderdetailDAO);
+// List<OrderdetailBean> list123 = svc.select(null);
+
+	 List<OrderBean> list = (List)session.getAttribute("list");  
+	 List<OrderdetailBean> list123 = (List)session.getAttribute("list123");  
 %>
 
 <html>
@@ -53,7 +56,7 @@ List<OrderdetailBean> list123 = svc.select(null);
 <link href="<%=request.getContextPath()%>/order/css/dashboard.css"
 	rel="stylesheet" />
 <!--color switcher css-->
-<link rel="stylesheet" href="css/switcher/skin-aqua.css" media="screen"
+<link rel="stylesheet" href="<%=request.getContextPath()%>/switcher/skin-aqua.css" media="screen"
 	id="style-colors" />
 <!-- Document Title -->
 <!-- <title>listagram - Directory Listing HTML Template</title> -->

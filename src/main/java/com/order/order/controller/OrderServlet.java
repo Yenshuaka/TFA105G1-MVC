@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +18,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.order.order.model.OrderBean;
 import com.order.order.model.OrderService;
+import com.order.orderdetail.model.OrderdetailBean;
+import com.order.orderdetail.model.OrderdetailService;
 
 @WebServlet("/order.do")
 public class OrderServlet extends HttpServlet {
@@ -35,19 +38,35 @@ public class OrderServlet extends HttpServlet {
 				WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
 		
 		OrderService orderService = context.getBean("orderService", OrderService.class);
-
+		OrderdetailService orderdetailService = context.getBean("orderdetailService",OrderdetailService.class);
+		
+		
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-//		if(action==null) {  //這是select全部的狀況
-//			List<OrderBean> list = orderService.select(null);
-//	
-//			HttpSession session = req.getSession();
-//			session.setAttribute("list", list.get(0));
-//			
-//			String url = "order/listAllOrder.jsp";
+		if(action==null) {  //這是select全部的狀況
+			List<OrderBean> list = orderService.select(null);
+			List<OrderdetailBean> list123 = orderdetailService.select(null);	
+			
+			HttpSession session = req.getSession();
+			HttpSession session1 = req.getSession();
+			if(list!=null&& list.size()>0 && !"".equals(list)) {
+				session.setAttribute("list", list);
+			}
+		
+			
+			if(list!=null && list123.size()>0 && !"".equals(list123)) {
+				session1.setAttribute("list123", list123);
+			}
+			
+			String url = "order/listAllOrder.jsp";
 //			res.sendRedirect(url); 
-//		}
+			RequestDispatcher sucessView = req.getRequestDispatcher(url);
+			sucessView.forward(req, res);
+			
+		}
+		
+		
 
 		if ("getOne_For_Display".equals(action)) { 
 
@@ -61,8 +80,8 @@ public class OrderServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 
-				HttpSession session = req.getSession();
-				session.setAttribute("orderBean", bean);
+				HttpSession session2 = req.getSession();
+				session2.setAttribute("orderBean", bean);
 				String url = "order/listOneOrder.jsp";
 				res.sendRedirect(url);
 
@@ -107,8 +126,8 @@ public class OrderServlet extends HttpServlet {
 //				RequestDispatcher failureView = req
 //						.getRequestDispatcher("/emp/listAllEmp.jsp");
 //				failureView.forward(req, res);
-				System.out.print("刪除資料失敗");
-			}
+//				System.out.print("刪除資料失敗");
+//			}
 
 //		}
 		
@@ -239,4 +258,4 @@ public class OrderServlet extends HttpServlet {
 
 	}
 
-//}
+}
