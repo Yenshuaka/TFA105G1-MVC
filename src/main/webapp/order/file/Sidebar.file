@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <aside class="menu-sidebar js-right-sidebar d-block d-lg-none">
 			<div class="logo" style="background-color: rgb(32, 69, 99)">
-				<a href="#"> <img src="images/f.png" alt="Listagram" />
+				<a href="#"> <img src="<%=request.getContextPath()%>/order/images/f.png" alt="Listagram" />
 				</a>
 			</div>
 			<div class="menu-sidebar__content js-scrollbar2">
