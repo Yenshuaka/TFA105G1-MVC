@@ -141,33 +141,66 @@ public class AddProduct extends HttpServlet {
 				bean.setStartdate(startdate);
 				bean.setEnddate(enddate);
 				bean.setTraveltime(traveltime);
-				bean.setState(0);
-				
-				/***************************上傳圖片處理start***************************************/
-				
-				Collection<Part> parts = req.getParts(); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
-				session.setAttribute("parts", parts);
-
-				/***************************上傳圖片處理end***************************************/
-				String[] cityid = req.getParameterValues("cityid");
+				bean.setState(0);			
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					session.setAttribute("ProductBean", bean); // 含有輸入格式錯誤的empVO物件,也存入req
-					if(cityid!=null) {
-						session.setAttribute("cityid", cityid);
-					}
 					res.sendRedirect(req.getContextPath()+"/MVC/AddProduct");
 					return;
 				}
 				
 				/***************************2.開始新增資料***************************************/
-				productService.insert(bean); // 商品資料
+				productService.insert(bean); // 商品資料z
 				session.removeAttribute("ProductBean");
 				
+				/***************************3.開始新增地區資料***************************************/
 				
-				session.setAttribute("cityid", cityid);		
-				res.sendRedirect(req.getContextPath()+"/ProductManage?action=addloc");
+				Integer productid = bean.getProductid();
+				String[] cityid = req.getParameterValues("cityid");			
+				
+				if(cityid!=null) {
+					for(int i = 0; i < cityid.length; i++) {
+						ProductLocBean bean2 = new ProductLocBean();
+						bean2.setProductid(productid);
+						bean2.setCityid(Integer.valueOf(cityid[i]) );
+						productLocService.insert(bean2);				
+					}
+				}
+				
+				/***************************4.開始新增圖片資料***************************************/
+				
+				Collection<Part> parts = req.getParts(); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
+				
+				if(parts!=null && parts.size()!=0) {
+				
+					for (Part part : parts) {
+						String filename = getFileNameFromPart(part);
+						if (filename!= null && part.getContentType()!=null) {
+							
+							long size = part.getSize();
+		
+//							 額外測試 InputStream 與 byte[] (幫將來model的VO預作準備)
+							InputStream in = part.getInputStream();
+							byte[] buf = new byte[in.available()];
+							in.read(buf);
+							in.close();
+							
+							ProductImgBean img = new ProductImgBean();
+							img.setProductid(productid);
+							img.setImgname(filename);
+							img.setProductimg(buf);
+							productImgService.insert(img);
+							
+						}
+					}
+				
+				}
+				
+				
+				/***************************5.新增完成 準備導向別的頁面***************************************/
+				
+				res.sendRedirect(req.getContextPath()+"/MVC/ProductManageController");
 				return;
 				
 				/***************************其他可能的錯誤處理**********************************/
@@ -352,78 +385,6 @@ public class AddProduct extends HttpServlet {
 				res.sendRedirect(req.getContextPath()+"/MVC/UpdateProduct");
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		if ("addloc".equals(action)) {
-			
-			Connection connection;
-			 PreparedStatement preparedStatement;
-			    Integer productid =0;
-			try {
-				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei", "root", "password");
-				preparedStatement = connection.prepareStatement("SELECT * FROM PRODUCT  ORDER BY PRODUCT_ID DESC LIMIT 0 , 1");
-				ResultSet rSet = preparedStatement.executeQuery();
-				while (rSet.next()) {
-					productid = rSet.getInt(1);
-				}
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-			HttpSession httpSession = req.getSession();
-			String[] cityid = (String[])httpSession.getAttribute("cityid");
-			if(cityid!=null) {
-				for(int i = 0; i < cityid.length; i++) {
-					ProductLocBean bean2 = new ProductLocBean();
-					bean2.setProductid(productid);
-					bean2.setCityid(Integer.valueOf(cityid[i]) );
-					productLocService.insert(bean2);				
-				}
-			}
-			
-			
-			Collection<Part> parts = (Collection<Part>) httpSession.getAttribute("parts");
-			
-			if(parts!=null) {
-			
-				for (Part part : parts) {
-					String filename = getFileNameFromPart(part);
-					if (filename!= null && part.getContentType()!=null) {
-						
-						long size = part.getSize();
-	
-//						 額外測試 InputStream 與 byte[] (幫將來model的VO預作準備)
-						InputStream in = part.getInputStream();
-						byte[] buf = new byte[in.available()];
-						in.read(buf);
-						in.close();
-						
-						ProductImgBean img = new ProductImgBean();
-						img.setProductid(productid);
-						img.setImgname(filename);
-						img.setProductimg(buf);
-						productImgService.insert(img);
-						
-					}
-				}
-			
-			}
-			
-			httpSession.removeAttribute("cityid");
-			
-			res.sendRedirect(req.getContextPath()+"/MVC/ProductManageController");
-			return;
-			
-		}
-		
-		
-		
 		
 		
 		
