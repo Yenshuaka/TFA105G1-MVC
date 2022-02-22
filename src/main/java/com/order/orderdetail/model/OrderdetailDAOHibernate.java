@@ -44,6 +44,7 @@ public class OrderdetailDAOHibernate implements OrderdetailInterface {
 				temp.setOrderrewardpoints(orderrewardpoints);
 				temp.setProductid(productid);
 				temp.setProductprice(productprice);
+				temp.setNumberoftraveler(numberoftraveler);
 				temp.setSpecialneeds(specialneeds);
 				return temp;
 			}

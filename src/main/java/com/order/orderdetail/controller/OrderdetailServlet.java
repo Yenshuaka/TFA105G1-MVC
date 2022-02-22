@@ -43,7 +43,6 @@ public class OrderdetailServlet extends HttpServlet {
 				WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
 		
 		OrderdetailService orderdetailService = context.getBean("orderdetailService",OrderdetailService.class);
-		TravelerlistService travelerlistService = context.getBean("travelerlistService",TravelerlistService.class);
 		
 
 		req.setCharacterEncoding("UTF-8");
@@ -158,7 +157,9 @@ public class OrderdetailServlet extends HttpServlet {
 				session.setAttribute("list", list);
 
 				String url = "order/listAllOrder.jsp";
-				res.sendRedirect(url);
+				RequestDispatcher sucessview = req.getRequestDispatcher(url);
+				sucessview.forward(req, res);
+//				res.sendRedirect(url);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
@@ -173,120 +174,52 @@ public class OrderdetailServlet extends HttpServlet {
 		}
 		;
 
-		if ("insert".equals(action)) { // 來自add-post.jsp的請求
-
-			try {
-
-				Integer orderid = Integer.parseInt(req.getParameter("orderid").trim());
-//				System.out.println(orderid);
-				Integer productid = Integer.parseInt(req.getParameter("productid").trim());
-//				System.out.println(productid);
-				Integer numberoftraveler = Integer.parseInt(req.getParameter("numberoftraveler").trim());
-//				System.out.println(numberoftraveler);
-				Integer productprice = Integer.parseInt(req.getParameter("productprice").trim());
-				Integer orderrewardpoints = Integer.parseInt(req.getParameter("orderrewardpoints").trim());
-				String specialneeds = req.getParameter("specialneeds");
-
-				/*************************** 2.開始新增資料 ***************************************/
-
-				OrderdetailBean bean = new OrderdetailBean();
-				bean.setOrderid(orderid);
-				bean.setProductid(productid);
-				bean.setOrderrewardpoints(orderrewardpoints);
-				bean.setSpecialneeds(specialneeds);
-				bean.setNumberoftraveler(numberoftraveler);
-				bean.setProductprice(productprice);
-
-				orderdetailService.insert(bean);
-
-				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				List<OrderdetailBean> list = orderdetailService.select(bean);// 新增完成後，秀出剩餘訂單
-
-				HttpSession session = req.getSession();
-				session.setAttribute("OrderdetailBean", list.get(0));// why新增用list.get(0)，但刪除用list就好?
-
-				String url = "order/listAllOrderdetail.jsp";
-				res.sendRedirect(url);
-
-				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				e.printStackTrace();
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/emp/addEmp.jsp");
-//				failureView.forward(req, res);
-				System.out.print("新增資料失敗");
-			}
-		}
-
-		if ("insertAll".equals(action)) { // 來自add-post.jsp的請求
-
-			try {
-				//新增訂單
-				//重導到另一個servlet
-				
-				
-
-				Integer orderid = Integer.parseInt(req.getParameter("orderid").trim());
-				Integer productid = Integer.parseInt(req.getParameter("productid").trim());
-				Integer numberoftraveler = Integer.parseInt(req.getParameter("numberoftraveler").trim());
-				Integer productprice = Integer.parseInt(req.getParameter("productprice").trim());
-				Integer orderrewardpoints = Integer.parseInt(req.getParameter("orderrewardpoints").trim());
-				String specialneeds = req.getParameter("specialneeds");
-
-				Integer travelerlistno = Integer.parseInt(req.getParameter("travelerlistno").trim());
-				Integer orderdetailno = Integer.parseInt(req.getParameter("orderdetailno").trim());
-				String lastname = req.getParameter("lastname");
-				String firstname = req.getParameter("firstname");
-				String gender = req.getParameter("gender");
-				Date birthday = Date.valueOf(req.getParameter("birthday").trim());
-				String idno = req.getParameter("idno");
-
-				/*************************** 2.開始新增資料 ***************************************/
-
-				OrderdetailBean bean = new OrderdetailBean();
-				bean.setOrderid(orderid);
-				bean.setProductid(productid);
-				bean.setOrderrewardpoints(orderrewardpoints);
-				bean.setSpecialneeds(specialneeds);
-				bean.setNumberoftraveler(numberoftraveler);
-				bean.setProductprice(productprice);
-
-				orderdetailService.insert(bean);
-				
-				TravelerlistBean travelerBean = new TravelerlistBean();
-
-				travelerBean.setTravelerlistno(travelerlistno);
-				travelerBean.setOrderdetailno(orderdetailno);
-				travelerBean.setLastname(lastname);
-				travelerBean.setFirstname(firstname);
-				travelerBean.setGender(gender);
-				travelerBean.setBirthday(birthday);
-				travelerBean.setIdno(idno);
-
-				travelerlistService.update(travelerBean);
-
-				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-//				List<OrderdetailBean> listOrderdetail = orderdetailService.select(bean);// 新增完成後，秀出剩餘訂單
-//				List<TravelerlistBean> listTraveler = travelerlistService.select(travelerBean);
-				
+//		if ("insert".equals(action)) { // 來自add-post.jsp的請求
+//
+//			try {
+//
+//				Integer orderid = Integer.parseInt(req.getParameter("orderid").trim());
+////				System.out.println(orderid);
+//				Integer productid = Integer.parseInt(req.getParameter("productid").trim());
+////				System.out.println(productid);
+//				Integer numberoftraveler = Integer.parseInt(req.getParameter("numberoftraveler").trim());
+////				System.out.println(numberoftraveler);
+//				Integer productprice = Integer.parseInt(req.getParameter("productprice").trim());
+//				Integer orderrewardpoints = Integer.parseInt(req.getParameter("orderrewardpoints").trim());
+//				String specialneeds = req.getParameter("specialneeds");
+//
+//				/*************************** 2.開始新增資料 ***************************************/
+//
+//				OrderdetailBean bean = new OrderdetailBean();
+//				bean.setOrderid(orderid);
+//				bean.setProductid(productid);
+//				bean.setOrderrewardpoints(orderrewardpoints);
+//				bean.setSpecialneeds(specialneeds);
+//				bean.setNumberoftraveler(numberoftraveler);
+//				bean.setProductprice(productprice);
+//
+//				orderdetailService.insert(bean);
+//
+//				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+//				List<OrderdetailBean> list = orderdetailService.select(bean);// 新增完成後，秀出剩餘訂單
+//
 //				HttpSession session = req.getSession();
-//				session.setAttribute("OrderdetailBean", listOrderdetail.get(0));// why新增用list.get(0)，但刪除用list就好?
-//				session.setAttribute("TravelerlistBean", listTraveler.get(0));
-				
-				String url = "order/booking_confirm.jsp";
-				res.sendRedirect(url);
+//				session.setAttribute("OrderdetailBean", list.get(0));// why新增用list.get(0)，但刪除用list就好?
+//
+//				String url = "order/listAllOrderdetail.jsp";
+//				res.sendRedirect(url);
+//
+//				/*************************** 其他可能的錯誤處理 **********************************/
+//			} catch (Exception e) {
+//				e.printStackTrace();
+////				errorMsgs.add(e.getMessage());
+////				RequestDispatcher failureView = req
+////						.getRequestDispatcher("/emp/addEmp.jsp");
+////				failureView.forward(req, res);
+//				System.out.print("新增資料失敗");
+//			}
+//		}
 
-				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				e.printStackTrace();
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/emp/addEmp.jsp");
-//				failureView.forward(req, res);
-				System.out.print("新增資料失敗");
-			}
-		}
 
 		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
 
@@ -360,8 +293,12 @@ public class OrderdetailServlet extends HttpServlet {
 
 				session.setAttribute("orderdetailBean", list.get(0));
 
-				String url = "/TFA105G1-MVC/orderdetail.do?action=update2";
-				res.sendRedirect(url);
+//				String url = "/TFA105G1-MVC/orderdetail.do?action=update2";
+//				res.sendRedirect(url);
+				
+				String url = ("orderdetail.do?action=update2");
+				RequestDispatcher sucessview = req.getRequestDispatcher(url);
+				sucessview.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
@@ -391,16 +328,16 @@ public class OrderdetailServlet extends HttpServlet {
 				while (rs.next()) {
 					OrderdetailBean bean = orderdetailService.getOneOrderdetail(rs.getInt(1));
 					list.add(bean);
-
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 
 			session.setAttribute("list", list);
-
 			String url = ("order/listOneOrderdetail.jsp?orderid=" + orderid);
-			res.sendRedirect(url);
+			RequestDispatcher sucessview = req.getRequestDispatcher(url);
+			sucessview.forward(req, res);
+//			res.sendRedirect(url);
 		}
 
 	}
