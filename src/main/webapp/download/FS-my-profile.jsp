@@ -2,9 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.member.model.*"%>
 
-
 <%
-MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
+Integer memberid = (Integer) session.getAttribute("memberid");
+MemberService memberSvc = new MemberService();
+MemberVO memberVO = memberSvc.getOneMember(memberid);
+pageContext.setAttribute("memberVO", memberVO);
 %>
 
 <html lang="en">
@@ -45,9 +47,7 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 <body>
 	<div class="page-wrapper">
 		<!--Sidebar Menu Starts-->
-
 		<%@include file="file/FS_Sidebar Menu.file"%>
-
 		<!--Sidebar Menu ends-->
 
 		<!--Dashboard content Wrapper starts-->
@@ -55,7 +55,7 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 
 			<!-- Top header starts-->
 
-			<%@include file="file/FS_Top header.file"%>
+			<%@include file="file/FS_Header.file"%>
 
 			<!-- Top header ends-->
 
@@ -94,31 +94,35 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 									<div class="row">
 										<div class="col-md-8 offset-md-2 py-4">
 											<div class="edit-profile-photo text-center">
-												<img src="#" alt="Big Pic">
+												<a
+													href="<%=request.getContextPath()%>/download/BS-update-image.jsp?memberid=${memberVO.memberid}"><img
+													alt="${memberVO.memberid}"
+													src="<%=request.getContextPath()%>/member/member.pic?memberid=${memberVO.memberid}"
+													width="80px"></a>
 											</div>
 										</div>
 										<div class="col-md-12">
 											<div class="my-profile">
 												<ul class="db-profile-info">
 													<li>
-														<h6>First Name :</h6> <span><%=(memberVO == null) ? "名子" : memberVO.getFirstname()%></span>
+														<h6>First Name :</h6> <span>${(memberVO == null) ? "名字" : memberVO.firstname}</span>
 													</li>
 													<li>
-														<h6>Last Name :</h6> <span><%=(memberVO == null) ? "姓氏" : memberVO.getLastname()%></span>
+														<h6>Last Name :</h6> <span>${(memberVO == null) ? "姓氏" : memberVO.lastname}</span>
 													</li>
 													<li>
-														<h6>Email Id :</h6> <span><%=(memberVO == null) ? "電子信箱" : memberVO.getEmail()%></span>
+														<h6>Email Id :</h6> <span>${(memberVO == null) ? "電子信箱" : memberVO.email}</span>
 													</li>
 													<li>
-														<h6>Phone :</h6> <span><%=(memberVO == null) ? "連絡電話" : memberVO.getPhone()%></span>
+														<h6>Phone :</h6> <span>${(memberVO == null) ? "連絡電話" : memberVO.phone}</span>
 													</li>
 													<li>
-														<h6>Password :</h6> <span><%=(memberVO == null) ? "密碼" : memberVO.getPassword()%></span>
+														<h6>Password :</h6> <span>${(memberVO == null) ? "密碼" : memberVO.password}</span>
 													</li>
-													<li>
-														<h6>Address :</h6> <span> 864 W. Walnut Ave. Avon,
-															IN 46123 St James Pl, Brooklyn</span>
-													</li>
+													<!-- 													<li> -->
+													<!-- 														<h6>Address :</h6> <span> 864 W. Walnut Ave. Avon, -->
+													<!-- 															IN 46123 St James Pl, Brooklyn</span> -->
+													<!-- 													</li> -->
 													<!-- <li>
                                                         <h6>Social Profile :</h6>
                                                         <ul class="social-profile">
@@ -142,8 +146,8 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 			</div>
 			<!--main content ends-->
 
-			<!--Dashboard footer starts-->			
-			<%@include file="file/FS_footer.file"%>			
+			<!--Dashboard footer starts-->
+			<%@include file="file/FS_footer.file"%>
 			<!--Dashboard footer ends-->
 		</div>
 		<!--Dashboard content Wrapper ends-->

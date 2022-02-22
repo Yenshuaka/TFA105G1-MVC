@@ -2,7 +2,7 @@
 <aside class="menu-sidebar js-right-sidebar d-block d-lg-none">
             <div class="logo"style="background-color: rgb(32, 69, 99)">
                 <a href="#">
-                    <img src="<%=request.getContextPath()%>/download/images/f.png" alt="Listagram" />
+                    <img src="<%=request.getContextPath()%>/download/images/f.png" alt="Logo" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar2">
