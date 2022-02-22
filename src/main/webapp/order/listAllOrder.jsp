@@ -159,8 +159,7 @@
 												<h11>&nbsp</h11>
 												<input type="text" name="orderid" class="select"> <input
 													type="hidden" name="action" value="getOne_For_Display">
-												<input type="submit" value="送出" class="send"> <a
-													class="add" href='addOrder.jsp' style="margin-left: 330px">新增訂單</a>
+												<input type="submit" value="送出" class="send"> 
 											</div>
 										</FORM>
 
