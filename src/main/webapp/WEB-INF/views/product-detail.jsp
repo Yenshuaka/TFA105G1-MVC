@@ -817,7 +817,7 @@
                     <div class="col-lg-4 col-md-12">
                         <div class="listing-sidebar">
                             <div class="sidebar-widget info">
-                                <h3><i class="ion-android-calendar"></i>訂購</h3>
+                                <h3><i class="ion-android-calendar"></i>訂購</h3> <span class='showarea'></span>
 <!--                                 <div class="row"> -->
 <!--                                     <div class="col-md-12 mar-bot-15"> -->
 <!--                                         <div class="nice-select filter-input mar-top-0" tabindex="0"><span class="current">Select Room</span> -->
@@ -881,7 +881,8 @@
                                     <a href="#"> 立即訂購</a>
                                 </div>
                                 <div class="book-btn text-center">
-                                    <a href="<%=request.getContextPath() %>/MVC/AddShoppingCart?productid=${ProductBean.productid}"> 加入購物車</a>
+                                    <a onclick='addCart(event)'> 加入購物車</a>
+                                    <input type='hidden' value='${ProductBean.productid}'>
                                 </div>
                             </div>
                             <div class="sidebar-widget">
@@ -1150,6 +1151,27 @@
     <!--Main js-->
     <script src="js/main.js"></script>
     <!--Scripts ends-->
+    
+    <!-- AJAX部分 -->
+    <script>
+    function addCart(e){
+		console.log($(e.target).next().val());
+		$.ajax({
+         url: '<%=request.getContextPath() %>/AddShoppingCart',
+         type: 'POST',
+         data: {
+         	productid: $(e.target).next().val()
+         },
+         dataType: "html",
+         success: function(res){
+             console.log("成功");
+             $('.showarea').html(res);
+             
+         }
+     });    		
+	}
+
+    </script>
 </body>
 
 </html>

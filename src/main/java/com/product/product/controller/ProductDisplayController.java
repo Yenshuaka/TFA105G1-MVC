@@ -23,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
@@ -285,39 +286,6 @@ public class ProductDisplayController {
 	}
 	
 	
-	
-	
-	
 
-	@RequestMapping("/AddShoppingCart")
-	public String addShoppingCart(String productid, Model model, HttpSession session) {
-		
-		Jedis jedis = new Jedis("localhost", 6379);
-		System.out.println(jedis.ping());
-		
-		Integer memberid = (Integer)session.getAttribute("memberid");
-		String memberidstring = String.valueOf(memberid);
-		
-		boolean exist = false;
-		List<String> range2 = jedis.lrange("會員"+memberidstring, 0, -1);
-		for (String product : range2) {
-			if(product.equals(productid))
-			exist=true;
-		}
-		
-		if(!exist) {
-			jedis.rpush("會員"+memberidstring, productid);
-		}else {
-			System.out.println("商品已存在購物車");
-		}
-		
-		jedis.close();
-
-	
-		return "redirect:/MVC/ProductDetail?productid=" + productid;
-
-	}
-	
-	
 	
 }

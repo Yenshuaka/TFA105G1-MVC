@@ -415,9 +415,9 @@
                                         </div>
                                         
                                         <div class="listing-button">
-                                        	TWD&nbsp<%=list.get(i).getProductprice() %>&nbsp&nbsp
+                                        	TWD&nbsp<span><%=list.get(i).getProductprice() %></span>&nbsp&nbsp
 <!--                                             <a href="#" class="btn v2"><i class="ion-edit"></i> Edit</a> -->
-                                            <a href="#" class="btn v5"><i class="ion-android-delete"></i> 刪除</a>
+                                            <button class="btn v5" onclick='deleteCart(event)' value='<%=list.get(i).getProductid() %>'><i class="ion-android-delete"></i> 刪除</button>
                                         </div>
                                     </div>
                                     
@@ -498,7 +498,7 @@
 <!--                                     </div> -->
                                     <% if(list!=null && list.size()!=0){ %>
                                     <div>
-                                        <h3>總金額: ${totalprice}元</h3>
+                                        <h3>總金額: <span class='totalprice'>${totalprice}</span>元</h3>
                                         <a href="#" class="btn v5"> 前往結帳</a>
                                     </div>
                                     <% }%>
@@ -537,6 +537,39 @@
     <script src="js/main.js"></script>
     <!-- Dashboard JS-->
     <script src="js/dashboard.js"></script>
+    
+    <!-- AJAX部分 -->
+    <script>
+    function deleteCart(e){
+//      var productid = $(e.target).next().next().val();
+     console.log($(e.target).parent().parent());
+		$.ajax({
+         url: '<%=request.getContextPath() %>/DeleteShoppingCart',
+         type: 'POST',
+         data: {
+         	productid: $(e.target).val()
+         },
+         dataType: "html",
+         success: function(){
+             console.log("成功");
+             var totalprice = parseInt($('.totalprice').text()); 
+             var oneprice = parseInt($(e.target).prev().text());
+             var priceafter = totalprice - oneprice;
+             $('.totalprice').text(priceafter);
+             
+             $(e.target).parent().parent().remove();
+             if(priceafter==0){
+            	 $('.viewd-item-wrap').html('<h5>購物車內暫無商品!</h5>');
+             }
+             
+             
+     
+         }
+     });    		
+	}
+
+    </script>
+
 </body>
 
 </html>
