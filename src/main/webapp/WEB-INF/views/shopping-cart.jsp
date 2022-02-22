@@ -390,6 +390,7 @@
                                 
                                 
                                 	<%  List<ProductBean> list = (List)request.getAttribute("list"); 
+                                		if(list!=null && list.size()!=0){
                                 		for(int i = 0; i < list.size(); i++){
                                 	%>
                                 
@@ -410,14 +411,20 @@
                                                 <i class="ion-ios-star-half"></i>
                                             </div>
                                             <div class="views">Views : <span>325</span></div>
+                                            
                                         </div>
+                                        
                                         <div class="listing-button">
+                                        	TWD&nbsp<%=list.get(i).getProductprice() %>&nbsp&nbsp
 <!--                                             <a href="#" class="btn v2"><i class="ion-edit"></i> Edit</a> -->
                                             <a href="#" class="btn v5"><i class="ion-android-delete"></i> 刪除</a>
                                         </div>
                                     </div>
                                     
-                                    <% } %>
+                                    <% } }else{ out.write("<h5>購物車內暫無商品!</h5>");}
+                                    
+                                    
+                                    %>
                                     
                                     
 <!--                                     <div class="most-viewed-item"> -->
@@ -489,11 +496,12 @@
 <!--                                             <a href="#" class="btn v5"><i class="ion-android-delete"></i> Delete</a> -->
 <!--                                         </div>     -->
 <!--                                     </div> -->
-                                    
+                                    <% if(list!=null && list.size()!=0){ %>
                                     <div>
-                                        <h3>總金額: C8763元</h3>
+                                        <h3>總金額: ${totalprice}元</h3>
                                         <a href="#" class="btn v5"> 前往結帳</a>
                                     </div>
+                                    <% }%>
                                 </div>
 
                             </div>

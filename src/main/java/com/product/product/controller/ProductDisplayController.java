@@ -32,6 +32,8 @@ import com.product.product.model.ProductService;
 import com.product.productcomment.model.ProductCommentBean;
 import com.product.productcomment.model.ProductCommentService;
 
+import redis.clients.jedis.Jedis;
+
 
 @Controller
 public class ProductDisplayController {
@@ -178,7 +180,9 @@ public class ProductDisplayController {
 	
 	
 	@RequestMapping("/ProductDetail")
-	public String productDetail(String productid, Model model) {
+	public String productDetail(String productid, Model model, HttpSession session) {
+		
+//		session.setAttribute("memberid", 2);//先假裝有會員登入
 		
 		ProductBean bean = new ProductBean();
 		Integer productidint = Integer.valueOf(productid);
@@ -241,16 +245,78 @@ public class ProductDisplayController {
 	
 	
 	@RequestMapping("/ShoppingCart")
-	public String shoppingCart(Model model) {
+	public String shoppingCart(Model model, HttpSession session) {
 		
-		List<ProductBean> list = productService.select(null);
+		session.setAttribute("memberid", 2);
+//		List<ProductBean> list = productService.select(null);
+//		model.addAttribute("list", list);
+		
+		Jedis jedis = new Jedis("localhost", 6379);
+		
+		Integer memberid = (Integer)session.getAttribute("memberid");
+		String memberidstring = String.valueOf(memberid);
+		List<Integer> productids = new ArrayList<Integer>();
+		List<ProductBean> list = new ArrayList<ProductBean>();
+		
+		List<String> range2 = jedis.lrange("會員"+memberidstring, 0, -1);
+		if(range2!=null && range2.size()!=0) {
+			for (String product : range2) {
+				productids.add(Integer.valueOf(product));
+			}			
+		}
+		
+		jedis.close();
+
+		Integer totalprice = 0;
+		
+		for (Integer productid : productids) {
+			ProductBean bean = new ProductBean();
+			bean.setProductid(productid);
+			list.add(productService.select(bean).get(0));
+			totalprice = totalprice + productService.select(bean).get(0).getProductprice();
+		}
+		
 		model.addAttribute("list", list);
+		model.addAttribute("totalprice", totalprice);
+	
+		
 	
 		return "shopping-cart";
 	}
 	
+	
+	
+	
+	
+
+	@RequestMapping("/AddShoppingCart")
+	public String addShoppingCart(String productid, Model model, HttpSession session) {
+		
+		Jedis jedis = new Jedis("localhost", 6379);
+		System.out.println(jedis.ping());
+		
+		Integer memberid = (Integer)session.getAttribute("memberid");
+		String memberidstring = String.valueOf(memberid);
+		
+		boolean exist = false;
+		List<String> range2 = jedis.lrange("會員"+memberidstring, 0, -1);
+		for (String product : range2) {
+			if(product.equals(productid))
+			exist=true;
+		}
+		
+		if(!exist) {
+			jedis.rpush("會員"+memberidstring, productid);
+		}else {
+			System.out.println("商品已存在購物車");
+		}
+		
+		jedis.close();
 
 	
+		return "redirect:/MVC/ProductDetail?productid=" + productid;
+
+	}
 	
 	
 	
