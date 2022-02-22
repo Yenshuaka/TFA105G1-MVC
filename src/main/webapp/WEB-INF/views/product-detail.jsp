@@ -1,6 +1,6 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
-<%@page import="java.util.Date, com.member.model.*"%>
+<%@page import="java.util.Date, com.member.model.*, com.member.controller.*"%>
 <%@page import="com.product.productcomment.model.ProductCommentBean"%>
 <%@ page import="com.product.product.model.ProductBean"%>
 <%@ page import="java.sql.*, com.product.productimg.*"%>
@@ -622,10 +622,22 @@
                                         <li>
                                             <div class="customer-review_wrap">
                                                 <div class="reviewer-img">
-                                                    <img src="images/clients/reviewer-1.png" class="img-fluid" alt="...">
-                                                    <%	for(int j =0; j < members.size(); j++){ 
+
+                                             <% for(int j =0; j < members.size(); j++){ 
+                                                    if(comments.get(i).getMemberid()== members.get(j).getMemberid() ){ 
+                                             %>
+                                                   	<img src="<%=request.getContextPath() %>/member/member.pic?memberid=<%=members.get(j).getMemberid() %>"  >
+                                          
+                                             <% } }%>   
+                                                    
+                                                          
+                                                    <%	for(int j =0; j < members.size(); j++){
                                                     	if (comments.get(i).getMemberid()== members.get(j).getMemberid()){ 
-                                                    		out.write("<p>"+  members.get(j).getNickname()   +"</p>");
+                                                    		if(members.get(j).getNickname()!=null){
+                                                    			out.write("<p>"+  members.get(j).getNickname()   +"</p>");
+                                                    		}else{
+                                                    			out.write("<p>"+  members.get(j).getEmail()   +"</p>");
+                                                    		}
                                                     	
                                                       } }%>
 <!--                                                     		<p>Frank Jane</p> -->
@@ -866,10 +878,10 @@
 <!--                                     </div> -->
 <!--                                 </div> -->
                                 <div class="book-btn text-center">
-                                    <a href="booking.html"> 立即訂購</a>
+                                    <a href="#"> 立即訂購</a>
                                 </div>
                                 <div class="book-btn text-center">
-                                    <a href="booking.html"> 加入購物車</a>
+                                    <a href="<%=request.getContextPath() %>/MVC/AddShoppingCart?productid=${ProductBean.productid}"> 加入購物車</a>
                                 </div>
                             </div>
                             <div class="sidebar-widget">
