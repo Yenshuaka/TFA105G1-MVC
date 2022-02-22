@@ -22,10 +22,14 @@ import javax.servlet.http.HttpSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.member.model.MemberService;
+import com.member.model.MemberVO;
 import com.order.orderdetail.model.OrderdetailBean;
 import com.order.orderdetail.model.OrderdetailService;
 import com.order.travelerlist.model.TravelerlistBean;
 import com.order.travelerlist.model.TravelerlistService;
+import com.product.product.model.ProductBean;
+import com.product.product.model.ProductService;
 
 @WebServlet("/orderdetail.do")
 public class OrderdetailServlet extends HttpServlet {
@@ -43,7 +47,7 @@ public class OrderdetailServlet extends HttpServlet {
 				WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
 		
 		OrderdetailService orderdetailService = context.getBean("orderdetailService",OrderdetailService.class);
-		
+		ProductService productService = context.getBean("productService",ProductService.class);
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
@@ -121,6 +125,16 @@ public class OrderdetailServlet extends HttpServlet {
 
 //				HttpSession session = req.getSession();
 				session.setAttribute("list", list);
+				
+				MemberService memberService = new MemberService();
+				List<MemberVO> members = memberService.getAll();
+				
+				HttpSession session1 = req.getSession();
+				session1.setAttribute("members", members);
+				
+				HttpSession session2 = req.getSession();
+				List<ProductBean> products = productService.select(null);
+				session2.setAttribute("products", products);
 
 				String url = "order/listOneOrderdetail.jsp";
 //				res.sendRedirect(url);

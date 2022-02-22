@@ -1,3 +1,4 @@
+<%@page import="com.product.product.model.ProductBean"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
@@ -33,16 +34,22 @@
 	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800"
 	rel="stylesheet">
 <!-- Plugins CSS -->
-<link href="<%=request.getContextPath()%>/order/css/plugin.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/order/css/plugin.css"
+	rel="stylesheet" />
 <!-- Perfect scrollbar CSS-->
-<link href="<%=request.getContextPath()%>/order/css/perfect-scrollbar.css" rel="stylesheet">
+<link
+	href="<%=request.getContextPath()%>/order/css/perfect-scrollbar.css"
+	rel="stylesheet">
 <!-- style CSS -->
-<link href="<%=request.getContextPath()%>/order/css/style.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/order/css/style.css"
+	rel="stylesheet" />
 <!-- Dashboard CSS -->
-<link href="<%=request.getContextPath()%>/order/css/dashboard.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/order/css/dashboard.css"
+	rel="stylesheet" />
 <!--color switcher css-->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/order/css/switcher/skin-aqua.css" media="screen"
-	id="style-colors" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/order/css/switcher/skin-aqua.css"
+	media="screen" id="style-colors" />
 <!-- Document Title -->
 <!-- <title>listagram - Directory Listing HTML Template</title> -->
 <title>訂單明細管理</title>
@@ -89,7 +96,9 @@ td {
 		<!--Sidebar Menu Starts-->
 		<aside class="menu-sidebar js-right-sidebar d-block d-lg-none">
 			<div class="logo" style="background-color: rgb(32, 69, 99)">
-				<a href="#"> <img src="<%=request.getContextPath()%>/order/images/f.png" alt="Listagram" />
+				<a href="#"> <img
+					src="<%=request.getContextPath()%>/order/images/f.png"
+					alt="Listagram" />
 				</a>
 			</div>
 			<div class="menu-sidebar__content js-scrollbar2">
@@ -302,7 +311,8 @@ td {
 							</div>
 						</div>
 						<div class="col-md-3 col-sm-6 col-8">
-							<img src="<%=request.getContextPath()%>/order/images/f.png" alt="">
+							<img src="<%=request.getContextPath()%>/order/images/f.png"
+								alt="">
 						</div>
 						<!-- <div class="col-md-3 col-sm-6 col-8">
                             <div class="header-button">
@@ -388,7 +398,8 @@ td {
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
 											<li class="active"><a href="#">Home</a></li>
-											<li class="active"><a href="<%=request.getContextPath()%>/order.do">訂單首頁</a></li>
+											<li class="active"><a
+												href="<%=request.getContextPath()%>/order.do">訂單首頁</a></li>
 											<li>訂單明細</li>
 										</ul>
 									</div>
@@ -435,21 +446,36 @@ td {
 											<th>修改</th>
 											<th>刪除</th>
 										</tr>
-
-										<c:forEach var="orderdetailBean" items="${list}">
+										<%
+// 										List<OrderBean> list = (List)session.getAttribute("list");  
+										List<OrderdetailBean> list = (List)session.getAttribute("list");  
+										List<MemberVO> members = (List<MemberVO>) request.getAttribute("members");
+										List<ProductBean> products = (List<ProductBean>) request.getAttribute("products");
+										%>
+										<%for(int i=0;i<list.size();i++){  %>
+											
+										
+<%-- 										<c:forEach var="orderdetailBean" items="${list}"> --%>
 											<tr>
 
-												<td>${orderdetailBean.orderdetailno}</td>
-												<td>${orderdetailBean.orderid}</td>
-												<%-- <td>${orderdetailBean.productid}</td> --%>
+												<td><%=list.get(i).getOrderdetailno()%></td>
+												<td><%=list.get(i).getOrderid()%></td>
+										
+												<%-- <%String productname = null; %>--%>
+												<%-- <%	for(int j =0; j < products.size(); j++){ 
+                                                    	if (list.get(i).getProductid()== products.get(j).getProductid()){
+                                                    	productname =  products.get(j).getProductname();
+                                                    	
+                                                      } }%>--%>
+<%-- 												<td><%=productname%></td> --%>
+												<!-- 												<td></td>{memberSvc.select(orderdetailBean.memberid).name} -->
 												<td></td>
-<!-- 												<td></td>{memberSvc.select(orderdetailBean.memberid).name} -->
 												<td></td>
 												<td></td>
-												<td>${orderdetailBean.numberoftraveler}</td>
-												<td>${orderdetailBean.productprice}</td>
-												<td>${orderdetailBean.orderrewardpoints}</td>
-												<td>${orderdetailBean.specialneeds}</td>
+												<td><%=list.get(i).getNumberoftraveler()%></td>
+												<td><%=list.get(i).getProductprice()%></td>
+												<td><%=list.get(i).getOrderrewardpoints()%></td>
+												<td><%=list.get(i).getSpecialneeds()%></td>
 
 												<td>
 													<FORM METHOD="post"
@@ -476,14 +502,15 @@ td {
 													<FORM METHOD="post"
 														ACTION="<%=request.getContextPath()%>/orderdetail.do"
 														style="margin-bottom: 0px;">
-														<input type="submit" value="刪除" class="btn v5" id="delete"> <input
-															type="hidden" name="orderdetailno"
+														<input type="submit" value="刪除" class="btn v5" id="delete">
+														<input type="hidden" name="orderdetailno"
 															value="${orderdetailBean.orderdetailno}"> <input
 															type="hidden" name="action" value="delete">
 													</FORM>
 												</td>
 											</tr>
-										</c:forEach>
+											<% } %>
+<%-- 										</c:forEach> --%>
 									</table>
 
 
@@ -518,23 +545,22 @@ td {
 	<!-- Plugin JS-->
 	<script src="<%=request.getContextPath()%>/order/js/plugin.js"></script>
 	<!--Perfect Scrollbar JS-->
-	<script src="<%=request.getContextPath()%>/order/js/perfect-scrollbar.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/order/js/perfect-scrollbar.min.js"></script>
 	<!-- Main JS-->
 	<script src="<%=request.getContextPath()%>/order/js/main.js"></script>
 	<!-- Dashboard JS-->
 	<script src="<%=request.getContextPath()%>/order/js/dashboard.js"></script>
-	
-	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-	
-	<script>
-	
-	$("#delete").on("click",function(){
-		var yes = confirm("你確定要刪除嗎?")
 
-	})
-	
+	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+
+	<script>
+		$("#delete").on("click", function() {
+			var yes = confirm("你確定要刪除嗎?")
+
+		})
 	</script>
-	
-	
+
+
 </body>
 </html>
