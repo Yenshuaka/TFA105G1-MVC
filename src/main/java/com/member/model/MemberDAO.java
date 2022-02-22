@@ -1,7 +1,6 @@
 package com.member.model;
 
 import java.io.BufferedInputStream;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -108,7 +107,67 @@ public class MemberDAO implements MemberDAO_interface {
 		+ "    MEMBER\r\n"
 		+ "WHERE\r\n"
 		+ "    MEMBER_ID = ?";
+	
+	private static final String FIND_FOR_LOGIN_STMT = 
+		"SELECT \r\n"
+		+ "    MEMBER_ID, \r\n"
+		+ "    EMAIL, \r\n"
+		+ "    `PASSWORD`\r\n"
+		+ "FROM\r\n"
+		+ "    MEMBER\r\n"
+		+ "WHERE\r\n"
+		+ "    EMAIL = ?\r\n"
+		+ "        AND `PASSWORD` = ?;";
+	
+	
+	@Override
+	public  Integer login(MemberVO memberVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Integer memberid = null;
 
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(FIND_FOR_LOGIN_STMT);
+			
+			pstmt.setString(1, memberVO.getEmail());
+			pstmt.setString(2, memberVO.getPassword());
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {				
+				 memberid = rs.getInt("MEMBER_ID");				
+			}
+			
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return memberid;
+	}
+	
+	
+	
+	
 	@Override
 	public void insert(MemberVO memberVO) {
 		Connection con = null;
