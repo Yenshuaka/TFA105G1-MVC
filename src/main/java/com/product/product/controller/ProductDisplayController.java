@@ -248,9 +248,10 @@ public class ProductDisplayController {
 	@RequestMapping("/ShoppingCart")
 	public String shoppingCart(Model model, HttpSession session) {
 		
-//		session.removeAttribute("memberid");
-//		List<ProductBean> list = productService.select(null);
-//		model.addAttribute("list", list);
+		if(session.getAttribute("memberid")==null) {	
+			return "FS-login";
+		};
+
 		
 		Jedis jedis = new Jedis("localhost", 6379);
 		

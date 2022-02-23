@@ -817,7 +817,8 @@
                     <div class="col-lg-4 col-md-12">
                         <div class="listing-sidebar">
                             <div class="sidebar-widget info">
-                                <h3><i class="ion-android-calendar"></i>訂購</h3> <span class='showarea'></span>
+                                <h3><i class="ion-android-calendar"></i>訂購 <span style='float: right'>TWD ${ProductBean.productprice}</span></h3> <span class='showarea'></span>
+                                	
 <!--                                 <div class="row"> -->
 <!--                                     <div class="col-md-12 mar-bot-15"> -->
 <!--                                         <div class="nice-select filter-input mar-top-0" tabindex="0"><span class="current">Select Room</span> -->
