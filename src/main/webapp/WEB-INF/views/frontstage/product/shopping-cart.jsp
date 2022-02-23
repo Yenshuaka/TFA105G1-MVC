@@ -38,7 +38,7 @@
     <div class="page-wrapper">
 
         <!--Sidebar Menu Starts-->
-        <%@include file="file/FS_Sidebar Menu.file"%>
+        <%@include file="/WEB-INF/views/file/FS_Sidebar Menu.file"%>
 <!--         <aside class="menu-sidebar js-right-sidebar d-block d-lg-none"> -->
 <!--             <div class="logo"> -->
 <!--                 <a href="#"> -->
@@ -132,7 +132,7 @@
 
         <!--Dashboard content Wrapper starts-->
         <div class="dash-content-wrap">
-		<%@include file="file/FS_Top header.file"%>
+		<%@include file="/WEB-INF/views/file/FS_Top header.file"%>
             <!-- Top header starts-->
 <!--             <header class="db-top-header"> -->
 <!--                 <div class="container-fluid"> -->

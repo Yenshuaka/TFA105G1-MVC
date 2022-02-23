@@ -175,7 +175,7 @@ public class ProductDisplayController {
 		model.addAttribute("page", page);
 		model.addAttribute("list2", list2);
 		model.addAttribute("imgids", imgids);
-		return "product-display";
+		return "frontstage/product/product-display";
 
 	}
 	
@@ -241,7 +241,7 @@ public class ProductDisplayController {
 		model.addAttribute("comments", comments);
 		
 
-		return "product-detail";
+		return "frontstage/product/product-detail";
 	}
 	
 	
@@ -283,7 +283,7 @@ public class ProductDisplayController {
 	
 		
 	
-		return "shopping-cart";
+		return "frontstage/product/shopping-cart";
 	}
 	
 	
