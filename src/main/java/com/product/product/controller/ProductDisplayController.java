@@ -248,7 +248,7 @@ public class ProductDisplayController {
 	@RequestMapping("/ShoppingCart")
 	public String shoppingCart(Model model, HttpSession session) {
 		
-		session.setAttribute("memberid", 2);
+//		session.removeAttribute("memberid");
 //		List<ProductBean> list = productService.select(null);
 //		model.addAttribute("list", list);
 		
