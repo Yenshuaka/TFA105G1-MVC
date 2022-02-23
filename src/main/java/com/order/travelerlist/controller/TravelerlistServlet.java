@@ -152,7 +152,7 @@ public class TravelerlistServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				session.setAttribute("list", list);
 
-				String url = "order/listTraveler.jsp";
+				String url = "travelerlist.do?action=delete2";
 				res.sendRedirect(url);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
@@ -166,7 +166,36 @@ public class TravelerlistServlet extends HttpServlet {
 			}
 
 		}
-		;
+		
+		if ("delete2".equals(action)) { 
+			System.out.println(22222);
+			HttpSession session = req.getSession();
+			String orderdetailno = (String)session.getAttribute("orderdetailno");
+			Integer orderdetailnoint = Integer.valueOf(orderdetailno);
+			Connection connection;
+			List<TravelerlistBean> list = new ArrayList<TravelerlistBean>();
+			try {
+				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei","root","password");
+				PreparedStatement ps = connection.prepareStatement("select traveler_list_no from traveler_list where order_detail_no = ? ");
+				ps.setInt(1,orderdetailnoint);
+				ResultSet rs = ps.executeQuery();
+				
+				
+				while(rs.next()) {
+					TravelerlistBean bean = travelerlistService.getOneTravelerlist(rs.getInt(1));
+					list.add(bean);
+					
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			session.setAttribute("list", list);
+			
+			String url = ("order/listTraveler.jsp?orderdetailno="   +  orderdetailno );
+			res.sendRedirect(url);
+		}
+	
 
 //		if ("insert".equals(action)) { // 來自add-post.jsp的請求
 //
@@ -290,7 +319,7 @@ public class TravelerlistServlet extends HttpServlet {
 
 				
 //				String url = "order/listTraveler.jsp";
-				String url = "/tfa105-order/travelerlist.do?action=update2";
+				String url = "travelerlist.do?action=update2";
 				res.sendRedirect(url);
 
 				/*************************** 其他可能的錯誤處理 **********************************/

@@ -53,6 +53,8 @@
 /* *{
     box-sizing: border-box;
 } */
+
+
 .row {
 	white-space: nowrap;
 }
@@ -70,7 +72,7 @@ label {
 	margin: 180px auto;
 	background-color: white;
 	width: 800px;
-	height: 600px;
+	height: 550px;
 	padding: 20px;
 	box-sizing: border-box;
 	font-size: small;
@@ -206,7 +208,7 @@ hr {
 	box-shadow: 0 2px 4px rgb(0 0 0/ 15%);;
 	background-color: white;
 	width: 700px;
-	height: 550px;
+	height: 500px;
 	padding: 20px;
 	box-sizing: border-box;
 	font-size: small;
@@ -596,7 +598,7 @@ ul.list>li>div.inner_block1 {
 
 ul.list>li>div.inner_block2 {
 	width: 63.52%;
-	height: 400px;
+	height: 200px;
 	font-size: 18px;
 	background-color: white;
 	color: #4a4a4a;

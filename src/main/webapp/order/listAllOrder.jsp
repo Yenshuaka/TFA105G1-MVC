@@ -152,13 +152,13 @@
 
 
 										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/order.do">
+											ACTION="<%=request.getContextPath()%>/orderdetail.do">
 											<div class="above">
 												<h10 style="color:brown">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp輸入訂單編號
 												(如1):</h10>
 												<h11>&nbsp</h11>
 												<input type="text" name="orderid" class="select"> <input
-													type="hidden" name="action" value="getOne_For_Display">
+													type="hidden" name="action" value="getOne_For_Orderdetail">
 												<input type="submit" value="送出" class="send"> 
 											</div>
 										</FORM>

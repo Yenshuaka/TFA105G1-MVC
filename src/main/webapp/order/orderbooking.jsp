@@ -25,11 +25,11 @@
 	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800"
 	rel="stylesheet">
 <!-- Plugins CSS -->
-<link href="css_orderbooking/plugin.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/order/css_orderbooking/plugin.css" rel="stylesheet" />
 <!-- style CSS -->
-<link href="css_orderbooking/style.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/order/css_orderbooking/style.css" rel="stylesheet" />
 <!--color switcher css-->
-<link rel="stylesheet" href="css_orderbooking/switcher/skin-red.css"
+<link rel="stylesheet" href="<%=request.getContextPath()%>/order/css_orderbooking/switcher/skin-red.css"
 	media="screen" id="style-colors" />
 <!-- Document Title -->
 <!-- <title>listagram - Directory Listing HTML Template</title> -->
@@ -38,7 +38,40 @@
 <!-- 21, 39, 34, 47-59, 63-128, 132-162, 166-177, 181-192, 197, 221, 228, 232, 283-293, 239, 245, 257 -->
 <!-- style.css 1575-1585-->
 
+<style>
 
+
+.btn_primary {
+    margin-left: 15px;
+}
+
+.buyer_board {
+height:500px;
+
+}
+
+.traveler_infor {
+
+height:480px;
+
+}
+
+ul.list>li>div.inner_block2 {
+	height: 300px;
+
+}
+.input_add {
+	width: 250px;
+	height: 30px;
+	padding: 10px 12px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+}
+
+td{
+padding:10px;
+}
+</style>
 
 <body>
 	<!--Preloader starts-->
@@ -52,16 +85,16 @@
 		<%@ include file="file/Header_main.file"%>
 		<!--Header ends-->
 		<!--Hero section starts-->
+		
+		
 		<div class="buyer_board">
 			<div class="txt">訂購人資料</div>
 			<hr>
-
-			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order.do"
-				style="margin-bottom: 0px;">
 				<div class="row">
 					<div class="col-md-4 col-sm-6 col-xs-12">
 						<div class="form_group">
-							<label>姓氏<span class="require_mark">*</span></label> <br> <input
+							<label>姓氏<span class="require_mark">*</span></label> <br>
+							<input
 								type="text" name="contact_lastName" placeholder="例:王"
 								class="form_control" id="book_last_name" value="王">
 							<div class="tip_text_danger" id="tip_text_danger_first">此欄位必填</div>
@@ -74,7 +107,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="row">
 					<div class="col-md-4 col-sm-6 col-xs-12">
 						<div class="form_group">
@@ -103,12 +135,15 @@
 				<div class="update_member">
 					<input type="checkbox" id="update_member_id"> 同時更新會員資料
 				</div>
-
-
 				<div>
 					<button class="btn_primary">繼續</button>
-				</div>
+				</div> 
 		</div>
+
+
+
+
+
 
 		<div id="traveler_Infor">
 			<div class="sub_title_traveler">旅客資料</div>
@@ -118,15 +153,13 @@
 						旅客代表人
 						<button class="btn_ex">清空</button>
 					</div>
-
-
-
 					<div class="same_person">
 						<select class="same_traveler">
 							<option disabled="disabled" selected>請選擇</option>
 							<option value="same">同訂購人資料</option>
 						</select>
 					</div>
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order.do">
 					<div class="form_group">
 						<label>出生日期 <span class="require_mark">*</span><br></label> <br>
 						<input type="text" name="birthday"
@@ -148,7 +181,6 @@
 							id="traveler_id">
 						<div class="tip_text_danger">此欄位必填</div>
 					</div>
-					<br>
 					<div class="form_group">
 						<label>姓氏<span class="require_mark">*</span><br></label> <br>
 						<input type="text" name="lastname" class="form_control"
@@ -156,7 +188,8 @@
 						<div class="tip_text_danger">此欄位必填</div>
 					</div>
 					<div class="form_group">
-						<label>名字</label><span class="require_mark">*</span></label> <br> <input
+						<label>名字</label><span class="require_mark">*</span><br> 
+						<input
 							type="text" name="firstname" class="form_control"
 							id="traveler_first_name">
 						<div class="tip_text_danger">此欄位必填</div>
@@ -165,7 +198,7 @@
 
 				<div class="sub_title">導覽語言</div>
 				<div class="form_group">
-					<label>行程導覽語言</label><span class="require_mark">*</span><br> </label>
+					<label>行程導覽語言</label><span class="require_mark">*</span><br>
 					<select name="" id="booking_guide_language" class="form_control">
 						<option disabled="disabled" selected>請選擇</option>
 						<option value="zh-tw">中文</option>
@@ -176,18 +209,19 @@
 				<div class="sub_title">緊急聯絡人</div>
 				<div class="urgent_board">
 					<div class="form_group">
-						<label>聯絡人姓</label><span class="require_mark">*</span><br> </label> <input
-							type="text" name="urgent_last_name" class="form_control">
+						<label>聯絡人姓</label><span class="require_mark">*</span><br> 
+						<input type="text" name="urgent_last_name" class="form_control">
 						<div class="tip_text_danger">此欄位必填</div>
 					</div>
 					<div class="form_group">
-						<label>聯絡人名</label><span class="require_mark">*</span><br> </label> <input
+						<label>聯絡人名</label><span class="require_mark">*</span><br>
+						<input
 							type="text" name="urgent_first_name" class="form_control">
 						<div class="tip_text_danger">此欄位必填</div>
 					</div>
 					<div class="form_group">
-						<label>連絡電話</label><span class="require_mark">*</span><br> </label> <input
-							type="text" name="urgent_phone" class="form_control"
+						<label>連絡電話</label><span class="require_mark">*</span><br>
+						 <input type="text" name="urgent_phone" class="form_control"
 							id="urgent_phone">
 						<div class="tip_text_danger">此欄位必填</div>
 					</div>
@@ -197,8 +231,11 @@
 				<textarea id="booking_note" name="specialneeds" class="note_control"
 					maxlength="900" rows="3"
 					placeholder="此欄位僅限資料備註。不在商品規範內的個人需求，不保證提供。"></textarea>
+				 
 			</div>
-
+		</div>
+		
+		<div>
 			<div class="sub_title_traveler">付款</div>
 			<div class="board_card" id="payment_board">
 				<ul class="list">
@@ -264,13 +301,9 @@
 							</button> ★ 付款明細
 					</a>
 						<div class="inner_block2">
+						<hr>
 							<table>
 
-								<!-- 								<tr> -->
-								<!-- 									<td>訂單編號:</td> -->
-								<!-- 									<td><input class="input_add" type="TEXT" name="orderid" -->
-								<!-- 										size="45" value="" /></td> -->
-								<!-- 								</tr> -->
 								<tr>
 									<td>商品名稱:</td>
 									<td><input class="input_add" type="TEXT"
@@ -303,20 +336,20 @@
 					1件商品合計<span class="amount">TWD 992</span> <input type="submit"
 						value="確認付款" class="btn_ex1"> <input type="hidden"
 						name="action" value="insert">
-					</FORM>
 				</div>
 			</div>
-
-
+			</FORM>
+		</div>
+</div>
 			<!--Color switcher ends-->
 			<!--Scripts starts-->
 			<!--plugin js-->
-			<script src="js_orderbooking/plugin.js"></script>
+			<script src="<%=request.getContextPath()%>/order/js_orderbooking/plugin.js"></script>
 			<!--google maps-->
 			<script
 				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_8C7p0Ws2gUu7wo0b6pK9Qu7LuzX2iWY&amp;libraries=places&amp;callback=initAutocomplete"></script>
 			<!--Main js-->
-			<script src="js_orderbooking/main.js"></script>
+			<script src="<%=request.getContextPath()%>/order/js_orderbooking/main.js"></script>
 			<!--Scripts ends-->
 </body>
 
