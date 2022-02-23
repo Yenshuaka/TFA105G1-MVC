@@ -259,11 +259,21 @@
                                         %>
                                          </p>
                                         <div class="list-ratings">
-                                            <span class="ion-android-star"></span>
-                                            <span class="ion-android-star"></span>
-                                            <span class="ion-android-star"></span>
-                                            <span class="ion-android-star"></span>
-                                            <span class="ion-android-star-half"></span>
+                                        <% Long avgScore = (Long) request.getAttribute("avgScore"); 
+                                           for(int i =1 ; i<= avgScore; i++){
+                                        %>
+                                        	<span class="ion-android-star"></span>
+                                        <% }
+                                           for(int i =1 ; i<= 5-avgScore; i++){
+                                        %>
+                                        	<span class="ion-android-star-outline">
+                                        <%} %>
+                                        	
+<!--                                             <span class="ion-android-star"></span> -->
+<!--                                             <span class="ion-android-star"></span> -->
+<!--                                             <span class="ion-android-star"></span> -->
+<!--                                             <span class="ion-android-star-outline"></span> -->
+<!--                                             <span class="ion-android-star-half"></span> -->
                                             <a href="#reviews">(<%=comments.size() %> Reviews)</a>
                                         </div>
                                     </div>
@@ -890,7 +900,7 @@
 <!--                                     </div> -->
 <!--                                 </div> -->
                                 <div class="book-btn text-center">
-                                    <a href="#"> 立即訂購</a>
+                                    <a href="<%=request.getContextPath() %>/booking.do?action=booking&productid=${ProductBean.productid}"> 立即訂購</a>
                                 </div>
                                 <div class="book-btn text-center">
                                     <a onclick='addCart(event)'> 加入購物車</a>

@@ -244,6 +244,17 @@ public class ProductDisplayController {
 			model.addAttribute("cities", listcity);
 			
 		//以下抓評分等級(星星數 幾個全星幾個半星)
+			
+		Double ttlScore = 0.0;
+		if(comments!=null && comments.size()!=0)
+		for(int i=0; i < comments.size(); i++) {
+			ttlScore = ttlScore + comments.get(i).getScore();		
+		}
+		
+		Double avgScoreDouble = ttlScore/comments.size();
+		Long avgScore = Math.round(avgScoreDouble);
+		model.addAttribute("avgScore", avgScore);
+			
 		
 		
 		
@@ -262,6 +273,8 @@ public class ProductDisplayController {
 	
 	@RequestMapping("/ShoppingCart")
 	public String shoppingCart(Model model, HttpSession session) {
+		
+		session.setAttribute("memberid", 3);
 		
 		if(session.getAttribute("memberid")==null) {	
 			return "FS-login";
