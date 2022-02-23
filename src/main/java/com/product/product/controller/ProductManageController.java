@@ -44,11 +44,11 @@ public class ProductManageController {
 			bean2.setProductid(Integer.valueOf(productid));
 			List<ProductBean> list = productService.select(bean2);
 			model.addAttribute("list", list);
-			return "productmanage1";	
+			return "backstage/product/productmanage1";	
 		}else if(action==null) {  //這是select全部的狀況	
 			List<ProductBean> list = productService.select(null);
 			model.addAttribute("list", list);
-			return "productmanage1";
+			return "backstage/product/productmanage1";
 		}
 		
 		return "";
@@ -82,13 +82,13 @@ public class ProductManageController {
 	
 	@RequestMapping("/AddProduct")
 	public String addProduct() {	
-		return "add-product1";
+		return "backstage/product/add-product1";
 	}
 	
 	
 	@RequestMapping("/UpdateProduct")
 	public String updateProduct() {	
-		return "update-product";
+		return "backstage/product/update-product";
 	}
 	
 	

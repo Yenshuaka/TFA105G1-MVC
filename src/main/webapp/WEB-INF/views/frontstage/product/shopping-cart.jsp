@@ -38,7 +38,7 @@
     <div class="page-wrapper">
 
         <!--Sidebar Menu Starts-->
-        <%@include file="file/FS_Sidebar Menu.file"%>
+        <%@include file="/WEB-INF/views/file/FS_Sidebar Menu.file"%>
 <!--         <aside class="menu-sidebar js-right-sidebar d-block d-lg-none"> -->
 <!--             <div class="logo"> -->
 <!--                 <a href="#"> -->
@@ -132,7 +132,7 @@
 
         <!--Dashboard content Wrapper starts-->
         <div class="dash-content-wrap">
-		<%@include file="file/FS_Top header.file"%>
+		<%@include file="/WEB-INF/views/file/FS_Top header.file"%>
             <!-- Top header starts-->
 <!--             <header class="db-top-header"> -->
 <!--                 <div class="container-fluid"> -->
@@ -387,7 +387,8 @@
                                 </div>
 
                                 <div class="viewd-item-wrap">
-                                
+                                <form method='post' action='<%=request.getContextPath() %>/booking.do'>
+                                	<input type='hidden' name='action' value='booking'>
                                 
                                 	<%  List<ProductBean> list = (List)request.getAttribute("list"); 
                                 		if(list!=null && list.size()!=0){
@@ -402,7 +403,7 @@
                                             <a class="category" href="#"><span class="list-bg aqua"><i class="icofont-hotel"></i></span>Hotel</a>
                                             <h3><a href="<%=request.getContextPath() %>/MVC/ProductDetail?productid=<%=list.get(i).getProductid() %>" target="_blank"><%=list.get(i).getProductname() %></a></h3>
                                             <p class="list-address"><i class="icofont-google-map"></i>4210 Khale Street, Florence, USA</p>
-
+											<input type='hidden' name='productid' value='<%=list.get(i).getProductid() %>'>
                                             <div class="ratings">
                                                 <i class="ion-ios-star"></i>
                                                 <i class="ion-ios-star"></i>
@@ -417,7 +418,7 @@
                                         <div class="listing-button">
                                         	TWD&nbsp<span><%=list.get(i).getProductprice() %></span>&nbsp&nbsp
 <!--                                             <a href="#" class="btn v2"><i class="ion-edit"></i> Edit</a> -->
-                                            <button class="btn v5" onclick='deleteCart(event)' value='<%=list.get(i).getProductid() %>'><i class="ion-android-delete"></i> 刪除</button>
+                                            <button type='button' class="btn v5" onclick='deleteCart(event)' value='<%=list.get(i).getProductid() %>'><i class="ion-android-delete"></i> 刪除</button>
                                         </div>
                                     </div>
                                     
@@ -499,9 +500,12 @@
                                     <% if(list!=null && list.size()!=0){ %>
                                     <div>
                                         <h3>總金額: <span class='totalprice'>${totalprice}</span>元</h3>
-                                        <a href="#" class="btn v5"> 前往結帳</a>
+<!--                                         <a href="#" class="btn v5"> 前往結帳</a> -->
+                                        <input type='submit' value='前往結帳' class="btn v5">
                                     </div>
                                     <% }%>
+                                    
+                                    </form>
                                 </div>
 
                             </div>
