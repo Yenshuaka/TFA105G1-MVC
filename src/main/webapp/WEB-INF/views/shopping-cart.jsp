@@ -418,7 +418,7 @@
                                         <div class="listing-button">
                                         	TWD&nbsp<span><%=list.get(i).getProductprice() %></span>&nbsp&nbsp
 <!--                                             <a href="#" class="btn v2"><i class="ion-edit"></i> Edit</a> -->
-                                            <button class="btn v5" onclick='deleteCart(event)' value='<%=list.get(i).getProductid() %>'><i class="ion-android-delete"></i> 刪除</button>
+                                            <button type='button' class="btn v5" onclick='deleteCart(event)' value='<%=list.get(i).getProductid() %>'><i class="ion-android-delete"></i> 刪除</button>
                                         </div>
                                     </div>
                                     
