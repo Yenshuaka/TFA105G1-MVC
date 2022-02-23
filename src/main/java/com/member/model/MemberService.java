@@ -17,14 +17,14 @@ public class MemberService {
 		return dao.login(memberVO);				
 	}
 	
-//	public MemberVO memberRegister(String email, String password) {
-//		MemberVO memberVO = new MemberVO();
-//		memberVO.setEmail(email);
-//		memberVO.setPassword(password);
-//		dao.login(memberVO);
-//		
-//		return memberVO;		
-//	}
+	public MemberVO memberRegister(String email, String password) {
+		MemberVO memberVO = new MemberVO();
+		memberVO.setEmail(email);
+		memberVO.setPassword(password);
+		dao.login(memberVO);
+		
+		return memberVO;		
+	}
 
 	public MemberVO addMember(String email, String password, String firstname, String lastname, String idno,
 			String gender, java.sql.Date dateofbirth, String country, String phone, String nickname, String selfintro) {

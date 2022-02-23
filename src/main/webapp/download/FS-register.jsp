@@ -65,17 +65,17 @@
                                             <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email" value="" required>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="user_password" id="user_password" tabindex="2" class="form-control" placeholder="Password" required>
+                                            <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" required>
                                         </div>
                                         <div class="res-box text-left">
-                                            <input type="checkbox" tabindex="3" class="" name="agreement" id="agreement" required>
+                                            <input type="checkbox" tabindex="3" class="" name="agreement" id="agreement" value="agreement"required>
                                             <label for="agreement">我已詳閱並同意 <a href="#TermsAndConditions">使用者條款</a> &amp; <a href="#Privacy">隱私權保護政策</a></label>
                                         </div>
                                         <div class="res-box text-center mar-top-30">
-                                            <button type="submit" class="btn v3"><i class="ion-android-checkmark-circle"></i>註冊</button>
+                                            <button type="submit" class="btn v3" value="register"><i class="ion-android-checkmark-circle"></i>註冊</button>
                                         </div>
                                     </form>
                                     <div class="col-md-8 col-12 text-left">
