@@ -251,8 +251,7 @@ public class ProductDisplayController {
 			ttlScore = ttlScore + comments.get(i).getScore();		
 		}
 		
-		Double avgScoreDouble = ttlScore/comments.size();
-		Long avgScore = Math.round(avgScoreDouble);
+		Double avgScore = ttlScore/comments.size();
 		model.addAttribute("avgScore", avgScore);
 			
 		

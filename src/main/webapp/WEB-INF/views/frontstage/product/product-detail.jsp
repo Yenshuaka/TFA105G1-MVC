@@ -254,27 +254,20 @@
                                         
                                         <% List<CityBean> cities = (List<CityBean>)request.getAttribute("cities");
                                         	for(int i=0; i < cities.size();i++){
-                                        		out.write(cities.get(i).getCity());
+                                        		out.write(cities.get(i).getCity()+" ");
                                         	}
                                         %>
+                                        
+                                        <a href="#reviews" style='color:white'>(<%=comments.size() %> 則評論)</a>
                                          </p>
-                                        <div class="list-ratings">
-                                        <% Long avgScore = (Long) request.getAttribute("avgScore"); 
-                                           for(int i =1 ; i<= avgScore; i++){
-                                        %>
-                                        	<span class="ion-android-star"></span>
-                                        <% }
-                                           for(int i =1 ; i<= 5-avgScore; i++){
-                                        %>
-                                        	<span class="ion-android-star-outline">
-                                        <%} %>
-                                        	
+                                         
+                                        <div class="list-ratings">           	
 <!--                                             <span class="ion-android-star"></span> -->
 <!--                                             <span class="ion-android-star"></span> -->
 <!--                                             <span class="ion-android-star"></span> -->
 <!--                                             <span class="ion-android-star-outline"></span> -->
 <!--                                             <span class="ion-android-star-half"></span> -->
-                                            <a href="#reviews">(<%=comments.size() %> Reviews)</a>
+<%--                                             <a href="#reviews">(<%=comments.size() %> 則評論)</a> --%>
                                         </div>
                                     </div>
                                 </div>
@@ -628,7 +621,8 @@
                             
                             
                             <div id="reviews" class="list-details-section mar-top-10">
-                                <h4>商品評論 <span>(<%=comments.size() %>)</span></h4>
+                                <h4>商品評論 <span>(<%=comments.size() %>)</span><span class="customer-rating">${avgScore}</span></h4>
+                                <br> 
                             <%	if(comments!=null && comments.size()!=0){ %>
 <!--                             <div id="reviews" class="list-details-section mar-top-10"> -->
 <%--                                 <h4>商品評論 <span>(<%=comments.size() %>)</span></h4> --%>
