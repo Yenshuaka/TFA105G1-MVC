@@ -1,5 +1,5 @@
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.DateFormat, com.product.city.model.*"%>
 <%@page import="java.util.Date, com.member.model.*, com.member.controller.*"%>
 <%@page import="com.product.productcomment.model.ProductCommentBean"%>
 <%@ page import="com.product.product.model.ProductBean"%>
@@ -10,6 +10,8 @@
 	import="java.util.*, org.springframework.context.ApplicationContext, org.springframework.web.context.WebApplicationContext"%>
 <%@ page
 	import="com.product.product.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
+
+<% List<ProductCommentBean> comments = (List<ProductCommentBean>)request.getAttribute("comments");%>
 
 <!DOCTYPE html>
 <html dir="ltr" lang="en-US">
@@ -245,17 +247,24 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-7 col-sm-12">
                                     <div class="single-listing-title float-left">
-                                        <p><a href="#" class="btn v6">Hotel</a></p>
+                                    <p>${ProductBean.producttype}</p>
+<%--                                         <p><span type='button' href="#" class="btn v6">${ProductBean.producttype}</span></p> --%>
                                         <h2>${ProductBean.productname}<i class="icofont-tick-boxed"></i></h2>
-                                        <p><i class="ion-ios-location"></i> 864 W. Walnut Ave.
-                                            Avon, IN 46123</p>
+                                        <p><i class="ion-ios-location"></i>
+                                        
+                                        <% List<CityBean> cities = (List<CityBean>)request.getAttribute("cities");
+                                        	for(int i=0; i < cities.size();i++){
+                                        		out.write(cities.get(i).getCity());
+                                        	}
+                                        %>
+                                         </p>
                                         <div class="list-ratings">
                                             <span class="ion-android-star"></span>
                                             <span class="ion-android-star"></span>
                                             <span class="ion-android-star"></span>
                                             <span class="ion-android-star"></span>
                                             <span class="ion-android-star-half"></span>
-                                            <a href="#">(31 Reviews)</a>
+                                            <a href="#reviews">(<%=comments.size() %> Reviews)</a>
                                         </div>
                                     </div>
                                 </div>
@@ -264,14 +273,14 @@
                                         <div class="save-btn">
                                             <a href="#" class="btn v3 white"><i class="ion-heart"></i> Save</a>
                                         </div>
-                                        <div class="share-btn">
-                                            <a href="#" class="btn v3 white"><i class="ion-android-share-alt"></i> Share</a>
-                                            <ul class="social-share">
-                                                <li class="bg-fb"><a href="#"><i class="ion-social-facebook"></i></a></li>
-                                                <li class="bg-tt"><a href="#"><i class="ion-social-twitter"></i></a></li>
-                                                <li class="bg-ig"><a href="#"><i class="ion-social-instagram"></i></a></li>
-                                            </ul>
-                                        </div>
+<!--                                         <div class="share-btn"> -->
+<!--                                             <a href="#" class="btn v3 white"><i class="ion-android-share-alt"></i> Share</a> -->
+<!--                                             <ul class="social-share"> -->
+<!--                                                 <li class="bg-fb"><a href="#"><i class="ion-social-facebook"></i></a></li> -->
+<!--                                                 <li class="bg-tt"><a href="#"><i class="ion-social-twitter"></i></a></li> -->
+<!--                                                 <li class="bg-ig"><a href="#"><i class="ion-social-instagram"></i></a></li> -->
+<!--                                             </ul> -->
+<!--                                         </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -607,7 +616,7 @@
                             
                             <!-- 上方為原本的商品評論code 我自己先註解 下方為自己增加的商品評論code -->
                             
-                            <% List<ProductCommentBean> comments = (List<ProductCommentBean>)request.getAttribute("comments");%>
+                            
                             <div id="reviews" class="list-details-section mar-top-10">
                                 <h4>商品評論 <span>(<%=comments.size() %>)</span></h4>
                             <%	if(comments!=null && comments.size()!=0){ %>
@@ -659,8 +668,8 @@
                                                     </p>
 
                                                     <div class="like-btn mar-top-40">
-                                                        <a href="#" class="rate-review float-left"><i class="icofont-thumbs-up"></i> Helpful Review <span>2</span></a>
-                                                        <a href="#" class="rate-review float-right"><i class="icofont-reply"></i>Reply</a>
+                                                        <a href="#" class="rate-review float-left"><i class="icofont-thumbs-up"></i><span>2</span></a>
+<!--                                                         <a href="#" class="rate-review float-right"><i class="icofont-reply"></i>Reply</a> -->
                                                     </div>
                                                 </div>
                                             </div>                                             

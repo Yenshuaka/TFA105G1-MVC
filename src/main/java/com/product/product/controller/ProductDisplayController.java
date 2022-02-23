@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
+import com.product.city.model.CityBean;
 import com.product.product.model.ProductBean;
 import com.product.product.model.ProductDAOHibernate;
 import com.product.product.model.ProductService;
@@ -230,6 +231,20 @@ public class ProductDisplayController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+		
+		//以下抓縣市資料
+		NativeQuery query = this.session.createSQLQuery(
+				"SELECT * FROM CITY\r\n"
+				+ "where CITY_ID = (SELECT CITY_ID \r\n"
+				+ "FROM  PRODUCT_LOC \r\n"
+				+ "where PRODUCT_ID = " + productid  +")"
+			);
+			query.addEntity(CityBean.class);
+			List<CityBean> listcity = (List<CityBean>) query.list();
+			model.addAttribute("cities", listcity);
+			
+		//以下抓評分等級(星星數 幾個全星幾個半星)
+		
 		
 		
 		MemberService memberService = new MemberService();
