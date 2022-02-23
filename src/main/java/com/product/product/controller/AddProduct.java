@@ -408,6 +408,7 @@ public class AddProduct extends HttpServlet {
 				bean.setProductid(productid);
 				productService.delete(bean);
 				
+				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
 				
 				res.sendRedirect(req.getContextPath()+"/MVC/ProductManageController");

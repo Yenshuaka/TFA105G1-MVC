@@ -16,9 +16,12 @@
 
 // List<OrderdetailBean> list = orderdetailService.select(null);
 //這裡開始
-// OrderdetailService svc = new OrderdetailService();
+
 // List<OrderdetailBean> list = orderdetailService.select(null);
 // request.setAttribute("list",list);
+
+
+
 %>
 
 <html>
@@ -483,7 +486,7 @@ td {
 														style="margin-bottom: 0px;">
 														<input type="submit" value="團員表" class="send"> <input
 															type="hidden" name="orderdetailno"
-															value="${orderdetailBean.orderdetailno}"> <input
+															value="<%=list.get(i).getOrderdetailno()%>"> <input
 															type="hidden" name="action"
 															' value="getOne_For_Travelerlist">
 													</FORM>
@@ -494,7 +497,7 @@ td {
 														style="margin-bottom: 0px;">
 														<input type="submit" value="修改" class="btn v2"> <input
 															type="hidden" name="orderdetailno"
-															value="${orderdetailBean.orderdetailno}"> <input
+															value="<%=list.get(i).getOrderdetailno()%>"> <input
 															type="hidden" name="action" value="getOne_For_Update">
 													</FORM>
 												</td>
@@ -504,7 +507,7 @@ td {
 														style="margin-bottom: 0px;">
 														<input type="submit" value="刪除" class="btn v5" id="delete">
 														<input type="hidden" name="orderdetailno"
-															value="${orderdetailBean.orderdetailno}"> <input
+															value="<%=list.get(i).getOrderdetailno()%>"> <input
 															type="hidden" name="action" value="delete">
 													</FORM>
 												</td>
