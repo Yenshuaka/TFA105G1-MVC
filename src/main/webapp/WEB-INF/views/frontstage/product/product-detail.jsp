@@ -608,9 +608,11 @@
                             <!-- 上方為原本的商品評論code 我自己先註解 下方為自己增加的商品評論code -->
                             
                             <% List<ProductCommentBean> comments = (List<ProductCommentBean>)request.getAttribute("comments");%>
-                            <%	if(comments!=null && comments.size()!=0){ %>
                             <div id="reviews" class="list-details-section mar-top-10">
                                 <h4>商品評論 <span>(<%=comments.size() %>)</span></h4>
+                            <%	if(comments!=null && comments.size()!=0){ %>
+<!--                             <div id="reviews" class="list-details-section mar-top-10"> -->
+<%--                                 <h4>商品評論 <span>(<%=comments.size() %>)</span></h4> --%>
                                 
                                  
                                 <% List<MemberVO> members = (List<MemberVO>)request.getAttribute("members"); %>
