@@ -464,13 +464,13 @@ td {
 												<td><%=list.get(i).getOrderdetailno()%></td>
 												<td><%=list.get(i).getOrderid()%></td>
 										
-												<%-- <%String productname = null; %>--%>
-												<%-- <%	for(int j =0; j < products.size(); j++){ 
+												<%String productname = null; %>
+												 <%	for(int j =0; j < products.size(); j++){ 
                                                     	if (list.get(i).getProductid()== products.get(j).getProductid()){
                                                     	productname =  products.get(j).getProductname();
                                                     	
-                                                      } }%>--%>
-<%-- 												<td><%=productname%></td> --%>
+                                                      } }%>
+												<td><%=productname%></td> 
 												<!-- 												<td></td>{memberSvc.select(orderdetailBean.memberid).name} -->
 												<td></td>
 												<td></td>

@@ -94,8 +94,16 @@ public class OrderdetailServlet extends HttpServlet {
 				session1.setAttribute("members", members);
 				
 				HttpSession session2 = req.getSession();
-				List<ProductBean> products = productService.select(null);
-				session2.setAttribute("products", products);
+				String[] productids = req.getParameterValues("productid");//傳來多個productid
+				List<ProductBean> productBeans = new ArrayList<ProductBean>();
+				for(int i = 0;i<productids.length;i++) {
+					ProductBean bean = new ProductBean();
+					bean.setProductid(Integer.valueOf(productids[i]));
+					productService.select(bean);
+					productBeans.add(productService.select(bean).get(0));
+					
+				}
+				session2.setAttribute("products", productBeans);
 
 				String url = "order/listOneOrderdetail.jsp";
 //				res.sendRedirect(url);
