@@ -42,6 +42,7 @@ import com.product.product.model.ProductDAOHibernate;
 import com.product.product.model.ProductService;
 import com.product.productcomment.model.ProductCommentBean;
 import com.product.productcomment.model.ProductCommentService;
+import com.product.productimg.model.ProductImgBean;
 
 import redis.clients.jedis.Jedis;
 
@@ -276,7 +277,7 @@ public class ProductDisplayController {
 					+ "    on ot.order_id = od.order_id\r\n"
 					+ "where member_id = "  + memberid +  " and product_id = "+ productid
 				);
-				query.addEntity(OrderdetailBean.class);
+				query2.addEntity(OrderdetailBean.class);
 				List<OrderdetailBean> listorderdetail = (List<OrderdetailBean>) query2.list();
 
 				if(listorderdetail.size()==0) {
@@ -309,7 +310,7 @@ public class ProductDisplayController {
 //		session.setAttribute("memberid", 3);
 		
 		if(session.getAttribute("memberid")==null) {	
-			return "FS-login";
+			return "frontstage/member/FS-login";
 		};
 
 		
@@ -331,17 +332,30 @@ public class ProductDisplayController {
 
 		Integer totalprice = 0;
 		
+		List<Integer> imgids = new ArrayList<Integer>();
+		
 		for (Integer productid : productids) {
+			//以下找出哪些商品
 			ProductBean bean = new ProductBean();
 			bean.setProductid(productid);
 			list.add(productService.select(bean).get(0));
 			totalprice = totalprice + productService.select(bean).get(0).getProductprice();
+			
+			//以下找出哪些圖片
+			NativeQuery query = this.session.createSQLQuery(
+					"select * from PRODUCT_IMG where PRODUCT_ID = "+ productid +" limit 1"
+				);
+				query.addEntity(ProductImgBean.class);
+				List<ProductImgBean> imgs = (List<ProductImgBean>) query.list();
+				imgids.add(imgs.get(0).getImgid());
+			
+			
 		}
 		
+		model.addAttribute("imgids", imgids);
 		model.addAttribute("list", list);
 		model.addAttribute("totalprice", totalprice);
 	
-		
 	
 		return "frontstage/product/shopping-cart";
 	}

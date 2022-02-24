@@ -390,17 +390,18 @@
                                 <form method='post' action='<%=request.getContextPath() %>/booking.do'>
                                 	<input type='hidden' name='action' value='booking'>
                                 
-                                	<%  List<ProductBean> list = (List)request.getAttribute("list"); 
+                                	<%  List<ProductBean> list = (List)request.getAttribute("list");
+                                		List<Integer> imgids = (List<Integer>)request.getAttribute("imgids");
                                 		if(list!=null && list.size()!=0){
                                 		for(int i = 0; i < list.size(); i++){
                                 	%>
                                 
                                     <div class="most-viewed-item">
                                         <div class="most-viewed-img">
-                                            <a href="#"><img src="images/single-listing/gallery-6.jpg" alt="..."></a>
+                                            <a href="#"><img src="<%=request.getContextPath() %>/ProductImageReader?imgid=<%=imgids.get(i) %>" ></a>
                                         </div>
                                         <div class="most-viewed-detail">
-                                            <a class="category" href="#"><span class="list-bg aqua"><i class="icofont-hotel"></i></span>Hotel</a>
+                                            <span class="list-bg aqua"></span><%=list.get(i).getProducttype() %>
                                             <h3><a href="<%=request.getContextPath() %>/MVC/ProductDetail?productid=<%=list.get(i).getProductid() %>" target="_blank"><%=list.get(i).getProductname() %></a></h3>
                                             <p class="list-address"><i class="icofont-google-map"></i>4210 Khale Street, Florence, USA</p>
 											<input type='hidden' name='productid' value='<%=list.get(i).getProductid() %>'>
