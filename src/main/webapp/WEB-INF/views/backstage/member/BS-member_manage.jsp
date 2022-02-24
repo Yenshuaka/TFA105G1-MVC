@@ -47,14 +47,14 @@ pageContext.setAttribute("list", list);
 
 	<div class="page-wrapper">
 		<!--Sidebar Menu Starts-->
-		<%@include file="file/BS_Sidebar Menu.file"%>
+		<%@include file="/WEB-INF/views/backstage/file/BS_Sidebar Menu.file"%>
 		<!--Sidebar Menu ends-->
 
 		<!--Dashboard content Wrapper starts-->
 		<div class="dash-content-wrap">
 
 			<!-- Top header starts-->
-			<%@include file="file/BS_Top header.file"%>
+			<%@include file="/WEB-INF/views/backstage/file/BS_Top header.file"%>
 			<!-- Top header ends-->
 
 			<!--Dashboard breadcrumb starts-->
@@ -86,9 +86,7 @@ pageContext.setAttribute("list", list);
 								<div class="act-title">
 									<h5>
 										<i class="ion-person"></i>會員資料 <a class="btn v2"
-											href="<%=request.getContextPath()%>/download/BS-add-member.jsp">新增</a> 測試 : <a
-										href="<%=session.getAttribute("memberid") == null ? request.getContextPath() + "/download/FS-login.jsp"
-		: request.getContextPath() + "/member/member.login?action=logout"%>"><%=session.getAttribute("memberid") == null ? "登入/註冊" : "登出"%></a>
+											href="<%=request.getContextPath()%>/download/BS-add-member.jsp">新增</a>
 									</h5>
 								</div>
 								<div class="invoice-body">
@@ -106,7 +104,7 @@ pageContext.setAttribute("list", list);
 													<th>身分證字號</th>
 												</tr>
 											</thead>
-											<%@ include file="file/page1.file"%>
+											<%@ include file="/WEB-INF/views/backstage/file/page1.file"%>
 											<c:forEach var="memberVO" items="${list}"
 												begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 												<tbody>
@@ -142,7 +140,7 @@ pageContext.setAttribute("list", list);
 												</tbody>
 											</c:forEach>
 										</table>
-										<%@ include file="file/page2.file"%>
+										<%@ include file="/WEB-INF/views/backstage/file/page2.file"%>
 									</div>
 								</div>
 							</div>
@@ -153,7 +151,7 @@ pageContext.setAttribute("list", list);
 			<!--Dashboard content ends-->
 
 			<!--Dashboard footer starts-->
-			<%@include file="file/BS_footer.file"%>
+			<%@include file="/WEB-INF/views/backstage/file/BS_footer.file"%>
 			<!--Dashboard footer ends-->
 		</div>
 		<!--Dashboard content Wrapper ends-->

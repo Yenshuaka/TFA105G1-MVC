@@ -15,10 +15,8 @@ import javax.sql.DataSource;
 
 public class MemberDAO implements MemberDAO_interface {
 	
-	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
 	private static DataSource ds = null;
 	
-	// Service Locator?
 	static {
 		try {
 			Context ctx = new InitialContext();
@@ -27,99 +25,12 @@ public class MemberDAO implements MemberDAO_interface {
 			e.printStackTrace();
 		}
 	}
-		
-	private static final String INSERT_STMT = 
-		"insert into MEMBER \r\n"
-			+ "(EMAIL, "
-			+ "`PASSWORD`, "
-			+ "FIRST_NAME, "
-			+ "LAST_NAME, "
-			+ "GENDER, "
-			+ "ID_NO, "
-			+ "DATE_OF_BIRTH, "
-			+ "COUNTRY, "
-			+ "PHONE, "
-			+ "NICKNAME, "
-			+ "SELF_INTRO)\r\n"
-		+ "value\r\n"
-			+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = 
-		"SELECT \r\n"
-			+"MEMBER_ID,\r\n"
-			+"EMAIL,\r\n"
-			+"`PASSWORD`,\r\n"
-			+"FIRST_NAME,\r\n"
-			+"LAST_NAME,\r\n"
-			+"GENDER,\r\n"
-			+"ID_NO,\r\n"
-			+"DATE_OF_BIRTH,\r\n"
-			+"COUNTRY,\r\n"
-			+"PHONE,\r\n"
-			+"POINTS,\r\n"
-			+"NICKNAME,\r\n"
-			+"SELF_INTRO\r\n"
-		+"FROM\r\n"
-			+"MEMBER\r\n"
-		+"order by MEMBER_ID";
-	private static final String GET_ONE_STMT = 
-		"SELECT \r\n"
-			+"MEMBER_ID,\r\n"
-			+"EMAIL,\r\n"
-			+"`PASSWORD`,\r\n"
-			+"FIRST_NAME,\r\n"
-			+"LAST_NAME,\r\n"
-			+"GENDER,\r\n"
-			+"ID_NO,\r\n"
-			+"DATE_OF_BIRTH,\r\n"
-			+"COUNTRY,\r\n"
-			+"PHONE,\r\n"
-			+"POINTS,\r\n"
-			+"NICKNAME,\r\n"
-			+"SELF_INTRO\r\n"		
-		+"FROM MEMBER\r\n"
-		+ "where MEMBER_ID = ?";
-	private static final String DELETE = 
-		"DELETE FROM MEMBER where MEMBER_ID = ?";
-	private static final String UPDATE = 
-		"UPDATE MEMBER \r\n"
-		+ "SET \r\n"
-		+ "    FIRST_NAME = ?,\r\n"
-		+ "    LAST_NAME = ?,\r\n"
-		+ "    ID_NO = ?,\r\n"
-		+ "    GENDER = ?,\r\n"
-		+ "    DATE_OF_BIRTH = ?,\r\n"
-		+ "    COUNTRY = ?,\r\n"
-		+ "    PHONE = ?\r\n"
-		+ "WHERE\r\n"
-		+ "    MEMBER_ID = ?";
-	
-	private static final String UPLOADPIC = 
-		"UPDATE MEMBER \r\n"
-		+ "SET \r\n"
-		+ "    AVATAR = ?\r\n"
-		+ "WHERE\r\n"
-		+ "    MEMBER_ID = ?";
-	
-	private static final String READPIC = 
-		"SELECT \r\n"
-		+ "    AVATAR\r\n"
-		+ "FROM\r\n"
-		+ "    MEMBER\r\n"
-		+ "WHERE\r\n"
-		+ "    MEMBER_ID = ?";
 	
 	private static final String FIND_FOR_LOGIN_STMT = 
-		"SELECT \r\n"
-		+ "    MEMBER_ID, \r\n"
-		+ "    EMAIL, \r\n"
-		+ "    `PASSWORD`\r\n"
-		+ "FROM\r\n"
-		+ "    MEMBER\r\n"
-		+ "WHERE\r\n"
-		+ "    EMAIL = ?\r\n"
-		+ "        AND `PASSWORD` = ?;";
-	
-	
+			"SELECT \r\n"
+			+ "	MEMBER_ID, EMAIL, `PASSWORD`\r\n"
+			+ "FROM MEMBER\r\n"
+			+ "WHERE EMAIL = ? AND `PASSWORD` = ?";
 	@Override
 	public  Integer login(MemberVO memberVO) {
 		Connection con = null;
@@ -166,8 +77,11 @@ public class MemberDAO implements MemberDAO_interface {
 	}
 	
 	
-	
-	
+	private static final String INSERT_STMT = 
+			"insert into MEMBER\r\n"
+			+ "	(EMAIL, `PASSWORD`, FIRST_NAME, LAST_NAME, GENDER, ID_NO, DATE_OF_BIRTH, COUNTRY, PHONE, NICKNAME, SELF_INTRO)\r\n"
+			+ "value\r\n"
+			+ "	(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";		
 	@Override
 	public void insert(MemberVO memberVO) {
 		Connection con = null;
@@ -215,6 +129,11 @@ public class MemberDAO implements MemberDAO_interface {
 		}
 	}
 
+	private static final String UPDATE = 
+			"UPDATE MEMBER\r\n"
+			+ "SET\r\n"
+			+ "	FIRST_NAME = ?, LAST_NAME = ?, ID_NO = ?, GENDER = ?, DATE_OF_BIRTH = ?, COUNTRY = ?, PHONE = ?\r\n"
+			+ "WHERE MEMBER_ID = ?";
 	@Override
 	public void update(MemberVO memberVO) {
 		Connection con = null;
@@ -258,7 +177,9 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 		}
 	}
-
+	
+	private static final String DELETE = 
+			"DELETE FROM MEMBER where MEMBER_ID = ?";
 	@Override
 	public void delete(Integer memberid) {
 		Connection con = null;
@@ -295,6 +216,12 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 		}
 	}
+	
+	private static final String GET_ONE_STMT = 
+			"SELECT\r\n"
+			+ "	MEMBER_ID, EMAIL, `PASSWORD`, FIRST_NAME, LAST_NAME, GENDER, ID_NO, DATE_OF_BIRTH, COUNTRY, PHONE, POINTS, NICKNAME, SELF_INTRO\r\n"
+			+ "FROM MEMBER\r\n"
+			+ "WHERE MEMBER_ID = ?";	
 	@Override
 	public MemberVO findByPrimaryKey(Integer memberid) {
 		MemberVO memberVO = null;
@@ -322,6 +249,8 @@ public class MemberDAO implements MemberDAO_interface {
 				memberVO.setDateofbirth(rs.getDate("DATE_OF_BIRTH"));
 				memberVO.setCountry(rs.getString("COUNTRY"));
 				memberVO.setPhone(rs.getString("PHONE"));
+				memberVO.setNickname(rs.getString("NICKNAME"));
+				memberVO.setSelfintro(rs.getString("SELF_INTRO"));
 			}
 
 			// Handle any driver errors
@@ -354,7 +283,12 @@ public class MemberDAO implements MemberDAO_interface {
 		}
 		return memberVO;
 	}
-
+	
+	private static final String GET_ALL_STMT = 
+			"SELECT\r\n"
+			+ "	MEMBER_ID, EMAIL, `PASSWORD`, FIRST_NAME, LAST_NAME, GENDER, ID_NO, DATE_OF_BIRTH, COUNTRY, PHONE, POINTS, NICKNAME, SELF_INTRO\r\n"
+			+ "FROM MEMBER\r\n"
+			+ "order by MEMBER_ID";
 	@Override
 	public List<MemberVO> getAll() {
 		List<MemberVO> list = new ArrayList<MemberVO>();
@@ -425,8 +359,13 @@ public class MemberDAO implements MemberDAO_interface {
 		return list;
 	}
 	
+	private static final String UPLOADPIC = 
+			"UPDATE MEMBER \r\n"
+			+ "SET \r\n"
+			+ "	AVATAR = ?\r\n"
+			+ "WHERE MEMBER_ID = ?";	
 	@Override
-	public void upload(MemberVO memberVO) {
+	public void uploadPic(MemberVO memberVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -463,6 +402,11 @@ public class MemberDAO implements MemberDAO_interface {
 		}
 	}
 	
+	private static final String READPIC = 
+			"SELECT\r\n"
+			+ "	AVATAR\r\n"
+			+ "FROM MEMBER\r\n"
+			+ "WHERE MEMBER_ID = ?";	
 	@Override
 	public byte[] read(Integer memberid) {
 		Connection con = null;
@@ -483,8 +427,7 @@ public class MemberDAO implements MemberDAO_interface {
 				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("AVATAR"));
 			//	buf = new byte[in.available()]; // 4K buffer
 				buf = in.readAllBytes();				
-			}
-			
+			}			
 			
 			// Handle any driver errors
 		} catch (Exception se) {
@@ -515,7 +458,6 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 		}
 		return buf;		
-	}
-	
+	}	
 	
 }

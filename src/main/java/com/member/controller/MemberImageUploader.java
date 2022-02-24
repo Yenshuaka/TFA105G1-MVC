@@ -47,7 +47,7 @@ public class MemberImageUploader extends HttpServlet {
 				memberVO.setAvatar(buf);
 
 				MemberService memberSvc = new MemberService();
-				memberVO = memberSvc.uploadPic(memberid, buf);
+				memberSvc.uploadPic(memberid, buf);
 
 //				String url = "/download/BS-member_manage.jsp";
 //				RequestDispatcher successView = req.getRequestDispatcher(url);

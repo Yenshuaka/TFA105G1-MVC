@@ -14,7 +14,7 @@ public interface MemberDAO_interface {
 
 	public List<MemberVO> getAll();
 	
-	public void upload(MemberVO memberVO);
+	public void uploadPic(MemberVO memberVO);
 	
 	public byte[] read(Integer memberid);
 	
