@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
+import com.order.orderdetail.model.OrderdetailBean;
+import com.product.city.model.CityBean;
 import com.product.product.model.ProductBean;
 import com.product.product.model.ProductDAOHibernate;
 import com.product.product.model.ProductService;
@@ -231,6 +234,52 @@ public class ProductDisplayController {
 			e.printStackTrace();
 		} 
 		
+		//以下抓縣市資料
+		NativeQuery query = this.session.createSQLQuery(
+				"SELECT * FROM CITY\r\n"
+				+ "where CITY_ID = (SELECT CITY_ID \r\n"
+				+ "FROM  PRODUCT_LOC \r\n"
+				+ "where PRODUCT_ID = " + productid  +")"
+			);
+			query.addEntity(CityBean.class);
+			List<CityBean> listcity = (List<CityBean>) query.list();
+			model.addAttribute("cities", listcity);
+			
+		//以下抓評分等級 (平均幾分)
+			
+		Double ttlScore = 0.0;
+		if(comments!=null && comments.size()!=0)
+		for(int i=0; i < comments.size(); i++) {
+			ttlScore = ttlScore + comments.get(i).getScore();		
+		}
+		
+		Double avgScore = ttlScore/comments.size();
+		model.addAttribute("avgScore", avgScore);
+		
+		//以下判斷是否有評論資格
+		if(session.getAttribute("memberid")!=null) {
+			Integer memberid = (Integer)session.getAttribute("memberid");
+			
+			NativeQuery query2 = this.session.createSQLQuery(
+					"select order_detail_no\r\n"
+					+ "from ordertest ot\r\n"
+					+ "	join order_detail od\r\n"
+					+ "    on ot.order_id = od.order_id\r\n"
+					+ "where member_id = "  + memberid +  " and product_id = "+ productid
+				);
+				query.addEntity(OrderdetailBean.class);
+				List<OrderdetailBean> listorderdetail = (List<OrderdetailBean>) query2.list();
+
+				if(listorderdetail.size()==0) {
+					model.addAttribute("commemtok", false);
+				}else {
+					model.addAttribute("commemtok", true);
+				}
+						
+		}
+			
+		
+		
 		
 		MemberService memberService = new MemberService();
 		List<MemberVO> members = memberService.getAll();
@@ -247,6 +296,8 @@ public class ProductDisplayController {
 	
 	@RequestMapping("/ShoppingCart")
 	public String shoppingCart(Model model, HttpSession session) {
+		
+//		session.setAttribute("memberid", 3);
 		
 		if(session.getAttribute("memberid")==null) {	
 			return "FS-login";
@@ -284,6 +335,16 @@ public class ProductDisplayController {
 		
 	
 		return "frontstage/product/shopping-cart";
+	}
+	
+	
+	@RequestMapping("/AddComment")
+	public String addComment(HttpSession session, String memberid, String productid) {
+		
+		// 網址 /MVC/AddComment?productid=x&memberid=y
+		session.setAttribute("memberid", Integer.valueOf(memberid));
+		
+		return "redirect:/MVC/ProductDetail?productid=" + productid;
 	}
 	
 	
