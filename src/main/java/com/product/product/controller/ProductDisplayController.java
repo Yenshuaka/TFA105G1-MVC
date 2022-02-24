@@ -372,16 +372,18 @@ public class ProductDisplayController {
 		bean.setCommentrewardpoints(10);
 		bean.setCommenttime(new Timestamp(System.currentTimeMillis()));
 		
+		
 		productCommentService.insert(bean);
 	
 		MemberService memberService = new MemberService();
 		MemberVO bean2 = memberService.getOneMember(memberid);
 		DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 		df.format(new Timestamp(System.currentTimeMillis()));
+		String nickname = bean2.getNickname();
+		if(nickname==null) {
+			nickname = bean2.getFirstname();
+		}
 		
-		
-		
-		System.out.println("成功");
 		
 		return "<div class=\"review-box\">\r\n"
 				+ "  <ul class=\"review_wrap\">\r\n"
@@ -389,7 +391,7 @@ public class ProductDisplayController {
 				+ "      <div class=\"customer-review_wrap\">\r\n"
 				+ "        <div class=\"reviewer-img\">\r\n"
 				+ "          <img src=\""+ req.getContextPath()+"/member/member.pic?memberid="+ memberid +"\">\r\n"
-				+ "          <p>"+bean2.getNickname() +" </p>\r\n"
+				+ "          <p>"+ nickname +" </p>\r\n"
 				+ "        </div>\r\n"
 				+ "        <div class=\"customer-content-wrap\">\r\n"
 				+ "          <div class=\"customer-content\">\r\n"
