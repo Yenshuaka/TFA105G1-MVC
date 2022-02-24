@@ -1,6 +1,8 @@
 package com.product.product.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -258,6 +261,8 @@ public class ProductDisplayController {
 		}
 		
 		Double avgScore = ttlScore/comments.size();
+		DecimalFormat df = new DecimalFormat("#.#");
+	    avgScore = Double.valueOf(df.format(avgScore));
 		model.addAttribute("avgScore", avgScore);
 		
 		//以下判斷是否有評論資格
