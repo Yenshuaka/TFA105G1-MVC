@@ -25,7 +25,7 @@ public class MemberServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-		if ("getOne_For_Display".equals(action)) { // 來自select_page_member.jsp的請求
+		if ("getOne_For_Display".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -33,11 +33,17 @@ public class MemberServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-				String str = req.getParameter("memberid");
-				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("請輸入會員編號");
-				}
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/			
+				Integer memberid = null;
+				try {
+					memberid = Integer.valueOf(req.getParameter("memberid").trim());
+					if (memberid == null) {
+						errorMsgs.add("請輸入會員編號");
+					}
+				} catch (Exception e) {
+					errorMsgs.add("會員編號格式不正確");
+				}				
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/download/BS-member_manage.jsp");
@@ -45,12 +51,6 @@ public class MemberServlet extends HttpServlet {
 					return;// 程式中斷
 				}
 
-				Integer memberid = null;
-				try {
-					memberid = new Integer(str);
-				} catch (Exception e) {
-					errorMsgs.add("會員編號格式不正確");
-				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/download/BS-member_manage.jsp");

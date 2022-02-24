@@ -86,7 +86,9 @@ pageContext.setAttribute("list", list);
 								<div class="act-title">
 									<h5>
 										<i class="ion-person"></i>會員資料 <a class="btn v2"
-											href="<%=request.getContextPath()%>/download/BS-add-member.jsp">新增</a>
+											href="<%=request.getContextPath()%>/download/BS-add-member.jsp">新增</a> 測試 : <a
+										href="<%=session.getAttribute("memberid") == null ? request.getContextPath() + "/download/FS-login.jsp"
+		: request.getContextPath() + "/member/member.login?action=logout"%>"><%=session.getAttribute("memberid") == null ? "登入/註冊" : "登出"%></a>
 									</h5>
 								</div>
 								<div class="invoice-body">

@@ -80,7 +80,7 @@ public class MemberService {
 		MemberVO memberVO = new MemberVO();
 		memberVO.setMemberid(memberid);
 		memberVO.setAvatar(buf);
-		dao.upload(memberVO);
+		dao.uploadPic(memberVO);
 
 	}
 	public byte[] readPic(Integer memberid) {

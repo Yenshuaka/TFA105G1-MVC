@@ -58,7 +58,7 @@ public class MemberLogin extends HttpServlet {
 				if (memberid == null) {
 					errorMsgs.add("查無資料");
 				}
-				System.err.println(errorMsgs);
+				System.err.println(errorMsgs); // []
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					String RejectUrl = "/download/FS-login.jsp";
