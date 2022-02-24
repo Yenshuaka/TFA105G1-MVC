@@ -669,12 +669,12 @@
                                                         <div class="customer-rating"><%=comments.get(i).getScore() %></div>
                                                     </div>
 <!--                                                     <p class="customer-text">I love the hotel here but it is so rare that I get to come here. Tasty Hand-Pulled hotel is the best type of whole in the wall restaurant. The staff are really nice, and you should be seated quickly. -->
-                                                    </p>
+<!--                                                     </p> -->
 
-                                                    <div class="like-btn mar-top-40">
-                                                        <a href="#" class="rate-review float-left"><i class="icofont-thumbs-up"></i><span>2</span></a>
+<!--                                                     <div class="like-btn mar-top-40"> -->
+<!--                                                         <a href="#" class="rate-review float-left"><i class="icofont-thumbs-up"></i><span>2</span></a> -->
 <!--                                                         <a href="#" class="rate-review float-right"><i class="icofont-reply"></i>Reply</a> -->
-                                                    </div>
+<!--                                                     </div> -->
                                                 </div>
                                             </div>                                             
                                 	</div>
@@ -686,7 +686,7 @@
                             	if(commemtok!=null && commemtok==true) {%>
                             <div id="add_review" class="list-details-section mar-top-10">
                                 <h4>留下評論</h4>
-                                <form id="leave-review" class="contact-form" >
+<!--                                 <form id="leave-review" class="contact-form" > -->
                                     <h4 class="contact-form__title">
                                         請為此商品留下評論
                                     </h4>
@@ -717,17 +717,18 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <input class="contact-form__input-text" type="text" name="name" id="name" placeholder="姓名:">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input class="contact-form__input-text" type="text" name="mail" id="mail" placeholder="Email:">
-                                        </div>
+<!--                                         <div class="col-md-6"> -->
+<!--                                             <input class="contact-form__input-text" type="text" name="name" id="name" placeholder="姓名:"> -->
+<!--                                         </div> -->
+<!--                                         <div class="col-md-6"> -->
+<!--                                             <input class="contact-form__input-text" type="text" name="mail" id="mail" placeholder="Email:"> -->
+<!--                                         </div> -->
                                     </div>
                                     <textarea class="contact-form__textarea" name="comment" id="comment" placeholder="評論:"></textarea>
-                                    <input class="btn v1" type="submit" name="submit-contact" id="submit_contact" value="提交">
-                                </form>
-                            </div>
+                                    <input class="btn v1" type="button" name="submit-contact" id="submit_contact" value="提交" onclick='addComment(event)'>
+                                    <input type='hidden' value='${ProductBean.productid}'>
+<!--                                 </form> -->
+                            </div>  
                             <% } %>
                         </div>
                         <!--Listing Details ends-->
@@ -1183,6 +1184,26 @@
          success: function(res){
              console.log("成功");
              $('.showarea').html(res);
+             
+         }
+     });    		
+	}
+    
+    
+    function addComment(e){
+	
+		$.ajax({
+         url: '<%=request.getContextPath() %>/MVC/AddRealComment',
+         type: 'POST',
+         data: {
+         	productid: $(e.target).next().val(),
+         	commentcontext: $(e.target).prev().val(),
+         	score: $('.rate-actual').text()
+         },
+         dataType: "html",
+         success: function(res){
+             console.log("成功");
+            $('#reviews').append(res);
              
          }
      });    		

@@ -6,6 +6,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.engine.query.spi.sql.NativeSQLQueryCollectionReturn;
 import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -348,6 +352,52 @@ public class ProductDisplayController {
 	}
 	
 	
+	@RequestMapping(value = "/AddRealComment", produces = "application/html; charset=utf-8")
+	public @ResponseBody String addRealComment(HttpSession session, String productid, String commentcontext,
+			String score, HttpServletRequest req ) {
+		
+		ProductCommentBean bean = new ProductCommentBean();
+		Integer memberid = (Integer)session.getAttribute("memberid");
+		Integer score1 = Integer.valueOf(score);
+		
+		bean.setMemberid(memberid);
+		bean.setProductid(Integer.valueOf(productid) );
+		bean.setCommentcontext(commentcontext);
+		bean.setScore(score1);
+		bean.setCommentrewardpoints(10);
+		bean.setCommenttime(new Timestamp(System.currentTimeMillis()));
+		
+		productCommentService.insert(bean);
+	
+		MemberService memberService = new MemberService();
+		MemberVO bean2 = memberService.getOneMember(memberid);
+		DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+		df.format(new Timestamp(System.currentTimeMillis()));
+		
+		
+		
+		System.out.println("成功");
+		
+		return "<div class=\"review-box\">\r\n"
+				+ "  <ul class=\"review_wrap\">\r\n"
+				+ "    <li>\r\n"
+				+ "      <div class=\"customer-review_wrap\">\r\n"
+				+ "        <div class=\"reviewer-img\">\r\n"
+				+ "          <img src=\""+ req.getContextPath()+"/member/member.pic?memberid="+ memberid +"\">\r\n"
+				+ "          <p>"+bean2.getNickname() +" </p>\r\n"
+				+ "        </div>\r\n"
+				+ "        <div class=\"customer-content-wrap\">\r\n"
+				+ "          <div class=\"customer-content\">\r\n"
+				+ "            <div class=\"customer-review\">\r\n"
+				+ "              <h6>" + commentcontext + "</h6>\r\n"
+				+ "              <p>於&nbsp"+ df.format(new Timestamp(System.currentTimeMillis()))  +"&nbsp評論</p>\r\n"
+				+ "            </div>\r\n"
+				+ "            <div class=\"customer-rating\">"+score1 +" </div>\r\n"
+				+ "          </div>\r\n"
+				+ "        </div>\r\n"
+				+ "      </div>\r\n"
+				+ "</div>";
+	}
 
 	
 }
