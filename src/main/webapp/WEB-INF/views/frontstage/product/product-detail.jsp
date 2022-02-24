@@ -682,7 +682,8 @@
                             </div>
                             
                             
-                            
+                            <%  Boolean commemtok = (Boolean)request.getAttribute("commemtok");
+                            	if(commemtok!=null && commemtok==true) {%>
                             <div id="add_review" class="list-details-section mar-top-10">
                                 <h4>留下評論</h4>
                                 <form id="leave-review" class="contact-form" >
@@ -727,6 +728,7 @@
                                     <input class="btn v1" type="submit" name="submit-contact" id="submit_contact" value="提交">
                                 </form>
                             </div>
+                            <% } %>
                         </div>
                         <!--Listing Details ends-->
                         <!--Similar Listing Starts-->
