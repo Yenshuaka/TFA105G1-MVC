@@ -13,10 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.member.model.MemberService;
+import com.member.model.MemberVO;
 
 
-@WebServlet("/member/member.login")
-public class MemberLogin extends HttpServlet {
+@WebServlet("/member/member.register")
+public class MemberRegister extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,8 +29,8 @@ public class MemberLogin extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-
-		if ("login".equals(action)) {
+		
+		if ("register".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -43,21 +44,34 @@ public class MemberLogin extends HttpServlet {
 				} else if (!email.trim().matches(emailReg)) {
 					errorMsgs.add("帳號: 請輸入英文字母、數字和 _ , - 且含@ + 信箱網域");
 				}
+				
 				String password = req.getParameter("password");
 				String pwdReg = "^([A-Za-z0-9]){1,20}$";
 				if (password == null || password.trim().length() == 0) {
 					errorMsgs.add("密碼: 請勿空白");
 				} else if (!password.trim().matches(pwdReg)) {
 					errorMsgs.add("密碼: 請輸入英文字母、數字 且1~20個字");
+				}				
+				
+				String confirmPWD = req.getParameter("confirm-password");
+				if(!password.equals(confirmPWD)) {
+					errorMsgs.add("密碼不一致，請重新輸入!");
 				}
-				System.out.println(email + password);
+				
+				String agreement = req.getParameter("agreement");
+				if(agreement == null) {
+					errorMsgs.add("尚有條款未確認!");
+				}				
+				
 				/*************************** 2.開始查詢資料 *****************************************/
+							
+				
+				
+				
 				MemberService memberSvc = new MemberService();
-				Integer memberid = memberSvc.memberLogin(email, password);
+				MemberVO memberVO = memberSvc.memberRegister(email, password);
 
-				if (memberid == null) {
-					errorMsgs.add("查無資料");
-				}
+				
 				System.err.println(errorMsgs);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -70,8 +84,8 @@ public class MemberLogin extends HttpServlet {
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 
 				HttpSession session = req.getSession();
-				session.setAttribute("memberid", memberid);
-				System.out.println("儲存memberid到session! = " + memberid);
+//				session.setAttribute("memberid", memberid);
+//				System.out.println("儲存memberid到session! = " + memberid);
 //				int days = 30;
 //				session.setMaxInactiveInterval(86400 * days);  // 要存幾天?
 //				String reqComeFrom = req.getHeader("referer"); // filter?
@@ -87,17 +101,6 @@ public class MemberLogin extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-
-		if ("logout".equals(action)) {
-			HttpSession session = req.getSession();
-			session.removeAttribute("memberid");
-			session.invalidate();
-			System.out.println("session 已清空!");
-			String ContextPath = req.getContextPath();
-			String indexUrl = "/download/FS-Index-Demo.jsp";
-			res.sendRedirect(ContextPath + indexUrl);
-		}
-
 	}
 
 }
