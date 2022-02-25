@@ -18,6 +18,11 @@ public class MemberVO implements Serializable {
 	private String nickname;
 	private String selfintro;
 	private byte[] avatar;
+	
+	
+
+	public MemberVO() {
+	}
 
 	public Integer getMemberid() {
 		return memberid;
