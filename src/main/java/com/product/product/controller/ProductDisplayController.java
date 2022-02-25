@@ -1,6 +1,8 @@
 package com.product.product.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,7 @@ import com.product.product.model.ProductDAOHibernate;
 import com.product.product.model.ProductService;
 import com.product.productcomment.model.ProductCommentBean;
 import com.product.productcomment.model.ProductCommentService;
+import com.product.productimg.model.ProductImgBean;
 
 import redis.clients.jedis.Jedis;
 
@@ -258,6 +262,8 @@ public class ProductDisplayController {
 		}
 		
 		Double avgScore = ttlScore/comments.size();
+		DecimalFormat df = new DecimalFormat("#.#");
+	    avgScore = Double.valueOf(df.format(avgScore));
 		model.addAttribute("avgScore", avgScore);
 		
 		//以下判斷是否有評論資格
@@ -271,7 +277,7 @@ public class ProductDisplayController {
 					+ "    on ot.order_id = od.order_id\r\n"
 					+ "where member_id = "  + memberid +  " and product_id = "+ productid
 				);
-				query.addEntity(OrderdetailBean.class);
+				query2.addEntity(OrderdetailBean.class);
 				List<OrderdetailBean> listorderdetail = (List<OrderdetailBean>) query2.list();
 
 				if(listorderdetail.size()==0) {
@@ -304,7 +310,7 @@ public class ProductDisplayController {
 //		session.setAttribute("memberid", 3);
 		
 		if(session.getAttribute("memberid")==null) {	
-			return "FS-login";
+			return "frontstage/member/FS-login";
 		};
 
 		
@@ -326,17 +332,30 @@ public class ProductDisplayController {
 
 		Integer totalprice = 0;
 		
+		List<Integer> imgids = new ArrayList<Integer>();
+		
 		for (Integer productid : productids) {
+			//以下找出哪些商品
 			ProductBean bean = new ProductBean();
 			bean.setProductid(productid);
 			list.add(productService.select(bean).get(0));
 			totalprice = totalprice + productService.select(bean).get(0).getProductprice();
+			
+			//以下找出哪些圖片
+			NativeQuery query = this.session.createSQLQuery(
+					"select * from PRODUCT_IMG where PRODUCT_ID = "+ productid +" limit 1"
+				);
+				query.addEntity(ProductImgBean.class);
+				List<ProductImgBean> imgs = (List<ProductImgBean>) query.list();
+				imgids.add(imgs.get(0).getImgid());
+			
+			
 		}
 		
+		model.addAttribute("imgids", imgids);
 		model.addAttribute("list", list);
 		model.addAttribute("totalprice", totalprice);
 	
-		
 	
 		return "frontstage/product/shopping-cart";
 	}
@@ -367,16 +386,18 @@ public class ProductDisplayController {
 		bean.setCommentrewardpoints(10);
 		bean.setCommenttime(new Timestamp(System.currentTimeMillis()));
 		
+		
 		productCommentService.insert(bean);
 	
 		MemberService memberService = new MemberService();
 		MemberVO bean2 = memberService.getOneMember(memberid);
 		DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 		df.format(new Timestamp(System.currentTimeMillis()));
+		String nickname = bean2.getNickname();
+		if(nickname==null) {
+			nickname = bean2.getFirstname();
+		}
 		
-		
-		
-		System.out.println("成功");
 		
 		return "<div class=\"review-box\">\r\n"
 				+ "  <ul class=\"review_wrap\">\r\n"
@@ -384,7 +405,7 @@ public class ProductDisplayController {
 				+ "      <div class=\"customer-review_wrap\">\r\n"
 				+ "        <div class=\"reviewer-img\">\r\n"
 				+ "          <img src=\""+ req.getContextPath()+"/member/member.pic?memberid="+ memberid +"\">\r\n"
-				+ "          <p>"+bean2.getNickname() +" </p>\r\n"
+				+ "          <p>"+ nickname +" </p>\r\n"
 				+ "        </div>\r\n"
 				+ "        <div class=\"customer-content-wrap\">\r\n"
 				+ "          <div class=\"customer-content\">\r\n"

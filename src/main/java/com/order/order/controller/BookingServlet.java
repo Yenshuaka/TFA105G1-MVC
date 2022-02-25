@@ -1,10 +1,6 @@
 package com.order.order.controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,13 +16,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 
+//import com.member.model.MemberService;
+import com.member.model.MemberVO;
+import com.order.order.model.memberupdate.*;
+import com.order.order.model.memberupdate.MemberBean;
 import com.product.product.model.ProductBean;
 import com.product.product.model.ProductService;
 
 @WebServlet("/booking.do")
 public class BookingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -37,29 +36,58 @@ public class BookingServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		ServletContext applicationContext = this.getServletContext();
-		ApplicationContext context = (ApplicationContext)applicationContext.getAttribute(
-				WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-		
-		ProductService productService = context.getBean("productService",ProductService.class);
-		
+		ApplicationContext context = (ApplicationContext) applicationContext
+				.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+
+		ProductService productService = context.getBean("productService", ProductService.class);
+
+		com.member.model.MemberService memberService = new com.member.model.MemberService();
+
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
+
 		if ("booking".equals(action)) {
 
 			try {
-				
+
 				HttpSession session = req.getSession();
-				String[] productids = req.getParameterValues("productid");//傳來多個productid
+				String[] productids = req.getParameterValues("productid");// 傳來多個productid
 				List<ProductBean> productBeans = new ArrayList<ProductBean>();
-				for(int i = 0;i<productids.length;i++) {
+				for (int i = 0; i < productids.length; i++) {
 					ProductBean bean = new ProductBean();
 					bean.setProductid(Integer.valueOf(productids[i]));
 					productService.select(bean);
 					productBeans.add(productService.select(bean).get(0));
-					
+
 				}
 				session.setAttribute("products", productBeans);
+
+				
+				/////////所有商品//////////
+				List<ProductBean> products = productService.select(null);
+				HttpSession session3 = req.getSession();
+				session3.setAttribute("allProducts", products);
+
+				
+				
+				
+				// 會員session
+				Integer memberid = (Integer) session.getAttribute("memberid");
+
+				MemberVO memberVO = new MemberVO();
+				memberVO.setMemberid(memberid);
+
+				List<MemberVO> memberVOs = new ArrayList<MemberVO>();
+				memberVOs.add(memberService.getOneMember(memberid));
+//				memberVOs.add(memberService.select(memberVO).get(0));
+				session.setAttribute("member", memberVO);
+
+				List<MemberVO> allMember = memberService.getAll();
+				System.out.println("allmember = " + allMember);
+				HttpSession session4 = req.getSession();
+				session4.setAttribute("allMember", allMember);
+
+			
 
 				String url = "order/orderbooking.jsp";
 //				res.sendRedirect(url);
@@ -77,6 +105,6 @@ public class BookingServlet extends HttpServlet {
 			}
 		}
 
-}
-	
+	}
+
 }

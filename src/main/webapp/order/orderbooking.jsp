@@ -1,3 +1,4 @@
+<%@page import="com.product.product.model.ProductBean"%>
 <%@page import="com.order.travelerlist.model.TravelerlistBean"%>
 <%@page import="com.order.orderdetail.model.OrderdetailService"%>
 <%@page import="java.sql.DriverManager"%>
@@ -8,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.* ,java.sql.*"%>
 <%@ page
-	import="com.order.order.model.*,com.order.orderdetail.model.*, org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
+	import="com.member.model.*,com.order.order.model.*,com.order.orderdetail.model.*, org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
 <!DOCTYPE html>
 
 <html dir="ltr" lang="en-US">
@@ -50,6 +51,12 @@ height:500px;
 
 }
 
+.traveler_board {
+
+height:inherit;
+
+}
+
 .traveler_infor {
 
 height:480px;
@@ -57,7 +64,7 @@ height:480px;
 }
 
 ul.list>li>div.inner_block2 {
-	height: 300px;
+	height:inherit;
 
 }
 .input_add {
@@ -86,24 +93,67 @@ padding:10px;
 		<!--Header ends-->
 		<!--Hero section starts-->
 		
-		
 		<div class="buyer_board">
 			<div class="txt">訂購人資料</div>
 			<hr>
 				<div class="row">
 					<div class="col-md-4 col-sm-6 col-xs-12">
 						<div class="form_group">
+							
+							<%
+							MemberVO member = (MemberVO) session.getAttribute("member");
+							List<MemberVO> allMember = (List<MemberVO>) session.getAttribute("allMember");
+							String lastname = null;
+						
+							for(int i = 0;i < allMember.size();i++){
+								if(member.getMemberid() == allMember.get(i).getMemberid()){
+									lastname = allMember.get(i).getLastname();
+								}
+							}
+							
+							String firstname = null;
+							
+							for(int i = 0;i < allMember.size();i++){
+								if(member.getMemberid() == allMember.get(i).getMemberid()){
+									firstname = allMember.get(i).getFirstname();
+								}
+							}
+							
+							String memberid = null;
+							
+							for(int i = 0;i < allMember.size();i++){
+								if(member.getMemberid() == allMember.get(i).getMemberid()){
+									memberid = allMember.get(i).getIdno();
+								}
+							}
+							
+							String phone = null;
+							
+							for(int i = 0;i < allMember.size();i++){
+								if(member.getMemberid() == allMember.get(i).getMemberid()){
+									phone = allMember.get(i).getPhone();
+								}
+							}
+							
+							String email = null;
+							
+							for(int i = 0;i < allMember.size();i++){
+								if(member.getMemberid() == allMember.get(i).getMemberid()){
+									email = allMember.get(i).getEmail();
+								}
+							}
+							%>
+<%-- 						<form id="register-form" action="<%=request.getContextPath()%>/memberUpdate.do" method="post"> --%>
+							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order.do">
 							<label>姓氏<span class="require_mark">*</span></label> <br>
 							<input
-								type="text" name="contact_lastName" placeholder="例:王"
-								class="form_control" id="book_last_name" value="王">
-							<div class="tip_text_danger" id="tip_text_danger_first">此欄位必填</div>
+								type="text" name="memberLastname" 
+								class="form_control" id="book_last_name" value="<%=lastname%>">
 						</div>
 						<div class="form_group">
 							<label>名字<span class="require_mark">*</span></label> <br> <input
-								type="text" name="contact_firstName" placeholder="例:小明"
-								class="form_control" id="book_first_name" value="小明">
-							<div class="tip_text_danger" id="tip_text_danger_last">此欄位必填</div>
+								type="text" name="memberFirstname" 
+								class="form_control" id="book_first_name" value="<%=firstname%>">
 						</div>
 					</div>
 				</div>
@@ -111,33 +161,35 @@ padding:10px;
 					<div class="col-md-4 col-sm-6 col-xs-12">
 						<div class="form_group">
 							<label>身分證號碼 <span class="require_mark">*</span><br></label>
-							<br> <input type="text" name="contact_id"
-								class="form_control" id="book_id" value="A1010101010">
-							<div class="tip_text_danger">此欄位必填</div>
+							<br> <input type="text" name="memberIdno"
+								class="form_control" id="book_id" value="<%=memberid%>">
 						</div>
 						<div class="form_group">
 							<label>連絡電話<span class="require_mark">*</span><br></label> <br>
-							<input value="0928605223" type="text" name="contact_phone"
+							<input value="<%=phone%>" type="text" name="memberPhone"
 								class="form_control" id="contact_phone">
-							<div class="tip_text_danger">此欄位必填</div>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="email_move">
 						<label>電子郵件信箱<span class="require_mark">*</span><br></label>
-						<br> <input value="m03272000@gmail.com" type="email"
-							name="contact_email" placeholder="請輸入常用電子郵件信箱"
+						<br> <input value="<%=email%>" type="email"
+							name="memberEmail" 
 							class="form_control_email">
 						<div class="tip_text_danger">請輸入正確的Email的格式！</div>
 					</div>
+				
 				</div>
 				<div class="update_member">
 					<input type="checkbox" id="update_member_id"> 同時更新會員資料
 				</div>
-				<div>
-					<button class="btn_primary">繼續</button>
-				</div> 
+<!-- 				<div> -->
+<!-- 					<input type="submit" -->
+<!-- 						value="更新" class="btn_primary"> <input type="hidden" -->
+<!-- 						name="action" value="update"> -->
+<!-- 				</div>  -->
+<!-- 				</form> -->
 		</div>
 
 
@@ -159,7 +211,7 @@ padding:10px;
 							<option value="same">同訂購人資料</option>
 						</select>
 					</div>
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order.do">
+				
 					<div class="form_group">
 						<label>出生日期 <span class="require_mark">*</span><br></label> <br>
 						<input type="text" name="birthday"
@@ -195,6 +247,470 @@ padding:10px;
 						<div class="tip_text_danger">此欄位必填</div>
 					</div>
 				</div>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 
 				<div class="sub_title">導覽語言</div>
 				<div class="form_group">
@@ -206,26 +722,26 @@ padding:10px;
 					<div class="tip_text_danger">此欄位必填</div>
 				</div>
 
-				<div class="sub_title">緊急聯絡人</div>
-				<div class="urgent_board">
-					<div class="form_group">
-						<label>聯絡人姓</label><span class="require_mark">*</span><br> 
-						<input type="text" name="urgent_last_name" class="form_control">
-						<div class="tip_text_danger">此欄位必填</div>
-					</div>
-					<div class="form_group">
-						<label>聯絡人名</label><span class="require_mark">*</span><br>
-						<input
-							type="text" name="urgent_first_name" class="form_control">
-						<div class="tip_text_danger">此欄位必填</div>
-					</div>
-					<div class="form_group">
-						<label>連絡電話</label><span class="require_mark">*</span><br>
-						 <input type="text" name="urgent_phone" class="form_control"
-							id="urgent_phone">
-						<div class="tip_text_danger">此欄位必填</div>
-					</div>
-				</div>
+<!-- 				<div class="sub_title">緊急聯絡人</div> -->
+<!-- 				<div class="urgent_board"> -->
+<!-- 					<div class="form_group"> -->
+<!-- 						<label>聯絡人姓</label><span class="require_mark">*</span><br>  -->
+<!-- 						<input type="text" name="urgent_last_name" class="form_control"> -->
+<!-- 						<div class="tip_text_danger">此欄位必填</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="form_group"> -->
+<!-- 						<label>聯絡人名</label><span class="require_mark">*</span><br> -->
+<!-- 						<input -->
+<!-- 							type="text" name="urgent_first_name" class="form_control"> -->
+<!-- 						<div class="tip_text_danger">此欄位必填</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="form_group"> -->
+<!-- 						<label>連絡電話</label><span class="require_mark">*</span><br> -->
+<!-- 						 <input type="text" name="urgent_phone" class="form_control" -->
+<!-- 							id="urgent_phone"> -->
+<!-- 						<div class="tip_text_danger">此欄位必填</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 
 				<div class="sub_title">特殊需求備註</div>
 				<textarea id="booking_note" name="specialneeds" class="note_control"
@@ -303,16 +819,27 @@ padding:10px;
 						<div class="inner_block2">
 						<hr>
 							<table>
-
+							<%
+							List<ProductBean> productBeans = (List<ProductBean>) session.getAttribute("products");
+							List<ProductBean> products = (List<ProductBean>) session.getAttribute("allProducts");
+							String productname = null;
+							%>
+									<%for(int i=0;i<productBeans.size();i++){  %>
+								
+										<%for(int j=0;j<products.size();j++){
+											if (productBeans.get(i).getProductid()== products.get(j).getProductid()){
+                                                 productname =  products.get(j).getProductname(); }
+                                         }%>
 								<tr>
 									<td>商品名稱:</td>
 									<td><input class="input_add" type="TEXT"
-										name="productname" size="45" value="台中一日行" /></td>
+										name="productname" size="45" value="<%=productname%>" /></td>
 								</tr>
+								
 
 								<tr>
 									<td>出發日期:</td>
-									<td><input class="input_add" name="startdate" id="f_date1"
+									<td><input class="input_add" name="startdate"
 										type="text" value="2021-12-31" /></td>
 
 								</tr>
@@ -326,6 +853,10 @@ padding:10px;
 									<td><input class="input_add" type="TEXT"
 										name="numberoftraveler" size="45" value="2" /></td>
 								</tr>
+									<input class="input_add" type="hidden"
+										name="productid" size="45" value="<%=productBeans.get(i).getProductid()%>" />
+								<%} %>
+								
 							</table>
 						</div></li>
 				</ul>
