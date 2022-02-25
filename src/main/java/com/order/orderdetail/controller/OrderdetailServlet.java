@@ -51,6 +51,8 @@ public class OrderdetailServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		
+		
 
 		if ("getOne_For_Orderdetail".equals(action)) {
 
@@ -72,39 +74,34 @@ public class OrderdetailServlet extends HttpServlet {
 				while (rs.next()) {
 					OrderdetailBean bean = orderdetailService.getOneOrderdetail(rs.getInt(1));
 					list.add(bean);
-
 				}
 
-				/*************************** 2.開始查詢資料 *****************************************/
-
-//				OrderdetailService svc = new OrderdetailService(orderdetailDAO);
-//				OrderdetailBean bean = orderdetailService.getOneOrderdetail(orderid);
-
-//				List<OrderdetailBean> list = orderdetailService.select(bean);//
-
-				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-
-//				HttpSession session = req.getSession();
 				session.setAttribute("list", list);
 				
-				MemberService memberService = new MemberService();
-				List<MemberVO> members = memberService.getAll();
+//				MemberService memberService = new MemberService();
+//				List<MemberVO> members = memberService.getAll();
+//				
+//				HttpSession session1 = req.getSession();
+//				session1.setAttribute("members", members);
 				
-				HttpSession session1 = req.getSession();
-				session1.setAttribute("members", members);
-				
-				HttpSession session2 = req.getSession();
-				String[] productids = req.getParameterValues("productid");//傳來多個productid
-				List<ProductBean> productBeans = new ArrayList<ProductBean>();
-				for(int i = 0;i<productids.length;i++) {
-					ProductBean bean = new ProductBean();
-					bean.setProductid(Integer.valueOf(productids[i]));
-					productService.select(bean);
-					productBeans.add(productService.select(bean).get(0));
-					
-				}
-				session2.setAttribute("products", productBeans);
+//				HttpSession session2 = req.getSession();
+//				String[] productids = req.getParameterValues("productid");//傳來多個productid
+////				String[] productids = (String[]) session.getAttribute("productid");
+//				List<ProductBean> productBeans = new ArrayList<ProductBean>();
+//				for(int i = 0;i<productids.length;i++) {
+//					ProductBean bean = new ProductBean();
+//					bean.setProductid(Integer.valueOf(productids[i]));
+//					productService.select(bean);
+//					productBeans.add(productService.select(bean).get(0));
+//					
+//				}
+//				session2.setAttribute("products", productBeans);
+//				
+				List<ProductBean> products = productService.select(null);
+				HttpSession session3 = req.getSession();
+				session3.setAttribute("allProducts", products);
 
+				
 				String url = "order/listOneOrderdetail.jsp";
 //				res.sendRedirect(url);
 				RequestDispatcher sucessView = req.getRequestDispatcher(url);
@@ -193,16 +190,12 @@ public class OrderdetailServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer orderdetailno = new Integer(req.getParameter("orderdetailno"));
-				System.out.println("test1");
 
 				/*************************** 2.開始查詢資料 ****************************************/
 
 				OrderdetailBean bean = new OrderdetailBean();
-//				System.out.println("bean = " + bean);
 				bean.setOrderdetailno(orderdetailno);
-//				System.out.println("orderdetailno = " + orderdetailno);
 				List<OrderdetailBean> list = orderdetailService.select(bean);
-//				System.out.println("list = " + list);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 

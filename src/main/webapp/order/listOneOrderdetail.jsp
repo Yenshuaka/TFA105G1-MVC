@@ -59,6 +59,14 @@
 
 
 <style>
+
+.send{
+margin-top:5px;
+}
+
+.btn.v2{
+margin-top:5px;
+}
 .viewd-item-wrap {
 	padding: 30px;
 }
@@ -75,6 +83,7 @@ table {
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	font-size: 14px;
 }
 
 th {
@@ -437,23 +446,20 @@ td {
 										<tr>
 											<th>訂單明細編號</th>
 											<th>訂單編號</th>
-											<!-- 											<th>商品編號</th> -->
+											<th>商品編號</th>
 											<th>商品名稱</th>
-											<th>姓</th>
-											<th>名</th>
 											<th>人數</th>
 											<th>商品價格</th>
 											<th>回饋點數</th>
 											<th>特殊需求</th>
 											<th>團員表</th>
 											<th>修改</th>
-											<th>刪除</th>
+<!-- 											<th>刪除</th> -->
 										</tr>
 										<%
 // 										List<OrderBean> list = (List)session.getAttribute("list");  
 										List<OrderdetailBean> list = (List)session.getAttribute("list");  
-										List<MemberVO> members = (List<MemberVO>) request.getAttribute("members");
-										List<ProductBean> products = (List<ProductBean>) request.getAttribute("products");
+										List<ProductBean> products = (List<ProductBean>) session.getAttribute("allProducts");
 										%>
 										<%for(int i=0;i<list.size();i++){  %>
 											
@@ -464,17 +470,16 @@ td {
 												<td><%=list.get(i).getOrderdetailno()%></td>
 												<td><%=list.get(i).getOrderid()%></td>
 										
-												<%String productname = null; %>
-												 <%	for(int j =0; j < products.size(); j++){ 
-                                                    	if (list.get(i).getProductid()== products.get(j).getProductid()){
-                                                    	productname =  products.get(j).getProductname();
-                                                    	
-                                                      } }%>
-												<td><%=productname%></td> 
+											
 												<!-- 												<td></td>{memberSvc.select(orderdetailBean.memberid).name} -->
-												<td></td>
-												<td></td>
-												<td></td>
+												<td><%=list.get(i).getProductid()%></td>
+												
+												<%String productname = null;
+												for(int j=0;j<products.size();j++){
+												if(list.get(i).getProductid()== products.get(j).getProductid())
+													productname =  products.get(j).getProductname();
+                                       				  }%>
+												<td><%=productname%></td>
 												<td><%=list.get(i).getNumberoftraveler()%></td>
 												<td><%=list.get(i).getProductprice()%></td>
 												<td><%=list.get(i).getOrderrewardpoints()%></td>
@@ -482,35 +487,33 @@ td {
 
 												<td>
 													<FORM METHOD="post"
-														ACTION="<%=request.getContextPath()%>/travelerlist.do"
-														style="margin-bottom: 0px;">
+														ACTION="<%=request.getContextPath()%>/travelerlist.do">
 														<input type="submit" value="團員表" class="send"> <input
 															type="hidden" name="orderdetailno"
 															value="<%=list.get(i).getOrderdetailno()%>"> <input
 															type="hidden" name="action"
-															' value="getOne_For_Travelerlist">
+															 value="getOne_For_Travelerlist">
 													</FORM>
 												</td>
 												<td>
 													<FORM METHOD="post"
-														ACTION="<%=request.getContextPath()%>/orderdetail.do"
-														style="margin-bottom: 0px;">
+														ACTION="<%=request.getContextPath()%>/orderdetail.do">
 														<input type="submit" value="修改" class="btn v2"> <input
 															type="hidden" name="orderdetailno"
 															value="<%=list.get(i).getOrderdetailno()%>"> <input
 															type="hidden" name="action" value="getOne_For_Update">
 													</FORM>
 												</td>
-												<td>
-													<FORM METHOD="post"
-														ACTION="<%=request.getContextPath()%>/orderdetail.do"
-														style="margin-bottom: 0px;">
-														<input type="submit" value="刪除" class="btn v5" id="delete">
-														<input type="hidden" name="orderdetailno"
-															value="<%=list.get(i).getOrderdetailno()%>"> <input
-															type="hidden" name="action" value="delete">
-													</FORM>
-												</td>
+<!-- 												<td> -->
+<!-- 													<FORM METHOD="post" -->
+<%-- 														ACTION="<%=request.getContextPath()%>/orderdetail.do" --%>
+<!-- 														style="margin-bottom: 0px;"> -->
+<!-- 														<input type="submit" value="刪除" class="btn v5" id="delete"> -->
+<!-- 														<input type="hidden" name="orderdetailno" -->
+<%-- 															value="<%=list.get(i).getOrderdetailno()%>"> <input --%>
+<!-- 															type="hidden" name="action" value="delete"> -->
+<!-- 													</FORM> -->
+<!-- 												</td> -->
 											</tr>
 											<% } %>
 <%-- 										</c:forEach> --%>
