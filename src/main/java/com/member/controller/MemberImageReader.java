@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import com.member.model.MemberService;
+import com.member.model.MemberVO;
 
 @WebServlet("/member/member.pic")
 public class MemberImageReader extends HttpServlet {
@@ -24,8 +25,10 @@ public class MemberImageReader extends HttpServlet {
 //			Integer memberid = 1;
 			/*************************** 2.開始查詢資料 *****************************************/
 			MemberService memberSvc = new MemberService();
-			byte[] buf = memberSvc.readPic(memberid);
+			MemberVO memberVo =  memberSvc.readPic(memberid);
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
+			byte[] buf = memberVo.getAvatar();
+			
 			out.write(buf);
 
 		} catch (Exception e) {

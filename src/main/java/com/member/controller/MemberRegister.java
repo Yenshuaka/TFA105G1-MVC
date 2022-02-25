@@ -62,33 +62,27 @@ public class MemberRegister extends HttpServlet {
 				if(agreement == null) {
 					errorMsgs.add("尚有條款未確認!");
 				}				
-				
-				/*************************** 2.開始查詢資料 *****************************************/
-							
-				
-				
-				
-				MemberService memberSvc = new MemberService();
-				MemberVO memberVO = memberSvc.memberRegister(email, password);
-
+				MemberVO memberVO = new MemberVO();
+				memberVO.setEmail(email);
+				memberVO.setPassword(password);
 				
 				System.err.println(errorMsgs);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					String RejectUrl = "/download/FS-login.jsp";
+					String RejectUrl = "/download/FS-register.jsp";
 					RequestDispatcher failureView = req.getRequestDispatcher(RejectUrl);
 					failureView.forward(req, res);
 					return;
 				}
+				/*************************** 2.開始查詢資料 *****************************************/				
+				MemberService memberSvc = new MemberService();
+				MemberVO newMember = memberSvc.addMember(memberVO);				
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-
 				HttpSession session = req.getSession();
-//				session.setAttribute("memberid", memberid);
-//				System.out.println("儲存memberid到session! = " + memberid);
-//				int days = 30;
-//				session.setMaxInactiveInterval(86400 * days);  // 要存幾天?
-//				String reqComeFrom = req.getHeader("referer"); // filter?
+				session.setAttribute("memberVO", newMember);
+				System.out.println("儲存\"新\"memberVO到session! = " + newMember);				
+				
 				String ContextPath = req.getContextPath();
 				String indexUrl = "/download/FS-Index-Demo.jsp";
 				res.sendRedirect(ContextPath + indexUrl);

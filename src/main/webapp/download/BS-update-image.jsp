@@ -116,17 +116,16 @@ Integer id = Integer.valueOf(request.getParameter("memberid"));
 													src="<%=request.getContextPath()%>/member/member.pic?memberid=<%=id%>">
 											</div>
 
-
 											<div class="change-photo-btn">
 												<div class="contact-form__upload-btn xs-left">
 
 													<FORM METHOD="post"
 														ACTION="<%=request.getContextPath()%>/member/member.upload"
-														method=post enctype="multipart/form-data">
-														<input type="file" id="p_file" name="photo-upload" accept="image/jpeg, image/png"
-															value="選擇圖片"> <input type="hidden"
-															name="memberid" value="<%=id%>"> <input
-															type="submit" value="上傳">
+														enctype="multipart/form-data">
+														<input type="file" id="p_file" name="photo-upload" accept="image/jpeg, image/png"/> 
+															
+															<input type="hidden" name="memberid" value="<%=id%>"> 
+															<input type="submit" name="action" value="上傳">
 													</FORM>
 
 												</div>

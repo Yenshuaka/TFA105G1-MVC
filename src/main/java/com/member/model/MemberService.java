@@ -9,59 +9,50 @@ public class MemberService {
 	public MemberService() {
 		dao = new MemberDAO();
 	}
-	
-	public Integer memberLogin(String email, String password) {
-		MemberVO memberVO = new MemberVO();
-		memberVO.setEmail(email);
-		memberVO.setPassword(password);
-		return dao.login(memberVO);				
+
+	public MemberVO memberLogin(String email, String password) {
+		return dao.login(email, password);
 	}
-	
+
 	public MemberVO memberRegister(String email, String password) {
 		MemberVO memberVO = new MemberVO();
 		memberVO.setEmail(email);
 		memberVO.setPassword(password);
-		dao.login(memberVO);
-		
-		return memberVO;		
-	}
-
-	public MemberVO addMember(String email, String password, String firstname, String lastname, String idno,
-			String gender, java.sql.Date dateofbirth, String country, String phone, String nickname, String selfintro) {
-
-		MemberVO memberVO = new MemberVO();
-
-		memberVO.setEmail(email);
-		memberVO.setPassword(password);
-		memberVO.setFirstname(firstname);
-		memberVO.setLastname(lastname);
-		memberVO.setIdno(idno);
-		memberVO.setGender(gender);
-		memberVO.setDateofbirth(dateofbirth);
-		memberVO.setCountry(country);
-		memberVO.setPhone(phone);
-		memberVO.setNickname(nickname);
-		memberVO.setSelfintro(selfintro);
-		dao.insert(memberVO);
+//		dao.register(memberVO);
 
 		return memberVO;
 	}
 
-	public MemberVO updateMember(Integer memberid, String lastname, String firstname, String idno, String gender,
-			java.sql.Date dateofbirth, String country, String phone) {
+	public MemberVO addMember(MemberVO memberVO) {
 
+		MemberVO memberVO1 = new MemberVO();
+
+		memberVO1.setEmail(memberVO.getEmail());
+		memberVO1.setPassword(memberVO.getPassword());
+		memberVO1.setFirstname(memberVO.getFirstname());
+		memberVO1.setLastname(memberVO.getLastname());
+		memberVO1.setIdno(memberVO.getIdno());
+		memberVO1.setGender(memberVO.getGender());
+		memberVO1.setDateofbirth(memberVO.getDateofbirth());
+		memberVO1.setCountry(memberVO.getCountry());
+		memberVO1.setPhone(memberVO.getPhone());
+		memberVO1.setNickname(memberVO.getNickname());
+		memberVO1.setSelfintro(memberVO.getSelfintro());
+		dao.insert(memberVO1);
+
+		return memberVO1;
+	}
+
+	public MemberVO updateMember(MemberVO memberVO) {
+		dao.update(memberVO);
+		return memberVO;
+	}
+
+	public void uploadPic(Integer memberid, byte[] buf) {
 		MemberVO memberVO = new MemberVO();
 		memberVO.setMemberid(memberid);
-		memberVO.setLastname(lastname);
-		memberVO.setFirstname(firstname);
-		memberVO.setIdno(idno);
-		memberVO.setGender(gender);
-		memberVO.setDateofbirth(dateofbirth);
-		memberVO.setCountry(country);
-		memberVO.setPhone(phone);
-		dao.update(memberVO);
-
-		return memberVO;
+		memberVO.setAvatar(buf);
+		dao.uploadPic(memberVO);
 	}
 
 	public void deleteMember(Integer memberid) {
@@ -76,14 +67,7 @@ public class MemberService {
 		return dao.getAll();
 	}
 
-	public void uploadPic(Integer memberid, byte[] buf) {
-		MemberVO memberVO = new MemberVO();
-		memberVO.setMemberid(memberid);
-		memberVO.setAvatar(buf);
-		dao.uploadPic(memberVO);
-
-	}
-	public byte[] readPic(Integer memberid) {
-		return dao.read(memberid);
+	public MemberVO readPic(Integer memberid) {
+		return dao.findByPrimaryKey(memberid);
 	}
 }

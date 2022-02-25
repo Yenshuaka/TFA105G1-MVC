@@ -1,10 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-		<aside class="menu-sidebar js-right-sidebar d-block d-lg-none">
-			<div class="logo"style="background-color: rgb(32, 69, 99)">
-                <a href="<%=request.getContextPath() %>/download/FS-Index-Demo.jsp">
-                    <img src="<%=request.getContextPath()%>/download/images/f.png" alt="Logo" />
-                </a>
-            </div>
+		<aside class="menu-sidebar js-right-sidebar d-block d-lg-none">			
 			<div class="menu-sidebar__content js-scrollbar2">
 				<div class="account-img">
 					<a href="<%=request.getContextPath()%>/download/FS-my-profile.jsp"><img
@@ -16,7 +11,7 @@
 					${memberVO.firstname}</h4>
 				<nav class="navbar-sidebar2">
 					<ul class="list-unstyled navbar__list">
-						<li><a href="db-my-profile.jsp"> <i
+						<li><a href="<%=request.getContextPath()%>/download/FS-my-profile.jsp"> <i
 								class="ion-ios-person-outline"></i>個人檔案
 						</a></li>
 						<li><a href="#1"> <i class="ion-ios-heart-outline"></i>我的收藏
