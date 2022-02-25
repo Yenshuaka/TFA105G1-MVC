@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,15 +22,21 @@ public class AddShoppingCart extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Jedis jedis = new Jedis("localhost", 6379);
+		HttpSession session = request.getSession();
 		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+		if(session.getAttribute("memberid")==null) {
+			out.write("<h5 style='color: red'> 請先登入!</h5>");
+			return;
+		}
+		
+		Jedis jedis = new Jedis("localhost", 6379);
 		System.out.println(jedis.ping());
 		
-		HttpSession session = request.getSession();
 		Integer memberid = (Integer)session.getAttribute("memberid");
 		String memberidstring = String.valueOf(memberid);
 		String productid = request.getParameter("productid");
-		PrintWriter out = response.getWriter();
+		
 		
 		boolean exist = false;
 		List<String> range2 = jedis.lrange("會員"+memberidstring, 0, -1);

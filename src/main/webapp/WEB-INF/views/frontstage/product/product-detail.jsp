@@ -1,5 +1,5 @@
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.DateFormat, com.product.city.model.*"%>
 <%@page import="java.util.Date, com.member.model.*, com.member.controller.*"%>
 <%@page import="com.product.productcomment.model.ProductCommentBean"%>
 <%@ page import="com.product.product.model.ProductBean"%>
@@ -10,6 +10,8 @@
 	import="java.util.*, org.springframework.context.ApplicationContext, org.springframework.web.context.WebApplicationContext"%>
 <%@ page
 	import="com.product.product.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
+
+<% List<ProductCommentBean> comments = (List<ProductCommentBean>)request.getAttribute("comments");%>
 
 <!DOCTYPE html>
 <html dir="ltr" lang="en-US">
@@ -245,17 +247,27 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-7 col-sm-12">
                                     <div class="single-listing-title float-left">
-                                        <p><a href="#" class="btn v6">Hotel</a></p>
+                                    <p>${ProductBean.producttype}</p>
+<%--                                         <p><span type='button' href="#" class="btn v6">${ProductBean.producttype}</span></p> --%>
                                         <h2>${ProductBean.productname}<i class="icofont-tick-boxed"></i></h2>
-                                        <p><i class="ion-ios-location"></i> 864 W. Walnut Ave.
-                                            Avon, IN 46123</p>
-                                        <div class="list-ratings">
-                                            <span class="ion-android-star"></span>
-                                            <span class="ion-android-star"></span>
-                                            <span class="ion-android-star"></span>
-                                            <span class="ion-android-star"></span>
-                                            <span class="ion-android-star-half"></span>
-                                            <a href="#">(31 Reviews)</a>
+                                        <p><i class="ion-ios-location"></i>
+                                        
+                                        <% List<CityBean> cities = (List<CityBean>)request.getAttribute("cities");
+                                        	for(int i=0; i < cities.size();i++){
+                                        		out.write(cities.get(i).getCity()+" ");
+                                        	}
+                                        %>
+                                        
+                                        <a href="#reviews" style='color:white'>(<%=comments.size() %> 則評論)</a>
+                                         </p>
+                                         
+                                        <div class="list-ratings">           	
+<!--                                             <span class="ion-android-star"></span> -->
+<!--                                             <span class="ion-android-star"></span> -->
+<!--                                             <span class="ion-android-star"></span> -->
+<!--                                             <span class="ion-android-star-outline"></span> -->
+<!--                                             <span class="ion-android-star-half"></span> -->
+<%--                                             <a href="#reviews">(<%=comments.size() %> 則評論)</a> --%>
                                         </div>
                                     </div>
                                 </div>
@@ -264,14 +276,14 @@
                                         <div class="save-btn">
                                             <a href="#" class="btn v3 white"><i class="ion-heart"></i> Save</a>
                                         </div>
-                                        <div class="share-btn">
-                                            <a href="#" class="btn v3 white"><i class="ion-android-share-alt"></i> Share</a>
-                                            <ul class="social-share">
-                                                <li class="bg-fb"><a href="#"><i class="ion-social-facebook"></i></a></li>
-                                                <li class="bg-tt"><a href="#"><i class="ion-social-twitter"></i></a></li>
-                                                <li class="bg-ig"><a href="#"><i class="ion-social-instagram"></i></a></li>
-                                            </ul>
-                                        </div>
+<!--                                         <div class="share-btn"> -->
+<!--                                             <a href="#" class="btn v3 white"><i class="ion-android-share-alt"></i> Share</a> -->
+<!--                                             <ul class="social-share"> -->
+<!--                                                 <li class="bg-fb"><a href="#"><i class="ion-social-facebook"></i></a></li> -->
+<!--                                                 <li class="bg-tt"><a href="#"><i class="ion-social-twitter"></i></a></li> -->
+<!--                                                 <li class="bg-ig"><a href="#"><i class="ion-social-instagram"></i></a></li> -->
+<!--                                             </ul> -->
+<!--                                         </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -304,20 +316,20 @@
 <!--                                     <p class="mar-bot-10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta consectetur et porro voluptatem maiores quidem inventore harum explicabo deserunt fuga minima sed, sit nemo expedita. Dolor aliquid rerum recusandae excepturi.</p> -->
 <!--                                     <p class="mar-bot-10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse, dicta, impedit. Eveniet incidunt provident minima totam aut facilis tenetur quam officia omnis dolorem! Autem iste fugit mollitia rerum quae, veritatis perferendis voluptas magni aliquam consequuntur, minima repellendus eveniet laboriosam iure.</p> -->
                                 </div>
-                                <div class="mar-top-20">
-                                    <h6>Amenities</h6>
-                                    <ul class="listing-features">
-                                        <li><i class="icofont-rocket-alt-1"></i> Elevator in building</li>
-                                        <li><i class="icofont-wifi"></i> Free Wi Fi</li>
-                                        <li><i class="icofont-car-alt-3"></i> Free Parking on premises</li>
-                                        <li><i class="icofont-snow"></i>Air Conditioned</li>
-                                        <li><i class="icofont-gym-alt-1"></i>Fitness Center</li>
-                                        <li><i class="icofont-search-restaurant"></i> Instant Book</li>
-                                        <li><i class="icofont-architecture-alt"></i> Friendly workspace</li>
-                                        <li><i class="icofont-wheelchair"></i> Wheelchair Friendly</li>
-                                        <li><i class="icofont-paw"></i> Pet Friendly </li>
-                                    </ul>
-                                </div>
+<!--                                 <div class="mar-top-20"> -->
+<!--                                     <h6>Amenities</h6> -->
+<!--                                     <ul class="listing-features"> -->
+<!--                                         <li><i class="icofont-rocket-alt-1"></i> Elevator in building</li> -->
+<!--                                         <li><i class="icofont-wifi"></i> Free Wi Fi</li> -->
+<!--                                         <li><i class="icofont-car-alt-3"></i> Free Parking on premises</li> -->
+<!--                                         <li><i class="icofont-snow"></i>Air Conditioned</li> -->
+<!--                                         <li><i class="icofont-gym-alt-1"></i>Fitness Center</li> -->
+<!--                                         <li><i class="icofont-search-restaurant"></i> Instant Book</li> -->
+<!--                                         <li><i class="icofont-architecture-alt"></i> Friendly workspace</li> -->
+<!--                                         <li><i class="icofont-wheelchair"></i> Wheelchair Friendly</li> -->
+<!--                                         <li><i class="icofont-paw"></i> Pet Friendly </li> -->
+<!--                                     </ul> -->
+<!--                                 </div> -->
                             </div>
                             <div id="gallery" class="list-details-section">
                                 <h4>商品圖片</h4>
@@ -607,10 +619,13 @@
                             
                             <!-- 上方為原本的商品評論code 我自己先註解 下方為自己增加的商品評論code -->
                             
-                            <% List<ProductCommentBean> comments = (List<ProductCommentBean>)request.getAttribute("comments");%>
-                            <%	if(comments!=null && comments.size()!=0){ %>
+                            
                             <div id="reviews" class="list-details-section mar-top-10">
-                                <h4>商品評論 <span>(<%=comments.size() %>)</span></h4>
+                                <h4>商品評論 <span>(<%=comments.size() %>)</span><span class="customer-rating">${avgScore}</span></h4>
+                                <br> 
+                            <%	if(comments!=null && comments.size()!=0){ %>
+<!--                             <div id="reviews" class="list-details-section mar-top-10"> -->
+<%--                                 <h4>商品評論 <span>(<%=comments.size() %>)</span></h4> --%>
                                 
                                  
                                 <% List<MemberVO> members = (List<MemberVO>)request.getAttribute("members"); %>
@@ -654,12 +669,12 @@
                                                         <div class="customer-rating"><%=comments.get(i).getScore() %></div>
                                                     </div>
 <!--                                                     <p class="customer-text">I love the hotel here but it is so rare that I get to come here. Tasty Hand-Pulled hotel is the best type of whole in the wall restaurant. The staff are really nice, and you should be seated quickly. -->
-                                                    </p>
+<!--                                                     </p> -->
 
-                                                    <div class="like-btn mar-top-40">
-                                                        <a href="#" class="rate-review float-left"><i class="icofont-thumbs-up"></i> Helpful Review <span>2</span></a>
-                                                        <a href="#" class="rate-review float-right"><i class="icofont-reply"></i>Reply</a>
-                                                    </div>
+<!--                                                     <div class="like-btn mar-top-40"> -->
+<!--                                                         <a href="#" class="rate-review float-left"><i class="icofont-thumbs-up"></i><span>2</span></a> -->
+<!--                                                         <a href="#" class="rate-review float-right"><i class="icofont-reply"></i>Reply</a> -->
+<!--                                                     </div> -->
                                                 </div>
                                             </div>                                             
                                 	</div>
@@ -667,10 +682,11 @@
                             </div>
                             
                             
-                            
+                            <%  Boolean commemtok = (Boolean)request.getAttribute("commemtok");
+                            	if(commemtok!=null && commemtok==true) {%>
                             <div id="add_review" class="list-details-section mar-top-10">
                                 <h4>留下評論</h4>
-                                <form id="leave-review" class="contact-form" >
+<!--                                 <form id="leave-review" class="contact-form" > -->
                                     <h4 class="contact-form__title">
                                         請為此商品留下評論
                                     </h4>
@@ -701,17 +717,19 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <input class="contact-form__input-text" type="text" name="name" id="name" placeholder="姓名:">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input class="contact-form__input-text" type="text" name="mail" id="mail" placeholder="Email:">
-                                        </div>
+<!--                                         <div class="col-md-6"> -->
+<!--                                             <input class="contact-form__input-text" type="text" name="name" id="name" placeholder="姓名:"> -->
+<!--                                         </div> -->
+<!--                                         <div class="col-md-6"> -->
+<!--                                             <input class="contact-form__input-text" type="text" name="mail" id="mail" placeholder="Email:"> -->
+<!--                                         </div> -->
                                     </div>
                                     <textarea class="contact-form__textarea" name="comment" id="comment" placeholder="評論:"></textarea>
-                                    <input class="btn v1" type="submit" name="submit-contact" id="submit_contact" value="提交">
-                                </form>
-                            </div>
+                                    <input class="btn v1" type="button" name="submit-contact" id="submit_contact" value="提交" onclick='addComment(event)'>
+                                    <input type='hidden' value='${ProductBean.productid}'>
+<!--                                 </form> -->
+                            </div>  
+                            <% } %>
                         </div>
                         <!--Listing Details ends-->
                         <!--Similar Listing Starts-->
@@ -879,7 +897,7 @@
 <!--                                     </div> -->
 <!--                                 </div> -->
                                 <div class="book-btn text-center">
-                                    <a href="#"> 立即訂購</a>
+                                    <a href="<%=request.getContextPath() %>/booking.do?action=booking&productid=${ProductBean.productid}"> 立即訂購</a>
                                 </div>
                                 <div class="book-btn text-center">
                                     <a onclick='addCart(event)'> 加入購物車</a>
@@ -889,128 +907,127 @@
                             <div class="sidebar-widget">
                                 <div id="map"></div>
                                 <div class="address">
-                                    <span class="ion-ios-location"></span>
-                                    <p> 864 W. Walnut Ave. Avon, IN 46123 St James Pl,
-                                        Brooklyn</p>
+                                    <span class="ion-ios-calendar"></span>
+                                    <p> 開始日期: ${ProductBean.startdate}</p>
                                 </div>
                                 <div class="address">
-                                    <span class="ion-ios-telephone"></span>
-                                    <p> +44 20 7336 8898</p>
+                                    <span class="ion-ios-calendar"></span>
+                                    <p> 結束日期: ${ProductBean.enddate}</p>
                                 </div>
-                                <div class="address">
-                                    <span class="ion-android-globe"></span>
-                                    <p>www.oceanparadise.com</p>
-                                </div>
+<!--                                 <div class="address"> -->
+<!--                                     <span class="ion-android-globe"></span> -->
+<!--                                     <p>www.oceanparadise.com</p> -->
+<!--                                 </div> -->
                             </div>
-                            <div class="sidebar-widget">
-                                <div class="business-time">
-                                    <div class="business-title">
-                                        <h6><i class="ion-android-alarm-clock"></i> Business Hours</h6>
-                                        <span class="float-right">Open Now</span>
-                                    </div>
-                                    <ul class="business-hours">
-                                        <li class="business-open">
-                                            <span class="day">Saturday</span>
-                                            <div class="atbd_open_close_time">
-                                                <span class="time">11:00 am</span> - <span class="time">06:00 pm</span>
-                                            </div>
-                                        </li>
-                                        <li class="business-open trend-closed">
-                                            <span class="day">Sunday</span>
-                                            <div class="atbd_open_close_time">
-                                                <span class="time">Closed</span>
-                                            </div>
-                                        </li>
-                                        <li class="business-open">
-                                            <span class="day">Monday</span>
-                                            <div class="atbd_open_close_time">
-                                                <span class="time">10:00 am</span> - <span class="time">06:00 pm</span>
-                                            </div>
-                                        </li>
-                                        <li class="business-open">
-                                            <span class="day">Tuesday</span>
-                                            <div class="atbd_open_close_time">
-                                                <span class="time">10:00 am</span> - <span class="time">06:30 pm</span>
-                                            </div>
-                                        </li>
-                                        <li class="business-open">
-                                            <span class="day">Wednesday</span>
-                                            <div class="atbd_open_close_time">
-                                                <span class="time">09:00 am</span> - <span class="time">05:00 pm</span>
-                                            </div>
-                                        </li>
-                                        <li class="business-open">
-                                            <span class="day">Thursday</span>
-                                            <div class="atbd_open_close_time">
-                                                <span class="time">10:00 am</span> - <span class="time">07:00 pm</span>
-                                            </div>
-                                        </li>
-                                        <li class="business-open">
-                                            <span class="day">Friday</span>
-                                            <div class="atbd_open_close_time">
-                                                <span class="time">11:00 am</span> - <span class="time">06:00 pm</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="sidebar-widget">
-                                <div class="coupon-widget" style="background-image: url(images/category/coupon/coupon-bg-1.jpg);">
-                                    <div class="overlay op-5"></div>
-                                    <a href="#" class="coupon-top">
-                                        <span class="coupon-link-icon"></span>
-                                        <h3>Book Now &amp; get 20% discount</h3>
-                                        <div class="daily-deals-wrap v1">
-                                            <!-- countdown start -->
-                                            <div class="countdown-deals text-center" data-countdown="2019/12/01"></div>
-                                            <!-- countdown end -->
-                                        </div>
-                                    </a>
-                                    <div class="coupon-bottom">
-                                        <p>Coupon Code</p>
-                                        <div class="coupon-code">DL76T</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sidebar-widget follow">
-                                <div class="follow-img">
-                                    <img src="images/clients/reviewer-1.png" class="img-fluid" alt="#">
-                                    <h6>Christine Evans</h6>
-                                    <span>New York</span>
-                                </div>
-                                <ul class="social-counts">
-                                    <li>
-                                        <h6>26</h6>
-                                        <span>Listings</span>
-                                    </li>
-                                    <li>
-                                        <h6>326</h6>
-                                        <span>Followers</span>
-                                    </li>
-                                    <li>
-                                        <h6>12</h6>
-                                        <span>Following</span>
-                                    </li>
-                                </ul>
-                                <div class="text-center mar-bot-25">
-                                    <a href="#" class="btn v3"><i class="icofont-eye-alt"></i> Follow</a>
-                                </div>
-                            </div>
-                            <div class="sidebar-widget ad-box">
-                                <a href="#"><img src="images/others/ad-1.jpg" alt="..."></a>
-                            </div>
-                            <div class="sidebar-widget listing-tags">
-                                <h4>Tags</h4>
-                                <ul class="list-tags">
-                                    <li><a href="#" class="btn v6 dark">Restaurant</a></li>
-                                    <li><a href="#" class="btn v6 dark">Hotel</a></li>
-                                    <li><a href="#" class="btn v6 dark">Travel</a></li>
-                                    <li><a href="#" class="btn v6 dark">Food</a></li>
-                                    <li><a href="#" class="btn v6 dark">Living</a></li>
-                                    <li><a href="#" class="btn v6 dark">Luxury</a></li>
-                                    <li><a href="#" class="btn v6 dark">Eat &amp; Drink</a></li>
-                                </ul>
-                            </div>
+<!--                             <div class="sidebar-widget"> -->
+<!--                                 <div class="business-time"> -->
+<!--                                     <div class="business-title"> -->
+<!--                                         <h6><i class="ion-android-alarm-clock"></i> Business Hours</h6> -->
+<!--                                         <span class="float-right">Open Now</span> -->
+<!--                                     </div> -->
+<!--                                     <ul class="business-hours"> -->
+<!--                                         <li class="business-open"> -->
+<!--                                             <span class="day">Saturday</span> -->
+<!--                                             <div class="atbd_open_close_time"> -->
+<!--                                                 <span class="time">11:00 am</span> - <span class="time">06:00 pm</span> -->
+<!--                                             </div> -->
+<!--                                         </li> -->
+<!--                                         <li class="business-open trend-closed"> -->
+<!--                                             <span class="day">Sunday</span> -->
+<!--                                             <div class="atbd_open_close_time"> -->
+<!--                                                 <span class="time">Closed</span> -->
+<!--                                             </div> -->
+<!--                                         </li> -->
+<!--                                         <li class="business-open"> -->
+<!--                                             <span class="day">Monday</span> -->
+<!--                                             <div class="atbd_open_close_time"> -->
+<!--                                                 <span class="time">10:00 am</span> - <span class="time">06:00 pm</span> -->
+<!--                                             </div> -->
+<!--                                         </li> -->
+<!--                                         <li class="business-open"> -->
+<!--                                             <span class="day">Tuesday</span> -->
+<!--                                             <div class="atbd_open_close_time"> -->
+<!--                                                 <span class="time">10:00 am</span> - <span class="time">06:30 pm</span> -->
+<!--                                             </div> -->
+<!--                                         </li> -->
+<!--                                         <li class="business-open"> -->
+<!--                                             <span class="day">Wednesday</span> -->
+<!--                                             <div class="atbd_open_close_time"> -->
+<!--                                                 <span class="time">09:00 am</span> - <span class="time">05:00 pm</span> -->
+<!--                                             </div> -->
+<!--                                         </li> -->
+<!--                                         <li class="business-open"> -->
+<!--                                             <span class="day">Thursday</span> -->
+<!--                                             <div class="atbd_open_close_time"> -->
+<!--                                                 <span class="time">10:00 am</span> - <span class="time">07:00 pm</span> -->
+<!--                                             </div> -->
+<!--                                         </li> -->
+<!--                                         <li class="business-open"> -->
+<!--                                             <span class="day">Friday</span> -->
+<!--                                             <div class="atbd_open_close_time"> -->
+<!--                                                 <span class="time">11:00 am</span> - <span class="time">06:00 pm</span> -->
+<!--                                             </div> -->
+<!--                                         </li> -->
+<!--                                     </ul> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                             <div class="sidebar-widget"> -->
+<!--                                 <div class="coupon-widget" style="background-image: url(images/category/coupon/coupon-bg-1.jpg);"> -->
+<!--                                     <div class="overlay op-5"></div> -->
+<!--                                     <a href="#" class="coupon-top"> -->
+<!--                                         <span class="coupon-link-icon"></span> -->
+<!--                                         <h3>Book Now &amp; get 20% discount</h3> -->
+<!--                                         <div class="daily-deals-wrap v1"> -->
+<!--                                             countdown start -->
+<!--                                             <div class="countdown-deals text-center" data-countdown="2019/12/01"></div> -->
+<!--                                             countdown end -->
+<!--                                         </div> -->
+<!--                                     </a> -->
+<!--                                     <div class="coupon-bottom"> -->
+<!--                                         <p>Coupon Code</p> -->
+<!--                                         <div class="coupon-code">DL76T</div> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                             <div class="sidebar-widget follow"> -->
+<!--                                 <div class="follow-img"> -->
+<!--                                     <img src="images/clients/reviewer-1.png" class="img-fluid" alt="#"> -->
+<!--                                     <h6>Christine Evans</h6> -->
+<!--                                     <span>New York</span> -->
+<!--                                 </div> -->
+<!--                                 <ul class="social-counts"> -->
+<!--                                     <li> -->
+<!--                                         <h6>26</h6> -->
+<!--                                         <span>Listings</span> -->
+<!--                                     </li> -->
+<!--                                     <li> -->
+<!--                                         <h6>326</h6> -->
+<!--                                         <span>Followers</span> -->
+<!--                                     </li> -->
+<!--                                     <li> -->
+<!--                                         <h6>12</h6> -->
+<!--                                         <span>Following</span> -->
+<!--                                     </li> -->
+<!--                                 </ul> -->
+<!--                                 <div class="text-center mar-bot-25"> -->
+<!--                                     <a href="#" class="btn v3"><i class="icofont-eye-alt"></i> Follow</a> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                             <div class="sidebar-widget ad-box"> -->
+<!--                                 <a href="#"><img src="images/others/ad-1.jpg" alt="..."></a> -->
+<!--                             </div> -->
+<!--                             <div class="sidebar-widget listing-tags"> -->
+<!--                                 <h4>Tags</h4> -->
+<!--                                 <ul class="list-tags"> -->
+<!--                                     <li><a href="#" class="btn v6 dark">Restaurant</a></li> -->
+<!--                                     <li><a href="#" class="btn v6 dark">Hotel</a></li> -->
+<!--                                     <li><a href="#" class="btn v6 dark">Travel</a></li> -->
+<!--                                     <li><a href="#" class="btn v6 dark">Food</a></li> -->
+<!--                                     <li><a href="#" class="btn v6 dark">Living</a></li> -->
+<!--                                     <li><a href="#" class="btn v6 dark">Luxury</a></li> -->
+<!--                                     <li><a href="#" class="btn v6 dark">Eat &amp; Drink</a></li> -->
+<!--                                 </ul> -->
+<!--                             </div> -->
                             
                         </div>
                     </div>
@@ -1167,6 +1184,26 @@
          success: function(res){
              console.log("成功");
              $('.showarea').html(res);
+             
+         }
+     });    		
+	}
+    
+    
+    function addComment(e){
+	
+		$.ajax({
+         url: '<%=request.getContextPath() %>/MVC/AddRealComment',
+         type: 'POST',
+         data: {
+         	productid: $(e.target).next().val(),
+         	commentcontext: $(e.target).prev().val(),
+         	score: $('.rate-actual').text()
+         },
+         dataType: "html",
+         success: function(res){
+             console.log("成功");
+            $('#reviews').append(res);
              
          }
      });    		

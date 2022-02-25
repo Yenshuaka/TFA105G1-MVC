@@ -40,7 +40,7 @@
 	<!--Page Wrapper starts-->
 	<div class="page-wrapper">
 		<!--Header starts-->
-		<%@include file="file/FS_Header.file"%>
+		<%@include file="/WEB-INF/views/frontstage/file/FS_Header.file"%>
 		<!--Header ends-->
 
 		<!--User Login section starts-->
@@ -111,7 +111,7 @@
 
 
 	<!--Dashboard footer starts-->
-	<%@include file="file/FS_footer.file"%>
+	<%@include file="/WEB-INF/views/frontstage/file/FS_footer.file"%>
 	<!--Dashboard footer ends-->
 
 
