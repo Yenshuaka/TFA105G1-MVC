@@ -26,7 +26,7 @@
 													<li><a href="about.html">獨特體驗</a></li>
 												</ul></li>
 											<li class="has-children"><a style="color: white"
-												href="#">論壇</a></li>
+												href="#">關於我們</a></li>
 											<li class="has-children"><a style="color: white"
 												href="<%=request.getContextPath()%>/download/FS-my-profile.jsp">會員專區</a></li>
 											<li class="has-children"><a style="color: white"
@@ -45,7 +45,7 @@
 									</a>
 								</div>
 								<div class="add-list float-right">
-									<a class="btn v8" href="add-listing.html">購物車 <i
+									<a class="btn v8" href="<%= request.getContextPath()%>/MVC/ShoppingCart ">購物車 <i
 										class="icofont-shopping-cart">&nbsp3</i></a>
 								</div>
 							</div>
