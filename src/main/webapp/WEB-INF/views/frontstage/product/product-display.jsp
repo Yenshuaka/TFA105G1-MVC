@@ -43,7 +43,7 @@
 	<!--Page Wrapper starts-->
 	<div class="page-wrapper fixed-footer">
 		<!--header starts-->
-		<%@include file="/WEB-INF/views/frontstage/file/FS_Header.file"%>
+		<%@include file="/download/file/FS_Header.file"%>
 		<!--Header ends-->
 		<!--Breadcrumb section starts-->
 		<div class="breadcrumb-section"

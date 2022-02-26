@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<header class="header transparent">
+<header class="header transparent scroll-hide">
 			<!--Main Menu starts-->
 			<div class="site-navbar-wrap v2"
 				style="background-color: rgb(32, 69, 99)">
@@ -30,8 +30,8 @@
 											<li class="has-children"><a style="color: white"
 												href="<%=request.getContextPath()%>/download/FS-my-profile.jsp">會員專區</a></li>
 											<li class="has-children"><a style="color: white"
-												href="<%=session.getAttribute("memberVO") == null ? request.getContextPath() + "/download/FS-login.jsp"
-		: request.getContextPath() + "/member/member.login?action=logout"%>"><%=session.getAttribute("memberVO") == null ? "登入/註冊" : "登出"%></a>
+												href="<%=session.getAttribute("memberid") == null ? request.getContextPath() + "/download/FS-login.jsp"
+		: request.getContextPath() + "/member/member.login?action=logout"%>"><%=session.getAttribute("memberid") == null ? "登入/註冊" : "登出"%></a>
 											</li>
 											<li class="d-lg-none"><a class="btn v1"
 												href="add-listing.html">Add Listing <i
@@ -45,7 +45,7 @@
 									</a>
 								</div>
 								<div class="add-list float-right">
-									<a class="btn v8" href="add-listing.html">購物車 <i
+									<a class="btn v8" href="<%= request.getContextPath() %>/MVC/ShoppingCart">購物車 <i
 										class="icofont-shopping-cart">&nbsp3</i></a>
 								</div>
 							</div>

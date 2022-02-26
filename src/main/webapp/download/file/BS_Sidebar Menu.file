@@ -14,11 +14,11 @@
                     <ul class="list-unstyled navbar__list">
                         <li>
                             <a class="active" href="db.html">
-                                <i class="ion-ios-gear-outline"></i>首頁公告
+                                <i class="ion-ios-gear-outline"></i>關於我們
                             </a>
                         </li>
                         <li>
-                            <a class="js-arrow" href="#">
+                            <a class="js-arrow" href="<%=request.getContextPath()%>/order.do">
                                 <i class="ion-social-buffer-outline"></i>訂單管理
                             </a>
                             <!-- <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -38,7 +38,7 @@
                         </li>
 
                         <li>
-                            <a href="db-bookings.html">
+                            <a href="<%=request.getContextPath()%>/MVC/ProductManageController">
                                 <i class="ion-ios-copy-outline"></i>行程總覽</a>
                         </li>
                         <li>
@@ -50,35 +50,7 @@
                             <a href="db-favourites.html">
                                 <i class="ion-ios-heart-outline"></i>admin管理</a>
                         </li>
-                        <li>
-                            <a href="db-add-listing.html">
-                                <i class="ion-ios-plus-outline"></i>論壇管理</a>
-                        </li>
-                        <li>
-                            <a class="js-arrow" href="#">
-                                <i class="ion-ios-star-outline"></i>客服系統管理
-                            </a>
-                            <!-- <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="db-recieve-reviews.html">
-                                        Recieved Reviews</a>
-                                    <span class="inbox-num active">6</span>
-                                </li>
-                                <li>
-                                    <a href="db-submit-reviews.html">
-                                        Submitted reviews</a>
-                                    <span class="inbox-num pending">8</span>
-                                </li>
-                            </ul> -->
-                        </li>
-                        <!-- <li>
-                            <a href="db-my-profile.html">
-                                <i class="ion-ios-person-outline"></i>My profile</a>
-                        </li>
-                        <li>
-                            <a href="db-invoices.html">
-                                <i class="ion-ios-printer-outline"></i>Invoices</a>
-                        </li> -->
+                        
                         <li>
                             <a href="#">
                                 <i class="ion-ios-upload-outline"></i>登出</a>
