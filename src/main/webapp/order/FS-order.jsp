@@ -33,13 +33,13 @@
 <body>
 
     <!--Sidebar Menu Starts-->
-  	<%@ include file="file/FS_Sidebar Menu.file"%>
+  	<%@ include file="/download/file/FS_Sidebar Menu.file"%>
     <!--Sidebar Menu ends-->
 
     <!--Dashboard content Wrapper starts-->
     <div class="dash-content-wrap">
         <!-- Top header starts-->
-	<%@ include file="file/FS_Header2.file"%>
+	<%@ include file="/download/file/FS_Header.file"%>
         <!-- Top header ends-->
 
         <!--Dashboard breadcrumb starts-->

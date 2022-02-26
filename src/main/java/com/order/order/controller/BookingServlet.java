@@ -123,6 +123,7 @@ public class BookingServlet extends HttpServlet {
 
 			
 
+//				String url = "order/orderbooking.jsp";
 				String url = "order/orderbooking.jsp";
 //				res.sendRedirect(url);
 				RequestDispatcher sucessView = req.getRequestDispatcher(url);

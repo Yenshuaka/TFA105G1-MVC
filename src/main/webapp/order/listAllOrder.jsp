@@ -82,14 +82,14 @@
 	<div class="page-wrapper">
 
 		<!--Sidebar Menu Starts-->
-		<%@ include file="file/Sidebar.file"%>
+		<%@ include file="/download/file/BS_Sidebar Menu.file"%>
 		<!--Sidebar Menu ends-->
 
 		<!--Dashboard content Wrapper starts-->
 		<div class="dash-content-wrap">
 
 			<!-- Top header starts-->
-			<%@ include file="file/Header.file"%>
+			<%@ include file="/download/file/BS_Top header.file"%>
 			<%-- <jsp:include page="<%request.getContextPath()%>/order/file/Sidebar.file" / > --%>
 			<!-- Top header ends-->
 
