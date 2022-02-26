@@ -45,31 +45,64 @@
 <!-- style.css 1575-1585-->
 
 <style>
-.amount{
-font-weight: 700;
+.date {
+	font-size: 15px;
+	font-weight: 400;
+	margin-top: 10px;
+	color: #737882;
 }
 
-.board2{
-	margin:20px auto;
-}
-.pull_right{
-float:right;
-color:#26bec9;
-font-weight: 500;
+.product_intro {
+	margin-left: 200px;
+	line-height: 1.8;
 }
 
-.price_detail{
+.productname1 {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.pic {
+	height: 120px;
+	border-radius: 4px;
+	float: left;
+}
+
+.pic_bottom {
+	height: 80px;
+	float: left;
+	display: inline;
+	border-radius: 4px;
+}
+
+.amount {
+	font-weight: 700;
+}
+
+.board2 {
+	margin: 20px auto;
+}
+
+.pull_right {
+	float: right;
+	color: #26bec9;
+	font-weight: 500;
+}
+
+.price_detail {
 	font-size: 16px;
 }
 
-.cart_detail{
-margin-left:200px;
+.cart_detail {
+	margin-left: 150px
 }
-.product_detail{
+
+.product_detail {
 	font-size: 16px;
 	font-weight: bold;
-	color:black;
+	color: black;
 }
+
 #traveler_gender {
 	margin-left: 10px;
 }
@@ -111,7 +144,7 @@ td {
 	font-size: large;
 	font-weight: bold;
 	margin-left: 10px;
-	margin-top:10px;
+	margin-top: 10px;
 }
 
 .productname {
@@ -237,29 +270,69 @@ td {
 
 
 
-	<%	List<ProductBean> productBeans = (List<ProductBean>) session.getAttribute("products");
-		List<ProductBean> products = (List<ProductBean>) session.getAttribute("allProducts"); 
-		List imgids = (List)request.getAttribute("imgids");%>
-		
-		<% for (int i = 0; i < productBeans.size(); i++) { %>
-								
-				<%String productname = null;
-				for (int j = 0; j < products.size(); j++) {
-					if (productBeans.get(i).getProductid() == products.get(j).getProductid()) {
-					productname = products.get(j).getProductname();	}}%>
-									
+		<%
+		List<ProductBean> productBeans = (List<ProductBean>) session.getAttribute("products");
+		List<ProductBean> products = (List<ProductBean>) session.getAttribute("allProducts");
+		List<Integer> imgids = (List<Integer>) session.getAttribute("imgids");
+		%>
+
+		<%
+		for (int i = 0; i < productBeans.size(); i++) {
+		%>
+
+		<%
+		String productname = null;
+		for (int j = 0; j < products.size(); j++) {
+			if (productBeans.get(i).getProductid() == products.get(j).getProductid()) {
+				productname = products.get(j).getProductname();
+			}
+		}
+		%>
+
+		<%
+		java.sql.Date startdate = null;
+		for (int j = 0; j < products.size(); j++) {
+			if (productBeans.get(i).getProductid() == products.get(j).getProductid()) {
+				startdate = products.get(j).getStartdate();
+			}
+		}
+		%>
+
+		<%
+		java.sql.Date enddate = null;
+		for (int j = 0; j < products.size(); j++) {
+			if (productBeans.get(i).getProductid() == products.get(j).getProductid()) {
+				enddate = products.get(j).getEnddate();
+			}
+		}
+		%>
+
 		<div id="traveler_Infor">
 			<div class="sub_title_traveler">旅客資料</div>
 
 			<div class="traveler_board">
-<%-- 			<img src="<%=request.getContextPath()%>/ProductImageReader?imgid=<%=imgids.get(i) %> " alt="#"> --%>
-			<div class="productname"><%=productname%></div>
-			<hr>
+				<div>
+					<img class="pic"
+						src="<%=request.getContextPath()%>/ProductImageReader?imgid=<%=imgids.get(i)%> "
+						alt="#">
+				</div>
+				<div class=product_intro>
+					<div class="productname1"><%=productname%></div>
+					<div class=date>
+						<div>
+							開始日期:
+							<%=startdate%></div>
+						<div>
+							結束日期:
+							<%=enddate%></div>
+					</div>
+				</div>
+				<hr>
 				<div class="sub_title1">團員人數</div>
 				<br> <label style="margin-left: 10px">人數</label><span
 					class="require_mark">*</span><br> <select
 					style="margin-left: 10px" name="numberoftraveler"
-					class="form_control" >
+					class="form_control">
 					<!-- 							<option disabled="disabled" selected>請選擇</option> -->
 					<option value="1">1</option>
 					<option value="2">2</option>
@@ -271,7 +344,7 @@ td {
 					<option value="8">8</option>
 					<option value="9">9</option>
 					<option value="10">10</option>
-					
+
 				</select>
 				<div class="traveler_infor">
 					<div class="txt">
@@ -361,7 +434,9 @@ td {
 
 			</div>
 		</div>
-		<%}%>
+		<%
+		}
+		%>
 
 		<div>
 			<div class="sub_title_traveler">付款</div>
@@ -429,12 +504,10 @@ td {
 							</button> ★ 付款明細
 					</a>
 						<div class="inner_block2">
-							
+
 							<table>
-							
+
 								<%
-							
-								
 								for (int i = 0; i < productBeans.size(); i++) {
 
 									String productname = null;
@@ -444,54 +517,61 @@ td {
 										}
 									}
 
-									
 									for (int k = 0; k < products.size(); k++) {
 										if (productBeans.get(i).getProductid() == products.get(k).getProductid()) {
 									productprice = products.get(k).getProductprice();
 										}
-									}sum += productprice;
+									}
+									sum += productprice;
 								%>
-								
-								<div class="cart_detail">
-									<div class="product_detail" value=""><%=productname%></div>
-									<div class="startdate" name="startdate" value="2021-12-31"></div>
-									<div class="price_detail">
-										<div class="pull_left">人數 x</div>
-										<div>總金額<span class="pull_right">TWD <%=productprice%> </span></div>
-										<hr>
+								<div>
+									<img class="pic_bottom"
+										src="<%=request.getContextPath()%>/ProductImageReader?imgid=<%=imgids.get(i)%> "
+										alt="#">
+									<div class="cart_detail">
+										<div class="product_detail" value=""><%=productname%></div>
+										<div class="startdate" name="startdate" value="2021-12-31"></div>
+										<div class="price_detail">
+											<div class="pull_left">人數 x</div>
+											<div>
+												總金額<span class="pull_right">TWD <%=productprice%>
+												</span>
+											</div>
+											<hr>
+										</div>
 									</div>
 								</div>
-								
-							
-<!-- 								<tr> -->
-									
-<!-- 									<td>商品名稱:</td> -->
-<!-- 									<td><input class="input_add" type="TEXT" -->
-<%-- 										name="productname" size="45" value="<%=productname%>" /></td> --%>
-<!-- 								</tr> -->
 
 
-<!-- 								<tr> -->
-<!-- 									<td>出發日期:</td> -->
-<!-- 									<td><input class="input_add" name="startdate" type="text" -->
-<!-- 										value="2021-12-31" /></td> -->
+								<!-- 								<tr> -->
 
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td>商品金額:</td> -->
-<!-- 									<td><input class="input_add" type="TEXT" -->
-<%-- 										name="productprice" size="45" value="<%=productprice%>" /></td> --%>
-<!-- 								</tr> -->
-								
+								<!-- 									<td>商品名稱:</td> -->
+								<!-- 									<td><input class="input_add" type="TEXT" -->
+								<%-- 										name="productname" size="45" value="<%=productname%>" /></td> --%>
+								<!-- 								</tr> -->
+
+
+								<!-- 								<tr> -->
+								<!-- 									<td>出發日期:</td> -->
+								<!-- 									<td><input class="input_add" name="startdate" type="text" -->
+								<!-- 										value="2021-12-31" /></td> -->
+
+								<!-- 								</tr> -->
+								<!-- 								<tr> -->
+								<!-- 									<td>商品金額:</td> -->
+								<!-- 									<td><input class="input_add" type="TEXT" -->
+								<%-- 										name="productprice" size="45" value="<%=productprice%>" /></td> --%>
+								<!-- 								</tr> -->
+
 								<input class="input_add" type="hidden" name="productid"
 									size="45" value="<%=productBeans.get(i).getProductid()%>" />
-									
-											<input class="input_add" type="hidden" name="productprice"
+
+								<input class="input_add" type="hidden" name="productprice"
 									size="45" value="<%=productBeans.get(i).getProductprice()%>" />
-								
-									<input class="input_add" type="hidden" name="orderpriceamount"
+
+								<input class="input_add" type="hidden" name="orderpriceamount"
 									size="45" value="<%=sum%>" />
-								
+
 								<%
 								}
 								%>
@@ -501,19 +581,21 @@ td {
 				</ul>
 				<hr>
 			</div>
-			
-			<%Integer size = productBeans.size(); %>
 
-	
+			<%
+			Integer size = productBeans.size();
+			%>
+
+
 
 			<div class="board2" id="payment_board">
 				<div class="gray_text2">
-					<%=size%>件商品合計<span class="amount">TWD<%=sum%></span> <input type="submit"
-						value="確認付款" class="btn_ex1"> <input type="hidden"
-						name="action" value="insert">
+					<%=size%>件商品合計<span class="amount">TWD<%=sum%></span> <input
+						type="submit" value="確認付款" class="btn_ex1"> <input
+						type="hidden" name="action" value="insert">
 				</div>
 			</div>
-			
+
 			</FORM>
 		</div>
 	</div>
@@ -554,11 +636,12 @@ $('#f_date1').datetimepicker({
    timepicker:false,       //timepicker:true,
    step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
    format:'Y-m-d',         //format:'Y-m-d H:i:s',
-   value: '<%=birthday%> ', // value:   new Date(),
-//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-//startDate:	            '2017/07/10',  // 起始日
-//minDate:               '-1970-01-01', // 去除今日(不含)之前
-//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+   value: '<%=birthday%>
+	', // value:   new Date(),
+		//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+		//startDate:	            '2017/07/10',  // 起始日
+		//minDate:               '-1970-01-01', // 去除今日(不含)之前
+		//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
 	});
 </script>
 </html>
