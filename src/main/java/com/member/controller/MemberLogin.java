@@ -67,11 +67,12 @@ public class MemberLogin extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
-
+				Integer memberid = memberVO.getMemberid();
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 
 				HttpSession session = req.getSession();
 				session.setAttribute("memberVO", memberVO);
+				session.setAttribute("memberid", memberid);
 				System.out.println("儲存memberVO到session! = " + memberVO);
 //				int days = 30;
 //				session.setMaxInactiveInterval(86400 * days);  // 要存幾天?
