@@ -1,6 +1,11 @@
 package com.order.order.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +74,32 @@ public class BookingServlet extends HttpServlet {
 				session3.setAttribute("allProducts", products);
 
 				
+				//找出此頁該顯示的圖片們
+				List imgids = new ArrayList();
+				Connection connection;
+				try {
+					connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei",
+							"root", "password");
+
+					for (int i = 0; i < productBeans.size(); i++) {
+						if (productBeans.get(i) != null) {
+							PreparedStatement ps = connection
+									.prepareStatement("SELECT * FROM PRODUCT_IMG where PRODUCT_ID = ? limit 1");
+							ps.setInt(1, productBeans.get(i).getProductid());
+							ResultSet rSet = ps.executeQuery();
+
+							while (rSet.next()) {
+								imgids.add(rSet.getInt(1));
+							}
+						}
+					}
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+				HttpSession session5 = req.getSession();
+				session5.setAttribute("imgids", imgids);
 				
 				
 				// 會員session
