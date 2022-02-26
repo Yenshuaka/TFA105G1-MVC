@@ -271,7 +271,7 @@ public class ProductDisplayController {
 			Integer memberid = (Integer)session.getAttribute("memberid");
 			
 			NativeQuery query2 = this.session.createSQLQuery(
-					"select order_detail_no\r\n"
+					"select * \r\n"
 					+ "from ordertest ot\r\n"
 					+ "	join order_detail od\r\n"
 					+ "    on ot.order_id = od.order_id\r\n"
