@@ -152,9 +152,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-6 col-8">
-                            <img src="<%=request.getContextPath()%>/download/images/f.png" alt=""> 
-                        </div>
+                        
                         <!-- <div class="col-md-3 col-sm-6 col-8">
                             <div class="header-button">
                                 <div class="header-button-item has-noti js-item-menu"> -->

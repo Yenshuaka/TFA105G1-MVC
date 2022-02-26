@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.member.model.MemberService;
+import com.member.model.MemberVO;
 
 
 @WebServlet("/member/member.login")
@@ -53,9 +54,9 @@ public class MemberLogin extends HttpServlet {
 				System.out.println(email + password);
 				/*************************** 2.開始查詢資料 *****************************************/
 				MemberService memberSvc = new MemberService();
-				Integer memberid = memberSvc.memberLogin(email, password);
+				MemberVO memberVO = memberSvc.memberLogin(email, password);	
 
-				if (memberid == null) {
+				if (memberVO == null) {
 					errorMsgs.add("查無資料");
 				}
 				System.err.println(errorMsgs); // []
@@ -70,11 +71,13 @@ public class MemberLogin extends HttpServlet {
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 
 				HttpSession session = req.getSession();
-				session.setAttribute("memberid", memberid);
-				System.out.println("儲存memberid到session! = " + memberid);
+				session.setAttribute("memberVO", memberVO);
+				System.out.println("儲存memberVO到session! = " + memberVO);
 //				int days = 30;
 //				session.setMaxInactiveInterval(86400 * days);  // 要存幾天?
 //				String reqComeFrom = req.getHeader("referer"); // filter?
+				String location = (String) session.getAttribute("location");
+				System.out.println("來源網站 = " + location);
 				String ContextPath = req.getContextPath();
 				String indexUrl = "/download/FS-Index-Demo.jsp";
 				res.sendRedirect(ContextPath + indexUrl);

@@ -1,3 +1,4 @@
+<%@page import="com.member.model.MemberVO"%>
 <%@page import="com.order.orderdetail.model.OrderdetailService"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="com.order.orderdetail.model.OrderdetailBean"%>
@@ -23,10 +24,8 @@
 // OrderdetailDAOHibernate orderdetailDAO = new OrderdetailDAOHibernate(sessionFactory);
 // OrderdetailService svc = new OrderdetailService(orderdetailDAO);
 // List<OrderdetailBean> list123 = svc.select(null);
-
-	 List<OrderBean> list = (List)session.getAttribute("list");  
-	 List<OrderdetailBean> list123 = (List)session.getAttribute("list123");  
 %>
+
 
 <html>
 <head>
@@ -56,8 +55,9 @@
 <link href="<%=request.getContextPath()%>/order/css/dashboard.css"
 	rel="stylesheet" />
 <!--color switcher css-->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/order/css/switcher/skin-aqua.css" media="screen"
-	id="style-colors" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/order/css/switcher/skin-aqua.css"
+	media="screen" id="style-colors" />
 <!-- Document Title -->
 <!-- <title>listagram - Directory Listing HTML Template</title> -->
 <title>後台訂單管理</title>
@@ -90,7 +90,7 @@
 
 			<!-- Top header starts-->
 			<%@ include file="file/Header.file"%>
-<%-- <jsp:include page="<%request.getContextPath()%>/order/file/Sidebar.file" / > --%>
+			<%-- <jsp:include page="<%request.getContextPath()%>/order/file/Sidebar.file" / > --%>
 			<!-- Top header ends-->
 
 			<!--Dashboard breadcrumb starts-->
@@ -141,8 +141,9 @@
 									<table>
 										<tr>
 											<th>訂單編號</th>
-											<th>會員編號</th>
 											<th>訂購日期</th>
+											<th>姓</th>
+											<th>名</th>
 											<th>訂單總金額</th>
 											<th>折抵點數</th>
 											<th>訂單明細</th>
@@ -159,22 +160,43 @@
 												<h11>&nbsp</h11>
 												<input type="text" name="orderid" class="select"> <input
 													type="hidden" name="action" value="getOne_For_Orderdetail">
-												<input type="submit" value="送出" class="send"> 
+												<input type="submit" value="送出" class="send">
 											</div>
 										</FORM>
 
 										<%-- 										<c:forEach var="orderBean" items="${list}"> --%>
+
+										<%
+										List<OrderBean> list = (List) session.getAttribute("list");
+										List<OrderdetailBean> list123 = (List) session.getAttribute("list123");
+										List<MemberVO> allMembers = (List<MemberVO>)session.getAttribute("allMembers");
+										%>
 										<%
 										for (int i = 0; i < list.size(); i++) {
 										%>
-
 										<tr>
 											<td><%=list.get(i).getOrderid()%></td>
-											<td><%=list.get(i).getMemberid()%></td>
+											<%-- 											<td><%=list.get(i).getMemberid()%></td> --%>
 											<td><%=list.get(i).getOrderdate()%></td>
-											<%
-											int amount = 0;
-											%>
+											
+											<%String lastname = null;
+											 for(int j=0;j < allMembers.size();j++){
+												if(list.get(i).getMemberid() == allMembers.get(j).getMemberid());
+												lastname = allMembers.get(j).getLastname();}
+											
+											  String firstname = null; 
+												for(int k = 0;k < allMembers.size();k++){
+													if(list.get(i).getMemberid() == allMembers.get(k).getMemberid());
+													firstname = allMembers.get(k).getFirstname();
+												}
+												%>
+												
+											
+											<td><%=lastname%></td>
+											<td><%=firstname%></td>
+											
+											<%int amount = 0;%>
+											
 											<%
 											for (int a = 0; a < list123.size(); a++) {
 
@@ -203,13 +225,10 @@
 												<FORM METHOD="post"
 													ACTION="<%=request.getContextPath()%>/orderdetail.do"
 													style="margin-bottom: 0px;">
-													<input type="submit" value="明細" class="send"> 
-													<input
+													<input type="submit" value="明細" class="send"> <input
 														type="hidden" name="orderid"
-														value="<%=list.get(i).getOrderid()%>"> 
-													<input
-														type="hidden" name="action"
-														value="getOne_For_Orderdetail">
+														value="<%=list.get(i).getOrderid()%>"> <input
+														type="hidden" name="action" value="getOne_For_Orderdetail">
 												</FORM>
 											</td>
 											<!-- 												<td></td> -->
@@ -276,7 +295,8 @@
 	<!-- Plugin JS-->
 	<script src="<%=request.getContextPath()%>/order/js/plugin.js"></script>
 	<!--Perfect Scrollbar JS-->
-	<script src="<%=request.getContextPath()%>/order/js/perfect-scrollbar.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/order/js/perfect-scrollbar.min.js"></script>
 	<!-- Main JS-->
 	<script src="<%=request.getContextPath()%>/order/js/main.js"></script>
 	<!-- Dashboard JS-->

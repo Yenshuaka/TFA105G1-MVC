@@ -89,7 +89,7 @@
 
 								</h5>
 							</div>
-							<div class="invoice-body">session.memberid = ${memberid}</div>
+							<div class="invoice-body">session.memberVO = ${memberVO.email}</div>
 
 						</div>
 

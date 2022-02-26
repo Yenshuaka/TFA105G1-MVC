@@ -2,12 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.member.model.*"%>
 
-<%
-Integer memberid = (Integer) session.getAttribute("memberid");
-MemberService memberSvc = new MemberService();
-MemberVO memberVO = memberSvc.getOneMember(memberid);
-pageContext.setAttribute("memberVO", memberVO);
-%>
 
 <html lang="en">
 
@@ -69,7 +63,7 @@ pageContext.setAttribute("memberVO", memberVO);
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
 											<li class="active"><a href="#">Home</a></li>
-											<li>My Profile</li>
+											<li>My Profiles</li>
 										</ul>
 									</div>
 								</div>
@@ -94,30 +88,65 @@ pageContext.setAttribute("memberVO", memberVO);
 									<div class="row">
 										<div class="col-md-8 offset-md-2 py-4">
 											<div class="edit-profile-photo text-center">
-												<a
-													href="<%=request.getContextPath()%>/download/BS-update-image.jsp?memberid=${memberVO.memberid}"><img
-													alt="${memberVO.memberid}"
-													src="<%=request.getContextPath()%>/member/member.pic?memberid=${memberVO.memberid}"
-													width="80px"></a>
+
+												<div id="changePicBox">
+													<img class="picBox" alt="${memberVO.memberid}"
+														src="<%=request.getContextPath()%>/member/member.pic?memberid=${memberVO.memberid}">
+												</div>
+
+												<div class="change-photo-btn">
+													<a href="#" data-toggle="modal" data-target="#avatar-page" class="rate-review"><i class="ion-log-in"></i>變更圖片</a>
+													<!-- modal-start -->
+													<div class="modal fade" id="avatar-page">
+														<div class="modal-dialog modal-dialog-centered"
+															role="image">
+															<div class="picBox">
+															
+																<div>
+																	<div id="changePic">
+																		<label for="p_file"> <img
+																			src="<%=request.getContextPath()%>/member/member.pic?memberid=${memberVO.memberid}">
+																		</label>
+																	</div>
+																</div>
+																
+																<div>
+																	<div class="contact-form__upload-btn xs-left">
+																		<FORM METHOD="post" enctype="multipart/form-data"
+																			ACTION="<%=request.getContextPath()%>/member/member.upload">
+																			
+																			<input type="file" id="p_file" name="photo-upload" accept="image/jpeg, image/png"
+																				style="display: none;"> 
+																			<input type="hidden" name="memberid" value="${memberVO.memberid}">
+																			<input type="submit" name="action" value="確認">
+																		</FORM>
+																	</div>
+																</div>
+																
+															</div>
+														</div>
+													</div>
+													<!-- modal-ends -->
+												</div>
 											</div>
 										</div>
 										<div class="col-md-12">
 											<div class="my-profile">
 												<ul class="db-profile-info">
 													<li>
-														<h6>First Name :</h6> <span>${(memberVO == null) ? "名字" : memberVO.firstname}</span>
+														<h6>First Name :</h6> <span>${(memberVO.firstname == null) ? "名字" : memberVO.firstname}</span>
 													</li>
 													<li>
-														<h6>Last Name :</h6> <span>${(memberVO == null) ? "姓氏" : memberVO.lastname}</span>
+														<h6>Last Name :</h6> <span>${(memberVO.lastname == null) ? "姓氏" : memberVO.lastname}</span>
 													</li>
 													<li>
-														<h6>Email Id :</h6> <span>${(memberVO == null) ? "電子信箱" : memberVO.email}</span>
+														<h6>Email Id :</h6> <span>${(memberVO.email == null) ? "電子信箱" : memberVO.email}</span>
 													</li>
 													<li>
-														<h6>Phone :</h6> <span>${(memberVO == null) ? "連絡電話" : memberVO.phone}</span>
+														<h6>Phone :</h6> <span>${(memberVO.phone == null) ? "連絡電話" : memberVO.phone}</span>
 													</li>
 													<li>
-														<h6>Password :</h6> <span>${(memberVO == null) ? "密碼" : memberVO.password}</span>
+														<h6>Password :</h6> <span>${(memberVO.password == null) ? "密碼" : memberVO.password}</span>
 													</li>
 													<!-- 													<li> -->
 													<!-- 														<h6>Address :</h6> <span> 864 W. Walnut Ave. Avon, -->
@@ -133,8 +162,9 @@ pageContext.setAttribute("memberVO", memberVO);
                                                     </li> -->
 
 												</ul>
-												<a href="db-edit-profile.jsp" class="btn v5">Edit
-													profile</a>
+												<a
+													href="<%=request.getContextPath()%>/download/FS-edit-profile.jsp"
+													class="btn v5">編輯</a>
 											</div>
 										</div>
 									</div>
@@ -160,6 +190,8 @@ pageContext.setAttribute("memberVO", memberVO);
 	<script src="js/main.js"></script>
 	<!-- Dashboard JS-->
 	<script src="js/dashboard.js"></script>
+	<!-- changePic id="p_file"-->
+	<script src="<%=request.getContextPath()%>/download/js/changePic.js"></script>
 </body>
 
 </html>

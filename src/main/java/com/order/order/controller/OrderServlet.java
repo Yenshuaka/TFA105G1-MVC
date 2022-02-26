@@ -1,6 +1,7 @@
 package com.order.order.controller;
 //http://localhost:7080/TFA105G1-MVC/MVC/ProductManageController
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,15 +18,18 @@ import javax.servlet.http.HttpSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.member.model.MemberVO;
 import com.order.order.model.OrderBean;
 import com.order.order.model.OrderService;
+import com.order.order.model.memberupdate.MemberBean;
+import com.order.order.model.memberupdate.MemberService;
 import com.order.orderdetail.model.OrderdetailBean;
 import com.order.orderdetail.model.OrderdetailService;
 import com.order.travelerlist.model.TravelerlistBean;
 import com.order.travelerlist.model.TravelerlistService;
 
 @WebServlet("/order.do")
-public class OrderServlet extends HttpServlet {
+public class OrderServlet extends HttpServlet implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -43,6 +47,9 @@ public class OrderServlet extends HttpServlet {
 		OrderService orderService = context.getBean("orderService", OrderService.class);
 		OrderdetailService orderdetailService = context.getBean("orderdetailService",OrderdetailService.class);
 		TravelerlistService travelerlistService = context.getBean("travelerlistService",TravelerlistService.class);
+		MemberService memberServiceOrder = context.getBean("memberService", MemberService.class);
+		com.member.model.MemberService memberService = new com.member.model.MemberService();
+
 		
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
@@ -50,6 +57,11 @@ public class OrderServlet extends HttpServlet {
 		if(action==null) {  //這是select全部的狀況
 			List<OrderBean> list = orderService.select(null);
 			List<OrderdetailBean> list123 = orderdetailService.select(null);	
+			
+			System.out.println("為甚麼娶不到memberid");
+			for(int i = 0;i<list.size();i++) {
+				System.out.println("orderbean memberId = " + list.get(i).getMemberid() );
+			}
 			
 			HttpSession session = req.getSession();
 			HttpSession session1 = req.getSession();
@@ -62,6 +74,14 @@ public class OrderServlet extends HttpServlet {
 				session1.setAttribute("list123", list123);
 			}
 			
+			List<MemberVO> allMembers = memberService.getAll();
+			
+			for(int i = 0;i<allMembers.size();i++) {
+				System.out.println("Lastname = " + allMembers.get(i).getLastname());
+			}
+			HttpSession session2 = req.getSession();
+			session2.setAttribute("allMembers", allMembers);
+			
 			String url = "order/listAllOrder.jsp";
 //			res.sendRedirect(url); 
 			RequestDispatcher sucessView = req.getRequestDispatcher(url);
@@ -69,6 +89,8 @@ public class OrderServlet extends HttpServlet {
 			
 		}
 		
+		
+
 		
 
 		if ("getOne_For_Display".equals(action)) { 
@@ -101,51 +123,21 @@ public class OrderServlet extends HttpServlet {
 		
 	
 
-//		if ("delete".equals(action)) {
-//
-//			try {
-//				/*************************** 1.接收請求參數 ***************************************/
-//				Integer orderid = new Integer(req.getParameter("orderid"));
-//
-//				/*************************** 2.開始刪除資料 ***************************************/
-//
-//				OrderBean bean = new OrderBean();
-//				bean.setOrderid(orderid);
-//				orderService.delete(bean);
-//
-//				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-//				List<OrderBean> list = orderService.select(bean); //刪除完成後，秀出剩餘訂單
-//
-//				HttpSession session = req.getSession();
-//				session.setAttribute("list", list);
-//
-//				String url = "order/listAllOrder.jsp";
-//				res.sendRedirect(url);
-//
-//				/*************************** 其他可能的錯誤處理 **********************************/
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				errorMsgs.add("刪除資料失敗:"+e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/emp/listAllEmp.jsp");
-//				failureView.forward(req, res);
-//				System.out.print("刪除資料失敗");
-//			}
-
-//		}
+//		
 		
 
 		if ("insert".equals(action)) { // 來自add-post.jsp的請求
 
 			try {
 				//order
-//				Integer memberid = Integer.parseInt(req.getParameter("memberid").trim());
+				HttpSession session = req.getSession();
+				Integer memberid1 = (Integer)session.getAttribute("memberid");//抓session傳入資料庫
 //				Integer orderpriceamount = Integer.parseInt(req.getParameter("orderpriceamount").trim());
 //				Integer usedfunpoints = Integer.parseInt(req.getParameter("usedfunpoints").trim());
 				LocalDateTime orderdate = LocalDateTime.now();
 
 				OrderBean bean = new OrderBean();
-				bean.setMemberid(5);
+				bean.setMemberid(memberid1);
 				bean.setOrderdate(orderdate);
 				bean.setOrderpriceamount(600);
 				bean.setUsedfunpoints(50);
@@ -154,11 +146,9 @@ public class OrderServlet extends HttpServlet {
 				
 				///orderdetail
 				
-//				Integer orderid = Integer.parseInt(req.getParameter("orderid").trim());
-				bean.getOrderid();
-//				Integer productid = Integer.parseInt(req.getParameter("productid").trim());
+				Integer productid = Integer.parseInt(req.getParameter("productid").trim());
+//				Integer productid = (Integer)session.getAttribute("productid");
 				Integer numberoftraveler = Integer.parseInt(req.getParameter("numberoftraveler").trim());
-				System.out.println(numberoftraveler);
 				Integer productprice = Integer.parseInt(req.getParameter("productprice").trim());
 //				Integer orderrewardpoints = Integer.parseInt(req.getParameter("orderrewardpoints").trim());
 				String specialneeds = req.getParameter("specialneeds");
@@ -166,7 +156,7 @@ public class OrderServlet extends HttpServlet {
 				
 				OrderdetailBean bean2 = new OrderdetailBean();
 				bean2.setOrderid(bean.getOrderid());
-				bean2.setProductid(2);
+				bean2.setProductid(productid);
 				bean2.setOrderrewardpoints(5);
 				bean2.setSpecialneeds(specialneeds);
 				bean2.setNumberoftraveler(numberoftraveler);
@@ -189,13 +179,40 @@ public class OrderServlet extends HttpServlet {
 				bean3.setLastname(lastname);
 				bean3.setFirstname(firstname);
 				bean3.setGender(gender);
-//				bean3.setBirthday(Date.valueOf("1992-03-27"));
 				bean3.setBirthday(birthday);
 				bean3.setIdno(idno);
 
 				travelerlistService.insert(bean3);
 				
+				
+				
+				// 更新會員資料
+				Integer memberid = (Integer) session.getAttribute("memberid");
+				String memberLastname = req.getParameter("memberLastname");
+				String memberFirstname = req.getParameter("memberFirstname");
+				String memberPhone = req.getParameter("memberPhone");
+				String memberEmail = req.getParameter("memberEmail");
+				String memberIdno = req.getParameter("memberIdno");
+				
+//				System.out.println("memberid = " + memberid);
+//				System.out.println("memberLastname = " + memberLastname);
+//				System.out.println("memberFirstname = " + memberFirstname);
+//				System.out.println("memberPhone = " + memberPhone);
+//				System.out.println("memberEmail = " + memberEmail);
+//				System.out.println("memberIdno = " + memberIdno);
 
+				MemberBean bean1 = new MemberBean();
+				bean1.setMemberid(memberid);
+				bean1.setEmail(memberEmail);
+				bean1.setFirstname(memberFirstname);
+				bean1.setLastname(memberLastname);
+				bean1.setPhone(memberPhone);
+				bean1.setIdno(memberIdno);
+
+				memberServiceOrder.update(bean1);
+				
+				
+				
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 //				List<OrderBean> list = orderService.select(bean);//新增完成後，秀出剩餘訂單
 //
@@ -296,7 +313,40 @@ public class OrderServlet extends HttpServlet {
 //				System.out.print("修改資料失敗");
 //			}
 //		}
+		
+		
+	
+//	if ("delete".equals(action)) {
+		//
+//					try {
+//						/*************************** 1.接收請求參數 ***************************************/
+//						Integer orderid = new Integer(req.getParameter("orderid"));
+		//
+//						/*************************** 2.開始刪除資料 ***************************************/
+		//
+//						OrderBean bean = new OrderBean();
+//						bean.setOrderid(orderid);
+//						orderService.delete(bean);
+		//
+//						/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
+//						List<OrderBean> list = orderService.select(bean); //刪除完成後，秀出剩餘訂單
+		//
+//						HttpSession session = req.getSession();
+//						session.setAttribute("list", list);
+		//
+//						String url = "order/listAllOrder.jsp";
+//						res.sendRedirect(url);
+		//
+//						/*************************** 其他可能的錯誤處理 **********************************/
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//						errorMsgs.add("刪除資料失敗:"+e.getMessage());
+//						RequestDispatcher failureView = req
+//								.getRequestDispatcher("/emp/listAllEmp.jsp");
+//						failureView.forward(req, res);
+//						System.out.print("刪除資料失敗");
+//					}
 
+//				}
 	}
-
 }

@@ -10,6 +10,7 @@
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="com.product"></context:component-scan>
 	<context:component-scan base-package="com.order"></context:component-scan>
+	<context:component-scan base-package="com.member"></context:component-scan>
 	
 	<tx:annotation-driven/>
 	<bean id="transactionManager"
@@ -53,6 +54,7 @@
 				<value>com.order.order.model.OrderBean</value>
 				<value>com.order.orderdetail.model.OrderdetailBean</value>
 				<value>com.order.travelerlist.model.TravelerlistBean</value>
+				<value>com.order.order.model.memberupdate.MemberBean</value>
 				
 			</array>
 		</property>
