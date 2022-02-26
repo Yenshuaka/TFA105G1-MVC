@@ -103,10 +103,12 @@ public class BookingServlet extends HttpServlet {
 				
 				
 				// 會員session
-				Integer memberid = (Integer) session.getAttribute("memberid");
+				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+				Integer memberid = memberVO.getMemberid();
+//				Integer memberid = (Integer) session.getAttribute("memberid");
 
-				MemberVO memberVO = new MemberVO();
-				memberVO.setMemberid(memberid);
+//				MemberVO memberVO = new MemberVO();
+//				memberVO.setMemberid(memberid);
 
 				List<MemberVO> memberVOs = new ArrayList<MemberVO>();
 				memberVOs.add(memberService.getOneMember(memberid));

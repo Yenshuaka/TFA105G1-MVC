@@ -131,7 +131,9 @@ public class OrderServlet extends HttpServlet implements Serializable {
 			try {
 				//order
 				HttpSession session = req.getSession();
-				Integer memberid1 = (Integer)session.getAttribute("memberid");//抓session傳入資料庫
+				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+				Integer memberid1 = memberVO.getMemberid();
+//				Integer memberid1 = (Integer)session.getAttribute("memberid");//抓session傳入資料庫
 				Integer orderpriceamount = Integer.parseInt(req.getParameter("orderpriceamount").trim());
 //				Integer usedfunpoints = Integer.parseInt(req.getParameter("usedfunpoints").trim());
 				LocalDateTime orderdate = LocalDateTime.now();
@@ -187,7 +189,7 @@ public class OrderServlet extends HttpServlet implements Serializable {
 				
 				
 				// 更新會員資料
-				Integer memberid = (Integer) session.getAttribute("memberid");
+//				Integer memberid = (Integer) session.getAttribute("memberid");
 				String memberLastname = req.getParameter("memberLastname");
 				String memberFirstname = req.getParameter("memberFirstname");
 				String memberPhone = req.getParameter("memberPhone");
@@ -202,7 +204,7 @@ public class OrderServlet extends HttpServlet implements Serializable {
 //				System.out.println("memberIdno = " + memberIdno);
 
 				MemberBean bean1 = new MemberBean();
-				bean1.setMemberid(memberid);
+				bean1.setMemberid(memberid1);
 				bean1.setEmail(memberEmail);
 				bean1.setFirstname(memberFirstname);
 				bean1.setLastname(memberLastname);
