@@ -1,5 +1,6 @@
 (function ($) {
 
+
     $(".same_traveler").on("change", function () {
         var book_last_name = $("#book_last_name").val();
         var book_first_name = $("#book_first_name").val();
