@@ -49,4 +49,8 @@
 		<servlet-name>DispatcherServlet</servlet-name>
 		<url-pattern>/MVC/*</url-pattern>
 	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>/download/FS-Index-Demo.jsp</welcome-file>
+	</welcome-file-list>
 </web-app>
