@@ -132,14 +132,14 @@ public class OrderServlet extends HttpServlet implements Serializable {
 				//order
 				HttpSession session = req.getSession();
 				Integer memberid1 = (Integer)session.getAttribute("memberid");//抓session傳入資料庫
-//				Integer orderpriceamount = Integer.parseInt(req.getParameter("orderpriceamount").trim());
+				Integer orderpriceamount = Integer.parseInt(req.getParameter("orderpriceamount").trim());
 //				Integer usedfunpoints = Integer.parseInt(req.getParameter("usedfunpoints").trim());
 				LocalDateTime orderdate = LocalDateTime.now();
 
 				OrderBean bean = new OrderBean();
 				bean.setMemberid(memberid1);
 				bean.setOrderdate(orderdate);
-				bean.setOrderpriceamount(600);
+				bean.setOrderpriceamount(orderpriceamount);
 				bean.setUsedfunpoints(50);
 
 				orderService.insert(bean);
@@ -147,20 +147,20 @@ public class OrderServlet extends HttpServlet implements Serializable {
 				///orderdetail
 				
 				Integer productid = Integer.parseInt(req.getParameter("productid").trim());
-//				Integer productid = (Integer)session.getAttribute("productid");
 				Integer numberoftraveler = Integer.parseInt(req.getParameter("numberoftraveler").trim());
-				Integer productprice = Integer.parseInt(req.getParameter("productprice").trim());
 //				Integer orderrewardpoints = Integer.parseInt(req.getParameter("orderrewardpoints").trim());
 				String specialneeds = req.getParameter("specialneeds");
+				Integer productprice = Integer.parseInt(req.getParameter("productprice").trim());
 				
 				
 				OrderdetailBean bean2 = new OrderdetailBean();
 				bean2.setOrderid(bean.getOrderid());
+				
 				bean2.setProductid(productid);
 				bean2.setOrderrewardpoints(5);
 				bean2.setSpecialneeds(specialneeds);
 				bean2.setNumberoftraveler(numberoftraveler);
-				bean2.setProductprice(500);
+				bean2.setProductprice(productprice);
 				
 				orderdetailService.insert(bean2);
 				
