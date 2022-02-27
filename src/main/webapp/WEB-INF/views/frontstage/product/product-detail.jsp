@@ -431,7 +431,10 @@
                             
                             
                             <div id="reviews" class="list-details-section mar-top-10">
-                                <h4>商品評論 <span>(<%=comments.size() %>)</span><span class="customer-rating">${avgScore}</span></h4>
+                                <h4>商品評論 <span>(<%=comments.size() %>)</span>
+                                <% if (request.getAttribute("avgScore")!=null){ %>
+                                <span class="customer-rating">${avgScore}</span></h4>
+                                <% }%>
                                 <br> 
                             <%	if(comments!=null && comments.size()!=0){ %>
 <!--                             <div id="reviews" class="list-details-section mar-top-10"> -->

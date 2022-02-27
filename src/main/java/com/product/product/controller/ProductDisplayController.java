@@ -256,15 +256,20 @@ public class ProductDisplayController {
 		//以下抓評分等級 (平均幾分)
 			
 		Double ttlScore = 0.0;
-		if(comments!=null && comments.size()!=0)
-		for(int i=0; i < comments.size(); i++) {
-			ttlScore = ttlScore + comments.get(i).getScore();		
+		if(comments!=null && comments.size()!=0) {
+			for(int i=0; i < comments.size(); i++) {
+				ttlScore = ttlScore + comments.get(i).getScore();		
+			}
+			
+			Double avgScore = ttlScore/comments.size();
+			DecimalFormat df = new DecimalFormat("#.#");
+			
+		    avgScore = Double.valueOf(df.format(avgScore));
+			model.addAttribute("avgScore", avgScore);
+			
+			
 		}
 		
-		Double avgScore = ttlScore/comments.size();
-		DecimalFormat df = new DecimalFormat("#.#");
-	    avgScore = Double.valueOf(df.format(avgScore));
-		model.addAttribute("avgScore", avgScore);
 		
 		//以下判斷是否有評論資格
 		if(session.getAttribute("memberid")!=null) {
