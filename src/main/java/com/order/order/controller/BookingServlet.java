@@ -75,7 +75,7 @@ public class BookingServlet extends HttpServlet {
 
 				
 				//找出此頁該顯示的圖片們
-				List imgids = new ArrayList();
+				List<Integer> imgids = new ArrayList<Integer>();
 				Connection connection;
 				try {
 					connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei",
@@ -98,6 +98,7 @@ public class BookingServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				
+				System.out.println(imgids);
 				HttpSession session5 = req.getSession();
 				session5.setAttribute("imgids", imgids);
 				
@@ -122,6 +123,7 @@ public class BookingServlet extends HttpServlet {
 
 			
 
+//				String url = "order/orderbooking.jsp";
 				String url = "order/orderbooking.jsp";
 //				res.sendRedirect(url);
 				RequestDispatcher sucessView = req.getRequestDispatcher(url);

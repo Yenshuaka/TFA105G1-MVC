@@ -18,7 +18,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="js-arrow" href="<%=request.getContextPath()%>/order.do">
+                            <a href="<%=request.getContextPath()%>/order.do">
                                 <i class="ion-social-buffer-outline"></i>訂單管理
                             </a>
                             <!-- <ul class="list-unstyled navbar__sub-list js-sub-list">

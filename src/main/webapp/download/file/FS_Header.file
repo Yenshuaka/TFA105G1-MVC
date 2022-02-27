@@ -8,7 +8,7 @@
 						<div class="row align-items-center">
 							<div class="col-md-4 col-6">
 								<a class="navbar-brand" href="home-v2-using.html"><img
-									src="images/f.png" alt="logo" class="img-fluid"></a>
+									src="<%=request.getContextPath()%>/download/images/f.png" alt="logo" class="img-fluid"></a>
 							</div>
 							<div class="col-md-8 col-6">
 								<nav class="site-navigation float-left">

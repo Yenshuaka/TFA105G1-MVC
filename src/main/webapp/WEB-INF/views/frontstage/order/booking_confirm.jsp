@@ -59,7 +59,25 @@
     </div>
     <!--Page Wrapper ends-->
     <!--Footer Starts-->
-  <%@ include file="/download/file/FS_footer.file"%>
+   <%@ include file="/download/file/FS_footer.file"%>
+    <!--Footer ends-->
+   <!--Color switcher starts-->
+<!--     <div class="color-switcher hide-color-switcher"> -->
+<!--         <a class="switcher-button"><i class="ion-android-settings"></i></a> -->
+<!--         <div class="color-switcher-title text-center"> -->
+<!--             <h5>Switch Colors</h5> -->
+<!--         </div> -->
+<!--         <div class="color-list text-center"> -->
+<!--             <a class="color green-theme" title="green"></a> -->
+<!--             <a class="color red-theme" title="red"></a> -->
+<!--             <a class="color blue-theme" title="blue"></a> -->
+<!--             <a class="color orange-theme" title="orange"></a> -->
+<!--             <a class="color pink-theme" title="pink"></a> -->
+<!--             <a class="color purple-theme" title="purple"></a> -->
+<!--             <a class="color violet-theme" title="violet"></a> -->
+<!--             <a class="color aqua-theme" title="aqua"></a> -->
+<!--         </div> -->
+<!--     </div> -->
     <!--Footer ends-->
    <!--Color switcher starts-->
 <!--     <div class="color-switcher hide-color-switcher"> -->
