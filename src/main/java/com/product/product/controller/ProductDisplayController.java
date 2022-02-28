@@ -81,6 +81,11 @@ public class ProductDisplayController {
 	public String displayAll(HttpSession session, String page, Model model, String keyword,
 			String price, String type) {
 		
+		session.removeAttribute("keyword");
+		session.removeAttribute("type");
+		session.removeAttribute("price");
+		
+		
 		//搜尋關鍵字過濾 類別過濾
 		List<ProductBean> list = null;
 		System.out.println(type);
@@ -92,8 +97,9 @@ public class ProductDisplayController {
 			);
 			query.addEntity(ProductBean.class);
 			list = (List<ProductBean>) query.list();
-			model.addAttribute("keyword", keyword);
-			model.addAttribute("type", type);
+			session.setAttribute("keyword", keyword);
+			session.setAttribute("type", type);
+
 		
 		} else if(keyword!=null && keyword!="") {
 			String keyword2 = keyword.trim();
@@ -102,14 +108,14 @@ public class ProductDisplayController {
 			);
 			query.addEntity(ProductBean.class);
 			list = (List<ProductBean>) query.list();
-			model.addAttribute("keyword", keyword);
+			session.setAttribute("keyword", keyword);
 		}else if(type != null &&  !"產品分類".equals(type)) {
 			NativeQuery query = this.session.createSQLQuery(
 					"select * from product where product_type = '" + type + "' "
 			);
 			query.addEntity(ProductBean.class);
 			list = (List<ProductBean>) query.list();
-			model.addAttribute("type", type);
+			session.setAttribute("type", type);
 		
 		}else {
 			list = productService.select(null);
@@ -121,7 +127,7 @@ public class ProductDisplayController {
 			price1 = Integer.parseInt(price);
 		}
 		if(price1!= 0) {
-			model.addAttribute("price", price);
+			session.setAttribute("price", price);
 			for(int i =0; i<list.size();i++) {
 				if(list.get(i).getProductprice() > price1) {
 					list.remove(list.get(i));
@@ -129,10 +135,91 @@ public class ProductDisplayController {
 				}
 			}
 		}
+		
+		for(int i =0; i < list.size(); i++) {
+			if(list.get(i).getState()==0) {
+				list.remove(list.get(i));
+			}
+		}
 
-
+		session.setAttribute("list", list);
+		return "redirect:/MVC/PageHandler";
 		
 		//找出此頁該顯示哪幾筆商品
+//		if(list==null) {
+//			list = productService.select(null);
+//		}
+//		if (page == null) {
+//			page = "1";
+//		}
+//		int pageindex = Integer.valueOf(page);
+//		List<ProductBean> list2 = new ArrayList();
+//
+//		for (int i = (pageindex - 1) * 4; i <= ((pageindex * 4) - 1); i++) {
+//			if ((i+1) <= list.size() ) {
+//				list2.add(list.get(i));
+//			}
+//		}
+//		
+		
+		//找出總共該有幾頁
+//		int totalpage = 0;
+//		if(list.size() % 4 == 0) {
+//			totalpage = list.size()/4;
+//		}else {
+//			totalpage = (list.size()/4) + 1;
+//		}
+//		model.addAttribute("totalpage", totalpage);
+
+		//找出此頁該顯示的圖片們
+//		List imgids = new ArrayList();
+//		Connection connection;
+//		try {
+//			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei",
+//					"root", "password");
+//
+//			for (int i = 0; i < list2.size(); i++) {
+//				if (list2.get(i) != null) {
+//					PreparedStatement ps = connection
+//							.prepareStatement("SELECT * FROM PRODUCT_IMG where PRODUCT_ID = ? limit 1");
+//					ps.setInt(1, list2.get(i).getProductid());
+//					ResultSet rSet = ps.executeQuery();
+//
+//					while (rSet.next()) {
+//						imgids.add(rSet.getInt(1));
+//					}
+//				}
+//			}
+//
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		model.addAttribute("page", page);
+//		model.addAttribute("list2", list2);
+//		model.addAttribute("imgids", imgids);
+//		return "frontstage/product/product-display";
+
+	}
+	
+	
+	@RequestMapping("/PageHandler")
+	public String pageHandler(HttpSession session, String page, Model model) {
+		
+		List<ProductBean> list = (List<ProductBean>)session.getAttribute("list");
+		
+//		找出總共該有幾頁
+		int totalpage = 0;
+		if(list.size() % 4 == 0) {
+			totalpage = list.size()/4;
+		}else {
+			totalpage = (list.size()/4) + 1;
+		}
+		model.addAttribute("totalpage", totalpage);
+		
+		
+//		找出此頁該顯示哪幾筆商品
 		if(list==null) {
 			list = productService.select(null);
 		}
@@ -148,17 +235,7 @@ public class ProductDisplayController {
 			}
 		}
 		
-		
-		//找出總共該有幾頁
-		int totalpage = 0;
-		if(list.size() % 4 == 0) {
-			totalpage = list.size()/4;
-		}else {
-			totalpage = (list.size()/4) + 1;
-		}
-		model.addAttribute("totalpage", totalpage);
-
-		//找出此頁該顯示的圖片們
+//		找出此頁該顯示的圖片們
 		List imgids = new ArrayList();
 		Connection connection;
 		try {
@@ -182,13 +259,25 @@ public class ProductDisplayController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 
+		
+		model.addAttribute("keyword", session.getAttribute("keyword"));
+//		session.removeAttribute("keyword");
+		model.addAttribute("type", session.getAttribute("type"));
+//		session.removeAttribute("type");
+		model.addAttribute("price", session.getAttribute("price"));
+//		session.removeAttribute("price");
 		model.addAttribute("page", page);
 		model.addAttribute("list2", list2);
 		model.addAttribute("imgids", imgids);
+		
 		return "frontstage/product/product-display";
-
 	}
+	
+	
+	
+	
 	
 	
 	@RequestMapping("/ProductDetail")
@@ -256,15 +345,20 @@ public class ProductDisplayController {
 		//以下抓評分等級 (平均幾分)
 			
 		Double ttlScore = 0.0;
-		if(comments!=null && comments.size()!=0)
-		for(int i=0; i < comments.size(); i++) {
-			ttlScore = ttlScore + comments.get(i).getScore();		
+		if(comments!=null && comments.size()!=0) {
+			for(int i=0; i < comments.size(); i++) {
+				ttlScore = ttlScore + comments.get(i).getScore();		
+			}
+			
+			Double avgScore = ttlScore/comments.size();
+			DecimalFormat df = new DecimalFormat("#.#");
+			
+		    avgScore = Double.valueOf(df.format(avgScore));
+			model.addAttribute("avgScore", avgScore);
+			
+			
 		}
 		
-		Double avgScore = ttlScore/comments.size();
-		DecimalFormat df = new DecimalFormat("#.#");
-	    avgScore = Double.valueOf(df.format(avgScore));
-		model.addAttribute("avgScore", avgScore);
 		
 		//以下判斷是否有評論資格
 		if(session.getAttribute("memberid")!=null) {
