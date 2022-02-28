@@ -106,26 +106,18 @@ public class BookingServlet extends HttpServlet {
 				// 會員session
 				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 				Integer memberid = memberVO.getMemberid();
-//				Integer memberid = (Integer) session.getAttribute("memberid");
-
-//				MemberVO memberVO = new MemberVO();
-//				memberVO.setMemberid(memberid);
 
 				List<MemberVO> memberVOs = new ArrayList<MemberVO>();
 				memberVOs.add(memberService.getOneMember(memberid));
-//				memberVOs.add(memberService.select(memberVO).get(0));
 				session.setAttribute("member", memberVO);
 
 				List<MemberVO> allMember = memberService.getAll();
-				System.out.println("allmember = " + allMember);
 				HttpSession session4 = req.getSession();
 				session4.setAttribute("allMember", allMember);
 
 			
 
-//				String url = "order/orderbooking.jsp";
 				String url = "order/orderbooking.jsp";
-//				res.sendRedirect(url);
 				RequestDispatcher sucessView = req.getRequestDispatcher(url);
 				sucessView.forward(req, res);
 

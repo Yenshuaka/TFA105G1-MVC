@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.order.order.model.OrderBean;
+
 @Repository
 public class OrderdetailDAOHibernate implements OrderdetailInterface {
 	@Autowired
@@ -68,6 +70,11 @@ public class OrderdetailDAOHibernate implements OrderdetailInterface {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public List<OrderdetailBean> ProductOrderdetailSelect(Integer productid) {
+		return this.getSession().createQuery("FROM OrderdetailBean where productid = "+ productid, OrderdetailBean.class).list();
 	}
 
 }

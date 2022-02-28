@@ -78,5 +78,9 @@ public class OrderdetailService {
 	public OrderdetailBean getOneOrderdetail(Integer orderid) {
 		return orderdetailDao.findByPrimaryKey(orderid);
 	}
+	
+	public List<OrderdetailBean> getProductOrderdetail(Integer productid){
+		return (List<OrderdetailBean>) orderdetailDao.ProductOrderdetailSelect(productid);
+	}
 
 }

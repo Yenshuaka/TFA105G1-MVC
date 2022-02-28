@@ -26,6 +26,16 @@ public class OrderdetailBean {
 	private Integer orderrewardpoints;
 	@Column(name = "SPECIAL_NEEDS")
 	private String specialneeds;
+	@Column(name = "IMG_ID")
+	private Integer imgid;
+
+	public Integer getImgid() {
+		return imgid;
+	}
+
+	public void setImgid(Integer imgid) {
+		this.imgid = imgid;
+	}
 
 	public Integer getOrderdetailno() {
 		return orderdetailno;
@@ -86,11 +96,12 @@ public class OrderdetailBean {
 
 	@Override
 	public String toString() {
-		return "OrderdetailBean [orderdetailno=" + orderdetailno + ", orderid=" + orderid + ", productid="
-				+ productid + ", numberoftraveler=" + numberoftraveler + ", productprice=" + productprice
-				+ ", orderrewardpoints=" + orderrewardpoints + ", specialneeds=" + specialneeds + "]";
+		return "OrderdetailBean [orderdetailno=" + orderdetailno + ", orderid=" + orderid + ", productid=" + productid
+				+ ", numberoftraveler=" + numberoftraveler + ", productprice=" + productprice + ", orderrewardpoints="
+				+ orderrewardpoints + ", specialneeds=" + specialneeds + ", imgid=" + imgid + "]";
 	}
-	
+
+
 	
 
 

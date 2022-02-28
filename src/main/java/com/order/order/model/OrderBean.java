@@ -1,6 +1,8 @@
 package com.order.order.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -45,8 +47,17 @@ public class OrderBean {
 		this.usedfunpoints = usedfunpoints;
 	}
 	
+//	DateTimeFormatter dtf = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
+//	String time = orderdate.format(dtf);
+	
+	
+
+
+	
 	@Override
 	public String toString() {
+//		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//		String time = orderdate.format(dtf);
 		return "OrderBean [orderid=" + orderid + ", memberid=" + memberid + ", orderdate=" + orderdate
 				+ ", orderpriceamount=" + orderpriceamount + ", usedfunpoints=" + usedfunpoints + "]";
 	}
@@ -104,6 +115,7 @@ public class OrderBean {
 
 	public void setOrderdate(LocalDateTime orderdate) {
 		this.orderdate = orderdate;
+		
 		
 	}
 

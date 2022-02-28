@@ -667,7 +667,7 @@
 .review-title h5,
 .inbox-title h5,
 .act-title h5 {
-    color: black;
+/*     color: #777; */
     margin-bottom: 0;
     line-height: 1;
 }
@@ -2070,3 +2070,4 @@ ul.buttons li {
             margin-bottom: 0;
         }
     }
+}
