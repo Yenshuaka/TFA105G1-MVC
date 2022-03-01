@@ -45,6 +45,26 @@
 <!-- style.css 1575-1585-->
 
 <style>
+
+.form_control {
+	width: 211px;
+	height: 44px;
+	padding: 10px 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	margin-top: 2px;
+}
+
+.birthday,.numberoftraveler,.traveler_id,.traveler_last_name,.traveler_first_name,.traveler_gender{
+	width: 211px;
+	height: 44px;
+	padding: 10px 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	margin-top: 2px;
+
+}
+
 .date {
 	font-size: 15px;
 	font-weight: 400;
@@ -332,7 +352,7 @@ td {
 				<br> <label style="margin-left: 10px">人數</label><span
 					class="require_mark">*</span><br> <select
 					style="margin-left: 10px" name="numberoftraveler" id="numberoftraveler"
-					class="form_control">
+					class="numberoftraveler">
 					<!-- 							<option disabled="disabled" selected>請選擇</option> -->
 					<option value="1">1</option>
 					<option value="2">2</option>
@@ -346,55 +366,8 @@ td {
 					<option value="10">10</option>
 
 				</select>
-				<div class="traveler_infor">
-					<div class="txt">
-						旅客
-						<button class="btn_ex" type="button">清空</button>
-					</div>
-					<div class="same_person">
-						<select class="same_traveler">
-							<option disabled="disabled" selected>請選擇</option>
-							<option value="same">同訂購人資料</option>
-						</select>
-					</div>
-
-					<div class="form_group">
-						<label>出生日期 <span class="require_mark">*</span><br></label> <br>
-						<input type="text" name="birthday" class="form_control"
-							id="f_date1">
-						<div class="tip_text_danger">此欄位必填</div>
-					</div>
-					<div class="form_group">
-						<label style="margin-left: 10px">性別 <span
-							class="require_mark">*</span><br></label> <br> <select
-							name="gender" class="form_control" id="traveler_gender">
-							<!-- 							<option disabled="disabled" selected>請選擇</option> -->
-							<option value="男">男生</option>
-							<option value="女">女生</option>
-						</select>
-						<div class="tip_text_danger">此欄位必填</div>
-					</div>
-					<div class="form_group">
-						<label>證件號碼(護照/身分證) <span class="require_mark">*</span><br></label>
-						<br> <input type="text" name="idno" class="form_control"
-							id="traveler_id">
-						<div class="tip_text_danger">此欄位必填</div>
-					</div>
-					<div class="form_group">
-						<label style="margin-left: 10px">姓氏<span
-							class="require_mark">*</span><br></label> <br> <input
-							style="margin-left: 10px" type="text" name="lastname"
-							class="form_control" id="traveler_last_name">
-						<div class="tip_text_danger">此欄位必填</div>
-					</div>
-					<div class="form_group">
-						<label>名字</label><span class="require_mark">*</span><br> <input
-							type="text" name="firstname" class="form_control"
-							id="traveler_first_name">
-						<div class="tip_text_danger">此欄位必填</div>
-					</div>
-				</div>
-
+				
+				<div class="tmp"></div>
 
 				<div class="sub_title">導覽語言</div>
 				<div class="form_group">
@@ -649,23 +622,80 @@ $('#f_date1').datetimepicker({
 
 
  
- $('#numberoftraveler').on('change', function () {
-    var numberoftraveler = $(this).val();
-    var e = $('.traveler_infor');
-    e.not(':first').remove();
-    for (var i = 1; i < numberoftraveler; i++) {
-        e.first().clone().insertAfter(e);
-    }
-    
-//     if(numberoftraveler>1){
-//     	$("#represent").val("");
+//  $('.numberoftraveler').on('change', function () {
+//     var numberoftraveler = $(this).val();
+//     var e = $('.traveler_infor');
+// //     e.not(':first').remove();
+//     for (var i = 1; i < numberoftraveler; i++) {
+//         e.first().clone().insertAfter(e);
 //     }
+    
+// //     if(numberoftraveler>1){
+// //     	$("#represent").val("");
+// //     }
 
+// }).trigger('change');
+
+$('.numberoftraveler').on('change', function () {
+    var numberoftraveler = $(this).val();
+	var tmp = $(this).next("div.tmp");
+	tmp.empty();
+	var html = `<div class="traveler_infor">
+					<div class="txt">
+						旅客
+						<button class="btn_ex" type="button" onclick="clear_info(this);">清空</button>
+					</div>
+					<div class="same_person">
+						<select class="same_traveler">
+							<option disabled="disabled" selected>請選擇</option>
+							<option value="same">同訂購人資料</option>
+						</select>
+					</div>
+
+					<div class="form_group">
+						<label>出生日期 <span class="require_mark">*</span><br></label> <br>
+						<input type="text" name="birthday" class="birthday"
+							id="f_date1">
+						<div class="tip_text_danger">此欄位必填</div>
+					</div>
+					<div class="form_group">
+						<label style="margin-left: 10px">性別 <span
+							class="require_mark">*</span><br></label> <br> <select
+							name="gender" class="traveler_gender" id="traveler_gender">
+							<!-- 							<option disabled="disabled" selected>請選擇</option> -->
+							<option value="男">男生</option>
+							<option value="女">女生</option>
+						</select>
+						<div class="tip_text_danger">此欄位必填</div>
+					</div>
+					<div class="form_group">
+						<label>證件號碼(護照/身分證) <span class="require_mark">*</span><br></label>
+						<br> <input type="text" name="idno" class="traveler_id"
+							id="traveler_id">
+						<div class="tip_text_danger">此欄位必填</div>
+					</div>
+					<div class="form_group">
+						<label style="margin-left: 10px">姓氏<span
+							class="require_mark">*</span><br></label> <br> <input
+							style="margin-left: 10px" type="text" name="lastname"
+							class="traveler_last_name" id="traveler_last_name">
+						<div class="tip_text_danger">此欄位必填</div>
+					</div>
+					<div class="form_group">
+						<label>名字</label><span class="require_mark">*</span><br> <input
+							type="text" name="firstname" class="traveler_first_name"
+							id="traveler_first_name">
+						<div class="tip_text_danger">此欄位必填</div>
+					</div>
+</div>`;
+    for (var i = 0; i < numberoftraveler; i++) {
+        tmp.prepend(html);
+    }
 }).trigger('change');
 
 
 
-
+		//同訂購人資料
 	    $(".same_traveler").on("change", function () {
 	        var book_last_name = $("#book_last_name").val();
 	        var book_first_name = $("#book_first_name").val();
@@ -688,15 +718,30 @@ $('#f_date1').datetimepicker({
 	    })
 
 	    //清除
-	    $(".btn_ex").on("click", function () {
-	        $("#traveler_last_name").val("");
-	        $("#traveler_first_name").val("");
-	        $("#traveler_id").val("");
-	        $("#traveler_birthday").val("");
-	        $("#traveler_gender").val("請選擇");
-	        $(".same_traveler").val("請選擇");
+	    function clear_info (e){
+			console.log(e);
+			var father = $(e).closest("div.traveler_infor");
+			father.find("input").val('');
+	    	// $(".traveler_last_name").val("");
+	        // $(".traveler_first_name").val("");
+	        // $(".traveler_id").val("");
+	        // $(".birthday").val("");
+			
+	        father.find(".traveler_gender").val("請選擇");
+	        father.find(".same_traveler").val("請選擇");
+		}
 
-	    })
+// 	    $(".btn_ex").on("click", function () {
+// 	        $(".traveler_last_name").val("");
+// 	        $(".traveler_first_name").val("");
+// 	        $(".traveler_id").val("");
+// 	        $(".birthday").val("");
+			
+// 	        $(".traveler_gender").val("請選擇");
+// 	        $(".same_traveler").val("請選擇");
+// // 	        $(".form_control").val("");
+
+// 	    })
 
 	    //電話號碼數字綁定
 	    $("#contact_phone").on("keydown", function (e) {

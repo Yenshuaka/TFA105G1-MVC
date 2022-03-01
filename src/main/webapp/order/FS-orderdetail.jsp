@@ -16,15 +16,15 @@
     <!-- google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800" rel="stylesheet">
     <!-- Plugins CSS -->
-    <link href="<%=request.getContextPath()%>/order/css/plugin.css" rel="stylesheet" />
+    <link href="<%=request.getContextPath()%>/download/css/plugin.css" rel="stylesheet" />
     <!-- Perfect scrollbar CSS-->
-    <link href="<%=request.getContextPath()%>/order/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/download/css/perfect-scrollbar.css" rel="stylesheet">
     <!-- style CSS -->
-    <link href="<%=request.getContextPath()%>/order/css/style.css" rel="stylesheet" />
+    <link href="<%=request.getContextPath()%>/download/css/style.css" rel="stylesheet" />
     <!-- Dashboard CSS -->
-    <link href="<%=request.getContextPath()%>/order/css/dashboard.css" rel="stylesheet" />
+    <link href="<%=request.getContextPath()%>/download/css/dashboard.css" rel="stylesheet" />
     <!--color switcher css-->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/order/css/switcher/skin-aqua.css" media="screen" id="style-colors" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/download/css/switcher/skin-aqua.css" media="screen" id="style-colors" />
     <!-- Document Title -->
     <title>訂單明細管理</title>
 
@@ -188,13 +188,13 @@ padding-left:50px;
     <!--Dashboard content Wrapper ends-->
 
     <!-- Plugin JS-->
-    <script src="<%=request.getContextPath()%>/order/js/plugin.js"></script>
+    <script src="<%=request.getContextPath()%>/download/js/plugin.js"></script>
     <!--Perfect Scrollbar JS-->
-    <script src="<%=request.getContextPath()%>/order/js/perfect-scrollbar.min.js"></script>
+    <script src="<%=request.getContextPath()%>/download/js/perfect-scrollbar.min.js"></script>
     <!-- Main JS-->
-    <script src="<%=request.getContextPath()%>/order/js/main.js"></script>
+    <script src="<%=request.getContextPath()%>/download/js/main.js"></script>
     <!-- Dashboard JS-->
-    <script src="<%=request.getContextPath()%>/order/js/dashboard.js"></script>
+    <script src="<%=request.getContextPath()%>/download/js/dashboard.js"></script>
 </body>
 
 </html>

@@ -19,15 +19,15 @@
 	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800"
 	rel="stylesheet">
 <!-- Plugins CSS -->
-<link href="css/plugin.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/download/css/plugin.css" rel="stylesheet" />
 <!-- Perfect scrollbar CSS-->
-<link href="css/perfect-scrollbar.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/download/css/perfect-scrollbar.css" rel="stylesheet">
 <!-- style CSS -->
-<link href="css/style.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/download/css/style.css" rel="stylesheet" />
 <!-- Dashboard CSS -->
-<link href="css/dashboard.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/download/css/dashboard.css" rel="stylesheet" />
 <!--color switcher css-->
-<link rel="stylesheet" href="css/switcher/skin-aqua.css" media="screen"
+<link rel="stylesheet" href="<%=request.getContextPath()%>/download/css/switcher/skin-aqua.css" media="screen"
 	id="style-colors" />
 <!-- Document Title -->
 <title>訂單管理</title>
@@ -206,13 +206,13 @@ pageContext.setAttribute("orderBean", orderBean);
 	<!--Dashboard content Wrapper ends-->
 
 	<!-- Plugin JS-->
-	<script src="js/plugin.js"></script>
+	<script src="<%=request.getContextPath()%>/download/js/plugin.js"></script>
 	<!--Perfect Scrollbar JS-->
-	<script src="js/perfect-scrollbar.min.js"></script>
+	<script src="<%=request.getContextPath()%>/download/js/perfect-scrollbar.min.js"></script>
 	<!-- Main JS-->
-	<script src="js/main.js"></script>
+	<script src="<%=request.getContextPath()%>/download/js/main.js"></script>
 	<!-- Dashboard JS-->
-	<script src="js/dashboard.js"></script>
+	<script src="<%=request.getContextPath()%>/download/js/dashboard.js"></script>
 </body>
 
 </html>
