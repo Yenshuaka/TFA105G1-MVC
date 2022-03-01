@@ -160,11 +160,11 @@
                                             <h2 class="single-place-title">
                                                 <a href="grid-fullwidth-map.html"><%=cities.get(i).getCity() %></a>
                                             </h2>
-                                            <ul class="single-place-list">
-                                                <li><span>5</span> Cities</li>
-                                                <li><span>255</span> Listing</li>
-                                            </ul>
-                                            <a class="btn v6 explore-place" href="<%=request.getContextPath() %>/MVC/ProductDisplayController?city=<%=cities.get(i).getCity() %>">Explore</a>
+<!--                                             <ul class="single-place-list"> -->
+<!--                                                 <li><span>5</span> Cities</li> -->
+<!--                                                 <li><span>255</span> Listing</li> -->
+<!--                                             </ul> -->
+                                            <a class="btn v6 explore-place" href="<%=request.getContextPath() %>/MVC/ProductDisplayController?city=<%=cities.get(i).getCity() %>">探索更多</a>
                                         </div>
                                     </div>
                                 </div>
@@ -263,38 +263,38 @@
                                         <h4><a href="single-listing-one.html"><%=list.get(i).getProductname() %></a></h4>
                                         <div class="customer-review">
                                             <div class="rating-summary float-left">
-                                                <div class="rating-result" title="60%">
-                                                    <ul class="product-rating">
-                                                        <li><i class="ion-android-star"></i></li>
-                                                        <li><i class="ion-android-star"></i></li>
-                                                        <li><i class="ion-android-star"></i></li>
-                                                        <li><i class="ion-android-star-half"></i></li>
-                                                        <li><i class="ion-android-star-half"></i></li>
-                                                    </ul>
-                                                </div>
+<!--                                                 <div class="rating-result" title="60%"> -->
+<!--                                                     <ul class="product-rating"> -->
+<!--                                                         <li><i class="ion-android-star"></i></li> -->
+<!--                                                         <li><i class="ion-android-star"></i></li> -->
+<!--                                                         <li><i class="ion-android-star"></i></li> -->
+<!--                                                         <li><i class="ion-android-star-half"></i></li> -->
+<!--                                                         <li><i class="ion-android-star-half"></i></li> -->
+<!--                                                     </ul> -->
+<!--                                                 </div> -->
                                             </div>
                                             <div class="review-summury float-right">
                                                 <p><a href="#">3 Reviews</a></p>
                                             </div>
                                         </div>
-                                        <ul class="trending-address">
-                                            <li><i class="ion-ios-location"></i>
-                                                <p>1690 Brown Avenue,Barline</p>
-                                            </li>
-                                            <li><i class="ion-ios-telephone"></i>
-                                                <p>+864-940-3419</p>
-                                            </li>
-                                            <li><i class="ion-android-globe"></i>
-                                                <p>www.thaishow.com</p>
-                                            </li>
-                                        </ul>
+<!--                                         <ul class="trending-address"> -->
+<!--                                             <li><i class="ion-ios-location"></i> -->
+<!--                                                 <p>1690 Brown Avenue,Barline</p> -->
+<!--                                             </li> -->
+<!--                                             <li><i class="ion-ios-telephone"></i> -->
+<!--                                                 <p>+864-940-3419</p> -->
+<!--                                             </li> -->
+<!--                                             <li><i class="ion-android-globe"></i> -->
+<!--                                                 <p>www.thaishow.com</p> -->
+<!--                                             </li> -->
+<!--                                         </ul> -->
                                         <div class="trending-bottom mar-top-15 pad-bot-30">
                                             <div class="trend-left float-left">
-                                                <span class="round-bg green"><i class="icofont-movie"></i></span>
-                                                <p><a href="#">Movie</a></p>
+<!--                                                 <span class="round-bg green"><i class="icofont-movie"></i></span> -->
+                                                <p><%=list.get(i).getProducttype() %></p>
                                             </div>
                                             <div class="trend-right float-right">
-                                                <div class="trend-open mar-top-5"><i class="ion-clock"></i> 2.30 pm</div>
+                                                <div class="trend-open mar-top-5"> TWD&nbsp<%=list.get(i).getProductprice() %></div>
                                             </div>
                                         </div>
                                     </div>

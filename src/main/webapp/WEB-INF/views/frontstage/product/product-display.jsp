@@ -574,15 +574,15 @@
 												</h4>
 												<div class="customer-review">
 													<div class="rating-summary float-left">
-														<div class="rating-result" title="60%">
-															<ul class="product-rating">
-																<li><i class="ion-android-star"></i></li>
-																<li><i class="ion-android-star"></i></li>
-																<li><i class="ion-android-star"></i></li>
-																<li><i class="ion-android-star-half"></i></li>
-																<li><i class="ion-android-star-half"></i></li>
-															</ul>
-														</div>
+<!-- 														<div class="rating-result" title="60%"> -->
+<!-- 															<ul class="product-rating"> -->
+<!-- 																<li><i class="ion-android-star"></i></li> -->
+<!-- 																<li><i class="ion-android-star"></i></li> -->
+<!-- 																<li><i class="ion-android-star"></i></li> -->
+<!-- 																<li><i class="ion-android-star-half"></i></li> -->
+<!-- 																<li><i class="ion-android-star-half"></i></li> -->
+<!-- 															</ul> -->
+<!-- 														</div> -->
 													</div>
 													<div class="review-summury float-right">
 														<p>
