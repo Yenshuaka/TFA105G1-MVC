@@ -19,11 +19,11 @@
 											<li class="has-children"><a style="color: white"
 												href="<%=request.getContextPath()%>/MVC/ProductDisplayController">產品分類</a>
 												<ul class="dropdown">
-													<li><a href="about.html">一日遊</a></li>
-													<li><a href="contact.html">多日遊</a></li>
-													<li><a href="about.html">包車</a></li>
-													<li><a href="contact.html">熱門票卷</a></li>
-													<li><a href="about.html">獨特體驗</a></li>
+													<li><a href="<%=request.getContextPath() %>/MVC/ProductDisplayController?type=一日遊">一日遊</a></li>
+													<li><a href="<%=request.getContextPath() %>/MVC/ProductDisplayController?type=多日遊">多日遊</a></li>
+													<li><a href="<%=request.getContextPath() %>/MVC/ProductDisplayController?type=包車">包車</a></li>
+													<li><a href="<%=request.getContextPath() %>/MVC/ProductDisplayController?type=熱門票卷">熱門票卷</a></li>
+													<li><a href="<%=request.getContextPath() %>/MVC/ProductDisplayController?type=獨特體驗">獨特體驗</a></li>
 												</ul></li>
 											<li class="has-children"><a style="color: white"
 												href="#">關於我們</a></li>
