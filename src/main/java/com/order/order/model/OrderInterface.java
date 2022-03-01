@@ -16,6 +16,8 @@ public interface OrderInterface {
 
 	public abstract OrderBean findByPrimaryKey(Integer orderid);
 	
+	public abstract OrderBean findByMemberid(Integer memberid );
+	
 	public abstract boolean delete(Integer orderid);
 
 

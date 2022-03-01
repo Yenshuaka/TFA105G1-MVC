@@ -9,15 +9,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.order.orderdetail.model.OrderdetailBean;
+import com.order.orderdetail.model.OrderdetailDAOHibernate;
+import com.order.orderdetail.model.OrderdetailService;
+
 @Service
 @Transactional
 public class OrderService { //給參數
 	@Autowired
 	private OrderDAOHibernate orderDao;
+	@Autowired
+	private OrderdetailDAOHibernate orderdetailDao;
+	
+	OrderdetailService orderdetailService = new OrderdetailService(orderdetailDao);
 	
 	public OrderService(OrderDAOHibernate orderDao) {
 		this.orderDao = orderDao;
 	}
+	
 //	public static void main(String[] args) {
 //		SessionFactory sessionFactory = HibernateUtil.getSessionfactory();
 //		Session session = sessionFactory.getCurrentSession();
@@ -93,5 +102,23 @@ public class OrderService { //給參數
 	public OrderBean getOneOrder(Integer orderid) {
 		return orderDao.findByPrimaryKey(orderid);
 	}
+	
+	public List<OrderBean> getMemberOrder(Integer memberid) {
+		return  (List<OrderBean>) orderDao.MemberOrderSelect(memberid);
+		
+//		System.out.println("time = "  );
+	}
+	
+//	public List<OrderdetailBean> getMemberOrder(Integer memberid) {
+//		List <OrderdetailBean> orderdetailBean = null;
+//		List<OrderBean> orderBean = (List<OrderBean>)orderDao.findByMemberid(memberid);
+//		for(int i=0;i<orderBean.size();i++) {
+//			
+//		 orderdetailBean = (List<OrderdetailBean>)orderdetailDao.findByPrimaryKey(orderBean.get(i).getOrderid());
+//		}
+//		
+//		return orderdetailBean;
+////		return orderDao.findByMemberid(memberid);
+//	}
 
 }

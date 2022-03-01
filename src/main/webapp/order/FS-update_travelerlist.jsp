@@ -20,16 +20,22 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800"
 	rel="stylesheet">
 <!-- Plugins CSS -->
-<link href="css/plugin.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/order/css/plugin.css"
+	rel="stylesheet" />
 <!-- Perfect scrollbar CSS-->
-<link href="css/perfect-scrollbar.css" rel="stylesheet">
+<link
+	href="<%=request.getContextPath()%>/order/css/perfect-scrollbar.css"
+	rel="stylesheet">
 <!-- style CSS -->
-<link href="css/style.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/order/css/style.css"
+	rel="stylesheet" />
 <!-- Dashboard CSS -->
-<link href="css/dashboard.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/order/css/dashboard.css"
+	rel="stylesheet" />
 <!--color switcher css-->
-<link rel="stylesheet" href="css/switcher/skin-aqua.css" media="screen"
-	id="style-colors" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/order/css/switcher/skin-aqua.css"
+	media="screen" id="style-colors" />
 <!-- Document Title -->
 <!-- <title>listagram - Directory Listing HTML Template</title> -->
 <title>後台管理</title>
@@ -40,14 +46,14 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 	<div class="page-wrapper">
 
 		<!--Sidebar Menu Starts-->
-		<%@ include file="/download/file/BS_Sidebar Menu.file"%>
+		<%@ include file="/download/file/FS_Sidebar Menu.file"%>
 		<!--Sidebar Menu ends-->
 
 		<!--Dashboard content Wrapper starts-->
 		<div class="dash-content-wrap">
 
 			<!-- Top header starts-->
-			<%@ include file="/download/file/BS_Top header.file"%>
+			<%@ include file="/download/file/FS_Header.file"%>
 			<!-- Top header ends-->
 
 			<!--Dashboard breadcrumb starts-->
@@ -61,7 +67,7 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 										<ul>
 											<li class="active"><a href="#">Home</a></li>
 											<li class="active"><a href="listAllOrder.jsp">訂單首頁</a></li>
-											<li>訂單修改</li>
+											<li>團員表</li>
 										</ul>
 									</div>
 								</div>
@@ -81,7 +87,7 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 							<div class="recent-activity my-listing">
 								<div class="act-title">
 									<h5>
-										<i class="ion-social-buffer-outline"></i>修改訂單資料
+										<i class="ion-social-buffer-outline"></i>修改團員表
 									</h5>
 								</div>
 
@@ -97,7 +103,7 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 
 
 									<FORM METHOD="post"
-										ACTION="<%=request.getContextPath()%>/travelerlist.do"
+										ACTION="<%=request.getContextPath()%>/traveler.do"
 										name="form1">
 
 										<table>
@@ -107,9 +113,7 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 											</tr>
 											<tr>
 												<td>訂單明細編號:</td>
-												<td><input class="input_update" type="TEXT"
-													name="orderdetailno" size="45"
-													value="<%=travelerlistBean.getOrderdetailno()%>" /></td>
+												<td><%=travelerlistBean.getOrderdetailno()%></td>
 											</tr>
 											<tr>
 												<td>姓:</td>
@@ -131,7 +135,7 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 											</tr>
 											<tr>
 												<td>生日:</td>
-												<td><input class="input_update" type="TEXT"
+												<td><input class="input_update" type="TEXT" id="f_date1"
 													name="birthday" size="45"
 													value="<%=travelerlistBean.getBirthday()%>" /></td>
 											</tr>
@@ -144,7 +148,9 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 										</table>
 										<br> <input type="hidden" name="action" value="update" />
 										<input type="hidden" name="travelerlistno"
-											value="<%=travelerlistBean.getTravelerlistno()%>" /> <input
+											value="<%=travelerlistBean.getTravelerlistno()%>" />
+											<input type="hidden" name="orderdetailno"
+											value="<%=travelerlistBean.getOrderdetailno()%>" /> <input
 											class="send" type="submit" value="送出修改" />
 									</FORM>
 
@@ -179,13 +185,14 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 
 	</div>
 	<!-- Plugin JS-->
-	<script src="js/plugin.js"></script>
+	<script src="<%=request.getContextPath()%>/order/js/plugin.js"></script>
 	<!--Perfect Scrollbar JS-->
-	<script src="js/perfect-scrollbar.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/order/js/perfect-scrollbar.min.js"></script>
 	<!-- Main JS-->
-	<script src="js/main.js"></script>
+	<script src="<%=request.getContextPath()%>/order/js/main.js"></script>
 	<!-- Dashboard JS-->
-	<script src="js/dashboard.js"></script>
+	<script src="<%=request.getContextPath()%>/order/js/dashboard.js"></script>
 </body>
 
 
@@ -206,6 +213,17 @@ try {
 	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
+
+body{
+color: #777;
+}
+
+h5 {
+	color: #777;
+	font-size: 18px;
+	font-weight: normal;
+}
+
 form {
 	height: 550px;
 	padding: 10px;
@@ -231,94 +249,32 @@ table {
 }
 
 .send {
-	float: right;
 	color: #fff;
 	border: 1px solid transparent;
 	padding: 9px 15px;
-	border-radius: 10px;
+	border-radius: 50px;
 	font-size: 14px;
-	transition: 0.5s;
-	background: #FD901B;
+	background: #1CBBB4;
 	line-height: 1;
-	margin-left: 5px;
-	height: 30px;
-	margin-top: 10px
+	margin-left:350px;
 }
 
-.send:hover {
-	color: black;
-	border: 1px solid #BDC1CA;
-	font-weight: bold;
-}
-
-.xdsoft_datetimepicker .xdsoft_datepicker {
-	width: 300px; /* width:  300px; */
-}
-
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-	height: 151px; /* height:  151px; */
-}
 </style>
 
 <script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
-	       theme: '',              //theme: 'dark',
-	       timepicker:false,       //timepicker:true,
-	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=orderdate%>
-	', // value:   new Date(),
-	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-	//startDate:	            '2017/07/10',  // 起始日
-	//minDate:               '-1970-01-01', // 去除今日(不含)之前
-	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-	});
+$.datetimepicker.setLocale('zh');
+$('#f_date1').datetimepicker({
+   theme: '',              //theme: 'dark',
+   timepicker:false,       //timepicker:true,
+   step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+   format:'Y-m-d',         //format:'Y-m-d H:i:s',
+   value: '<%=travelerlistBean.getBirthday()%> ', // value:   new Date(),
+//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+//startDate:	            '2017/07/10',  // 起始日
+//minDate:               '-1970-01-01', // 去除今日(不含)之前
+//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+});
 
-	// ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
 
-	//      1.以下為某一天之前的日期無法選擇
-	//      var somedate1 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() <  somedate1.getYear() || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
-
-	//      2.以下為某一天之後的日期無法選擇
-	//      var somedate2 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
-
-	//      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
-	//      var somedate1 = new Date('2017-06-15');
-	//      var somedate2 = new Date('2017-06-25');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() <  somedate1.getYear() || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-	//		             ||
-	//		            date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
 </script>
 </html>
