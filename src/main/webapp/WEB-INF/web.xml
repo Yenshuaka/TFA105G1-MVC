@@ -51,6 +51,6 @@
 	</servlet-mapping>
 	
 	<welcome-file-list>
-		<welcome-file>/download/FS-Index-Demo.jsp</welcome-file>
+		<welcome-file>/download/homepage2.jsp</welcome-file>
 	</welcome-file-list>
 </web-app>
