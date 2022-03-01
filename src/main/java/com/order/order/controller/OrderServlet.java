@@ -1,4 +1,5 @@
 package com.order.order.controller;
+
 //http://localhost:7080/TFA105G1-MVC/MVC/ProductManageController
 import java.io.IOException;
 import java.io.Serializable;
@@ -30,6 +31,8 @@ import com.order.orderdetail.model.OrderdetailService;
 import com.order.travelerlist.model.TravelerlistBean;
 import com.order.travelerlist.model.TravelerlistService;
 
+import redis.clients.jedis.Jedis;
+
 @WebServlet("/order.do")
 public class OrderServlet extends HttpServlet implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -43,62 +46,56 @@ public class OrderServlet extends HttpServlet implements Serializable {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		ServletContext applicationContext = this.getServletContext();
-		ApplicationContext context = (ApplicationContext)applicationContext.getAttribute(
-				WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-		
+		ApplicationContext context = (ApplicationContext) applicationContext
+				.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+
 		OrderService orderService = context.getBean("orderService", OrderService.class);
-		OrderdetailService orderdetailService = context.getBean("orderdetailService",OrderdetailService.class);
-		TravelerlistService travelerlistService = context.getBean("travelerlistService",TravelerlistService.class);
+		OrderdetailService orderdetailService = context.getBean("orderdetailService", OrderdetailService.class);
+		TravelerlistService travelerlistService = context.getBean("travelerlistService", TravelerlistService.class);
 		MemberService memberServiceOrder = context.getBean("memberService", MemberService.class);
 		com.member.model.MemberService memberService = new com.member.model.MemberService();
 
-		
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-		if(action==null) {  //這是select全部的狀況
+		if (action == null) { // 這是select全部的狀況
 			List<OrderBean> list = orderService.select(null);
-			List<OrderdetailBean> list123 = orderdetailService.select(null);	
-			
-			
+			List<OrderdetailBean> list123 = orderdetailService.select(null);
+
 			HttpSession session = req.getSession();
 			HttpSession session1 = req.getSession();
-		
-				session.setAttribute("list", list);
-				session1.setAttribute("list123", list123);
-			
-			
+
+			session.setAttribute("list", list);
+			session1.setAttribute("list123", list123);
+
 			List<MemberVO> allMembers = memberService.getAll();
-			
+
 			HttpSession session3 = req.getSession();
 			session3.setAttribute("allMembers", allMembers);
-			
+
 			String url = "order/listAllOrder.jsp";
 //			res.sendRedirect(url); 
 			RequestDispatcher sucessView = req.getRequestDispatcher(url);
 			sucessView.forward(req, res);
-			
+
 		}
-		
-		
+
 //		
-		
 
 		if ("insert".equals(action)) { // 來自add-post.jsp的請求
 
 			try {
-				//order
+				// order
 				HttpSession session = req.getSession();
 				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 				Integer memberid1 = memberVO.getMemberid();
 //				Integer memberid1 = (Integer)session.getAttribute("memberid");//抓session傳入資料庫
 				Integer orderpriceamount = Integer.parseInt(req.getParameter("orderpriceamount").trim());
 //				Integer usedfunpoints = Integer.parseInt(req.getParameter("usedfunpoints").trim());
-				
+
 				DateTimeFormatter dtf4 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
 				LocalDateTime orderdate = LocalDateTime.now();
 //				String orderdate = dtf4.format(LocalDateTime.now());
-				
 
 				OrderBean bean = new OrderBean();
 				bean.setMemberid(memberid1);
@@ -108,84 +105,82 @@ public class OrderServlet extends HttpServlet implements Serializable {
 				bean.setUsedfunpoints(50);
 
 				orderService.insert(bean);
-				
-				///orderdetail
-				
+
+				/// orderdetail
+
 //				List<OrderdetailBean> orderdetailBeans = new ArrayList();
 
-				String[] productids = req.getParameterValues("productid"); //跑迴圈裝進bean
+				String[] productids = req.getParameterValues("productid"); // 跑迴圈裝進bean
 				String[] numberoftravelers = req.getParameterValues("numberoftraveler");
 				String[] productprices = req.getParameterValues("productprice");
 //				String[] orderrewardpoints = req.getParameterValues("orderrewardpoints");
 				String[] specialneeds = req.getParameterValues("specialneeds");
 				String[] imgids = req.getParameterValues("imgid");
-				
+
 //				Integer productid = Integer.parseInt(req.getParameter("productid").trim());
 //				Integer numberoftraveler = Integer.parseInt(req.getParameter("numberoftraveler").trim());
 //				Integer orderrewardpoints = Integer.parseInt(req.getParameter("orderrewardpoints").trim());
 //				String specialneeds = req.getParameter("specialneeds");
 //				Integer productprice = Integer.parseInt(req.getParameter("productprice").trim());
-				
+
 				OrderdetailBean bean2 = new OrderdetailBean();
 				bean2.setOrderid(bean.getOrderid());
-				for(int i = 0;i<productids.length;i++) {
+				for (int i = 0; i < productids.length; i++) {
 					bean2.setProductid(Integer.valueOf(productids[i]));
 					bean2.setNumberoftraveler(Integer.valueOf(numberoftravelers[i]));
 					bean2.setProductprice(Integer.valueOf(productprices[i]));
 					bean2.setOrderrewardpoints(5);
 					bean2.setSpecialneeds(specialneeds[i]);
 					bean2.setImgid(Integer.valueOf(imgids[i]));
-					
+
 					orderdetailService.insert(bean2);
-					
+
 				}
-				
-				
-				//traveler
-				String lastname = req.getParameter("lastname");
-				String firstname = req.getParameter("firstname");
-				String gender = req.getParameter("gender");
-				Date birthday = Date.valueOf(req.getParameter("birthday").trim());
-				String idno = req.getParameter("idno");
-				
+
+				// traveler
+//				String lastname = req.getParameter("lastname");
+//				String firstname = req.getParameter("firstname");
+//				String gender = req.getParameter("gender");
+//				Date birthday = Date.valueOf(req.getParameter("birthday").trim());
+//				String idno = req.getParameter("idno");
+
+				String[] lastnames = req.getParameterValues("lastname");
+				String[] firstnames = req.getParameterValues("firstname");
+				String[] genders = req.getParameterValues("gender");
+				String[] birthdays = req.getParameterValues("birthday");
+				String[] idnos = req.getParameterValues("idno");
+
 				TravelerlistBean bean3 = new TravelerlistBean();
-				
-//				String[] lastnames = req.getParameterValues("lastname");
-//				String[] firstnames = req.getParameterValues("firstname");
-//				String[] genders = req.getParameterValues("gender");
-//				String[] birthdays = req.getParameterValues("birthday");
-//				String[] idnos = req.getParameterValues("idno");
 
+				for (int k = 0; k < productids.length; k++) {
+					bean3.setOrderdetailno(bean2.getOrderdetailno());
 
-//				for(int i = 0;i < numberoftravelers.length;i++) {
-//					bean3.setOrderdetailno(bean2.getOrderdetailno());
-//					bean3.setLastname(lastnames[i]);
-//					bean3.setFirstname(firstnames[i]);
-//					bean3.setGender(genders[i]);
-//					bean3.setBirthday(Date.valueOf(birthdays[i]));
-//					bean3.setIdno(idnos[i]);
-//					travelerlistService.insert(bean3);
-//				}
+					for (int i = 0; i < numberoftravelers.length; i++) {
 
-				bean3.setOrderdetailno(bean2.getOrderdetailno());
-				bean3.setLastname(lastname);
-				bean3.setFirstname(firstname);
-				bean3.setGender(gender);
-				bean3.setBirthday(birthday);
-				bean3.setIdno(idno);
+						bean3.setLastname(lastnames[i]);
+						bean3.setFirstname(firstnames[i]);
+						bean3.setGender(genders[i]);
+						bean3.setBirthday(Date.valueOf(birthdays[i]));
+						bean3.setIdno(idnos[i]);
+						travelerlistService.insert(bean3);
+					}
+				}
 
-				travelerlistService.insert(bean3);
-				
-				
-				
+//				bean3.setOrderdetailno(bean2.getOrderdetailno());
+//				bean3.setLastname(lastname);
+//				bean3.setFirstname(firstname);
+//				bean3.setGender(gender);
+//				bean3.setBirthday(birthday);
+//				bean3.setIdno(idno);
+
 				// 更新會員資料
-//				Integer memberid = (Integer) session.getAttribute("memberid");
+				Integer memberid = (Integer) session.getAttribute("memberid");
 				String memberLastname = req.getParameter("memberLastname");
 				String memberFirstname = req.getParameter("memberFirstname");
 				String memberPhone = req.getParameter("memberPhone");
 				String memberEmail = req.getParameter("memberEmail");
 				String memberIdno = req.getParameter("memberIdno");
-				
+
 //				System.out.println("memberid = " + memberid);
 //				System.out.println("memberLastname = " + memberLastname);
 //				System.out.println("memberFirstname = " + memberFirstname);
@@ -202,9 +197,12 @@ public class OrderServlet extends HttpServlet implements Serializable {
 				bean1.setIdno(memberIdno);
 
 				memberServiceOrder.update(bean1);
-				
-				
-				
+
+				// 購物車項目刪除
+				Jedis jedis = new Jedis();
+
+				jedis.del("會員" + memberid);
+
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 //				List<OrderBean> list = orderService.select(bean);//新增完成後，秀出剩餘訂單
 //
@@ -224,11 +222,6 @@ public class OrderServlet extends HttpServlet implements Serializable {
 				System.out.print("新增資料失敗");
 			}
 		}
-		
-		
-	
-		
-		
 
 //		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
 //
@@ -310,9 +303,7 @@ public class OrderServlet extends HttpServlet implements Serializable {
 //				System.out.print("修改資料失敗");
 //			}
 //		}
-		
-		
-	
+
 //	if ("delete".equals(action)) {
 		//
 //					try {
@@ -345,7 +336,7 @@ public class OrderServlet extends HttpServlet implements Serializable {
 //					}
 
 //				}
-		
+
 //		if ("getOne_For_Display".equals(action)) { 
 //
 //			try {
