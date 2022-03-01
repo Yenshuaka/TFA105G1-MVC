@@ -67,20 +67,31 @@ table {
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	border-collapse: collapse;
+	color: #777;
+	font-family: 'poppins', sans-serif;
+	font-size: 14px;
+	font-weight: 300;
+	text-indent: initial;
+	border-spacing: 2px;
+	border: none;
 }
 
 th {
 	text-align: center;
-	background: #0ceffe;
 	padding: 5px;
 	font-weight: normal;
+	background: white;
+	line-height: 1.5;
+	border-bottom: 1px solid gray;
 }
 
 td {
 	text-align: center;
-	background: #dcddc0;
 	padding: 5px;
 	font-weight: normal;
+	background: white;
+	line-height: 1.5;
 }
 </style>
 
@@ -96,7 +107,7 @@ td {
 		<div class="dash-content-wrap">
 
 			<!-- Top header starts-->
-		<%@ include file="/download/file/BS_Top header.file"%>
+			<%@ include file="/download/file/BS_Top header.file"%>
 			<!-- Top header ends-->
 
 			<!--Dashboard breadcrumb starts-->
@@ -151,7 +162,7 @@ td {
 											<th>出生日期</th>
 											<th>身分證字號</th>
 											<th>修改</th>
-											<th>刪除</th>
+											<!-- 											<th>刪除</th> -->
 										</tr>
 
 										<c:forEach var="travelerlistBean" items="${list}">
@@ -177,16 +188,16 @@ td {
 															type="hidden" name="action" value="getOne_For_Update">
 													</FORM>
 												</td>
-												<td>
-													<FORM METHOD="post"
-														ACTION="<%=request.getContextPath()%>/travelerlist.do"
-														style="margin-bottom: 0px;">
-														<input type="submit" value="刪除" class="btn v5"　id="delete"> <input
-															type="hidden" name="travelerlistno"
-															value="${travelerlistBean.travelerlistno}"> <input
-															type="hidden" name="action" value="delete">
-													</FORM>
-												</td>
+												<!-- 												<td> -->
+												<!-- 													<FORM METHOD="post" -->
+												<%-- 														ACTION="<%=request.getContextPath()%>/travelerlist.do" --%>
+												<!-- 														style="margin-bottom: 0px;"> -->
+												<!-- 														<input type="submit" value="刪除" class="btn v5"　id="delete"> <input -->
+												<!-- 															type="hidden" name="travelerlistno" -->
+												<%-- 															value="${travelerlistBean.travelerlistno}"> <input --%>
+												<!-- 															type="hidden" name="action" value="delete"> -->
+												<!-- 													</FORM> -->
+												<!-- 												</td> -->
 											</tr>
 										</c:forEach>
 									</table>

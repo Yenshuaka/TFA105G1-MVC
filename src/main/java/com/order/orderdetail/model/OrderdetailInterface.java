@@ -16,5 +16,7 @@ public interface OrderdetailInterface {
 
 	public abstract OrderdetailBean findByPrimaryKey(Integer orderdetailno);
 	
+	public abstract List<OrderdetailBean> ProductOrderdetailSelect(Integer productid);
+	
 	public abstract boolean delete(Integer orderdetailno);
 }

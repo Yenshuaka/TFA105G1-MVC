@@ -102,4 +102,17 @@ public class OrderDAOHibernate implements OrderInterface {
 		}
 		return null;
 	}
+	
+	@Override
+	public OrderBean findByMemberid(Integer memberid) {
+		if(memberid!=null) { //如果id存在
+			return getSession().get(OrderBean.class, memberid);
+		}
+		return null;
+	}
+	
+	public List<OrderBean> MemberOrderSelect(Integer memberid) {
+		return this.getSession().createQuery("FROM OrderBean where memberid = "+ memberid, OrderBean.class).list();
+	}
+
 }

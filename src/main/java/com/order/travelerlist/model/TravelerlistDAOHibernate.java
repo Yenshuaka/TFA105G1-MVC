@@ -35,17 +35,18 @@ public class TravelerlistDAOHibernate implements TravelerlistInterface {
 	}
 
 	@Override
-	public TravelerlistBean update(Integer travelerlistno, Integer orderdetailno, String firstname, String lastname,
-			String gender,Date birthday ,String idno) {
+	public TravelerlistBean update(Integer travelerlistno, Integer orderdetailno,
+			String firstname, String lastname, String gender,Date birthday ,String idno) {
 		if (travelerlistno != null) {
 			TravelerlistBean temp = this.getSession().get(TravelerlistBean.class, travelerlistno);
 			if (temp != null) {
-				temp.setIdno(idno);
+				temp.setTravelerlistno(travelerlistno);
+				temp.setOrderdetailno(orderdetailno);
 				temp.setFirstname(firstname);
 				temp.setLastname(lastname);
-				temp.setOrderdetailno(orderdetailno);
-				temp.setBirthday(birthday);
 				temp.setGender(gender);
+				temp.setBirthday(birthday);
+				temp.setIdno(idno);
 				return temp;
 				
 			}

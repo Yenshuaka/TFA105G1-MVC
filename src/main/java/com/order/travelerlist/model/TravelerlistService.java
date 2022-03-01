@@ -72,7 +72,7 @@ public class TravelerlistService {
 	public TravelerlistBean update(TravelerlistBean bean) {
 		TravelerlistBean result = null;
 		if(bean!=null && bean.getTravelerlistno()!=null) {
-			result = travelerlistDao.update(bean.getTravelerlistno(), bean.getTravelerlistno(), bean.getFirstname(), bean.getLastname(), bean.getGender(), bean.getBirthday(),bean.getIdno());
+			result = travelerlistDao.update(bean.getTravelerlistno(), bean.getOrderdetailno(), bean.getFirstname(), bean.getLastname(), bean.getGender(), bean.getBirthday(),bean.getIdno());
 		}
 		return result;
 	}

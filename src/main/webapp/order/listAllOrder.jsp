@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.* ,java.sql.*"%>
 <%@ page
-	import="com.order.order.model.*,com.order.orderdetail.model.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
+	import="java.time.LocalDateTime,java.time.format.DateTimeFormatter,com.order.order.model.*,com.order.orderdetail.model.* , org.hibernate.Session, org.hibernate.SessionFactory, org.hibernate.Transaction "%>
 <!DOCTYPE html>
 
 <%
@@ -64,6 +64,38 @@
 </head>
 
 <style>
+.send {
+	background: #BDC1CA;
+	padding: 9px 15px;
+	border-radius: 50px;
+	color: #fff;
+	transition: 0.3s;
+	border: 1px solid transparent;
+	font-size: 14px;
+	transition: 0.5s;
+	line-height: 1;
+}
+
+table {
+	border-collapse: collapse;
+	color: #777;
+	font-family: 'poppins', sans-serif;
+	font-size: 16px;
+	font-weight: 300;
+	text-indent: initial;
+	border-spacing: 2px;
+	border: none;
+	line-height: 1.5;
+}
+
+th, td {
+	background: white;
+}
+
+th{
+border-bottom: 1px solid gray;
+}
+
 .detail {
 	color: blue;
 	font-weight: bold;
@@ -169,34 +201,37 @@
 										<%
 										List<OrderBean> list = (List) session.getAttribute("list");
 										List<OrderdetailBean> list123 = (List) session.getAttribute("list123");
-										List<MemberVO> allMembers = (List<MemberVO>)session.getAttribute("allMembers");
+										List<MemberVO> allMembers = (List<MemberVO>) session.getAttribute("allMembers");
 										%>
 										<%
 										for (int i = 0; i < list.size(); i++) {
 										%>
 										<tr>
 											<td><%=list.get(i).getOrderid()%></td>
-											<%-- 											<td><%=list.get(i).getMemberid()%></td> --%>
 											<td><%=list.get(i).getOrderdate()%></td>
-											
-											<%String lastname = null;
-											 for(int j=0;j < allMembers.size();j++){
-												if(list.get(i).getMemberid() == allMembers.get(j).getMemberid());
-												lastname = allMembers.get(j).getLastname();}
-											
-											  String firstname = null; 
-												for(int k = 0;k < allMembers.size();k++){
-													if(list.get(i).getMemberid() == allMembers.get(k).getMemberid());
-													firstname = allMembers.get(k).getFirstname();
-												}
-												%>
-												
-											
+
+											<%
+											String lastname = null;
+											for (int j = 0; j < allMembers.size(); j++) {
+												if (list.get(i).getMemberid() == allMembers.get(j).getMemberid())
+												lastname = allMembers.get(j).getLastname();
+											}
+
+											String firstname = null;
+											for (int k = 0; k < allMembers.size(); k++) {
+												if (list.get(i).getMemberid() == allMembers.get(k).getMemberid())
+												firstname = allMembers.get(k).getFirstname();
+											}
+											%>
+
+
 											<td><%=lastname%></td>
 											<td><%=firstname%></td>
-											
-											<%int amount = 0;%>
-											
+
+											<%
+											int amount = 0;
+											%>
+
 											<%
 											for (int a = 0; a < list123.size(); a++) {
 
@@ -206,7 +241,7 @@
 												}
 											}
 											%>
-											<td><%=amount%></td>
+											<td><%=list.get(i).getOrderpriceamount()%></td>
 
 											<%
 											int total = 0;
@@ -223,12 +258,12 @@
 
 											<td>
 												<FORM METHOD="post"
-													ACTION="<%=request.getContextPath()%>/orderdetail.do"
-													style="margin-bottom: 0px;">
+													ACTION="<%=request.getContextPath()%>/orderdetail.do">
 													<input type="submit" value="明細" class="send"> <input
 														type="hidden" name="orderid"
 														value="<%=list.get(i).getOrderid()%>"> <input
 														type="hidden" name="action" value="getOne_For_Orderdetail">
+														
 												</FORM>
 											</td>
 											<!-- 												<td></td> -->

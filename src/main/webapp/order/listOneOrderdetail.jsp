@@ -84,20 +84,31 @@ table {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	font-size: 14px;
+		border-collapse: collapse;
+	color: #777;
+	font-family: 'poppins', sans-serif;
+	font-size: 14px;
+	font-weight: 300;
+	text-indent: initial;
+	border-spacing: 2px;
+	border: none;
 }
 
 th {
 	text-align: center;
-	background: #0ceffe;
 	padding: 5px;
 	font-weight: normal;
+	background: white;
+	line-height: 1.5;
+	border-bottom: 1px solid gray;
 }
 
 td {
 	text-align: center;
-	background: #dcddc0;
 	padding: 5px;
 	font-weight: normal;
+	background: white;
+	line-height: 1.5;
 }
 </style>
 
@@ -169,7 +180,7 @@ td {
 											<th>回饋點數</th>
 											<th>特殊需求</th>
 											<th>團員表</th>
-											<th>修改</th>
+<!-- 											<th>修改</th> -->
 <!-- 											<th>刪除</th> -->
 										</tr>
 										<%
@@ -211,15 +222,15 @@ td {
 															 value="getOne_For_Travelerlist">
 													</FORM>
 												</td>
-												<td>
-													<FORM METHOD="post"
-														ACTION="<%=request.getContextPath()%>/orderdetail.do">
-														<input type="submit" value="修改" class="btn v2"> <input
-															type="hidden" name="orderdetailno"
-															value="<%=list.get(i).getOrderdetailno()%>"> <input
-															type="hidden" name="action" value="getOne_For_Update">
-													</FORM>
-												</td>
+<!-- 												<td> -->
+<!-- 													<FORM METHOD="post" -->
+<%-- 														ACTION="<%=request.getContextPath()%>/orderdetail.do"> --%>
+<!-- 														<input type="submit" value="修改" class="btn v2"> <input -->
+<!-- 															type="hidden" name="orderdetailno" -->
+<%-- 															value="<%=list.get(i).getOrderdetailno()%>"> <input --%>
+<!-- 															type="hidden" name="action" value="getOne_For_Update"> -->
+<!-- 													</FORM> -->
+<!-- 												</td> -->
 <!-- 												<td> -->
 <!-- 													<FORM METHOD="post" -->
 <%-- 														ACTION="<%=request.getContextPath()%>/orderdetail.do" --%>

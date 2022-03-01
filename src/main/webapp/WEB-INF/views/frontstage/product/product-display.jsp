@@ -123,83 +123,83 @@
 											<ul class="explore__form-checkbox-list half-filter">
 												<div class="filter-checkbox">
 													<p>行程時間</p>
-													<li><input id="check-a" type="checkbox" name="check">
+													<li><input id="check-a" type="checkbox" name="time" value="a">
 														<label for="check-a">少於4小時</label></li>
-													<li><input id="check-b" type="checkbox" name="check">
+													<li><input id="check-b" type="checkbox" name="time" value="b">
 														<label for="check-b">4小時~1天</label></li>
-													<li><input id="check-c" type="checkbox" name="check">
+													<li><input id="check-c" type="checkbox" name="time" value="c">
 														<label for="check-c">1天~2天</label></li>
-													<li><input id="check-d" type="checkbox" name="check">
+													<li><input id="check-d" type="checkbox" name="time" value="d">
 														<label for="check-d">大於兩天</label></li>
 <!--  													<li><input id="check-f" type="checkbox" name="check"> -->
 <!--                                                         <label for="check-f">Events</label></li>  -->
 <!--                                                     <li><input id="check-e" type="checkbox" name="check">  -->
 <!--                                                          <label for="check-e">Free Wifi</label></li>  -->
 												</div>
-												<div class="filter-checkbox">
-													<p>依評價篩選</p>
-													<div>
-														<input id="check-w" type="checkbox" name="check">
-														<label for="check-w"> </label>
-														<div class="list-ratings">
-															<span class="ion-android-star"></span> <span
-																class="ion-android-star"></span> <span
-																class="ion-android-star"></span> <span
-																class="ion-android-star"></span> <span
-																class="ion-android-star"></span>
-														</div>
-													</div>
-													<div>
-														<input id="check-x" type="checkbox" name="check">
-														<label for="check-x"> </label>
-														<div class="list-ratings">
-															<span class="ion-android-star"></span> <span
-																class="ion-android-star"></span> <span
-																class="ion-android-star"></span> <span
-																class="ion-android-star"></span> <span
-																class="ion-android-star-outline"></span>
-														</div>
-													</div>
-													<div>
-														<input id="check-y" type="checkbox" name="check">
-														<label for="check-y"> </label>
-														<div class="list-ratings">
-															<span class="ion-android-star"></span> <span
-																class="ion-android-star"></span> <span
-																class="ion-android-star"></span> <span
-																class="ion-android-star-outline"></span> <span
-																class="ion-android-star-outline"></span>
-														</div>
-													</div>
-													<div>
-														<input id="check-z" type="checkbox" name="check">
-														<label for="check-z"> </label>
-														<div class="list-ratings">
-															<span class="ion-android-star"></span> <span
-																class="ion-android-star"></span> <span
-																class="ion-android-star-outline"></span> <span
-																class="ion-android-star-outline"></span> <span
-																class="ion-android-star-outline"></span>
-														</div>
-													</div>
-												</div>
+<!-- 												<div class="filter-checkbox"> -->
+<!-- 													<p>依評價篩選</p> -->
+<!-- 													<div> -->
+<!-- 														<input id="check-w" type="checkbox" name="check"> -->
+<!-- 														<label for="check-w"> </label> -->
+<!-- 														<div class="list-ratings"> -->
+<!-- 															<span class="ion-android-star"></span> <span -->
+<!-- 																class="ion-android-star"></span> <span -->
+<!-- 																class="ion-android-star"></span> <span -->
+<!-- 																class="ion-android-star"></span> <span -->
+<!-- 																class="ion-android-star"></span> -->
+<!-- 														</div> -->
+<!-- 													</div> -->
+<!-- 													<div> -->
+<!-- 														<input id="check-x" type="checkbox" name="check"> -->
+<!-- 														<label for="check-x"> </label> -->
+<!-- 														<div class="list-ratings"> -->
+<!-- 															<span class="ion-android-star"></span> <span -->
+<!-- 																class="ion-android-star"></span> <span -->
+<!-- 																class="ion-android-star"></span> <span -->
+<!-- 																class="ion-android-star"></span> <span -->
+<!-- 																class="ion-android-star-outline"></span> -->
+<!-- 														</div> -->
+<!-- 													</div> -->
+<!-- 													<div> -->
+<!-- 														<input id="check-y" type="checkbox" name="check"> -->
+<!-- 														<label for="check-y"> </label> -->
+<!-- 														<div class="list-ratings"> -->
+<!-- 															<span class="ion-android-star"></span> <span -->
+<!-- 																class="ion-android-star"></span> <span -->
+<!-- 																class="ion-android-star"></span> <span -->
+<!-- 																class="ion-android-star-outline"></span> <span -->
+<!-- 																class="ion-android-star-outline"></span> -->
+<!-- 														</div> -->
+<!-- 													</div> -->
+<!-- 													<div> -->
+<!-- 														<input id="check-z" type="checkbox" name="check"> -->
+<!-- 														<label for="check-z"> </label> -->
+<!-- 														<div class="list-ratings"> -->
+<!-- 															<span class="ion-android-star"></span> <span -->
+<!-- 																class="ion-android-star"></span> <span -->
+<!-- 																class="ion-android-star-outline"></span> <span -->
+<!-- 																class="ion-android-star-outline"></span> <span -->
+<!-- 																class="ion-android-star-outline"></span> -->
+<!-- 														</div> -->
+<!-- 													</div> -->
+<!-- 												</div> -->
 												<div class="filter-checkbox">
 													<p>依地區篩選</p>
-													<input id="check-ab" type="checkbox" name="check">
+													<input id="check-ab" type="checkbox" name="city" value="台北市">
 													<label for="check-ab">台北市</label> 
-													<input id="check-bc" type="checkbox" name="check"> 
+													<input id="check-bc" type="checkbox" name="city" value="新北市"> 
 													<label for="check-bc">新北市</label> 
-													<input id="check-cd" type="checkbox" name="check"> 
+													<input id="check-cd" type="checkbox" name="city" value="台中市"> 
 													<label for="check-cd">台中市</label> 
-													<input id="check-df" type="checkbox" name="check"> 
+													<input id="check-df" type="checkbox" name="city" value="高雄市"> 
 													<label for="check-df">高雄市 </label>
-													<input id="check-fg" type="checkbox" name="check">
+													<input id="check-fg" type="checkbox" name="city" value="台東市">
 													<label for="check-fg">台東市 </label>
-													<input id="check-gh" type="checkbox" name="check">
+													<input id="check-gh" type="checkbox" name="city" value="花蓮縣">
 													<label for="check-gh">花蓮縣 </label>
-													<input id="check-hi" type="checkbox" name="check">
+													<input id="check-hi" type="checkbox" name="city" value="彰化縣">
 													<label for="check-hi">彰化縣 </label>
-													<input id="check-ij" type="checkbox" name="check">
+													<input id="check-ij" type="checkbox" name="city" value="台南市">
 													<label for="check-ij">台南市 </label>
 								
 												</div>
@@ -225,7 +225,7 @@
 							<div class="col-lg-8 col-sm-8 col-12">
 								<div class="item-element res-box  text-right xs-left">
 									<p>
-										共 <span>2748</span> 項行程
+										共 <span><%=session.getAttribute("totalproduct") %></span> 項行程
 									</p>
 								</div>
 							</div>
@@ -553,6 +553,11 @@
 								<div id="list-view" class="tab-pane active product-list">
 								<%   List<ProductBean> list2 = (List)request.getAttribute("list2");
 									List imgids = 	(List)request.getAttribute("imgids");
+									List<String> introStrings = (List<String>)request.getAttribute("introStrings");
+									List<Integer> commentcount = (List<Integer>)request.getAttribute("commentcount");
+									List<Double> avg = (List<Double>)request.getAttribute("avg");
+									List<String> cities = (List<String>)request.getAttribute("cities");
+									
 									if(list2.size()==0){ out.print("<h5>查無資料!</h5>");} 
 							    %>      
 								<%  for(int i=0; i < list2.size();i++){ %>
@@ -563,7 +568,7 @@
 										<div class="col-md-6 no-pad-lr">
 											<div class="trending-img">
 												<img src="<%=request.getContextPath()%>/ProductImageReader?imgid=<%=imgids.get(i) %> " alt="#">
-												<span class="trending-rating-green">7</span> <span
+												<span class="trending-rating-green"><%=avg.get(i) %></span> <span
 													class="save-btn"><i class="icofont-heart"></i></span>
 											</div>
 										</div>
@@ -574,36 +579,39 @@
 												</h4>
 												<div class="customer-review">
 													<div class="rating-summary float-left">
-														<div class="rating-result" title="60%">
-															<ul class="product-rating">
-																<li><i class="ion-android-star"></i></li>
-																<li><i class="ion-android-star"></i></li>
-																<li><i class="ion-android-star"></i></li>
-																<li><i class="ion-android-star-half"></i></li>
-																<li><i class="ion-android-star-half"></i></li>
-															</ul>
-														</div>
+<!-- 														<div class="rating-result" title="60%"> -->
+<!-- 															<ul class="product-rating"> -->
+<!-- 																<li><i class="ion-android-star"></i></li> -->
+<!-- 																<li><i class="ion-android-star"></i></li> -->
+<!-- 																<li><i class="ion-android-star"></i></li> -->
+<!-- 																<li><i class="ion-android-star-half"></i></li> -->
+<!-- 																<li><i class="ion-android-star-half"></i></li> -->
+<!-- 															</ul> -->
+<!-- 														</div> -->
 													</div>
 													<div class="review-summury float-right">
 														<p>
-															<a href="#">3 Reviews</a>
+															<a href="#"><%=commentcount.get(i) %> 則評論</a>
 														</p>
 													</div>
 												</div>
 												<ul class="trending-address">
 													<li><i class="ion-ios-location"></i>
-														<p>4210 Khale Street,Florence,USA</p></li>
-													<li><i class="ion-ios-telephone"></i>
-														<p>+843-600-2040</p></li>
-													<li><i class="ion-android-globe"></i>
-														<p>www.laresorta.com</p></li>
+														<p><%=cities.get(i) %></p></li>
+														<li>
+														<p><%=introStrings.get(i) %></p>
+														</li>
+<!-- 													<li><i class="ion-ios-telephone"></i> -->
+<!-- 														<p>+843-600-2040</p></li> -->
+<!-- 													<li><i class="ion-android-globe"></i> -->
+<!-- 														<p>www.laresorta.com</p></li> -->
 												</ul>
 												<div class="trending-bottom mar-top-15 pad-bot-30">
 													<div class="trend-left float-left">
-														<span class="round-bg pink"><i
-															class="icofont-hotel"></i></span>
+<!-- 														<span class="round-bg pink"><i -->
+<!-- 															class="icofont-hotel"></i></span> -->
 														<p>
-															<a href="#">Hotel</a>
+															<%=list2.get(i).getProducttype() %>
 														</p>
 
 													</div>

@@ -13,6 +13,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.PersistenceContext;
@@ -79,16 +80,16 @@ public class ProductDisplayController {
 	
 	@RequestMapping("/ProductDisplayController")
 	public String displayAll(HttpSession session, String page, Model model, String keyword,
-			String price, String type) {
+			String price, String type, String[] city, String[] time) {
 		
 		session.removeAttribute("keyword");
 		session.removeAttribute("type");
 		session.removeAttribute("price");
 		
-		
+	
 		//搜尋關鍵字過濾 類別過濾
 		List<ProductBean> list = null;
-		System.out.println(type);
+//		System.out.println(type);
 		if( type != null &&  !"產品分類".equals(type) && keyword!=null && keyword!=""  ) {
 			String keyword2 = keyword.trim();
 			NativeQuery query = this.session.createSQLQuery(
@@ -141,65 +142,70 @@ public class ProductDisplayController {
 				list.remove(list.get(i));
 			}
 		}
-
-		session.setAttribute("list", list);
+		
+		
+		//縣市過濾
+		if(city!=null && city.length!=0) {
+			for(int i = 0; i < list.size(); i++) {
+				NativeQuery query = this.session.createSQLQuery(
+						"SELECT c.CITY_ID, c.CITY, c.AREA \r\n"
+						+ "FROM PRODUCT p \r\n"
+						+ "	join PRODUCT_LOC pl\r\n"
+						+ "		on p.PRODUCT_ID = pl.PRODUCT_ID\r\n"
+						+ "         join City c \r\n"
+						+ "			on c.CITY_ID = pl.CITY_ID\r\n"
+						+ "where p.PRODUCT_ID = " + list.get(i).getProductid()
+				);
+				query.addEntity(CityBean.class);
+				CityBean bean = ((List<CityBean>) query.list()).get(0);
+				String cityString = bean.getCity();
+				boolean a = false;
+				for(int j =0; j<city.length; j++) {
+					if(cityString.equals(city[j])) {
+						a = true;
+					}
+				}
+				
+				if(a!=true) {
+					list.remove(list.get(i));
+					i--;
+				}
+				
+	
+			}	
+		}
+		
+		
+		if(time!=null && time.length!=0) {
+			int total = list.size();
+			List<ProductBean> newlist = new ArrayList<ProductBean>();
+			for(int i = 0; i < total ; i++) {
+				if(Arrays.asList(time).contains("a") && list.get(i).getTraveltime()<4) {
+					newlist.add(list.get(i));
+				}
+				if(Arrays.asList(time).contains("b") && list.get(i).getTraveltime()>=4 && list.get(i).getTraveltime()<24) {
+					newlist.add(list.get(i));
+				}
+				if(Arrays.asList(time).contains("c") && list.get(i).getTraveltime()>=24 && list.get(i).getTraveltime()<48) {
+					newlist.add(list.get(i));
+				}
+				if(Arrays.asList(time).contains("d") && list.get(i).getTraveltime()>=48) {
+					newlist.add(list.get(i));
+				}
+			}
+			
+			session.setAttribute("list", newlist);
+			
+		}else {
+			session.setAttribute("list", list);
+		}
+		
+		
+		
+		session.setAttribute("totalproduct", list.size());
+//		session.setAttribute("list", list);
 		return "redirect:/MVC/PageHandler";
 		
-		//找出此頁該顯示哪幾筆商品
-//		if(list==null) {
-//			list = productService.select(null);
-//		}
-//		if (page == null) {
-//			page = "1";
-//		}
-//		int pageindex = Integer.valueOf(page);
-//		List<ProductBean> list2 = new ArrayList();
-//
-//		for (int i = (pageindex - 1) * 4; i <= ((pageindex * 4) - 1); i++) {
-//			if ((i+1) <= list.size() ) {
-//				list2.add(list.get(i));
-//			}
-//		}
-//		
-		
-		//找出總共該有幾頁
-//		int totalpage = 0;
-//		if(list.size() % 4 == 0) {
-//			totalpage = list.size()/4;
-//		}else {
-//			totalpage = (list.size()/4) + 1;
-//		}
-//		model.addAttribute("totalpage", totalpage);
-
-		//找出此頁該顯示的圖片們
-//		List imgids = new ArrayList();
-//		Connection connection;
-//		try {
-//			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei",
-//					"root", "password");
-//
-//			for (int i = 0; i < list2.size(); i++) {
-//				if (list2.get(i) != null) {
-//					PreparedStatement ps = connection
-//							.prepareStatement("SELECT * FROM PRODUCT_IMG where PRODUCT_ID = ? limit 1");
-//					ps.setInt(1, list2.get(i).getProductid());
-//					ResultSet rSet = ps.executeQuery();
-//
-//					while (rSet.next()) {
-//						imgids.add(rSet.getInt(1));
-//					}
-//				}
-//			}
-//
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		model.addAttribute("page", page);
-//		model.addAttribute("list2", list2);
-//		model.addAttribute("imgids", imgids);
-//		return "frontstage/product/product-display";
 
 	}
 	
@@ -237,6 +243,9 @@ public class ProductDisplayController {
 		
 //		找出此頁該顯示的圖片們
 		List imgids = new ArrayList();
+		List<Integer> commentcount = new ArrayList<Integer>();
+		List<Double> avg = new ArrayList<Double>();
+		List<String> cities = new ArrayList<String>();
 		Connection connection;
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei",
@@ -252,16 +261,77 @@ public class ProductDisplayController {
 					while (rSet.next()) {
 						imgids.add(rSet.getInt(1));
 					}
+					
+					//以下找出有幾則評論
+					ps = connection
+							.prepareStatement("SELECT COUNT(*) FROM PRODUCT_COMMENT WHERE PRODUCT_ID = ?");
+					ps.setInt(1, list2.get(i).getProductid());
+					rSet = ps.executeQuery();
+
+					while (rSet.next()) {
+						commentcount.add(rSet.getInt(1));
+					}
+					
+					//以下找出平均分數
+					
+					ps = connection
+							.prepareStatement("SELECT AVG(SCORE) FROM PRODUCT_COMMENT WHERE PRODUCT_ID = ?");
+					ps.setInt(1, list2.get(i).getProductid());
+					rSet = ps.executeQuery();
+
+					while (rSet.next()) {
+						DecimalFormat df = new DecimalFormat("#.#");
+						avg.add(Double.valueOf(df.format(rSet.getDouble(1))));
+					}
+					
+					
+					//以下找出所在城市
+					ps = connection
+							.prepareStatement("SELECT c.CITY\r\n"
+									+ "FROM PRODUCT p \r\n"
+									+ "	join PRODUCT_LOC pl\r\n"
+									+ "		on p.PRODUCT_ID = pl.PRODUCT_ID\r\n"
+									+ "         join City c \r\n"
+									+ "			on c.CITY_ID = pl.CITY_ID\r\n"
+									+ "where p.PRODUCT_ID = ?");
+					ps.setInt(1, list2.get(i).getProductid());
+					rSet = ps.executeQuery();
+
+					while (rSet.next()) {
+						cities.add(rSet.getString(1));
+					}
+					
+					
+					rSet.close();
+					ps.close();
 				}
 			}
 
+			
+			connection.close();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-
-		
+		//顯示哪幾筆介紹
+		List<String> introStrings = new ArrayList<String>();
+		for(int i = 0 ; i < list2.size(); i++) {
+			String string = list2.get(i).getProductintro();
+//			String[] strs = string.split("<br>");
+//			String a = strs[0]+strs[1];
+//			String a = string.substring(0, 50);
+			String a = string.replaceAll("<br>", " ");
+			a = a.substring(0, 50);
+			
+			introStrings.add(a);
+		}
+			
+		model.addAttribute("cities", cities);
+		model.addAttribute("avg", avg);
+		model.addAttribute("commentcount", commentcount);
+		model.addAttribute("introStrings", introStrings);
 		model.addAttribute("keyword", session.getAttribute("keyword"));
 //		session.removeAttribute("keyword");
 		model.addAttribute("type", session.getAttribute("type"));
@@ -514,5 +584,7 @@ public class ProductDisplayController {
 				+ "</div>";
 	}
 
+
+	
 	
 }

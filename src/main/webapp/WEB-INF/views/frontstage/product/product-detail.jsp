@@ -141,6 +141,11 @@
 <!--                                     </ul> -->
 <!--                                 </div> -->
                             </div>
+                            <div id="overview" class="list-details-section">
+                            	<div>
+                            		<h4> 旅行時數: ${ProductBean.traveltime} 小時</h4>
+                            	</div>
+                            </div>
                             <div id="gallery" class="list-details-section">
                                 <h4>商品圖片</h4>
                                 <!--Carousel Wrapper-->
