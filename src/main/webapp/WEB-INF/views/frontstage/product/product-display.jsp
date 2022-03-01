@@ -185,21 +185,21 @@
 												</div>
 												<div class="filter-checkbox">
 													<p>依地區篩選</p>
-													<input id="check-ab" type="checkbox" name="check">
+													<input id="check-ab" type="checkbox" name="city" value="台北市">
 													<label for="check-ab">台北市</label> 
-													<input id="check-bc" type="checkbox" name="check"> 
+													<input id="check-bc" type="checkbox" name="city" value="新北市"> 
 													<label for="check-bc">新北市</label> 
-													<input id="check-cd" type="checkbox" name="check"> 
+													<input id="check-cd" type="checkbox" name="city" value="台中市"> 
 													<label for="check-cd">台中市</label> 
-													<input id="check-df" type="checkbox" name="check"> 
+													<input id="check-df" type="checkbox" name="city" value="高雄市"> 
 													<label for="check-df">高雄市 </label>
-													<input id="check-fg" type="checkbox" name="check">
+													<input id="check-fg" type="checkbox" name="city" value="台東市">
 													<label for="check-fg">台東市 </label>
-													<input id="check-gh" type="checkbox" name="check">
+													<input id="check-gh" type="checkbox" name="city" value="花蓮縣">
 													<label for="check-gh">花蓮縣 </label>
-													<input id="check-hi" type="checkbox" name="check">
+													<input id="check-hi" type="checkbox" name="city" value="彰化縣">
 													<label for="check-hi">彰化縣 </label>
-													<input id="check-ij" type="checkbox" name="check">
+													<input id="check-ij" type="checkbox" name="city" value="台南市">
 													<label for="check-ij">台南市 </label>
 								
 												</div>

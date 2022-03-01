@@ -164,7 +164,7 @@
                                                 <li><span>5</span> Cities</li>
                                                 <li><span>255</span> Listing</li>
                                             </ul>
-                                            <a class="btn v6 explore-place" href="grid-fullwidth-map.html">Explore</a>
+                                            <a class="btn v6 explore-place" href="<%=request.getContextPath() %>/MVC/ProductDisplayController?city=<%=cities.get(i).getCity() %>">Explore</a>
                                         </div>
                                     </div>
                                 </div>

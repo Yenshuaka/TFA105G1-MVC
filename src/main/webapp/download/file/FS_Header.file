@@ -7,7 +7,7 @@
 					<div class="site-navbar">
 						<div class="row align-items-center">
 							<div class="col-md-4 col-6">
-								<a class="navbar-brand" href="home-v2-using.html"><img
+								<a class="navbar-brand" href="<%=request.getContextPath()%>/"><img
 									src="<%=request.getContextPath()%>/download/images/f.png" alt="logo" class="img-fluid"></a>
 							</div>
 							<div class="col-md-8 col-6">
@@ -15,7 +15,7 @@
 									<div class="container">
 										<ul class="site-menu js-clone-nav d-none d-lg-block">
 											<li class="has-children"><a style="color: white"
-												href="<%=request.getContextPath()%>/download/homepage2.jsp">首頁</a></li>
+												href="<%=request.getContextPath()%>/">首頁</a></li>
 											<li class="has-children"><a style="color: white"
 												href="<%=request.getContextPath()%>/MVC/ProductDisplayController">產品分類</a>
 												<ul class="dropdown">
