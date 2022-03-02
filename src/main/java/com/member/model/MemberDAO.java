@@ -31,19 +31,14 @@ public class MemberDAO implements MemberDAO_interface {
 
 	@Override
 	public MemberVO login(String email, String password) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		MemberVO memberVO = null;
-		try {
 
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(FIND_FOR_LOGIN_STMT);
+		MemberVO memberVO = null;
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(FIND_FOR_LOGIN_STMT)) {
 
 			pstmt.setString(1, email);
 			pstmt.setString(2, password);
 
-			rs = pstmt.executeQuery();
+			ResultSet rs = pstmt.executeQuery();			
 
 			while (rs.next()) {
 				memberVO = new MemberVO();
@@ -62,26 +57,8 @@ public class MemberDAO implements MemberDAO_interface {
 				memberVO.setSelfintro(rs.getString("SELF_INTRO"));
 
 			}
-
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 		return memberVO;
 	}
@@ -92,13 +69,8 @@ public class MemberDAO implements MemberDAO_interface {
 
 	@Override
 	public void insert(MemberVO memberVO) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
 
-		try {
-
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT);
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
 
 			pstmt.setString(1, memberVO.getEmail());
 			pstmt.setString(2, memberVO.getPassword());
@@ -114,72 +86,54 @@ public class MemberDAO implements MemberDAO_interface {
 
 			pstmt.executeUpdate();
 
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 	}
 
 	private static final String UPDATE = "UPDATE MEMBER\r\n" + "SET\r\n"
 			+ " EMAIL = ?, `PASSWORD` = ?, FIRST_NAME = ?, LAST_NAME = ?, ID_NO = ?, GENDER = ?, DATE_OF_BIRTH = ?, COUNTRY = ?, PHONE = ?\r\n"
 			+ "WHERE MEMBER_ID = ?";
+	private static final String UPDATEBS = "UPDATE MEMBER\r\n" + "SET\r\n"
+			+ " EMAIL = ?, FIRST_NAME = ?, LAST_NAME = ?, ID_NO = ?, GENDER = ?, DATE_OF_BIRTH = ?, COUNTRY = ?, PHONE = ?\r\n"
+			+ "WHERE MEMBER_ID = ?";
 
 	@Override
 	public void update(MemberVO memberVO) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
 
-		try {
+		try (Connection con = ds.getConnection();) {
+			if (memberVO.getPassword() != null) {
+				try (PreparedStatement pstmt = con.prepareStatement(UPDATE);) {
+					pstmt.setString(1, memberVO.getEmail());
+					pstmt.setString(2, memberVO.getPassword());
+					pstmt.setString(3, memberVO.getFirstname());
+					pstmt.setString(4, memberVO.getLastname());
+					pstmt.setString(5, memberVO.getIdno());
+					pstmt.setString(6, memberVO.getGender());
+					pstmt.setDate(7, memberVO.getDateofbirth());
+					pstmt.setString(8, memberVO.getCountry());
+					pstmt.setString(9, memberVO.getPhone());
+					pstmt.setInt(10, memberVO.getMemberid());
 
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(UPDATE);
+					pstmt.executeUpdate();
+				}
+			} else {
+				try (PreparedStatement pstmt = con.prepareStatement(UPDATEBS);) {
+					pstmt.setString(1, memberVO.getEmail());
+					pstmt.setString(2, memberVO.getFirstname());
+					pstmt.setString(3, memberVO.getLastname());
+					pstmt.setString(4, memberVO.getIdno());
+					pstmt.setString(5, memberVO.getGender());
+					pstmt.setDate(6, memberVO.getDateofbirth());
+					pstmt.setString(7, memberVO.getCountry());
+					pstmt.setString(8, memberVO.getPhone());
+					pstmt.setInt(9, memberVO.getMemberid());
 
-			pstmt.setString(1, memberVO.getEmail());
-			pstmt.setString(2, memberVO.getPassword());
-			pstmt.setString(3, memberVO.getFirstname());
-			pstmt.setString(4, memberVO.getLastname());
-			pstmt.setString(5, memberVO.getIdno());
-			pstmt.setString(6, memberVO.getGender());
-			pstmt.setDate(7, memberVO.getDateofbirth());
-			pstmt.setString(8, memberVO.getCountry());
-			pstmt.setString(9, memberVO.getPhone());
-			pstmt.setInt(10, memberVO.getMemberid());
-
-			pstmt.executeUpdate();
-
+					pstmt.executeUpdate();
+				}
+			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 	}
 
@@ -187,13 +141,8 @@ public class MemberDAO implements MemberDAO_interface {
 
 	@Override
 	public void delete(Integer memberid) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
 
-		try {
-
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(DELETE);
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(DELETE)) {
 
 			pstmt.setInt(1, memberid);
 
@@ -203,21 +152,6 @@ public class MemberDAO implements MemberDAO_interface {
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 	}
 
@@ -228,14 +162,10 @@ public class MemberDAO implements MemberDAO_interface {
 	@Override
 	public MemberVO findByPrimaryKey(Integer memberid) {
 		MemberVO memberVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
+
 		ResultSet rs = null;
 
-		try {
-
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ONE_STMT);
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(GET_ONE_STMT)) {
 
 			pstmt.setInt(1, memberid);
 
@@ -245,6 +175,7 @@ public class MemberDAO implements MemberDAO_interface {
 				memberVO = new MemberVO();
 				memberVO.setMemberid(rs.getInt("MEMBER_ID"));
 				memberVO.setEmail(rs.getString("EMAIL"));
+				memberVO.setPassword(rs.getString("PASSWORD"));
 				memberVO.setFirstname(rs.getString("FIRST_NAME"));
 				memberVO.setLastname(rs.getString("LAST_NAME"));
 				memberVO.setIdno(rs.getString("ID_NO"));
@@ -259,28 +190,6 @@ public class MemberDAO implements MemberDAO_interface {
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 		return memberVO;
 	}
@@ -294,15 +203,9 @@ public class MemberDAO implements MemberDAO_interface {
 		List<MemberVO> list = new ArrayList<MemberVO>();
 		MemberVO memberVO = null;
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT)) {
 
-		try {
-
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ALL_STMT);
-			rs = pstmt.executeQuery();
+			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				memberVO = new MemberVO();
@@ -320,35 +223,12 @@ public class MemberDAO implements MemberDAO_interface {
 				memberVO.setNickname(rs.getString("NICKNAME"));
 				memberVO.setSelfintro(rs.getString("SELF_INTRO"));
 
-				list.add(memberVO); // Store the row in the list
+				list.add(memberVO);
 			}
 
-			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 		return list;
 	}
@@ -358,38 +238,16 @@ public class MemberDAO implements MemberDAO_interface {
 
 	@Override
 	public void uploadPic(MemberVO memberVO) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
 
-		try {
-
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(UPLOADPIC);
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPLOADPIC)) {
 
 			pstmt.setBytes(1, memberVO.getAvatar());
 			pstmt.setInt(2, memberVO.getMemberid());
 
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
 	}
 

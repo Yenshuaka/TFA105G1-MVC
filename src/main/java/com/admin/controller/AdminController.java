@@ -1,5 +1,6 @@
 package com.admin.controller;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class AdminController {
 	private AdminService adminService;
 
 	@RequestMapping(method = { RequestMethod.POST })
-	public String processPost(String action, HttpSession session, AdminVO admin, Model model, String account,
+	public String login(String action, HttpSession session, AdminVO admin, Model model, String account,
 			String password) {
 
 		if ("login".equals(action)) {
@@ -46,7 +47,7 @@ public class AdminController {
 			} else if (!password.trim().matches(pwdReg)) {
 				errorMsgs.put("account", "密碼: 請輸入英文字母、數字 且1~20個字");
 			}
-			
+
 //			if (errorMsgs != null && !!errorMsgs.isEmpty()) {
 //				System.out.println(errorMsgs);
 //				return "/download/BS-login.jsp";
@@ -59,7 +60,18 @@ public class AdminController {
 			session.setAttribute("adminVO", adminVO);
 			return "backstage/BS-index";
 		}
-		return "";
+		return null;
 	}
 
+	@RequestMapping(method = { RequestMethod.GET })
+	public String logout(String action, HttpSession session) {
+		if ("logout".equals(action)) {
+			session.removeAttribute("memberid");
+			session.invalidate();
+			System.out.println("Admin session 已清空!");
+			return "redirect:/download/BS-login.jsp";
+		}
+		return null;
+	}
+	
 }

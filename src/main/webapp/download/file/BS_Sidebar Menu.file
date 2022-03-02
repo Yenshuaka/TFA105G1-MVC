@@ -39,11 +39,12 @@
 
                         <li>
                             <a href="<%=request.getContextPath()%>/MVC/ProductManageController">
+                            
                                 <i class="ion-ios-copy-outline"></i>行程總覽</a>
                         </li>
                         <li>
-                            <a href="<%=request.getContextPath()%>/download/BS-member_manage.jsp">
-                                <i class="ion-ios-person-outline"></i>會員管理</a>                            
+                            <a href="<%=request.getContextPath()%>/MVC/MemberDispacher/MemberManage">
+                                <i class="ion-ios-person-outline"></i>會員管理</a>
                         </li>
 
                         <li>
@@ -52,7 +53,7 @@
                         </li>
                         
                         <li>
-                            <a href="#">
+                            <a href="<%=request.getContextPath()%>/MVC/adminManagement?action=logout">
                                 <i class="ion-ios-upload-outline"></i>登出</a>
                         </li>
                     </ul>

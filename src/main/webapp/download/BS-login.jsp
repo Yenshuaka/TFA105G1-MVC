@@ -76,7 +76,6 @@
 
 									<form id="login-form"
 										action="<%=request.getContextPath()%>/MVC/adminManagement"
-<%-- 										action="<%=request.getContextPath()%>/admin.login" --%>
 										method="post">
 										<div class="form-group">
 											<input type="text" name="account" id="username" tabindex="1"

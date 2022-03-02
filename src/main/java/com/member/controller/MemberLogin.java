@@ -78,10 +78,9 @@ public class MemberLogin extends HttpServlet {
 //				session.setMaxInactiveInterval(86400 * days);  // 要存幾天?
 //				String reqComeFrom = req.getHeader("referer"); // filter?
 				String location = (String) session.getAttribute("location");
-				System.out.println("來源網站 = " + location);
-				String ContextPath = req.getContextPath();
-				String indexUrl = "/download/FS-Index-Demo.jsp";
-				res.sendRedirect(ContextPath + indexUrl);
+				System.out.println("來源網站 = " + location);				
+				String indexUrl = "/download/homepage2.jsp";
+				res.sendRedirect(req.getContextPath() + indexUrl);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {

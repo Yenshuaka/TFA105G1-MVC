@@ -42,14 +42,14 @@
 
 	<div class="page-wrapper">
 		<!--Sidebar Menu Starts-->
-		<%@include file="file/BS_Sidebar Menu.file"%>
+		<%@include file="/download/file/BS_Sidebar Menu.file"%>
 		<!--Sidebar Menu ends-->
 
 		<!--Dashboard content Wrapper starts-->
 		<div class="dash-content-wrap">
 
 			<!-- Top header starts-->
-			<%@include file="file/BS_Top header.file"%>
+			<%@include file="/download/file/BS_Top header.file"%>
 			<!-- Top header ends-->
 
 			<!--Dashboard breadcrumb starts-->
@@ -83,7 +83,7 @@
 
 			</div>
 			<!--Dashboard footer starts-->
-			<%@include file="file/BS_footer.file"%>
+			<%@include file="/download/file/BS_footer.file"%>
 			<!--Dashboard footer ends-->
 		</div>
 		<!--Dashboard content Wrapper ends-->
