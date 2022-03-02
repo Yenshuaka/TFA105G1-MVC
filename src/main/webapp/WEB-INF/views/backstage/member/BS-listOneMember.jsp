@@ -43,14 +43,14 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO"); //MemberServlet
 
 	<div class="page-wrapper">
 		<!--Sidebar Menu Starts-->
-		<%@include file="/WEB-INF/views/backstage/file/BS_Sidebar Menu.file"%>
+		<%@include file="/download/file/BS_Sidebar Menu.file"%>
 		<!--Sidebar Menu ends-->
 
 		<!--Dashboard content Wrapper starts-->
 		<div class="dash-content-wrap">
 
 			<!-- Top header starts-->
-			<%@include file="/WEB-INF/views/backstage/file/BS_Top header.file"%>
+			<%@include file="/download/file/BS_Top header.file"%>
 			<!-- Top header ends-->
 
 			<!--Dashboard breadcrumb starts-->
@@ -103,7 +103,7 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO"); //MemberServlet
 										<table class="invoice-table">
 											<thead>
 												<tr class="invoice-headings">
-													<!-- <th>Email</th>  -->
+													<th>Email</th> 
 													<th>姓</th>
 													<th>名</th>
 													<th>身分證字號</th>
@@ -116,7 +116,7 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO"); //MemberServlet
 											</thead>
 											<tbody>
 												<tr>
-													<!-- <td><%=memberVO.getEmail()%></td>  -->
+													<td><%=memberVO.getEmail()%></td>
 													<td><%=memberVO.getLastname()%></td>
 													<td><%=memberVO.getFirstname()%></td>
 													<td><%=memberVO.getIdno()%></td>
@@ -130,27 +130,31 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO"); //MemberServlet
 									</div>
 								</div>
 							</div>
+								<a class="btn v3"
+									href="<%=request.getContextPath()%>/MVC/MemberDispacher/MemberManage">
+									回會員管理</a>
 						</div>
 					</div>
 				</div>
 			</div>
+
 			<!--Dashboard content ends-->
 
-					<!--Dashboard footer starts-->
-					<%@include file="/WEB-INF/views/backstage/file/BS_footer.file"%>
-					<!--Dashboard footer ends-->
-				</div>
-				<!--Dashboard content Wrapper ends-->
-			</div>
-			<!-- Plugin JS-->
-			<script src="<%=request.getContextPath()%>/download/js/plugin.js"></script>
-			<!--Perfect Scrollbar JS-->
-			<script
-				src="<%=request.getContextPath()%>/download/js/perfect-scrollbar.min.js"></script>
-			<!-- Main JS-->
-			<script src="<%=request.getContextPath()%>/download/js/main.js"></script>
-			<!-- Dashboard JS-->
-			<script src="<%=request.getContextPath()%>/download/js/dashboard.js"></script>
+			<!--Dashboard footer starts-->
+			<%@include file="/download/file/BS_footer.file"%>
+			<!--Dashboard footer ends-->
+		</div>
+		<!--Dashboard content Wrapper ends-->
+	</div>
+	<!-- Plugin JS-->
+	<script src="<%=request.getContextPath()%>/download/js/plugin.js"></script>
+	<!--Perfect Scrollbar JS-->
+	<script
+		src="<%=request.getContextPath()%>/download/js/perfect-scrollbar.min.js"></script>
+	<!-- Main JS-->
+	<script src="<%=request.getContextPath()%>/download/js/main.js"></script>
+	<!-- Dashboard JS-->
+	<script src="<%=request.getContextPath()%>/download/js/dashboard.js"></script>
 </body>
 
 </html>

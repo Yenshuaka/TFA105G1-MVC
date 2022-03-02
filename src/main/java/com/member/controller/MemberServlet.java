@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
@@ -102,7 +103,7 @@ public class MemberServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("memberVO", memberVO); // 資料庫取出的memberVO物件,存入req
-				String url = "../download/BS-edit-member.jsp";
+				String url = "/MVC/MemberDispacher/EditMember";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 BS-edit-member.jsp
 				successView.forward(req, res);
 
@@ -214,7 +215,12 @@ public class MemberServlet extends HttpServlet {
 				memberSvc.updateMember(memberVO);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				
+				HttpSession session = req.getSession();
+				MemberVO currentVO =(MemberVO) session.getAttribute("memberVO");
+				if(currentVO != null) {
+					session.removeAttribute("memberVO");
+					session.setAttribute("memberVO", memberVO);
+				}
 				String url = "/download/FS-my-profile.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交BS-listOneMember.jsp
 				successView.forward(req, res);
@@ -230,7 +236,7 @@ public class MemberServlet extends HttpServlet {
 			}
 		}
 
-		if ("updateB".equals(action)) { 
+		if ("updateBS".equals(action)) { 
 
 			List<String> errorMsgs = new LinkedList<String>();
 			
@@ -243,6 +249,14 @@ public class MemberServlet extends HttpServlet {
 
 				Integer memberid = Integer.valueOf(req.getParameter("memberid").trim());
 
+				String email = req.getParameter("email");
+				String emailReg = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
+				if (email == null || email.trim().length() == 0) {
+					errorMsgs.add("帳號: 請勿空白");
+				} else if (!email.trim().matches(emailReg)) {
+					errorMsgs.add("帳號: 請輸入英文字母、數字和 _ , - 且含@ + 信箱網域");
+				}
+				
 				String lastname = req.getParameter("lastname");
 				String lnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
 				if (lastname == null || lastname.trim().length() == 0) {
@@ -290,6 +304,7 @@ public class MemberServlet extends HttpServlet {
 				
 				MemberVO memberVO = new MemberVO();
 				memberVO.setMemberid(memberid);
+				memberVO.setEmail(email);
 				memberVO.setLastname(lastname);
 				memberVO.setFirstname(firstname);
 				memberVO.setIdno(idno);
@@ -302,7 +317,8 @@ public class MemberServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					System.out.println(errorMsgs);
 					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的memberVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/download/BS-edit-member.jsp");
+					String url = "/MVC/MemberDispacher/EditMember";
+					RequestDispatcher failureView = req.getRequestDispatcher(url);
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -313,17 +329,16 @@ public class MemberServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("memberVO", memberVO); // 資料庫update成功後,正確的的memberVO物件,存入req
-				String url = "/download/BS-listOneMember.jsp";
+				String url = "/MVC/MemberDispacher/ListOneMember";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交BS-listOneMember.jsp
 				successView.forward(req, res);
 
-//				String url = "/download/BS-member_manage.jsp";
-//				res.sendRedirect(req.getContextPath()+url);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/download/BS-edit-member.jsp");
+				String url = "/MVC/MemberDispacher/EditMember";
+				RequestDispatcher failureView = req.getRequestDispatcher(url);
 				failureView.forward(req, res);
 			}
 		}
@@ -339,9 +354,21 @@ public class MemberServlet extends HttpServlet {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 
 				String email = req.getParameter("email").trim();
-
+				String emailReg = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
+				if (email == null || email.trim().length() == 0) {
+					errorMsgs.add("帳號: 請勿空白");
+				} else if (!email.trim().matches(emailReg)) {
+					errorMsgs.add("帳號: 請輸入英文字母、數字和 _ , - 且含@ + 信箱網域");
+				}
+				
 				String password = req.getParameter("password").trim();
-
+				String pwdReg = "^([A-Za-z0-9]){1,20}$";
+				if (password == null || password.trim().length() == 0) {
+					errorMsgs.add("密碼: 請勿空白");
+				} else if (!password.trim().matches(pwdReg)) {
+					errorMsgs.add("密碼: 請輸入英文字母、數字 且1~20個字");
+				}
+				
 				String lastname = req.getParameter("lastname");
 				String lnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
 				if (lastname == null || lastname.trim().length() == 0) {
@@ -410,7 +437,8 @@ public class MemberServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					System.out.println(errorMsgs);
 					req.setAttribute("memberVO", memberVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/download/BS-add-member.jsp");
+					String url = "/MVC/MemberDispacher/AddMember";
+					RequestDispatcher failureView = req.getRequestDispatcher(url);
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -420,22 +448,14 @@ public class MemberServlet extends HttpServlet {
 				memberSvc.addMember(memberVO);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-//				String url = "/download/BS-member_manage.jsp";				
-//				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交BS-member_manage.jsp
-//				successView.forward(req, res);
-
-//				String urlALL = "http://localhost:8081/Ex-member 0201 MVC/src/main/webapp/download/BS-member_manage.jsp";
-//				res.sendRedirect(urlALL);
-
-//				req.setAttribute("memberVO", memberVO); // 資料庫update成功後,正確的的memberVO物件,存入req
-//				String url = "/download/BS-listOneMember.jsp";
-				String url = "/download/BS-member_manage.jsp";
+				String url = "/MVC/MemberDispacher/MemberManage";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/download/BS-add-member.jsp");
+				String url = "/MVC/MemberDispacher/AddMember";
+				RequestDispatcher failureView = req.getRequestDispatcher(url);
 				failureView.forward(req, res);
 			}
 		}
@@ -456,14 +476,15 @@ public class MemberServlet extends HttpServlet {
 				memberSvc.deleteMember(memberid);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				String url = "/download/BS-member_manage.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+				String url = "/MVC/MemberDispacher/MemberManage";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/download/BS-member_manage.jsp");
+				String url = "/MVC/MemberDispacher/MemberManage";
+				RequestDispatcher failureView = req.getRequestDispatcher(url);
 				failureView.forward(req, res);
 			}
 		}

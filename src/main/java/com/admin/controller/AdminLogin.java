@@ -1,4 +1,4 @@
-package com.member.controller;
+package com.admin.controller;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -15,9 +15,8 @@ import javax.servlet.http.HttpSession;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
 
-
-@WebServlet("/member/member.login")
-public class MemberLogin extends HttpServlet {
+@WebServlet("/admin.login")
+public class AdminLogin extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,12 +36,12 @@ public class MemberLogin extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 
-				String email = req.getParameter("email");
-				String emailReg = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
-				if (email == null || email.trim().length() == 0) {
+				String account = req.getParameter("account");
+				String accountReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+				if (account == null || account.trim().length() == 0) {
 					errorMsgs.add("帳號: 請勿空白");
-				} else if (!email.trim().matches(emailReg)) {
-					errorMsgs.add("帳號: 請輸入英文字母、數字和 _ , - 且含@ + 信箱網域");
+				} else if (!account.trim().matches(accountReg)) {
+					errorMsgs.add("帳號: 請輸入英文字母、數字");
 				}
 				String password = req.getParameter("password");
 				String pwdReg = "^([A-Za-z0-9]){1,20}$";
@@ -51,41 +50,42 @@ public class MemberLogin extends HttpServlet {
 				} else if (!password.trim().matches(pwdReg)) {
 					errorMsgs.add("密碼: 請輸入英文字母、數字 且1~20個字");
 				}
-				System.out.println(email + password);
+				System.out.println(account + password);
 				/*************************** 2.開始查詢資料 *****************************************/
-				MemberService memberSvc = new MemberService();
-				MemberVO memberVO = memberSvc.memberLogin(email, password);	
-
-				if (memberVO == null) {
-					errorMsgs.add("查無資料");
+//				MemberService memberSvc = new MemberService();
+//				MemberVO memberVO = memberSvc.memberLogin(account, password);	
+				
+				if(!"admin".equals(account) || !"123".equals(password) ) {
+					errorMsgs.add("帳號或密碼錯誤! 請重新輸入");
 				}
+				
+
 				System.err.println(errorMsgs); // []
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					String RejectUrl = "/download/FS-login.jsp";
+					String RejectUrl = "/download/BS-login.jsp";
 					RequestDispatcher failureView = req.getRequestDispatcher(RejectUrl);
 					failureView.forward(req, res);
 					return;
 				}
-				Integer memberid = memberVO.getMemberid();
+				
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 
 				HttpSession session = req.getSession();
-				session.setAttribute("memberVO", memberVO);
-				session.setAttribute("memberid", memberid);
-				System.out.println("儲存memberVO到session! = " + memberVO);
+				session.setAttribute("admin", account);
+				System.out.println("儲存admin到session! = " + account);
 //				int days = 30;
 //				session.setMaxInactiveInterval(86400 * days);  // 要存幾天?
 //				String reqComeFrom = req.getHeader("referer"); // filter?
-				String location = (String) session.getAttribute("location");
-				System.out.println("來源網站 = " + location);				
-				String indexUrl = "/download/homepage2.jsp";
+//				String location = (String) session.getAttribute("location");
+//				System.out.println("來源網站 = " + location);				
+				String indexUrl = "/download/BS-member_manage.jsp";
 				res.sendRedirect(req.getContextPath() + indexUrl);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				String RejectUrl = "/download/FS-login.jsp";
+				String RejectUrl = "/download/BS-login.jsp";
 				RequestDispatcher failureView = req.getRequestDispatcher(RejectUrl);
 				failureView.forward(req, res);
 			}
@@ -95,12 +95,9 @@ public class MemberLogin extends HttpServlet {
 			HttpSession session = req.getSession();
 			session.removeAttribute("memberid");
 			session.invalidate();
-			System.out.println("session 已清空!");
-			String ContextPath = req.getContextPath();
-			String indexUrl = "/download/FS-Index-Demo.jsp";
-			res.sendRedirect(ContextPath + indexUrl);
+			System.out.println("session 已清空!");			
+			String indexUrl = "/download/BS-login.jsp";
+			res.sendRedirect(req.getContextPath() + indexUrl);
 		}
-
 	}
-
 }

@@ -16,4 +16,6 @@ public interface AdminDAOInterface {
 
 	public abstract boolean delete(Integer empno);
 
+	public abstract AdminVO selectAccount(AdminVO admin);
+
 }

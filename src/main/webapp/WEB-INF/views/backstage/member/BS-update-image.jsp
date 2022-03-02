@@ -50,14 +50,14 @@ Integer id = Integer.valueOf(request.getParameter("memberid"));
 
 	<div class="page-wrapper">
 		<!--Sidebar Menu Starts-->
-		<%@include file="/WEB-INF/views/backstage/file/BS_Sidebar Menu.file"%>
+		<%@include file="/download/file/BS_Sidebar Menu.file"%>
 		<!--Sidebar Menu ends-->
 
 		<!--Dashboard content Wrapper starts-->
 		<div class="dash-content-wrap">
 
 			<!-- Top header starts-->
-			<%@include file="/WEB-INF/views/backstage/file/BS_Top header.file"%>
+			<%@include file="/download/file/BS_Top header.file"%>
 			<!-- Top header ends-->
 
 			<!--Dashboard breadcrumb starts-->
@@ -116,17 +116,16 @@ Integer id = Integer.valueOf(request.getParameter("memberid"));
 													src="<%=request.getContextPath()%>/member/member.pic?memberid=<%=id%>">
 											</div>
 
-
 											<div class="change-photo-btn">
 												<div class="contact-form__upload-btn xs-left">
 
 													<FORM METHOD="post"
 														ACTION="<%=request.getContextPath()%>/member/member.upload"
-														method=post enctype="multipart/form-data">
-														<input type="file" id="p_file" name="photo-upload" accept="image/jpeg, image/png"
-															value="選擇圖片"> <input type="hidden"
-															name="memberid" value="<%=id%>"> <input
-															type="submit" value="上傳">
+														enctype="multipart/form-data">
+														<input type="file" id="p_file" name="photo-upload" accept="image/jpeg, image/png"/> 
+															
+															<input type="hidden" name="memberid" value="<%=id%>"> 
+															<input type="submit" name="action" value="上傳">
 													</FORM>
 
 												</div>
@@ -143,7 +142,7 @@ Integer id = Integer.valueOf(request.getParameter("memberid"));
 			<!--Dashboard content ends-->
 
 			<!--Dashboard footer starts-->
-			<%@include file="/WEB-INF/views/backstage/file/BS_footer.file"%>
+			<%@include file="/download/file/BS_footer.file"%>
 			<!--Dashboard footer ends-->
 		</div>
 		<!--Dashboard content Wrapper ends-->
