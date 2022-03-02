@@ -167,7 +167,7 @@
                                             <!-- <form> -->
                                                 <div class="form-group">
                                                     <label for="list_info">商品說明</label>
-                                                    <textarea class="form-control" id="list_info" rows="4" placeholder="" name="productintro"><%= (bean==null)? "" : bean.getProductintro()%></textarea>
+                                                    <textarea class="form-control" id="list_info" rows="4" placeholder="" name="productintro"><%= (bean==null)? "" : bean.getProductintro().replaceAll("<br>", "\n") %></textarea>
                                                 </div>
                                             <!-- </form> -->
                                         </div>
@@ -176,7 +176,7 @@
                                             <!-- <form> -->
                                                 <div class="form-group">
                                                     <label for="list_info">注意事項</label>
-                                                    <textarea class="form-control" id="list_info" rows="4" placeholder="" name="attention"><%= (bean==null)? "" : bean.getAttention()%></textarea>
+                                                    <textarea class="form-control" id="list_info" rows="4" placeholder="" name="attention"><%= (bean==null)? "" : bean.getAttention().replaceAll("<br>", "\n") %></textarea>
                                                 </div>
                                             <!-- </form> -->
                                         </div>
