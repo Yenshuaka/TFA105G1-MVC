@@ -193,6 +193,11 @@ public class ProductDisplayController {
 	public String pageHandler(HttpSession session, String page, Model model) {
 
 		List<ProductBean> list = (List<ProductBean>) session.getAttribute("list");
+		
+		if(list==null) {
+			list = productService.select(null);
+		}
+		
 
 //		找出總共該有幾頁
 		int totalpage = 0;

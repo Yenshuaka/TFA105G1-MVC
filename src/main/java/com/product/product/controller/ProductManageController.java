@@ -38,6 +38,8 @@ public class ProductManageController {
 	public String name(String action, HttpSession session, ProductBean bean, 
 			Model model, String productid) {
 		
+		session.removeAttribute("ProductBean");
+		
 		if(productid!=null && productid!="") {
 			
 			ProductBean bean2 = new ProductBean();
@@ -81,7 +83,8 @@ public class ProductManageController {
 	
 	
 	@RequestMapping("/AddProduct")
-	public String addProduct() {	
+	public String addProduct(HttpSession session) {
+		
 		return "backstage/product/add-product1";
 	}
 	

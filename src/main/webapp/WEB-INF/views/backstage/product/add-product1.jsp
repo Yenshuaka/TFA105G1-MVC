@@ -32,6 +32,27 @@
     <!-- <title>listagram - Directory Listing HTML Template</title> -->
     <title>行程總覽/新增商品</title>
 
+	<style>
+		.send {
+			background: #BDC1CA;
+			padding: 9px 15px;
+			border-radius: 50px;
+			color: #fff;
+			transition: 0.3s;
+			border: 1px solid transparent;
+			font-size: 14px;
+			transition: 0.5s;
+			line-height: 1;
+		}
+		
+		.picture_list{
+			width:400px
+		
+		}
+	</style>
+
+
+
 </head>
 
 <body>
@@ -58,8 +79,8 @@
                                 <div class="dash-breadcrumb-left">
                                     <div class="breadcrumb-menu text-right sm-left">
                                         <ul>
-                                            <li class="active"><a href="#">行程總覽</a></li>
-                                            <li class="active"><a href="#">新增商品</a></li>
+                                            <li class="active"><a href="<%=request.getContextPath() %>/MVC/ProductManageController">行程總覽</a></li>
+                                            <li class="active">新增商品</li>
                                             <!-- <li>My Listings</li> -->
                                         </ul>
                                     </div>
@@ -102,7 +123,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-group">
+                                            <div class="form-group" >
                                                 <label>商品分類</label>
                                                 <!--  下面div原本的屬性 class="nice-select filter-input" tabindex="0"-->
                                                 <div ><span class="current">請選擇商品分類:</span>
@@ -114,7 +135,7 @@
                                                         <li class="option">獨特體驗</li> -->
                                                         <!-- <li class="option">Fitness</li> -->
                                                     <!-- </ul> -->
-                                                    <select name="producttype" >
+                                                    <select name="producttype" class="col-md-4" >
                                                     <% String[] x = {"一日遊", "多日遊", "包車", "熱門票卷", "獨特體驗"}; %>
                                                     <%   for(int i =0; i<x.length; i++) { %>
                                                        <% out.write( "<option " ); 
@@ -216,14 +237,14 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label>開始日</label>
-                                                    <input type="text" class="form-control filter-input" name="startdate" placeholder="請輸入日期格式: yyyy-MM-dd" value="<%= (bean==null)? "" : bean.getStartdate()%>">
-                                                </div>
-
+                                                    <input type=date autocomplete="false" class="form-control" name="startdate" placeholder="請輸入日期格式: yyyy-MM-dd" value="<%= (bean==null)? "" : bean.getStartdate()%>">
+                                                </div>	
+											
                                                 <div class="col-md-6">
                                                     <label>結束日</label>
-                                                    <input type="text" class="form-control filter-input" name="enddate" placeholder="請輸入日期格式: yyyy-MM-dd" value="<%= (bean==null)? "" : bean.getEnddate()%>">
+                                                    <input type="date" autocomplete="false" class="form-control" name="enddate" placeholder="請輸入日期格式: yyyy-MM-dd" value="<%= (bean==null)? "" : bean.getEnddate()%>">                         
                                                 </div>
-                                                
+                                             
                                                 <div class="col-md-6">
                                                     <label>旅行時數</label>
                                                     <input type="text" class="form-control filter-input" name="traveltime" placeholder="請輸入小時 例如: 18.5" value="<%= (bean==null)? "" : bean.getTraveltime()%>">
@@ -240,23 +261,38 @@
                                 <div class="act-title">
                                     <h5><i class="ion-image"></i> 商品圖片 :</h5>
                                 </div>
-                                <div class="db-add-listing">
+									<div>
+										<ul class="picture_list"></ul>
+										<ul class="picture_list"></ul>
+										<ul class="picture_list"></ul>
+										<ul class="picture_list"></ul>
+										<ul class="picture_list"></ul>
+									</div>
+									<div class="db-add-listing">
                                     <div class="form-group">
                                         <!-- <form class="photo-upload"> -->
                                             <div class="form-group">
                                                 <div class="add-listing__input-file-box">
-                                                    <input  type="file" name="file" id="file">
-                                                    <input  type="file" name="file" id="file">
-                                                    <input  type="file" name="file" id="file">
-                                                    <input  type="file" name="file" id="file">
-                                                    <input  type="file" name="file" id="file">
+                                                    <input  type="file" name="file" id="file1" >
+                                                    <input  type="file" name="file" id="file2" >
+                                                    <input  type="file" name="file" id="file3" >
+                                                    <input  type="file" name="file" id="file4" >
+                                                    <input  type="file" name="file" id="file5" >
                                                     <!-- <div class="add-listing__input-file-wrap">
                                                         <i class="ion-ios-cloud-upload"></i>
                                                         <p>Click here to upload your images</p>
                                                     </div> -->
                                                 </div>
+<!--                                                 <div> -->
+<!--                                                 	<ul class="picture_list"></ul> -->
+<!--                                                 	<ul class="picture_list"></ul> -->
+<!--                                                 	<ul class="picture_list"></ul> -->
+<!--                                                 	<ul class="picture_list"></ul> -->
+<!--                                                 	<ul class="picture_list"></ul> -->
+<!--                                                 </div> -->
                                             </div>
                                         <!-- </form> -->
+
                                     </div>
                                     <!-- <div class="add-btn">
                                         <button type="submit" class="btn v8 mar-top-20">新增商品</button>
@@ -264,9 +300,18 @@
                                 </div>
 
                             </div>
+                            
                             <div class="add-btn">
                                 <input type="hidden" name="action"	value="insert">
-                                <input type="submit" value="新增商品">
+                                <input type="submit" value="新增商品" class='send' onclick='clicked(event)'>
+                                <script>          
+													function clicked(e)
+													{
+													    if(!confirm('確定新增?')) {
+													        e.preventDefault();
+													    }
+													}												
+								</script>
 <!--                                 <button type="submit" class="btn v8 mar-top-20">新增商品</button> -->
                             </div>
                         </form>
@@ -954,6 +999,131 @@
     <script src="js/main.js"></script>
     <!-- Dashboard JS-->
     <script src="js/dashboard.js"></script>
+    <script>
+    window.addEventListener("load", function(){
+    		
+    	  var the_file_element = document.getElementById("file1");
+    	  the_file_element.addEventListener("change", function(e){          
+
+    	    // 寫在這
+    	    var picture_list = document.getElementsByClassName("picture_list")[0];
+    	    picture_list.innerHTML = ""; // 清空
+    	    
+    	    // 跑每個使用者選的檔案，留意 i 的部份
+    	    for (let i = 0; i < this.files.length; i++) {
+    	      let reader = new FileReader(); // 用來讀取檔案
+    	      reader.readAsDataURL(this.files[i]); // 讀取檔案
+    	      reader.addEventListener("load", function () {
+    	        console.log(reader.result);
+    	        let li_html = 
+    	                "<li><img src="+ reader.result   +" ></li>"
+    	              ;
+    	        picture_list.insertAdjacentHTML("beforeend", li_html); // 加進節點
+    	      });
+    	    }
+
+    	  });
+    	  
+    	  
+    	  
+    	  var the_file_element2 = document.getElementById("file2");
+    	  the_file_element2.addEventListener("change", function(e){          
+
+    	    // 寫在這
+    	    var picture_list2 = document.getElementsByClassName("picture_list")[1];
+    	    picture_list2.innerHTML = ""; // 清空
+    	    
+    	    // 跑每個使用者選的檔案，留意 i 的部份
+    	    for (let i = 0; i < this.files.length; i++) {
+    	      let reader = new FileReader(); // 用來讀取檔案
+    	      reader.readAsDataURL(this.files[i]); // 讀取檔案
+    	      reader.addEventListener("load", function () {
+    	        console.log(reader.result);
+    	        let li_html = 
+    	                "<li><img src="+ reader.result   +" ></li>"
+    	              ;
+    	        picture_list2.insertAdjacentHTML("beforeend", li_html); // 加進節點
+    	      });
+    	    }
+
+    	  });
+    	  
+    	  
+    	  var the_file_element3 = document.getElementById("file3");
+    	  the_file_element3.addEventListener("change", function(e){          
+
+    	    // 寫在這
+    	    var picture_list3 = document.getElementsByClassName("picture_list")[2];
+    	    picture_list3.innerHTML = ""; // 清空
+    	    
+    	    // 跑每個使用者選的檔案，留意 i 的部份
+    	    for (let i = 0; i < this.files.length; i++) {
+    	      let reader = new FileReader(); // 用來讀取檔案
+    	      reader.readAsDataURL(this.files[i]); // 讀取檔案
+    	      reader.addEventListener("load", function () {
+    	        console.log(reader.result);
+    	        let li_html = 
+    	                "<li><img src="+ reader.result   +" ></li>"
+    	              ;
+    	        picture_list3.insertAdjacentHTML("beforeend", li_html); // 加進節點
+    	      });
+    	    }
+
+    	  });
+    	  
+    	  
+    	  var the_file_element4 = document.getElementById("file4");
+    	  the_file_element4.addEventListener("change", function(e){          
+
+    	    // 寫在這
+    	    var picture_list4 = document.getElementsByClassName("picture_list")[3];
+    	    picture_list4.innerHTML = ""; // 清空
+    	    
+    	    // 跑每個使用者選的檔案，留意 i 的部份
+    	    for (let i = 0; i < this.files.length; i++) {
+    	      let reader = new FileReader(); // 用來讀取檔案
+    	      reader.readAsDataURL(this.files[i]); // 讀取檔案
+    	      reader.addEventListener("load", function () {
+    	        console.log(reader.result);
+    	        let li_html = 
+    	                "<li><img src="+ reader.result   +" ></li>"
+    	              ;
+    	        picture_list4.insertAdjacentHTML("beforeend", li_html); // 加進節點
+    	      });
+    	    }
+
+    	  });
+    	  
+    	  
+    	  var the_file_element5 = document.getElementById("file5");
+    	  the_file_element5.addEventListener("change", function(e){          
+
+    	    // 寫在這
+    	    var picture_list5 = document.getElementsByClassName("picture_list")[4];
+    	    picture_list5.innerHTML = ""; // 清空
+    	    
+    	    // 跑每個使用者選的檔案，留意 i 的部份
+    	    for (let i = 0; i < this.files.length; i++) {
+    	      let reader = new FileReader(); // 用來讀取檔案
+    	      reader.readAsDataURL(this.files[i]); // 讀取檔案
+    	      reader.addEventListener("load", function () {
+    	        console.log(reader.result);
+    	        let li_html = 
+    	                "<li><img src="+ reader.result   +" ></li>"
+    	              ;
+    	        picture_list5.insertAdjacentHTML("beforeend", li_html); // 加進節點
+    	      });
+    	    }
+
+    	  });
+    	  
+    
+    });
+    
+    
+    
+    
+    </script>
 </body>
 
 </html>
