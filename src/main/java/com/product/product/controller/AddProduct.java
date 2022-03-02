@@ -323,6 +323,8 @@ public class AddProduct extends HttpServlet {
 				productService.update(bean); // 商品資料
 				session.removeAttribute("ProductBean");
 				cityid = req.getParameterValues("cityid");
+				Collection<Part> parts = req.getParts();
+				System.out.println(parts);
 				
 				Connection connection;
 				PreparedStatement preparedStatement;
@@ -332,10 +334,11 @@ public class AddProduct extends HttpServlet {
 					connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei", "root", "password");
 					preparedStatement = connection.prepareStatement("delete from PRODUCT_LOC where PRODUCT_ID = ?");
 					preparedStatement.setInt(1, productid);
-					preparedStatement.execute();	
+					preparedStatement.execute();
 					preparedStatement = connection.prepareStatement("delete from PRODUCT_IMG where PRODUCT_ID = ?");
 					preparedStatement.setInt(1, productid);
 					preparedStatement.execute();
+					
 					
 									
 				}catch (Exception e) {
@@ -346,7 +349,7 @@ public class AddProduct extends HttpServlet {
 				/*************************以下上傳圖片******************************************/
 				
 				
-				Collection<Part> parts = req.getParts();
+//				Collection<Part> parts = req.getParts();
 				
 				if(parts!=null) {
 				
@@ -423,7 +426,7 @@ public class AddProduct extends HttpServlet {
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
-				System.out.println("安 安");
+//				System.out.println("安 安");
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				res.sendRedirect(req.getContextPath()+"/MVC/ProductManageController");
 				

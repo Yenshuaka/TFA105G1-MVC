@@ -281,12 +281,8 @@
                         			
                         			if(rSet.getBytes(3)!=null){
                         		%>
-                        				<ul class="picture_list">
-                        				<li>
                         				<img src="<%=request.getContextPath() %>/ProductImageReader?imgid=<%=imgid %>" style="width:400px">
-               
-                        				</li>
-                        				</ul>
+
                         		<%  }} %>
                                	
 
