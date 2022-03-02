@@ -164,7 +164,7 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO"); //MemberServlet
 														value="${memberVO.phone}" placeholder="請輸入手機" /></td>
 												</tr>
 											</table>
-											<br> <input type="hidden" name="action" value="updateB">
+											<br> <input type="hidden" name="action" value="updateBS">
 											<input type="hidden" name="memberid"
 												value="${memberVO.memberid}"> <input type="submit"
 												value="送出">

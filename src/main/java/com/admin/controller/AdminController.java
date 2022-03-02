@@ -1,38 +1,65 @@
 package com.admin.controller;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.admin.model.AdminService;
 import com.admin.model.AdminVO;
 
 @Controller
+@Scope("session")
+@RequestMapping("/adminManagement")
 public class AdminController {
 	@Autowired
 	private AdminService adminService;
 
-	@RequestMapping("/adminManagement")
-	public String name(String action, HttpSession session, AdminVO admin, Model model, String empno) {
+	@RequestMapping(method = { RequestMethod.POST })
+	public String processPost(String action, HttpSession session, AdminVO admin, Model model, String account,
+			String password) {
 
-		if (empno != null && empno != "") {
+		if ("login".equals(action)) {
 
-			AdminVO admin1 = new AdminVO();
-			admin1.setEmpno(Integer.valueOf(empno));
-			List<AdminVO> list = adminService.select(admin1);
-			model.addAttribute("list", list);
-			return "backstage/product/productmanage1";
-		} else if (action == null) { // 這是select全部的狀況
-			List<AdminVO> list = adminService.select(null);
-			model.addAttribute("list", list);
-			return "backstage/product/productmanage1";
+			Map<String, String> errorMsgs = new HashMap<String, String>();
+			model.addAttribute("errorMsgs", errorMsgs);
+
+			String accountReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+			if (account == null || account.trim().length() == 0) {
+				errorMsgs.put("account", "帳號: 請勿空白");
+			} else if (!account.trim().matches(accountReg)) {
+				errorMsgs.put("account", "帳號: 請輸入英文字母、數字");
+			}
+
+			String pwdReg = "^([A-Za-z0-9]){1,20}$";
+			if (password == null || password.trim().length() == 0) {
+				errorMsgs.put("account", "密碼: 請勿空白");
+			} else if (!password.trim().matches(pwdReg)) {
+				errorMsgs.put("account", "密碼: 請輸入英文字母、數字 且1~20個字");
+			}
+			
+//			if (errorMsgs != null && !!errorMsgs.isEmpty()) {
+//				System.out.println(errorMsgs);
+//				return "/download/BS-login.jsp";
+//			}
+
+			admin.setAccount(account);
+			admin.setPassword(password);
+
+			AdminVO adminVO = adminService.loginAdmin(admin);
+			session.setAttribute("adminVO", adminVO);
+			return "backstage/BS-index";
 		}
-
 		return "";
 	}
+
 }

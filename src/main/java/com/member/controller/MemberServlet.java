@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
@@ -214,7 +215,12 @@ public class MemberServlet extends HttpServlet {
 				memberSvc.updateMember(memberVO);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				
+				HttpSession session = req.getSession();
+				MemberVO currentVO =(MemberVO) session.getAttribute("memberVO");
+				if(currentVO != null) {
+					session.removeAttribute("memberVO");
+					session.setAttribute("memberVO", memberVO);
+				}
 				String url = "/download/FS-my-profile.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交BS-listOneMember.jsp
 				successView.forward(req, res);
@@ -230,7 +236,7 @@ public class MemberServlet extends HttpServlet {
 			}
 		}
 
-		if ("updateB".equals(action)) { 
+		if ("updateBS".equals(action)) { 
 
 			List<String> errorMsgs = new LinkedList<String>();
 			

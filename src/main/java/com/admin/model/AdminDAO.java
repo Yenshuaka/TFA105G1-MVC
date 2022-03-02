@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import com.member.model.MemberVO;
-import com.product.product.model.ProductBean;
-
+@Repository
 public class AdminDAO implements AdminDAOInterface {
-
+	@Autowired
 	private SessionFactory sessionFactory;
 
 	public AdminDAO(SessionFactory sessionFactory) {
@@ -58,6 +59,18 @@ public class AdminDAO implements AdminDAOInterface {
 			return this.getSession().get(AdminVO.class, empno);
 		}
 		return null;
+	}
+
+	@Override
+	public AdminVO selectAccount(AdminVO admin) {
+		String account = admin.getAccount();
+		String password = admin.getPassword();
+
+		String hql = "from AdminVO where account = :account AND password = :password";
+		Query<AdminVO> query = this.getSession().createQuery(hql, AdminVO.class).setParameter("account", account)
+				.setParameter("password", password);
+		AdminVO result = query.uniqueResult();
+		return result;
 	}
 
 	@Override

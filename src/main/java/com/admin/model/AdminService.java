@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
 @Transactional
 public class AdminService {
@@ -50,6 +49,17 @@ public class AdminService {
 			if (temp != null) {
 				result = new ArrayList<AdminVO>();
 				result.add(temp);
+			}
+		}
+		return result;
+	}
+
+	public AdminVO loginAdmin(AdminVO admin) {
+		AdminVO result = null;
+		if (admin != null && admin.getAccount() != null) {
+			result = adminDAO.selectAccount(admin);
+			if (result != null) {
+				return result;
 			}
 		}
 		return result;
