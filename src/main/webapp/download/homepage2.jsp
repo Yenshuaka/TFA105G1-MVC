@@ -256,13 +256,15 @@
                                 <div class="swiper-slide trending-place-item">
                                     <div class="trending-img">
                                         <img src="<%=request.getContextPath() %>/ProductImageReader?imgid=<%=imgids.get(i) %>" alt="#" style="height:233px">
-                                        <span class="trending-rating-orange">6.5</span>
+<!--                                         <span class="trending-rating-orange">6.5</span> -->
                                         <span class="save-btn"><i class="icofont-heart"></i></span>
                                     </div>
                                     <div class="trending-title-box">
                                         <h4><a href="<%=request.getContextPath() %>/MVC/ProductDetail?productid=<%=list.get(i).getProductid() %>"><%=list.get(i).getProductname() %></a></h4>
-                                        <div class="customer-review">
-                                            <div class="rating-summary float-left">
+                                        <% if(list.get(i).getProductid()==1) { %>
+                                        <div >
+                                        	<p><i class="icofont-fire"></i>&nbsp20+ 個已訂購</p>
+<!--                                             <div class="rating-summary float-left"> -->
 <!--                                                 <div class="rating-result" title="60%"> -->
 <!--                                                     <ul class="product-rating"> -->
 <!--                                                         <li><i class="ion-android-star"></i></li> -->
@@ -272,11 +274,12 @@
 <!--                                                         <li><i class="ion-android-star-half"></i></li> -->
 <!--                                                     </ul> -->
 <!--                                                 </div> -->
-                                            </div>
-                                            <div class="review-summury float-right">
-                                                <p><a href="#">3 Reviews</a></p>
-                                            </div>
+<!--                                             </div> -->
+<!--                                             <div class="review-summury float-right"> -->
+<!--                                                 <p><a href="#">3 Reviews</a></p> -->
+<!--                                             </div> -->
                                         </div>
+											<% }%>
 <!--                                         <ul class="trending-address"> -->
 <!--                                             <li><i class="ion-ios-location"></i> -->
 <!--                                                 <p>1690 Brown Avenue,Barline</p> -->
