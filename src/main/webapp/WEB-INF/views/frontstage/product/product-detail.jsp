@@ -1002,6 +1002,10 @@
          success: function(res){
              console.log("成功");
              $('.showarea').html(res);
+             var i =  parseInt( $('.cartqty').text());
+             i = i+1;
+             var a = i + "";
+             $('.cartqty').text(a);
              
          }
      });    		
@@ -1022,7 +1026,7 @@
          success: function(res){
              console.log("成功");
             $('#reviews').append(res);
-             
+            
          }
      });    		
 	}

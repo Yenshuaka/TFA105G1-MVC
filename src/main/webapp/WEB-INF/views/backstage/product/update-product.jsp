@@ -166,8 +166,8 @@
                                         <div class="col-md-12">
                                             <!-- <form> -->
                                                 <div class="form-group">
-                                                    <label for="list_info">商品說明</label>
-                                                    <textarea class="form-control" id="list_info" rows="4" placeholder="" name="productintro"><%= (bean==null)? "" : bean.getProductintro()%></textarea>
+                                                    <label for="list_info">商品說明(請至少輸入50字)</label>
+                                                    <textarea class="form-control" id="list_info" rows="4" placeholder="" name="productintro"><%= (bean==null)? "" : bean.getProductintro().replaceAll("<br>", "\n") %></textarea>
                                                 </div>
                                             <!-- </form> -->
                                         </div>
@@ -176,7 +176,7 @@
                                             <!-- <form> -->
                                                 <div class="form-group">
                                                     <label for="list_info">注意事項</label>
-                                                    <textarea class="form-control" id="list_info" rows="4" placeholder="" name="attention"><%= (bean==null)? "" : bean.getAttention()%></textarea>
+                                                    <textarea class="form-control" id="list_info" rows="4" placeholder="" name="attention"><%= (bean==null)? "" : bean.getAttention().replaceAll("<br>", "\n") %></textarea>
                                                 </div>
                                             <!-- </form> -->
                                         </div>
@@ -269,7 +269,7 @@
                             </div>
                             <div class="db-add-list-wrap">
                                 <div class="act-title">
-                                    <h5><i class="ion-image"></i> 商品圖片 :</h5>
+                                    <h5><i class="ion-image"></i> 商品圖片(請至少上傳一張圖片) :</h5>
                                 </div>
                                	<% 
                         			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei", "root", "password");
@@ -281,12 +281,8 @@
                         			
                         			if(rSet.getBytes(3)!=null){
                         		%>
-                        				<ul class="picture_list">
-                        				<li>
                         				<img src="<%=request.getContextPath() %>/ProductImageReader?imgid=<%=imgid %>" style="width:400px">
-               
-                        				</li>
-                        				</ul>
+
                         		<%  }} %>
                                	
 
@@ -295,7 +291,7 @@
                                         <!-- <form class="photo-upload"> -->
                                             <div class="form-group">
                                                 <div class="add-listing__input-file-box">
-                                                <h5>如需修改商品資訊，亦請重新上傳商品圖片:</h5>
+                                                <h5>重新上傳商品圖片:</h5>
                                                     <input  type="file" name="file" id="file1">
                                                     <input  type="file" name="file" id="file2">
                                                     <input  type="file" name="file" id="file3">

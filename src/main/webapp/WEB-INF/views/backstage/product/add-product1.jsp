@@ -172,7 +172,7 @@
                                         <div class="col-md-12">
                                             <!-- <form> -->
                                                 <div class="form-group">
-                                                    <label for="list_info">商品說明</label>
+                                                    <label for="list_info">商品說明(請至少輸入50字)</label>
                                                     <textarea class="form-control" id="list_info" rows="4" placeholder="" name="productintro"><%= (bean==null)? "" : bean.getProductintro()%></textarea>
                                                 </div>
                                             <!-- </form> -->
@@ -259,7 +259,7 @@
                             </div>
                             <div class="db-add-list-wrap">
                                 <div class="act-title">
-                                    <h5><i class="ion-image"></i> 商品圖片 :</h5>
+                                    <h5><i class="ion-image"></i> 商品圖片(請至少上傳一張圖片) :</h5>
                                 </div>
 									<div>
 										<ul class="picture_list"></ul>

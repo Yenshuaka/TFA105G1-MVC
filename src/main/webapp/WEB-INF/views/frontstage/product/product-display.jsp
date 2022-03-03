@@ -557,6 +557,7 @@
 									List<Integer> commentcount = (List<Integer>)request.getAttribute("commentcount");
 									List<Double> avg = (List<Double>)request.getAttribute("avg");
 									List<String> cities = (List<String>)request.getAttribute("cities");
+									List<Integer> orders = (List<Integer>)request.getAttribute("orders");
 									
 									if(list2.size()==0){ out.print("<h5>查無資料!</h5>");} 
 							    %>      
@@ -600,6 +601,10 @@
 														<p><%=cities.get(i) %></p></li>
 														<li>
 														<p><%=introStrings.get(i) %></p>
+														
+														<% if(orders.get(i)>=20) {%>
+															<p><i class="icofont-fire"></i>&nbsp&nbsp&nbsp&nbsp&nbsp 20+ 個已訂購</p>
+														<% } %>
 														</li>
 <!-- 													<li><i class="ion-ios-telephone"></i> -->
 <!-- 														<p>+843-600-2040</p></li> -->

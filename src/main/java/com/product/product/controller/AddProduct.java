@@ -98,6 +98,10 @@ public class AddProduct extends HttpServlet {
 					errorMsgs.add("商品說明請勿空白");
 				}
 				
+				if (productintro.length() < 50) {
+					errorMsgs.add("商品說明至少50字");
+				}
+				
 				
 				String attention = req.getParameter("attention").trim();
 				if (attention == null || attention.trim().length() == 0) {
@@ -148,6 +152,20 @@ public class AddProduct extends HttpServlet {
 				bean.setState(0);			
 				
 				String[] cityid = req.getParameterValues("cityid");
+				
+				//判斷使用者有無上傳圖片
+				Collection<Part> parts = req.getParts();
+				boolean haspic = false;
+				for (Part part : parts) {	
+					if (part.getContentType()!=null && part.getContentType().equals("image/jpeg")) {
+						haspic = true;
+					}
+				}
+				
+				if(!haspic) {
+					errorMsgs.add("請至少上傳一張照片");
+				}
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					session.setAttribute("cityid", cityid);
@@ -177,7 +195,7 @@ public class AddProduct extends HttpServlet {
 				
 				/***************************4.開始新增圖片資料***************************************/
 				
-				Collection<Part> parts = req.getParts(); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
+//				Collection<Part> parts = req.getParts(); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
 				
 				if(parts!=null && parts.size()!=0) {
 				
@@ -258,6 +276,10 @@ public class AddProduct extends HttpServlet {
 					errorMsgs.add("商品說明請勿空白");
 				}
 				
+				if (productintro.length() < 50) {
+					errorMsgs.add("商品說明至少50字");
+				}
+				
 				
 				String attention = req.getParameter("attention").trim();
 				if (attention == null || attention.trim().length() == 0) {
@@ -308,6 +330,19 @@ public class AddProduct extends HttpServlet {
 				bean.setState(0);
 				
 				String[] cityid = req.getParameterValues("cityid");
+				
+				//判斷使用者有無上傳圖片
+				Collection<Part> parts = req.getParts();
+				boolean haspic = false;
+				for (Part part : parts) {	
+					if (part.getContentType()!=null && part.getContentType().equals("image/jpeg")) {
+						haspic = true;
+					}
+				}
+				
+				if(!haspic) {
+					errorMsgs.add("請至少上傳一張照片");
+				}
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -323,6 +358,7 @@ public class AddProduct extends HttpServlet {
 				productService.update(bean); // 商品資料
 				session.removeAttribute("ProductBean");
 				cityid = req.getParameterValues("cityid");
+		
 				
 				Connection connection;
 				PreparedStatement preparedStatement;
@@ -332,10 +368,11 @@ public class AddProduct extends HttpServlet {
 					connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei", "root", "password");
 					preparedStatement = connection.prepareStatement("delete from PRODUCT_LOC where PRODUCT_ID = ?");
 					preparedStatement.setInt(1, productid);
-					preparedStatement.execute();	
+					preparedStatement.execute();
 					preparedStatement = connection.prepareStatement("delete from PRODUCT_IMG where PRODUCT_ID = ?");
 					preparedStatement.setInt(1, productid);
 					preparedStatement.execute();
+					
 					
 									
 				}catch (Exception e) {
@@ -346,7 +383,7 @@ public class AddProduct extends HttpServlet {
 				/*************************以下上傳圖片******************************************/
 				
 				
-				Collection<Part> parts = req.getParts();
+//				Collection<Part> parts = req.getParts();
 				
 				if(parts!=null) {
 				
@@ -423,7 +460,7 @@ public class AddProduct extends HttpServlet {
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
-				System.out.println("安 安");
+//				System.out.println("安 安");
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				res.sendRedirect(req.getContextPath()+"/MVC/ProductManageController");
 				

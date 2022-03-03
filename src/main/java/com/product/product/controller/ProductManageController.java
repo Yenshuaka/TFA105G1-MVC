@@ -2,6 +2,7 @@ package com.product.product.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,7 @@ public class ProductManageController {
 
 	@RequestMapping("/ProductManageController")
 	public String name(String action, HttpSession session, ProductBean bean, 
-			Model model, String productid) {
+			Model model, String productid, String state) {
 		
 		session.removeAttribute("ProductBean");
 		
@@ -46,14 +47,77 @@ public class ProductManageController {
 			bean2.setProductid(Integer.valueOf(productid));
 			List<ProductBean> list = productService.select(bean2);
 			model.addAttribute("list", list);
+			model.addAttribute("totalpage", 1);
+			model.addAttribute("page", "1");
 			return "backstage/product/productmanage1";	
 		}else if(action==null) {  //這是select全部的狀況	
 			List<ProductBean> list = productService.select(null);
-			model.addAttribute("list", list);
-			return "backstage/product/productmanage1";
+			if(state!=null) {
+			
+				if(state.equals("1")) {
+					for(int i =0; i< list.size(); i++) {
+						if(list.get(i).getState()!=1) {
+							list.remove(list.get(i));
+							i--;
+						}
+					}
+				}
+				
+				if(state.equals("0")) {
+					for(int i =0; i< list.size(); i++) {
+						if(list.get(i).getState()!=0) {
+							list.remove(list.get(i));
+							i--;
+						}
+					}
+				}
+			}
+			session.setAttribute("list", list);
+			return "redirect:/MVC/ManagePageHandler";
 		}
 		
 		return "";
+	}
+	
+	@RequestMapping("/ManagePageHandler")
+	public String pageHandler(HttpSession session, String page, Model model) {
+		
+		List<ProductBean> list = (List<ProductBean>) session.getAttribute("list");
+		
+		if(list==null) {
+			list = productService.select(null);
+		}
+		
+
+//		找出總共該有幾頁
+		int totalpage = 0;
+		if (list.size() % 10 == 0) {
+			totalpage = list.size() / 10;
+		} else {
+			totalpage = (list.size() / 10) + 1;
+		}
+		model.addAttribute("totalpage", totalpage);
+
+//		找出此頁該顯示哪幾筆商品
+		if (list == null) {
+			list = productService.select(null);
+		}
+		if (page == null) {
+			page = "1";
+		}
+		int pageindex = Integer.valueOf(page);
+		List<ProductBean> list2 = new ArrayList();
+
+		for (int i = (pageindex - 1) * 10; i <= ((pageindex * 10) - 1); i++) {
+			if ((i + 1) <= list.size()) {
+				list2.add(list.get(i));
+			}
+		}
+		
+		model.addAttribute("totalpage", totalpage);
+		model.addAttribute("page", page);
+		model.addAttribute("list", list2);
+		return "backstage/product/productmanage1";
 	}
 	
 	

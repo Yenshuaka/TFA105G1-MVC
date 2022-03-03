@@ -81,6 +81,9 @@
                                     </div>
                                 </div>
                                 <div>
+                                	<p><a href="<%=request.getContextPath() %>/MVC/ProductManageController?state=1">•上架中</a>&nbsp&nbsp&nbsp&nbsp<a href="<%=request.getContextPath() %>/MVC/ProductManageController?state=0">•下架中</a></p> 
+                                </div>
+                                <div>
                                 	<form method="post" action="<%=request.getContextPath() %>/MVC/ProductManageController">
                               	   		<input type="number" placeholder="請輸入商品編號" name="productid" style="border-radius: 10px;">
                               	   		<input type="submit" value="搜尋">
@@ -155,14 +158,14 @@
                                                     <td>
                                                     	<div>
                                                     	<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/ProductManage" >
-                                                        	<input type="submit" value="刪除" onclick="clicked(event)" class="send">
+                                                        	<input type="submit" value="刪除此項商品" onclick="clicked(event)" class="send">
 			     											<input type="hidden" name="productid"  value="<%=list1.get(i).getProductid() %>">
 			     											<input type="hidden" name="action" value="delete">
                                                         </FORM>
                                                         </div>
                                                         <div style='margin-top: 5px;'>
                                                         <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ProductManage" >
-			     											<input type="submit" value="修改"  class="send">
+			     											<input type="submit" value="修改/查看詳情"  class="send">
 			     											<input type="hidden" name="productid"  value="<%=list1.get(i).getProductid() %>">
 			     											<input type="hidden" name="action"	value="getOne_For_Update">
 			     										</FORM>
@@ -189,6 +192,23 @@
 
                     </div>
                 </div>
+            </div>
+            <div>
+            <div class="page-num text-center">
+            <ul>
+													<% Integer totalpage = (Integer)request.getAttribute("totalpage");
+														Integer pageaa = Integer.valueOf((String)request.getAttribute("page"));
+														for(int i =1; i<= totalpage; i++){
+													%>	
+													<li <% if(i==pageaa){out.write("class='active'");} %>><a href="<%=request.getContextPath() %>/MVC/ManagePageHandler?page=<%=i %>"><%=i %></a></li>
+													
+													<% } %>
+<!-- 													<li><a href="#">2</a></li> -->
+<!-- 													<li><a href="#">3</a></li> -->
+<!-- 													<li><a href="#">4</a></li> -->
+<!-- 													<li><a href="#"><i class="ion-ios-arrow-right"></i></a></li> -->
+												</ul>
+												</div>
             </div>
             <!-- Dashboard Content ends-->
 

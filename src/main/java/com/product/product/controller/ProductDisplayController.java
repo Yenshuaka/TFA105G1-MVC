@@ -125,9 +125,11 @@ public class ProductDisplayController {
 			}
 		}
 
+		//上架過濾
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getState() == 0) {
 				list.remove(list.get(i));
+				i--;
 			}
 		}
 
@@ -223,12 +225,14 @@ public class ProductDisplayController {
 				list2.add(list.get(i));
 			}
 		}
+		
 
-//		找出此頁該顯示的圖片們
+//		找出此頁該顯示的圖片們 商品的訂購數量
 		List imgids = new ArrayList();
 		List<Integer> commentcount = new ArrayList<Integer>();
 		List<Double> avg = new ArrayList<Double>();
 		List<String> cities = new ArrayList<String>();
+		List<Integer> orders = new ArrayList<Integer>();
 		Connection connection;
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei",
@@ -276,6 +280,19 @@ public class ProductDisplayController {
 					while (rSet.next()) {
 						cities.add(rSet.getString(1));
 					}
+					
+					//以下找出訂購數量
+					ps = connection
+							.prepareStatement("select COUNT(1) from order_detail where PRODUCT_ID = ?");
+					ps.setInt(1, list2.get(i).getProductid());
+					rSet = ps.executeQuery();
+
+					while (rSet.next()) {
+						orders.add(rSet.getInt(1));
+					}
+					
+					
+					
 
 					rSet.close();
 					ps.close();
@@ -302,6 +319,7 @@ public class ProductDisplayController {
 			introStrings.add(a);
 		}
 
+		model.addAttribute("orders", orders);
 		model.addAttribute("cities", cities);
 		model.addAttribute("avg", avg);
 		model.addAttribute("commentcount", commentcount);
@@ -400,11 +418,17 @@ public class ProductDisplayController {
 					+ memberid + " and product_id = " + productid);
 			query2.addEntity(OrderdetailBean.class);
 			List<OrderdetailBean> listorderdetail = (List<OrderdetailBean>) query2.list();
-
-			if (listorderdetail.size() == 0) {
-				model.addAttribute("commemtok", false);
-			} else {
+			
+			NativeQuery query3 = this.session.createSQLQuery("SELECT * FROM PRODUCT_COMMENT "
+					+ "where MEMBER_ID = " + memberid +" and product_id = " + productid);
+			query3.addEntity(ProductCommentBean.class);
+			List<ProductCommentBean> listcomment = (List<ProductCommentBean>) query3.list();
+			
+			
+			if (listorderdetail.size() != 0 && listcomment.size()==0) {
 				model.addAttribute("commemtok", true);
+			} else {
+				model.addAttribute("commemtok", false);
 			}
 
 		}
@@ -437,6 +461,7 @@ public class ProductDisplayController {
 		List<ProductBean> list = new ArrayList<ProductBean>();
 		
 		List<String> range2 = jedis.lrange("會員"+memberidstring, 0, -1);
+		
 		if(range2!=null && range2.size()!=0) {
 			for (String product : range2) {
 				productids.add(Integer.valueOf(product));
