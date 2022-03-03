@@ -81,6 +81,9 @@
                                     </div>
                                 </div>
                                 <div>
+                                	<p><a href="<%=request.getContextPath() %>/MVC/ProductManageController?state=1">•上架中</a>&nbsp&nbsp&nbsp&nbsp<a href="<%=request.getContextPath() %>/MVC/ProductManageController?state=0">•下架中</a></p> 
+                                </div>
+                                <div>
                                 	<form method="post" action="<%=request.getContextPath() %>/MVC/ProductManageController">
                               	   		<input type="number" placeholder="請輸入商品編號" name="productid" style="border-radius: 10px;">
                               	   		<input type="submit" value="搜尋">

@@ -166,7 +166,7 @@
                                         <div class="col-md-12">
                                             <!-- <form> -->
                                                 <div class="form-group">
-                                                    <label for="list_info">商品說明</label>
+                                                    <label for="list_info">商品說明(請至少輸入50字)</label>
                                                     <textarea class="form-control" id="list_info" rows="4" placeholder="" name="productintro"><%= (bean==null)? "" : bean.getProductintro().replaceAll("<br>", "\n") %></textarea>
                                                 </div>
                                             <!-- </form> -->

@@ -98,6 +98,10 @@ public class AddProduct extends HttpServlet {
 					errorMsgs.add("商品說明請勿空白");
 				}
 				
+				if (productintro.length() < 50) {
+					errorMsgs.add("商品說明至少50字");
+				}
+				
 				
 				String attention = req.getParameter("attention").trim();
 				if (attention == null || attention.trim().length() == 0) {
@@ -270,6 +274,10 @@ public class AddProduct extends HttpServlet {
 				String productintro = req.getParameter("productintro").trim();
 				if (productintro == null || productintro.trim().length() == 0) {
 					errorMsgs.add("商品說明請勿空白");
+				}
+				
+				if (productintro.length() < 50) {
+					errorMsgs.add("商品說明至少50字");
 				}
 				
 				
