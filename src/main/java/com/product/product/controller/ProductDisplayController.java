@@ -418,11 +418,17 @@ public class ProductDisplayController {
 					+ memberid + " and product_id = " + productid);
 			query2.addEntity(OrderdetailBean.class);
 			List<OrderdetailBean> listorderdetail = (List<OrderdetailBean>) query2.list();
-
-			if (listorderdetail.size() == 0) {
-				model.addAttribute("commemtok", false);
-			} else {
+			
+			NativeQuery query3 = this.session.createSQLQuery("SELECT * FROM PRODUCT_COMMENT "
+					+ "where MEMBER_ID = " + memberid +" and product_id = " + productid);
+			query3.addEntity(ProductCommentBean.class);
+			List<ProductCommentBean> listcomment = (List<ProductCommentBean>) query3.list();
+			
+			
+			if (listorderdetail.size() != 0 && listcomment.size()==0) {
 				model.addAttribute("commemtok", true);
+			} else {
+				model.addAttribute("commemtok", false);
 			}
 
 		}
