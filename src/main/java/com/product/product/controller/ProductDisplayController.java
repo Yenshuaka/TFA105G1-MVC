@@ -225,12 +225,14 @@ public class ProductDisplayController {
 				list2.add(list.get(i));
 			}
 		}
+		
 
-//		找出此頁該顯示的圖片們
+//		找出此頁該顯示的圖片們 商品的訂購數量
 		List imgids = new ArrayList();
 		List<Integer> commentcount = new ArrayList<Integer>();
 		List<Double> avg = new ArrayList<Double>();
 		List<String> cities = new ArrayList<String>();
+		List<Integer> orders = new ArrayList<Integer>();
 		Connection connection;
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei",
@@ -278,6 +280,19 @@ public class ProductDisplayController {
 					while (rSet.next()) {
 						cities.add(rSet.getString(1));
 					}
+					
+					//以下找出訂購數量
+					ps = connection
+							.prepareStatement("select COUNT(1) from order_detail where PRODUCT_ID = ?");
+					ps.setInt(1, list2.get(i).getProductid());
+					rSet = ps.executeQuery();
+
+					while (rSet.next()) {
+						orders.add(rSet.getInt(1));
+					}
+					
+					
+					
 
 					rSet.close();
 					ps.close();
@@ -304,6 +319,7 @@ public class ProductDisplayController {
 			introStrings.add(a);
 		}
 
+		model.addAttribute("orders", orders);
 		model.addAttribute("cities", cities);
 		model.addAttribute("avg", avg);
 		model.addAttribute("commentcount", commentcount);
