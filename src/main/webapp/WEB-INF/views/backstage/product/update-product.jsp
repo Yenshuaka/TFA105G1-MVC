@@ -291,7 +291,7 @@
                                         <!-- <form class="photo-upload"> -->
                                             <div class="form-group">
                                                 <div class="add-listing__input-file-box">
-                                                <h5>如需修改商品資訊，亦請重新上傳商品圖片:</h5>
+                                                <h5>重新上傳商品圖片:</h5>
                                                     <input  type="file" name="file" id="file1">
                                                     <input  type="file" name="file" id="file2">
                                                     <input  type="file" name="file" id="file3">
