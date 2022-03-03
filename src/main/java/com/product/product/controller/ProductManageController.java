@@ -56,6 +56,13 @@ public class ProductManageController {
 		return "";
 	}
 	
+	@RequestMapping("/ManagePageHandler")
+	public String pageHandler(HttpSession session, String page, Model model) {
+		
+		
+		return "";
+	}
+	
 	
 	@RequestMapping("/PutonGetoff")
 	public String name2(String action, HttpSession session, String productid, Model model) {

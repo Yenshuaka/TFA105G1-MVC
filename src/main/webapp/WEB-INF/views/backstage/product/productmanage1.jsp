@@ -155,14 +155,14 @@
                                                     <td>
                                                     	<div>
                                                     	<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/ProductManage" >
-                                                        	<input type="submit" value="刪除" onclick="clicked(event)" class="send">
+                                                        	<input type="submit" value="刪除此項商品" onclick="clicked(event)" class="send">
 			     											<input type="hidden" name="productid"  value="<%=list1.get(i).getProductid() %>">
 			     											<input type="hidden" name="action" value="delete">
                                                         </FORM>
                                                         </div>
                                                         <div style='margin-top: 5px;'>
                                                         <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ProductManage" >
-			     											<input type="submit" value="修改"  class="send">
+			     											<input type="submit" value="修改/查看詳情"  class="send">
 			     											<input type="hidden" name="productid"  value="<%=list1.get(i).getProductid() %>">
 			     											<input type="hidden" name="action"	value="getOne_For_Update">
 			     										</FORM>

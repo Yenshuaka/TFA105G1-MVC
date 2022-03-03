@@ -269,7 +269,7 @@
                             </div>
                             <div class="db-add-list-wrap">
                                 <div class="act-title">
-                                    <h5><i class="ion-image"></i> 商品圖片 :</h5>
+                                    <h5><i class="ion-image"></i> 商品圖片(請至少上傳一張圖片) :</h5>
                                 </div>
                                	<% 
                         			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei", "root", "password");

@@ -148,6 +148,20 @@ public class AddProduct extends HttpServlet {
 				bean.setState(0);			
 				
 				String[] cityid = req.getParameterValues("cityid");
+				
+				//判斷使用者有無上傳圖片
+				Collection<Part> parts = req.getParts();
+				boolean haspic = false;
+				for (Part part : parts) {	
+					if (part.getContentType()!=null && part.getContentType().equals("image/jpeg")) {
+						haspic = true;
+					}
+				}
+				
+				if(!haspic) {
+					errorMsgs.add("請至少上傳一張照片");
+				}
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					session.setAttribute("cityid", cityid);
@@ -177,7 +191,7 @@ public class AddProduct extends HttpServlet {
 				
 				/***************************4.開始新增圖片資料***************************************/
 				
-				Collection<Part> parts = req.getParts(); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
+//				Collection<Part> parts = req.getParts(); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
 				
 				if(parts!=null && parts.size()!=0) {
 				
@@ -308,6 +322,19 @@ public class AddProduct extends HttpServlet {
 				bean.setState(0);
 				
 				String[] cityid = req.getParameterValues("cityid");
+				
+				//判斷使用者有無上傳圖片
+				Collection<Part> parts = req.getParts();
+				boolean haspic = false;
+				for (Part part : parts) {	
+					if (part.getContentType()!=null && part.getContentType().equals("image/jpeg")) {
+						haspic = true;
+					}
+				}
+				
+				if(!haspic) {
+					errorMsgs.add("請至少上傳一張照片");
+				}
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -323,8 +350,7 @@ public class AddProduct extends HttpServlet {
 				productService.update(bean); // 商品資料
 				session.removeAttribute("ProductBean");
 				cityid = req.getParameterValues("cityid");
-				Collection<Part> parts = req.getParts();
-				System.out.println(parts);
+		
 				
 				Connection connection;
 				PreparedStatement preparedStatement;
