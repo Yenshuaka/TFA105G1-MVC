@@ -112,6 +112,10 @@ public class OrderServlet extends HttpServlet implements Serializable {
 
 				String[] productids = req.getParameterValues("productid"); // 跑迴圈裝進bean
 				String[] numberoftravelers = req.getParameterValues("numberoftraveler");
+				for(int i =0;i<numberoftravelers.length;i++) {
+					System.out.println("numberoftravelers = " + numberoftravelers[i]);
+				}
+				
 				String[] productprices = req.getParameterValues("productprice");
 //				String[] orderrewardpoints = req.getParameterValues("orderrewardpoints");
 				String[] specialneeds = req.getParameterValues("specialneeds");
@@ -125,7 +129,10 @@ public class OrderServlet extends HttpServlet implements Serializable {
 
 				OrderdetailBean bean2 = new OrderdetailBean();
 				bean2.setOrderid(bean.getOrderid());
+				TravelerlistBean bean3 = new TravelerlistBean();
+				int a = 0;
 				for (int i = 0; i < productids.length; i++) {
+					
 					bean2.setProductid(Integer.valueOf(productids[i]));
 					bean2.setNumberoftraveler(Integer.valueOf(numberoftravelers[i]));
 					bean2.setProductprice(Integer.valueOf(productprices[i]));
@@ -135,7 +142,35 @@ public class OrderServlet extends HttpServlet implements Serializable {
 
 					orderdetailService.insert(bean2);
 
-				}
+				
+
+//					TravelerlistBean bean3 = new TravelerlistBean();
+//
+//					bean3.setOrderdetailno(bean2.getOrderdetailno());
+
+						for (int j = 0; j < Integer.valueOf(numberoftravelers[i]); j++) {
+							System.out.println("numberoftravelers[i] = " + Integer.valueOf(numberoftravelers[i]));
+							String[] lastnames = req.getParameterValues("lastname");
+							System.out.println("lastnames = " + lastnames);
+							String[] firstnames = req.getParameterValues("firstname");
+							String[] genders = req.getParameterValues("gender");
+							String[] birthdays = req.getParameterValues("birthday");
+							String[] idnos = req.getParameterValues("idno");
+							
+							bean3.setOrderdetailno(bean2.getOrderdetailno());
+							bean3.setLastname(lastnames[a]);
+							bean3.setFirstname(firstnames[a]);
+							bean3.setGender(genders[a]);
+							bean3.setBirthday(Date.valueOf(birthdays[a]));
+							bean3.setIdno(idnos[a]);
+							travelerlistService.insert(bean3);
+							System.out.println("a = " + a);
+							System.out.println(lastnames[a]);
+							a++;
+						}
+					}
+
+//				}
 
 				// traveler
 //				String lastname = req.getParameter("lastname");
@@ -144,27 +179,28 @@ public class OrderServlet extends HttpServlet implements Serializable {
 //				Date birthday = Date.valueOf(req.getParameter("birthday").trim());
 //				String idno = req.getParameter("idno");
 
-				String[] lastnames = req.getParameterValues("lastname");
-				String[] firstnames = req.getParameterValues("firstname");
-				String[] genders = req.getParameterValues("gender");
-				String[] birthdays = req.getParameterValues("birthday");
-				String[] idnos = req.getParameterValues("idno");
-
-				TravelerlistBean bean3 = new TravelerlistBean();
-
-				for (int k = 0; k < productids.length; k++) {
-					bean3.setOrderdetailno(bean2.getOrderdetailno());
-
-					for (int i = 0; i < numberoftravelers.length; i++) {
-
-						bean3.setLastname(lastnames[i]);
-						bean3.setFirstname(firstnames[i]);
-						bean3.setGender(genders[i]);
-						bean3.setBirthday(Date.valueOf(birthdays[i]));
-						bean3.setIdno(idnos[i]);
-						travelerlistService.insert(bean3);
-					}
-				}
+//				String[] lastnames = req.getParameterValues("lastname");
+//				String[] firstnames = req.getParameterValues("firstname");
+//				String[] genders = req.getParameterValues("gender");
+//				String[] birthdays = req.getParameterValues("birthday");
+//				String[] idnos = req.getParameterValues("idno");
+//
+//				TravelerlistBean bean3 = new TravelerlistBean();
+//
+//				bean3.setOrderdetailno(bean2.getOrderdetailno());
+//
+//				for (int k = 0; k < productids.length; k++) {
+//					bean3.setOrderdetailno(bean2.getOrderdetailno());
+//					for (int i = 0; i < numberoftravelers.length; i++) {
+//
+//						bean3.setLastname(lastnames[i]);
+//						bean3.setFirstname(firstnames[i]);
+//						bean3.setGender(genders[i]);
+//						bean3.setBirthday(Date.valueOf(birthdays[i]));
+//						bean3.setIdno(idnos[i]);
+//						travelerlistService.insert(bean3);
+//					}
+//				}
 
 //				bean3.setOrderdetailno(bean2.getOrderdetailno());
 //				bean3.setLastname(lastname);
