@@ -2,7 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
-
+<%-- <% --%>
+// MemberService memberSvc = new MemberService();
+// List<MemberVO> list = memberSvc.getAll();
+// pageContext.setAttribute("list", list);
+<%-- %> --%>
 
 <html lang="en">
 
@@ -73,7 +77,7 @@
 				</div>
 				<%-- 錯誤表列 --%>
 				<c:if test="${not empty errorMsgs}">
-					<span class="errorMsgsOnly">請修正以下錯誤:</span>
+					<font style="color: red">請修正以下錯誤:</font>
 					<ul>
 						<c:forEach var="message" items="${errorMsgs}">
 							<li style="color: red">${message}</li>
@@ -109,7 +113,7 @@
 													<th>身分證字號</th>
 												</tr>
 											</thead>
-											<c:forEach var="memberVO" items="${memberList}">
+											<c:forEach var="memberVO" items="${list}">
 												<tbody>
 													<tr style="text-align: center; padding: 10 0">
 														<td>${memberVO.memberid}</td>

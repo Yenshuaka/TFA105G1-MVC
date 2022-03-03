@@ -452,6 +452,11 @@
 	background: #2B333E;
 }
 
+.BS {
+	background: radial-gradient(circle farthest-corner at right ,#808080 15%,#2B333E 85%);
+	
+}
+
 .menu-sidebar__content .name {
 	text-transform: capitalize;
 	font-weight: 400;

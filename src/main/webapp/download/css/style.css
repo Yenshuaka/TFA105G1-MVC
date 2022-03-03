@@ -629,6 +629,10 @@ h6 {
     color: #141414;
 }
 
+.errorMsgsOnly {
+	color: red;
+}
+
 
 .gray-bg {
     background-color: #fafafa
@@ -1540,7 +1544,7 @@ ul.list-inline li {
 
 .site-navbar-wrap.v2 {
     border-bottom: 1px solid rgba(153, 153, 153, 0.22);
-    padding: 10px 0;
+    padding: 21px 0;
     background-color: #fff;
 }
 
@@ -2418,6 +2422,7 @@ ul.list-inline li {
 }
 
 .nice-select .list {
+	height:0px;
     background-color: #fff;
     border-radius: 1px;
     box-shadow: 0 0 0 1px rgba(68, 68, 68, 0.11);

@@ -61,8 +61,8 @@
 							</ul>
 							<div>
 								<%-- 錯誤表列 --%>
-								<c:if test="${not empty errorMsgs}">
-									<font style="color: red">請修正以下錯誤:</font>
+								<c:if test="${not empty errorMsgs}">									
+									<span class="errorMsgsOnly">請修正以下錯誤:</span>
 									<ul>
 										<c:forEach var="message" items="${errorMsgs}">
 											<li style="color: red">${message}</li>
@@ -79,7 +79,7 @@
 										method="post">
 										<div class="form-group">
 											<input type="text" name="account" id="username" tabindex="1"
-												class="form-control" placeholder="account" required>
+												class="form-control" placeholder="account" required autofocus>
 										</div>
 										<div class="form-group">
 											<input type="password" name="password" id="password"

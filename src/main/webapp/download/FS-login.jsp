@@ -79,7 +79,7 @@
 										method="post">
 										<div class="form-group">
 											<input type="text" name="email" id="username" tabindex="1"
-												class="form-control" placeholder="email" value="" required>
+												class="form-control" placeholder="email" value="" required autofocus>
 										</div>
 										<div class="form-group">
 											<input type="password" name="password" id="password"
