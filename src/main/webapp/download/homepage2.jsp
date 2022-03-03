@@ -260,7 +260,7 @@
                                         <span class="save-btn"><i class="icofont-heart"></i></span>
                                     </div>
                                     <div class="trending-title-box">
-                                        <h4><a href="single-listing-one.html"><%=list.get(i).getProductname() %></a></h4>
+                                        <h4><a href="<%=request.getContextPath() %>/MVC/ProductDetail?productid=<%=list.get(i).getProductid() %>"><%=list.get(i).getProductname() %></a></h4>
                                         <div class="customer-review">
                                             <div class="rating-summary float-left">
 <!--                                                 <div class="rating-result" title="60%"> -->

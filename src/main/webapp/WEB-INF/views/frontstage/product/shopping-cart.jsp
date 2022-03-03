@@ -392,6 +392,8 @@
                                 
                                 	<%  List<ProductBean> list = (List)request.getAttribute("list");
                                 		List<Integer> imgids = (List<Integer>)request.getAttribute("imgids");
+                                		List<Double> avg = (List<Double>)request.getAttribute("avg");
+                                		List<Integer> cities = (List<Integer>)request.getAttribute("cities");
                                 		if(list!=null && list.size()!=0){
                                 		for(int i = 0; i < list.size(); i++){
                                 	%>
@@ -403,14 +405,15 @@
                                         <div class="most-viewed-detail">
                                             <span class="list-bg aqua"></span><%=list.get(i).getProducttype() %>
                                             <h3><a href="<%=request.getContextPath() %>/MVC/ProductDetail?productid=<%=list.get(i).getProductid() %>" target="_blank"><%=list.get(i).getProductname() %></a></h3>
-                                            <p class="list-address"><i class="icofont-google-map"></i>4210 Khale Street, Florence, USA</p>
+                                            <p class="list-address"><i class="icofont-google-map"></i><%=cities.get(i) %></p>
 											<input type='hidden' name='productid' value='<%=list.get(i).getProductid() %>'>
                                             <div class="ratings">
                                                 <i class="ion-ios-star"></i>
-                                                <i class="ion-ios-star"></i>
-                                                <i class="ion-ios-star"></i>
-                                                <i class="ion-ios-star"></i>
-                                                <i class="ion-ios-star-half"></i>
+                                                <%=avg.get(i) %>
+<!--                                                 <i class="ion-ios-star"></i> -->
+<!--                                                 <i class="ion-ios-star"></i> -->
+<!--                                                 <i class="ion-ios-star"></i> -->
+<!--                                                 <i class="ion-ios-star-half"></i> -->
                                             </div>
                                             <div class="views">Views : <span>325</span></div>
                                             

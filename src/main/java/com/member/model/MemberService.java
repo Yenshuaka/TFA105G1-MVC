@@ -45,7 +45,9 @@ public class MemberService {
 
 	public MemberVO updateMember(MemberVO memberVO) {
 		dao.update(memberVO);
-		return memberVO;
+		Integer memberid = memberVO.getMemberid();
+		MemberVO newMemberVO = dao.findByPrimaryKey(memberid);
+		return newMemberVO;
 	}
 
 	public void uploadPic(Integer memberid, byte[] buf) {

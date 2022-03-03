@@ -47,14 +47,14 @@ pageContext.setAttribute("list", list);
 
 	<div class="page-wrapper">
 		<!--Sidebar Menu Starts-->
-		<%@include file="/WEB-INF/views/backstage/file/BS_Sidebar Menu.file"%>
+		<%@include file="/download/file/BS_Sidebar Menu.file"%>
 		<!--Sidebar Menu ends-->
 
 		<!--Dashboard content Wrapper starts-->
 		<div class="dash-content-wrap">
 
 			<!-- Top header starts-->
-			<%@include file="/WEB-INF/views/backstage/file/BS_Top header.file"%>
+			<%@include file="/download/file/BS_Top header.file"%>
 			<!-- Top header ends-->
 
 			<!--Dashboard breadcrumb starts-->
@@ -75,6 +75,15 @@ pageContext.setAttribute("list", list);
 						</div>
 					</div>
 				</div>
+				<%-- 錯誤表列 --%>
+				<c:if test="${not empty errorMsgs}">
+					<font style="color: red">請修正以下錯誤:</font>
+					<ul>
+						<c:forEach var="message" items="${errorMsgs}">
+							<li style="color: red">${message}</li>
+						</c:forEach>
+					</ul>
+				</c:if>
 			</div>
 			<!--Dashboard breadcrumb ends-->
 			<!--Dashboard content starts-->
@@ -86,14 +95,14 @@ pageContext.setAttribute("list", list);
 								<div class="act-title">
 									<h5>
 										<i class="ion-person"></i>會員資料 <a class="btn v2"
-											href="<%=request.getContextPath()%>/download/BS-add-member.jsp">新增</a>
+											href="<%=request.getContextPath()%>/MVC/MemberDispacher/AddMember">新增</a>										
 									</h5>
 								</div>
 								<div class="invoice-body">
 									<div class="table-responsive">
 										<table class="invoice-table">
 											<thead>
-												<tr class="invoice-headings" style="text-align:center">
+												<tr class="invoice-headings" style="text-align: center">
 													<th>No.</th>
 													<th>Email</th>
 													<th>頭像</th>
@@ -104,15 +113,13 @@ pageContext.setAttribute("list", list);
 													<th>身分證字號</th>
 												</tr>
 											</thead>
-											<%@ include file="/WEB-INF/views/backstage/file/page1.file"%>
-											<c:forEach var="memberVO" items="${list}"
-												begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+											<c:forEach var="memberVO" items="${list}">
 												<tbody>
-													<tr style="text-align:center;padding:10 0">
+													<tr style="text-align: center; padding: 10 0">
 														<td>${memberVO.memberid}</td>
 														<td>${memberVO.email}</td>
-														<td><a href="<%=request.getContextPath()%>/download/BS-update-image.jsp?memberid=${memberVO.memberid}"><img alt="${memberVO.memberid}" 
-															src="<%=request.getContextPath()%>/member/member.pic?memberid=${memberVO.memberid}" width="60px"></a></td>
+														<td><a href="<%=request.getContextPath()%>/MVC/MemberDispacher/MemberUpdatePic?memberid=${memberVO.memberid}">
+														<img alt="${memberVO.memberid}" src="<%=request.getContextPath()%>/member/member.pic?memberid=${memberVO.memberid}" width="60px"></a></td>
 														<td>${memberVO.lastname}</td>
 														<td>${memberVO.firstname}</td>
 														<td>${memberVO.gender}</td>
@@ -121,8 +128,8 @@ pageContext.setAttribute("list", list);
 														<td>
 															<FORM METHOD="post"
 																ACTION="<%=request.getContextPath()%>/member/member.do">
-																<input type="submit" value="編輯"> <input
-																	type="hidden" name="memberid"
+																<input type="submit" class="btn v2" value="編輯">
+																<input type="hidden" name="memberid"
 																	value="${memberVO.memberid}"> <input
 																	type="hidden" name="action" value="getOne_For_Update">
 															</FORM>
@@ -130,8 +137,8 @@ pageContext.setAttribute("list", list);
 														<td>
 															<FORM METHOD="post"
 																ACTION="<%=request.getContextPath()%>/member/member.do">
-																<input type="submit" value="刪除"> <input
-																	type="hidden" name="memberid"
+																<input type="submit" class="btn v2" value="刪除">
+																<input type="hidden" name="memberid"
 																	value="${memberVO.memberid}"> <input
 																	type="hidden" name="action" value="delete">
 															</FORM>
@@ -140,7 +147,7 @@ pageContext.setAttribute("list", list);
 												</tbody>
 											</c:forEach>
 										</table>
-										<%@ include file="/WEB-INF/views/backstage/file/page2.file"%>
+
 									</div>
 								</div>
 							</div>
@@ -151,7 +158,7 @@ pageContext.setAttribute("list", list);
 			<!--Dashboard content ends-->
 
 			<!--Dashboard footer starts-->
-			<%@include file="/WEB-INF/views/backstage/file/BS_footer.file"%>
+			<%@include file="/download/file/BS_footer.file"%>
 			<!--Dashboard footer ends-->
 		</div>
 		<!--Dashboard content Wrapper ends-->

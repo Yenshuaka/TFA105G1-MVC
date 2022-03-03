@@ -30,8 +30,8 @@
 											<li class="has-children"><a style="color: white"
 												href="<%=request.getContextPath()%>/download/FS-my-profile.jsp">會員專區</a></li>
 											<li class="has-children"><a style="color: white"
-												href="<%=session.getAttribute("memberid") == null ? request.getContextPath() + "/download/FS-login.jsp"
-		: request.getContextPath() + "/member/member.login?action=logout"%>"><%=session.getAttribute("memberid") == null ? "登入/註冊" : "登出"%></a>
+												href="<%=session.getAttribute("memberVO") == null ? request.getContextPath() + "/download/FS-login.jsp"
+		: request.getContextPath() + "/member/member.login?action=logout"%>"><%=session.getAttribute("memberVO") == null ? "登入/註冊" : "登出"%></a>
 											</li>
 											<li class="d-lg-none"><a class="btn v1"
 												href="add-listing.html">Add Listing <i

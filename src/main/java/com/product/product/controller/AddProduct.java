@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -105,7 +106,9 @@ public class AddProduct extends HttpServlet {
 				
 				java.sql.Date startdate = null;
 				try {
-					startdate = java.sql.Date.valueOf(req.getParameter("startdate").trim());
+					
+					String a = req.getParameter("startdate").trim().replaceAll("/", "-");
+					startdate = java.sql.Date.valueOf(a);
 				} catch (IllegalArgumentException e) {
 					startdate=new java.sql.Date(System.currentTimeMillis());
 					errorMsgs.add("請輸入開始日");
@@ -113,7 +116,8 @@ public class AddProduct extends HttpServlet {
 				
 				java.sql.Date enddate = null;
 				try {
-					enddate = java.sql.Date.valueOf(req.getParameter("enddate").trim());
+					String a = req.getParameter("enddate").trim().replaceAll("/", "-");
+					enddate = java.sql.Date.valueOf(a);
 				} catch (IllegalArgumentException e) {
 					enddate=new java.sql.Date(System.currentTimeMillis());
 					errorMsgs.add("請輸入結束日");
@@ -143,9 +147,12 @@ public class AddProduct extends HttpServlet {
 				bean.setTraveltime(traveltime);
 				bean.setState(0);			
 				
+				String[] cityid = req.getParameterValues("cityid");
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
+					session.setAttribute("cityid", cityid);
 					session.setAttribute("ProductBean", bean); // 含有輸入格式錯誤的empVO物件,也存入req
+					System.out.println(errorMsgs);
 					res.sendRedirect(req.getContextPath()+"/MVC/AddProduct");
 					return;
 				}
@@ -157,7 +164,7 @@ public class AddProduct extends HttpServlet {
 				/***************************3.開始新增地區資料***************************************/
 				
 				Integer productid = bean.getProductid();
-				String[] cityid = req.getParameterValues("cityid");			
+//				String[] cityid = req.getParameterValues("cityid");			
 				
 				if(cityid!=null) {
 					for(int i = 0; i < cityid.length; i++) {
@@ -205,6 +212,7 @@ public class AddProduct extends HttpServlet {
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.add(e.getMessage());
 				res.sendRedirect(req.getContextPath()+"/MVC/AddProduct");
 			}
@@ -315,6 +323,8 @@ public class AddProduct extends HttpServlet {
 				productService.update(bean); // 商品資料
 				session.removeAttribute("ProductBean");
 				cityid = req.getParameterValues("cityid");
+				Collection<Part> parts = req.getParts();
+				System.out.println(parts);
 				
 				Connection connection;
 				PreparedStatement preparedStatement;
@@ -324,10 +334,11 @@ public class AddProduct extends HttpServlet {
 					connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei", "root", "password");
 					preparedStatement = connection.prepareStatement("delete from PRODUCT_LOC where PRODUCT_ID = ?");
 					preparedStatement.setInt(1, productid);
-					preparedStatement.execute();	
+					preparedStatement.execute();
 					preparedStatement = connection.prepareStatement("delete from PRODUCT_IMG where PRODUCT_ID = ?");
 					preparedStatement.setInt(1, productid);
 					preparedStatement.execute();
+					
 					
 									
 				}catch (Exception e) {
@@ -338,7 +349,7 @@ public class AddProduct extends HttpServlet {
 				/*************************以下上傳圖片******************************************/
 				
 				
-				Collection<Part> parts = req.getParts();
+//				Collection<Part> parts = req.getParts();
 				
 				if(parts!=null) {
 				
@@ -415,7 +426,7 @@ public class AddProduct extends HttpServlet {
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
-				System.out.println("安 安");
+//				System.out.println("安 安");
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				res.sendRedirect(req.getContextPath()+"/MVC/ProductManageController");
 				

@@ -1,12 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.member.model.*"%>
-
-<%
-Integer id = Integer.valueOf(request.getParameter("memberid"));
-%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.admin.model.*"%>
 
 <html lang="en">
+
 <head>
 <!-- Metas -->
 <meta charset="UTF-8" />
@@ -35,14 +33,8 @@ Integer id = Integer.valueOf(request.getParameter("memberid"));
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/download/css/switcher/skin-aqua.css"
 	media="screen" id="style-colors" />
-<style>
-.picBox {
-	display: block;
-	margin: auto;
-}
-</style>
 <!-- Document Title -->
-<title>更新頭像</title>
+<title>後台</title>
 
 </head>
 
@@ -50,14 +42,14 @@ Integer id = Integer.valueOf(request.getParameter("memberid"));
 
 	<div class="page-wrapper">
 		<!--Sidebar Menu Starts-->
-		<%@include file="file/BS_Sidebar Menu.file"%>
+		<%@include file="/download/file/BS_Sidebar Menu.file"%>
 		<!--Sidebar Menu ends-->
 
 		<!--Dashboard content Wrapper starts-->
 		<div class="dash-content-wrap">
 
 			<!-- Top header starts-->
-			<%@include file="file/BS_Top header.file"%>
+			<%@include file="/download/file/BS_Top header.file"%>
 			<!-- Top header ends-->
 
 			<!--Dashboard breadcrumb starts-->
@@ -69,10 +61,9 @@ Integer id = Integer.valueOf(request.getParameter("memberid"));
 								<div class="dash-breadcrumb-left">
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
-											<li class="active"><a href="#">Home</a></li>
 											<li class="active"><a
-												href="<%=request.getContextPath()%>/download/BS-member_manage.jsp">會員管理</a></li>
-											<li>更新頭像</li>
+												href="<%=request.getContextPath()%>/download/BS-index.jsp">Home</a></li>
+											<li>管理員: ${adminVO.account}</li>
 										</ul>
 									</div>
 								</div>
@@ -81,68 +72,18 @@ Integer id = Integer.valueOf(request.getParameter("memberid"));
 					</div>
 				</div>
 			</div>
-			<div>
-				<%-- 錯誤表列 --%>
-				<c:if test="${not empty errorMsgs}">
-					<font style="color: red">請修正以下錯誤:</font>
-					<ul>
-						<c:forEach var="message" items="${errorMsgs}">
-							<li style="color: red">${message}</li>
-						</c:forEach>
-					</ul>
-				</c:if>
-			</div>
 			<!--Dashboard breadcrumb ends-->
 			<!--Dashboard content starts-->
+			<div>
+				<h2>
+					<%=session.getAttribute("adminVO")%>
+				</h2>
+				<img alt="home" src="images/bg/Home-web-icon.svg">
+				<!--Dashboard content ends-->
 
-			<div class="dash-content">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-12 ">
-							<div class="invoice-panel">
-								<div class="act-title">
-									<h5>
-										<i class="ion-gear"></i>更新頭像
-									</h5>
-								</div>
-								<div class="row">
-									<div class="col-md-4">
-										<div class="edit-profile-photo">
-
-
-
-											<div id="changePic">
-												<img class="picBox"
-													src="<%=request.getContextPath()%>/member/member.pic?memberid=<%=id%>">
-											</div>
-
-											<div class="change-photo-btn">
-												<div class="contact-form__upload-btn xs-left">
-
-													<FORM METHOD="post"
-														ACTION="<%=request.getContextPath()%>/member/member.upload"
-														enctype="multipart/form-data">
-														<input type="file" id="p_file" name="photo-upload" accept="image/jpeg, image/png"/> 
-															
-															<input type="hidden" name="memberid" value="<%=id%>"> 
-															<input type="submit" name="action" value="上傳">
-													</FORM>
-
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
-
-			<!--Dashboard content ends-->
-
 			<!--Dashboard footer starts-->
-			<%@include file="file/BS_footer.file"%>
+			<%@include file="/download/file/BS_footer.file"%>
 			<!--Dashboard footer ends-->
 		</div>
 		<!--Dashboard content Wrapper ends-->
@@ -156,8 +97,6 @@ Integer id = Integer.valueOf(request.getParameter("memberid"));
 	<script src="<%=request.getContextPath()%>/download/js/main.js"></script>
 	<!-- Dashboard JS-->
 	<script src="<%=request.getContextPath()%>/download/js/dashboard.js"></script>
-	<!-- changePic id="p_file"-->
-	<script src="<%=request.getContextPath()%>/download/js/changePic.js"></script>
 </body>
 
 </html>

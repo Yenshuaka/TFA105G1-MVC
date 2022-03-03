@@ -31,6 +31,21 @@
     <!-- Document Title -->
     <!-- <title>listagram - Directory Listing HTML Template</title> -->
     <title>行程總覽/所有商品</title>
+    
+    <style>
+		.send {
+			background: #BDC1CA;
+			padding: 9px 15px;
+			border-radius: 50px;
+			color: #fff;
+			transition: 0.3s;
+			border: 1px solid transparent;
+			font-size: 14px;
+			transition: 0.5s;
+			line-height: 1;
+		}
+	</style>
+
 
 </head>
 
@@ -67,7 +82,7 @@
                                 </div>
                                 <div>
                                 	<form method="post" action="<%=request.getContextPath() %>/MVC/ProductManageController">
-                              	   		<input type="number" placeholder="請輸入商品編號" name="productid">
+                              	   		<input type="number" placeholder="請輸入商品編號" name="productid" style="border-radius: 10px;">
                               	   		<input type="submit" value="搜尋">
                               	   </form>
                               	</div>
@@ -138,17 +153,20 @@
                                             		</td>
                                                     <td> <%=list1.get(i).getProductprice() %> </td>
                                                     <td>
+                                                    	<div>
                                                     	<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/ProductManage" >
-                                                        	<input type="submit" value="刪除" onclick="clicked(event)">
+                                                        	<input type="submit" value="刪除" onclick="clicked(event)" class="send">
 			     											<input type="hidden" name="productid"  value="<%=list1.get(i).getProductid() %>">
 			     											<input type="hidden" name="action" value="delete">
                                                         </FORM>
+                                                        </div>
+                                                        <div style='margin-top: 5px;'>
                                                         <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ProductManage" >
-			     											<input type="submit" value="修改">
+			     											<input type="submit" value="修改"  class="send">
 			     											<input type="hidden" name="productid"  value="<%=list1.get(i).getProductid() %>">
 			     											<input type="hidden" name="action"	value="getOne_For_Update">
 			     										</FORM>
-			     											
+			     										</div>	
                                                     </td>
                                                 </tr>      
                                                 <% } }%>
@@ -156,7 +174,7 @@
 												<script>          
 													function clicked(e)
 													{
-													    if(!confirm('Are you sure?')) {
+													    if(!confirm('確定刪除?')) {
 													        e.preventDefault();
 													    }
 													}												

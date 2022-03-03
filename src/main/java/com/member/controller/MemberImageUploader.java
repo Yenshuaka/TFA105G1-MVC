@@ -59,7 +59,7 @@ public class MemberImageUploader extends HttpServlet {
 			}
 		}
 			if ("上傳".equals(action)) {
-				String url = "/download/BS-member_manage.jsp";
+				String url = "/MVC/MemberDispacher/MemberManage";
 				res.sendRedirect(req.getContextPath() + url);					
 			} else if ("確認".equals(action)) {
 				String url = "/download/FS-my-profile.jsp";
