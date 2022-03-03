@@ -2,6 +2,7 @@ package com.product.product.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,8 +50,8 @@ public class ProductManageController {
 			return "backstage/product/productmanage1";	
 		}else if(action==null) {  //這是select全部的狀況	
 			List<ProductBean> list = productService.select(null);
-			model.addAttribute("list", list);
-			return "backstage/product/productmanage1";
+			session.setAttribute("list", list);
+			return "redirect:/MVC/ManagePageHandler";
 		}
 		
 		return "";
@@ -59,8 +60,42 @@ public class ProductManageController {
 	@RequestMapping("/ManagePageHandler")
 	public String pageHandler(HttpSession session, String page, Model model) {
 		
+		List<ProductBean> list = (List<ProductBean>) session.getAttribute("list");
 		
-		return "";
+		if(list==null) {
+			list = productService.select(null);
+		}
+		
+
+//		找出總共該有幾頁
+		int totalpage = 0;
+		if (list.size() % 10 == 0) {
+			totalpage = list.size() / 10;
+		} else {
+			totalpage = (list.size() / 10) + 1;
+		}
+		model.addAttribute("totalpage", totalpage);
+
+//		找出此頁該顯示哪幾筆商品
+		if (list == null) {
+			list = productService.select(null);
+		}
+		if (page == null) {
+			page = "1";
+		}
+		int pageindex = Integer.valueOf(page);
+		List<ProductBean> list2 = new ArrayList();
+
+		for (int i = (pageindex - 1) * 10; i <= ((pageindex * 10) - 1); i++) {
+			if ((i + 1) <= list.size()) {
+				list2.add(list.get(i));
+			}
+		}
+		
+		model.addAttribute("totalpage", totalpage);
+		model.addAttribute("page", page);
+		model.addAttribute("list", list2);
+		return "backstage/product/productmanage1";
 	}
 	
 	

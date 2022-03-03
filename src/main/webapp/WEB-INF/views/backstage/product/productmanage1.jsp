@@ -190,6 +190,23 @@
                     </div>
                 </div>
             </div>
+            <div>
+            <div class="page-num text-center">
+            <ul>
+													<% Integer totalpage = (Integer)request.getAttribute("totalpage");
+														Integer pageaa = Integer.valueOf((String)request.getAttribute("page"));
+														for(int i =1; i<= totalpage; i++){
+													%>	
+													<li <% if(i==pageaa){out.write("class='active'");} %>><a href="<%=request.getContextPath() %>/MVC/ManagePageHandler?page=<%=i %>"><%=i %></a></li>
+													
+													<% } %>
+<!-- 													<li><a href="#">2</a></li> -->
+<!-- 													<li><a href="#">3</a></li> -->
+<!-- 													<li><a href="#">4</a></li> -->
+<!-- 													<li><a href="#"><i class="ion-ios-arrow-right"></i></a></li> -->
+												</ul>
+												</div>
+            </div>
             <!-- Dashboard Content ends-->
 
             <!--Dashboard footer starts-->
