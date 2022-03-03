@@ -439,6 +439,7 @@ public class ProductDisplayController {
 		List<ProductBean> list = new ArrayList<ProductBean>();
 		
 		List<String> range2 = jedis.lrange("會員"+memberidstring, 0, -1);
+		
 		if(range2!=null && range2.size()!=0) {
 			for (String product : range2) {
 				productids.add(Integer.valueOf(product));
