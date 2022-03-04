@@ -489,15 +489,16 @@
 <!--                                                     <p class="customer-text">I love the hotel here but it is so rare that I get to come here. Tasty Hand-Pulled hotel is the best type of whole in the wall restaurant. The staff are really nice, and you should be seated quickly. -->
 <!--                                                     </p> -->
 													<% MemberVO bean = (MemberVO) session.getAttribute("memberVO");
+														System.out.println(bean.getMemberid());
+														System.out.println(comments.get(i).getMemberid());
 														if(bean!=null){
-														if(comments.get(i).getMemberid()==  bean.getMemberid()){
-															
+														if(comments.get(i).getMemberid() == bean.getMemberid()){	
 													%>
                                                     <div class="like-btn mar-top-40">
                                                     	<form method="post" action="<%=request.getContextPath() %>/MVC/DeleteComment">
 <!--                                                         <a href="#" class="rate-review float-left"><i class="icofont-thumbs-up"></i><span>2</span></a> -->
                                                         <input type="submit" value="刪除" class="rate-review float-right">
-                                                        <input type="button" value="修改" class="rate-review float-right updatecomment">
+                                                        <input type="button" value="修改" class="rate-review float-right updatecomment" onclick="update(event)">
 <!--                                                         <a href="#" class="rate-review float-right updatecomment"><i class="icofont-pencil"></i>修改</a> -->
                                                         <input type="hidden" name="commentid" value="<%=comments.get(i).getCommentid() %>">
                                                         <input type="hidden" name="productid" value="${ProductBean.productid}">
@@ -1049,21 +1050,49 @@
 	}
     
     
-    $('.updatecomment').on('click', function(e){
+//     $('.updatecomment').on('click', function(e){
     	
-    	console.log($(e.target).parent(".review-box"));
-    	var html = `<div>
+//     	console.log($(e.target).parent(".review-box"));
+//     	var html = `<div>
+//         	<h5>請輸入評論:<input type="text" name="commentcontext"> 請輸入評分(1~5)<input type="number" name="score"></h5>
+//             </div> ` ;
+//             $(e.target).closest(".review-box").append(html);	
+    	
+//     })
+</script>
+
+<script type="text/javascript">
+    
+    function update(e){
+    	
+    	var commentid = $(e.target).next().val();
+    	var productid = $(e.target).next().next().val();
+	
+    	var html = `<div class='updatearea'>
+    		<form method="post" action="<%=request.getContextPath() %>/MVC/UpdateComment">
         	<h5>請輸入評論:<input type="text" name="commentcontext"> 請輸入評分(1~5)<input type="number" name="score"></h5>
+        	<input type="submit" value="確定修改" class="rate-review float-right">
+            <input type="button" value="取消" class="rate-review float-right updatecomment" onclick="cancel(event)">
+        	<input class="aaa" type="hidden" name="commentid" >
+            <input class="bbb" type="hidden" name="productid" >
+        	</form>
             </div> ` ;
             $(e.target).closest(".review-box").append(html);
+            $('.aaa').val(commentid);
+            $('.bbb').val(productid);
     	
-            
-    	
-    	
-    })
+    }
     
     
+    function cancel(e){
+        $('.updatearea').remove();
+    }
     
+                                                            
+    
+                                                           
+                                                            
+                                                            
     
 
     </script>
