@@ -489,8 +489,7 @@
 <!--                                                     <p class="customer-text">I love the hotel here but it is so rare that I get to come here. Tasty Hand-Pulled hotel is the best type of whole in the wall restaurant. The staff are really nice, and you should be seated quickly. -->
 <!--                                                     </p> -->
 													<% MemberVO bean = (MemberVO) session.getAttribute("memberVO");
-														System.out.println(bean.getMemberid());
-														System.out.println(comments.get(i).getMemberid());
+														
 														if(bean!=null){
 														if(comments.get(i).getMemberid() == bean.getMemberid()){	
 													%>
