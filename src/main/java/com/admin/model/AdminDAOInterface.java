@@ -2,8 +2,6 @@ package com.admin.model;
 
 import java.util.List;
 
-import com.product.city.model.CityBean;
-
 public interface AdminDAOInterface {
 	
 	public abstract AdminVO select(Integer empno);
