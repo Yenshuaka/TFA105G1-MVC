@@ -597,7 +597,7 @@ public class ProductDisplayController {
 				+ "<!--                                                         <a href=\"#\" class=\"rate-review float-left\"><i class=\"icofont-thumbs-up\"></i><span>2</span></a> -->\r\n"
 				+ "                                                        <input type=\"submit\" value=\"刪除\" class=\"rate-review float-right\">\r\n"
 				+ "                                                        <a href=\"#\" class=\"rate-review float-right\"><i class=\"icofont-pencil\"></i>修改</a>\r\n"
-				+ "                                                        <input type=\"hidden\" name=\"commentid\" value=\" "+ bean.getCommentid()+"\">\r\n"
+				+ "                                                        <input type=\"hidden\" name=\"commentid\" value=\""+ bean.getCommentid()+"\">\r\n"
 				+ "                                                        <input type=\"hidden\" name=\"productid\" value=\""+ productid +"\">\r\n"
 				+ "                                                        \r\n"
 				+ "                                                        </form>\r\n"
