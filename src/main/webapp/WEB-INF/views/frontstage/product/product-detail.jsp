@@ -497,7 +497,8 @@
                                                     	<form method="post" action="<%=request.getContextPath() %>/MVC/DeleteComment">
 <!--                                                         <a href="#" class="rate-review float-left"><i class="icofont-thumbs-up"></i><span>2</span></a> -->
                                                         <input type="submit" value="刪除" class="rate-review float-right">
-                                                        <a href="#" class="rate-review float-right"><i class="icofont-pencil"></i>修改</a>
+                                                        <input type="button" value="修改" class="rate-review float-right updatecomment">
+<!--                                                         <a href="#" class="rate-review float-right updatecomment"><i class="icofont-pencil"></i>修改</a> -->
                                                         <input type="hidden" name="commentid" value="<%=comments.get(i).getCommentid() %>">
                                                         <input type="hidden" name="productid" value="${ProductBean.productid}">
                                                         
@@ -506,7 +507,10 @@
                                                     <%  }} %>
                                                     
                                                 </div>
-                                            </div>                                             
+                                            </div>
+<!--                                             <div> -->
+<!--                                             	<h5>請輸入評論:<input type="text" name="commentcontext"> 請輸入評分(1~5)<input type="number" name="score"></h5> -->
+<!--                                             </div>                                              -->
                                 	</div>
                                 	<% } } %>
                             </div>
@@ -1043,6 +1047,24 @@
          }
      });    		
 	}
+    
+    
+    $('.updatecomment').on('click', function(e){
+    	
+    	console.log($(e.target).parent(".review-box"));
+    	var html = `<div>
+        	<h5>請輸入評論:<input type="text" name="commentcontext"> 請輸入評分(1~5)<input type="number" name="score"></h5>
+            </div> ` ;
+            $(e.target).closest(".review-box").append(html);
+    	
+            
+    	
+    	
+    })
+    
+    
+    
+    
 
     </script>
 </body>
