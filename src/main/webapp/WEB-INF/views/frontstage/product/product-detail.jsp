@@ -488,11 +488,23 @@
                                                     </div>
 <!--                                                     <p class="customer-text">I love the hotel here but it is so rare that I get to come here. Tasty Hand-Pulled hotel is the best type of whole in the wall restaurant. The staff are really nice, and you should be seated quickly. -->
 <!--                                                     </p> -->
-
-<!--                                                     <div class="like-btn mar-top-40"> -->
+													<% MemberVO bean = (MemberVO) session.getAttribute("memberVO");
+														if(bean!=null){
+														if(comments.get(i).getMemberid()==  bean.getMemberid()){
+															
+													%>
+                                                    <div class="like-btn mar-top-40">
+                                                    	<form method="post" action="<%=request.getContextPath() %>/MVC/DeleteComment">
 <!--                                                         <a href="#" class="rate-review float-left"><i class="icofont-thumbs-up"></i><span>2</span></a> -->
-<!--                                                         <a href="#" class="rate-review float-right"><i class="icofont-reply"></i>Reply</a> -->
-<!--                                                     </div> -->
+                                                        <input type="submit" value="刪除" class="rate-review float-right">
+                                                        <a href="#" class="rate-review float-right"><i class="icofont-pencil"></i>修改</a>
+                                                        <input type="hidden" name="commentid" value="<%=comments.get(i).getCommentid() %>">
+                                                        <input type="hidden" name="productid" value="${ProductBean.productid}">
+                                                        
+                                                        </form>
+                                                    </div>
+                                                    <%  }} %>
+                                                    
                                                 </div>
                                             </div>                                             
                                 	</div>
@@ -1026,6 +1038,7 @@
          success: function(res){
              console.log("成功");
             $('#reviews').append(res);
+            $('#add_review').remove();
             
          }
      });    		

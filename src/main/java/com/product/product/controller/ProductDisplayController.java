@@ -590,7 +590,43 @@ public class ProductDisplayController {
 				+ "            <div class=\"customer-review\">\r\n" + "              <h6>" + commentcontext
 				+ "</h6>\r\n" + "              <p>於&nbsp" + df.format(new Timestamp(System.currentTimeMillis()))
 				+ "&nbsp評論</p>\r\n" + "            </div>\r\n" + "            <div class=\"customer-rating\">" + score1
-				+ " </div>\r\n" + "          </div>\r\n" + "        </div>\r\n" + "      </div>\r\n" + "</div>";
+				+ " </div>\r\n" + "          </div>\r\n" 
+				//以下新增部分 編輯 修改
+				+"<div class=\"like-btn mar-top-40\">\r\n"
+				+ "                                                    	<form method=\"post\" action=\""+ req.getContextPath()+"/MVC/DeleteComment\">\r\n"
+				+ "<!--                                                         <a href=\"#\" class=\"rate-review float-left\"><i class=\"icofont-thumbs-up\"></i><span>2</span></a> -->\r\n"
+				+ "                                                        <input type=\"submit\" value=\"刪除\" class=\"rate-review float-right\">\r\n"
+				+ "                                                        <a href=\"#\" class=\"rate-review float-right\"><i class=\"icofont-pencil\"></i>修改</a>\r\n"
+				+ "                                                        <input type=\"hidden\" name=\"commentid\" value=\" "+ bean.getCommentid()+"\">\r\n"
+				+ "                                                        <input type=\"hidden\" name=\"productid\" value=\""+ productid +"\">\r\n"
+				+ "                                                        \r\n"
+				+ "                                                        </form>\r\n"
+				+ "                                                    </div>"
+				//以上新增部分 編輯 修改
+				+"        </div>\r\n" + "      </div>\r\n" + "</div>";
 	}
 
+	
+	
+	
+	@RequestMapping("/DeleteComment")
+	public String deleteComment(HttpSession session, String commentid, String productid) {
+		
+		ProductCommentBean bean = new ProductCommentBean();
+		bean.setCommentid(Integer.valueOf(commentid));
+		productCommentService.delete(bean);
+		
+		
+		return "redirect:/MVC/ProductDetail?productid=" + productid + "#reviews";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
