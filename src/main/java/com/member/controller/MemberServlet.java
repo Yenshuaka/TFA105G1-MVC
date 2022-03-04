@@ -27,7 +27,7 @@ public class MemberServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		// BS
-		String MemberManage = "/MVC/MemberDisdacher/MemberManage";
+		String MemberManage = "/MVC/MemberDispacher/MemberManage";
 		String AddMember = "/MVC/MemberDisdacher/AddMember";
 		String EditMember = "/MVC/MemberDisdacher/EditMember";
 		String ListOneMember = "/MVC/MemberDisdacher/ListOneMember";
