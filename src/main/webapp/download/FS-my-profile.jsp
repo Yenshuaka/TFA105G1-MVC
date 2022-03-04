@@ -145,22 +145,7 @@
 													<li>
 														<h6>Phone :</h6> <span>${(memberVO.phone == null) ? "連絡電話" : memberVO.phone}</span>
 													</li>
-													<li>
-														<h6>Password :</h6> <span>${(memberVO.password == null) ? "密碼" : memberVO.password}</span>
-													</li>
-													<!-- 													<li> -->
-													<!-- 														<h6>Address :</h6> <span> 864 W. Walnut Ave. Avon, -->
-													<!-- 															IN 46123 St James Pl, Brooklyn</span> -->
-													<!-- 													</li> -->
-													<!-- <li>
-                                                        <h6>Social Profile :</h6>
-                                                        <ul class="social-profile">
-                                                            <li class="bg-fb"><a href="https://www.facebook.com"><i class="ion-social-facebook"></i></a></li>
-                                                            <li class="bg-tt"><a href="https://www.twitter.com"><i class="ion-social-twitter"></i></a></li>
-                                                            <li class="bg-ig"><a href="https://www.instagram.com"><i class="ion-social-instagram"></i></a></li>
-                                                        </ul>
-                                                    </li> -->
-
+																					
 												</ul>
 												<a
 													href="<%=request.getContextPath()%>/download/FS-edit-profile.jsp"

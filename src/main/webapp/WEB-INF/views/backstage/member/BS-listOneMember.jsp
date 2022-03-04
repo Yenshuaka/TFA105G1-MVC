@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.member.model.*"%>
 
-<%
-MemberVO memberVO = (MemberVO) request.getAttribute("memberVO"); //MemberServlet.java(Controller), 存入req的memberVO物件
-%>
+<%-- <% --%>
+// MemberVO memberVO = (MemberVO) request.getAttribute("memberVO"); //MemberServlet.java(Controller), 存入req的memberVO物件
+<%-- %> --%>
 
 <html lang="en">
 <head>
@@ -115,15 +115,15 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO"); //MemberServlet
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td><%=memberVO.getEmail()%></td>
-													<td><%=memberVO.getLastname()%></td>
-													<td><%=memberVO.getFirstname()%></td>
-													<td><%=memberVO.getIdno()%></td>
-													<td><%=memberVO.getGender()%></td>
-													<td><%=memberVO.getDateofbirth()%></td>
-													<td><%=memberVO.getCountry()%></td>
-													<td><%=memberVO.getPhone()%></td>
+												<tr> 
+													<td>${memberVO.email}</td>
+													<td>${memberVO.lastname}</td>
+													<td>${memberVO.firstname}</td>
+													<td>${memberVO.idno}</td>
+													<td>${memberVO.gender}</td>
+													<td>${memberVO.dateofbirth}</td>
+													<td>${memberVO.country}</td>
+													<td>${memberVO.phone}</td> 												
 												</tr>
 											</tbody>
 										</table>

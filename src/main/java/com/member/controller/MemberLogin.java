@@ -29,7 +29,8 @@ public class MemberLogin extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-
+		String indexUrl = "/download/homepage2.jsp";
+		
 		if ("login".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -71,6 +72,7 @@ public class MemberLogin extends HttpServlet {
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 
 				HttpSession session = req.getSession();
+				req.changeSessionId();
 				session.setAttribute("memberVO", memberVO);
 				session.setAttribute("memberid", memberid);
 				System.out.println("儲存memberVO到session! = " + memberVO);
@@ -79,7 +81,6 @@ public class MemberLogin extends HttpServlet {
 //				String reqComeFrom = req.getHeader("referer"); // filter?
 				String location = (String) session.getAttribute("location");
 				System.out.println("來源網站 = " + location);				
-				String indexUrl = "/download/homepage2.jsp";
 				res.sendRedirect(req.getContextPath() + indexUrl);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
@@ -96,9 +97,7 @@ public class MemberLogin extends HttpServlet {
 			session.removeAttribute("memberid");
 			session.invalidate();
 			System.out.println("session 已清空!");
-			String ContextPath = req.getContextPath();
-			String indexUrl = "/download/FS-Index-Demo.jsp";
-			res.sendRedirect(ContextPath + indexUrl);
+			res.sendRedirect(req.getContextPath() + indexUrl);
 		}
 
 	}

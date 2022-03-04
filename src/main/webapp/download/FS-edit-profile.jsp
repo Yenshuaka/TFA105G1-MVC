@@ -48,9 +48,7 @@
 		<div class="dash-content-wrap">
 
 			<!-- Top header starts-->
-
 			<%@include file="file/FS_Header.file"%>
-
 			<!-- Top header ends-->
 
 			<!--main 上索引starts-->
@@ -72,6 +70,15 @@
 						</div>
 					</div>
 				</div>
+				<%-- 錯誤表列 --%>
+				<c:if test="${not empty errorMsgs}">
+					<font style="color: red">請修正以下錯誤:</font>
+					<ul>
+						<c:forEach var="message" items="${errorMsgs}">
+							<li style="color: red">${message}</li>
+						</c:forEach>
+					</ul>
+				</c:if>
 			</div>
 			<!--main 上索引ends-->
 			<!--main content starts-->
@@ -154,7 +161,7 @@
 												<br> <input type="hidden" name="action" value="update">
 												<input type="hidden" name="memberid"
 													value="${memberVO.memberid}"> <input type="submit"
-													value="送出">
+													class="btn v3" value="送出">
 											</FORM>
 										</div>
 
