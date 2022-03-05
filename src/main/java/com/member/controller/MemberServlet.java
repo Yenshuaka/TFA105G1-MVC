@@ -27,13 +27,13 @@ public class MemberServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		// BS
-		String MemberManage = "/MVC/MemberDispacher/MemberManage";
-		String AddMember = "/MVC/MemberDisdacher/AddMember";
-		String EditMember = "/MVC/MemberDisdacher/EditMember";
-		String ListOneMember = "/MVC/MemberDisdacher/ListOneMember";
+		final String MemberManage = "/MVC/MemberDispacher/MemberManage";
+		final String AddMember = "/MVC/MemberDisdacher/AddMember";
+		final String EditMember = "/MVC/MemberDisdacher/EditMember";
+		final String ListOneMember = "/MVC/MemberDisdacher/ListOneMember";
 		// FS
-		String UserProfile = "/download/FS-my-profile.jsp";
-		String FSEditMember = "/download/FS-edit-profile.jsp";
+		final String UserProfile = "/download/FS-my-profile.jsp";
+		final String FSEditMember = "/download/FS-edit-profile.jsp";
 
 		if ("getOne_For_Update".equals(action)) {
 
@@ -51,8 +51,8 @@ public class MemberServlet extends HttpServlet {
 				MemberVO memberVO = memberSvc.getOneMember(memberid);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				req.setAttribute("memberVO", memberVO); // 資料庫取出的memberVO物件,存入req
-				RequestDispatcher successView = req.getRequestDispatcher(EditMember);// 成功轉交 BS-edit-member.jsp
+				req.setAttribute("memberVO", memberVO);
+				RequestDispatcher successView = req.getRequestDispatcher(EditMember);
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
@@ -96,7 +96,7 @@ public class MemberServlet extends HttpServlet {
 				String lnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
 				if (lastname == null || lastname.trim().length() == 0) {
 					errorMsgs.add("姓氏: 請勿空白");
-				} else if (!lastname.trim().matches(lnameReg)) { // 以下練習正則(規)表示式(regular-expression)
+				} else if (!lastname.trim().matches(lnameReg)) {
 					errorMsgs.add("姓氏: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
 				}
 
@@ -104,7 +104,7 @@ public class MemberServlet extends HttpServlet {
 				String fnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
 				if (firstname == null || firstname.trim().length() == 0) {
 					errorMsgs.add("名字: 請勿空白");
-				} else if (!firstname.trim().matches(fnameReg)) { // 以下練習正則(規)表示式(regular-expression)
+				} else if (!firstname.trim().matches(fnameReg)) {
 					errorMsgs.add("名字: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
 				}
 
@@ -112,7 +112,7 @@ public class MemberServlet extends HttpServlet {
 				String idnoReg = "^[a-zA-Z]\\d{9}$";
 				if (idno == null || idno.trim().length() == 0) {
 					errorMsgs.add("身分證字號: 請勿空白");
-				} else if (!idno.trim().matches(idnoReg)) { // 以下練習正則(規)表示式(regular-expression)
+				} else if (!idno.trim().matches(idnoReg)) {
 					errorMsgs.add("身分證字號: 英文字母、數字 , 且長度必需在10");
 				}
 
@@ -152,8 +152,8 @@ public class MemberServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					System.out.println(errorMsgs);
-					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的memberVO物件,也存入req
-					
+					req.setAttribute("memberVO", memberVO);
+
 					RequestDispatcher failureView = req.getRequestDispatcher(FSEditMember);
 					failureView.forward(req, res);
 					return; // 程式中斷
@@ -169,8 +169,8 @@ public class MemberServlet extends HttpServlet {
 				if (currentVO != null) {
 					session.removeAttribute("memberVO");
 					session.setAttribute("memberVO", memberVO);
-				}				
-				res.sendRedirect(req.getContextPath()+UserProfile);
+				}
+				res.sendRedirect(req.getContextPath() + UserProfile);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
@@ -203,7 +203,7 @@ public class MemberServlet extends HttpServlet {
 				String lnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
 				if (lastname == null || lastname.trim().length() == 0) {
 					errorMsgs.add("姓氏: 請勿空白");
-				} else if (!lastname.trim().matches(lnameReg)) { // 以下練習正則(規)表示式(regular-expression)
+				} else if (!lastname.trim().matches(lnameReg)) {
 					errorMsgs.add("姓氏: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
 				}
 
@@ -211,7 +211,7 @@ public class MemberServlet extends HttpServlet {
 				String fnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
 				if (firstname == null || firstname.trim().length() == 0) {
 					errorMsgs.add("名字: 請勿空白");
-				} else if (!firstname.trim().matches(fnameReg)) { // 以下練習正則(規)表示式(regular-expression)
+				} else if (!firstname.trim().matches(fnameReg)) {
 					errorMsgs.add("名字: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
 				}
 
@@ -219,7 +219,7 @@ public class MemberServlet extends HttpServlet {
 				String idnoReg = "^[a-zA-Z]\\d{9}$";
 				if (idno == null || idno.trim().length() == 0) {
 					errorMsgs.add("身分證字號: 請勿空白");
-				} else if (!idno.trim().matches(idnoReg)) { // 以下練習正則(規)表示式(regular-expression)
+				} else if (!idno.trim().matches(idnoReg)) {
 					errorMsgs.add("身分證字號: 英文字母、數字 , 且長度必需在10");
 				}
 
@@ -258,7 +258,7 @@ public class MemberServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					System.out.println(errorMsgs);
-					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的memberVO物件,也存入req
+					req.setAttribute("memberVO", memberVO);
 					RequestDispatcher failureView = req.getRequestDispatcher(EditMember);
 					failureView.forward(req, res);
 					return; // 程式中斷
@@ -269,8 +269,8 @@ public class MemberServlet extends HttpServlet {
 				memberSvc.updateMember(memberVO);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("memberVO", memberVO); // 資料庫update成功後,正確的的memberVO物件,存入req
-				RequestDispatcher successView = req.getRequestDispatcher(ListOneMember); // 修改成功後,轉交BS-listOneMember.jsp
+				req.setAttribute("memberVO", memberVO);
+				RequestDispatcher successView = req.getRequestDispatcher(ListOneMember);
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
@@ -311,7 +311,7 @@ public class MemberServlet extends HttpServlet {
 				String lnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
 				if (lastname == null || lastname.trim().length() == 0) {
 					errorMsgs.add("會員姓: 請勿空白");
-				} else if (!lastname.trim().matches(lnameReg)) { // 以下練習正則(規)表示式(regular-expression)
+				} else if (!lastname.trim().matches(lnameReg)) {
 					errorMsgs.add("會員姓: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
 				}
 
@@ -319,7 +319,7 @@ public class MemberServlet extends HttpServlet {
 				String fnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
 				if (firstname == null || firstname.trim().length() == 0) {
 					errorMsgs.add("會員名: 請勿空白");
-				} else if (!firstname.trim().matches(fnameReg)) { // 以下練習正則(規)表示式(regular-expression)
+				} else if (!firstname.trim().matches(fnameReg)) {
 					errorMsgs.add("會員姓名: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
 				}
 
@@ -327,7 +327,7 @@ public class MemberServlet extends HttpServlet {
 				String idnoReg = "^[(a-zA-Z0-9)]{10}$";
 				if (idno == null || idno.trim().length() == 0) {
 					errorMsgs.add("身分證字號: 請勿空白");
-				} else if (!idno.trim().matches(idnoReg)) { // 以下練習正則(規)表示式(regular-expression)
+				} else if (!idno.trim().matches(idnoReg)) {
 					errorMsgs.add("身分證字號: 英文字母、數字 , 且長度必需在10");
 				}
 
@@ -349,7 +349,7 @@ public class MemberServlet extends HttpServlet {
 				String phoneReg = "^[(0-9)]{10}$";
 				if (idno == null || idno.trim().length() == 0) {
 					errorMsgs.add("手機: 請勿空白");
-				} else if (!phone.trim().matches(phoneReg)) { // 以下練習正則(規)表示式(regular-expression)
+				} else if (!phone.trim().matches(phoneReg)) {
 					errorMsgs.add("手機: 數字 , 且長度必需在10");
 				}
 
@@ -386,7 +386,7 @@ public class MemberServlet extends HttpServlet {
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				res.sendRedirect(req.getContextPath() + MemberManage);
-				
+
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
@@ -411,7 +411,7 @@ public class MemberServlet extends HttpServlet {
 				memberSvc.deleteMember(memberid);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				RequestDispatcher successView = req.getRequestDispatcher(MemberManage); // 修改成功後,轉交
+				RequestDispatcher successView = req.getRequestDispatcher(MemberManage);
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/

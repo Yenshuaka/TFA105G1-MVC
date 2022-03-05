@@ -45,7 +45,7 @@
 
 		<!--User Login section starts-->
 		<div class="user-login-section section-padding bg-fixed"
-			style="background-image: url(images/admin-bg-image.jpg)">
+			style="background-image: url(<%=request.getContextPath()%>/download/images/admin-bg-image.jpg)">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-10 offset-md-1  text-center">
@@ -58,36 +58,28 @@
 								<li class="nav-item"><a class="nav-link active"
 									data-toggle="tab" href="#login" role="tab" aria-selected="true">登入</a>
 								</li>
-							</ul>
-							<div>
-								<%-- 錯誤表列 --%>
-								<c:if test="${not empty errorMsgs}">									
-									<span class="errorMsgsOnly">請修正以下錯誤:</span>
-									<ul>
-										<c:forEach var="message" items="${errorMsgs}">
-											<li style="color: red">${message}</li>
-										</c:forEach>
-									</ul>
-								</c:if>
-							</div>
+							</ul>							
 							<div class="ui-dash tab-content">
 								<div class="tab-pane fade show active" id="login"
 									role="tabpanel">
 
 									<form id="login-form"
-										action="<%=request.getContextPath()%>/MVC/adminManagement"
-										method="post">
+										action="<%=request.getContextPath()%>/MVC/adminManagement/login"
+										method="POST">
 										<div class="form-group">
+										<span class="error errorMsgsOnly">${errorMsgs.result}</span>
 											<input type="text" name="account" id="username" tabindex="1"
 												class="form-control" placeholder="account" required autofocus>
+												<span class="error errorMsgsOnly">${errorMsgs.account}</span>
 										</div>
 										<div class="form-group">
 											<input type="password" name="password" id="password"
 												tabindex="2" class="form-control" placeholder="Password"
-												required>
+												required><span class="error errorMsgsOnly">${errorMsgs.password}</span>
 										</div>
 										<div class="row mar-top-20">
 											<div class="col-md-6 col-12 text-left">
+											
 												<!-- <div class="res-box">
                                                     <input type="checkbox" tabindex="3" class="" name="remember"
                                                         id="remember">
