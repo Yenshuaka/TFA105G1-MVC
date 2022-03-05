@@ -81,9 +81,41 @@
 							<div class="invoice-panel">
 								<div class="act-title">
 									<h5>
-										<i class="ion-person"></i>管理員列表 <a class="btn v2"
-											href="<%=request.getContextPath()%>/MVC/MemberDispacher/AddMember">新增</a>										
+										<i class="ion-person"></i>管理員列表 
+										<a class="btn v2" href="#">新增</a>
+										<a href="#" data-toggle="modal" data-target="#avatar-page" class="rate-review"><i class="ion-log-in"></i>變更圖片</a>
 									</h5>
+									<!-- modal-start -->
+													<div class="modal fade" id="avatar-page">
+														<div class="modal-dialog modal-dialog-centered"
+															role="image">
+															<div class="picBox">
+															
+																<div>
+																	<div id="changePic">
+																		<label for="p_file"> <img
+																			src="<%=request.getContextPath()%>/member/member.pic?memberid=${memberVO.memberid}">
+																		</label>
+																	</div>
+																</div>
+																
+																<div>
+																	<div class="contact-form__upload-btn xs-left">
+																		<FORM METHOD="post" enctype="multipart/form-data"
+																			ACTION="<%=request.getContextPath()%>/member/member.upload">
+																			
+																			<input type="file" id="p_file" name="photo-upload" accept="image/jpeg, image/png"
+																				style="display: none;"> 
+																			<input type="hidden" name="memberid" value="${memberVO.memberid}">
+																			<input type="submit" name="action" value="確認">
+																		</FORM>
+																	</div>
+																</div>
+																
+															</div>
+														</div>
+													</div>
+													<!-- modal-ends -->
 								</div>
 								<div class="invoice-body">
 									<div class="table-responsive">
@@ -98,14 +130,18 @@
 											<c:forEach var="adminVO" items="${AdminList}">
 												<tbody>
 													<tr style="text-align: center; padding: 10 0">
-														<td>${adminVO.empno}</td>
-														<td>${adminVO.ename}</td>
-														<td>${adminVO.account}</td>
+													
+														<td><input type="TEXT" name="empno" size="30"
+														value="${adminVO.empno}" placeholder="請輸入員工編號" /></td>
+														<td><input type="TEXT" name="ename" size="30"
+														value="${adminVO.ename}" placeholder="請輸入員工姓名" /></td>
+														<td><input type="TEXT" name="account" size="30"
+														value="${adminVO.account}" placeholder="請輸入帳號" /></td>
 														<td>
 															<FORM METHOD="post"
 																ACTION="<%=request.getContextPath()%>/member/member.do">
 																<input type="submit" class="btn v2" value="編輯">
-																<input type="hidden" name="memberid"
+																<input type="hidden" name="empno"
 																	value="${adminVO.empno}"> <input
 																	type="hidden" name="action" value="getOne_For_Update">
 															</FORM>
@@ -114,7 +150,7 @@
 															<FORM METHOD="post"
 																ACTION="<%=request.getContextPath()%>/member/member.do">
 																<input type="submit" class="btn v2" value="刪除">
-																<input type="hidden" name="memberid"
+																<input type="hidden" name="empno"
 																	value="${adminVO.empno}"> <input
 																	type="hidden" name="action" value="delete">
 															</FORM>

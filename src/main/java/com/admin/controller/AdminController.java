@@ -87,6 +87,16 @@ public class AdminController {
 		return "backstage/admin/BS-admin_manage";
 	}
 	
+	@GetMapping("/AddAdmin")
+	public String AddAdmin() {
+		
+		return "backstage/admin/BS-admin_manage";
+	}
+	
+	
+	
+	
+	
 	@RequestMapping(method = { RequestMethod.GET })
 	public String logout(String action, HttpSession session) {
 		if ("logout".equals(action)) {
