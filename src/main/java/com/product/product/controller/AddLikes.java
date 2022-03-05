@@ -29,7 +29,7 @@ public class AddLikes extends HttpServlet {
 //			RequestDispatcher failureView = request
 //					.getRequestDispatcher("/WEB-INF/views/frontstage/member/FS-login.jsp");
 //			failureView.forward(request, response);
-			response.sendRedirect("/WEB-INF/views/frontstage/member/FS-login.jsp");
+			out.write("login");
 			return;
 		}
 		
