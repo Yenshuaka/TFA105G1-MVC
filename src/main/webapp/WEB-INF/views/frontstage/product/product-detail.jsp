@@ -1023,14 +1023,16 @@
          data: {
          	productid: $(e.target).next().val()
          },
-         dataType: "html",
+         dataType: "text",
          success: function(res){
              console.log("成功");
              $('.showarea').html(res);
-             var i =  parseInt( $('.cartqty').text());
-             i = i+1;
-             var a = i + "";
-             $('.cartqty').text(a);
+             if(res=="<h5 style='color: red'> 已新增至購物車</h5>"){
+	             var i =  parseInt( $('.cartqty').text());
+	             i = i+1;
+	             var a = i + "";
+	             $('.cartqty').text(a);
+         	 }
              
          }
      });    		
