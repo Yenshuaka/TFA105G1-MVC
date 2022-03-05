@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="col-lg-6 col-md-5 col-sm-12">
                                     <div class="list-details-btn text-right sm-left">
-                                        <div class="save-btn">
+                                        <div class="save-btn">				<!-- ion-ios-heart-outline -->
                                             <a href="#" class="btn v3 white"><i class="ion-heart"></i> Save</a>
                                         </div>
 <!--                                         <div class="share-btn"> -->
