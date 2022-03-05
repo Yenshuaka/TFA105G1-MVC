@@ -673,7 +673,9 @@ public class ProductDisplayController {
 		ProductCommentBean bean = new ProductCommentBean();
 		
 		Integer memberid = (Integer) session.getAttribute("memberid");
-		Integer score1 = Integer.valueOf(score);
+		Integer score1 = 0 ;
+		if(score!="" && score!=null)
+		Integer.valueOf(score);
 
 		bean.setCommentid(Integer.valueOf(commentid));
 		bean.setMemberid(memberid);
