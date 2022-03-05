@@ -83,8 +83,17 @@
                                 </div>
                                 <div class="col-lg-6 col-md-5 col-sm-12">
                                     <div class="list-details-btn text-right sm-left">
-                                        <div class="save-btn">
-                                            <a href="#" class="btn v3 white"><i class="ion-heart"></i> Save</a>
+                                    <% boolean exist = (boolean)request.getAttribute("exist"); %>
+                                        <div class="save-btn">				<!-- ion-ios-heart-outline, ion-heart -->
+                                            <a  onclick='addLikes(event)' class="btn v3 white">
+                                            <% if(exist){%>
+                                            <i id='aaaa' class="ion-heart"></i> 
+                                            <% }else {%>
+                                            <i id='aaaa' class="ion-ios-heart-outline"></i>
+                                            <% }%>
+                                            
+                                            Save</a>    
+                                    		<input type='hidden' value='${ProductBean.productid}'>
                                         </div>
 <!--                                         <div class="share-btn"> -->
 <!--                                             <a href="#" class="btn v3 white"><i class="ion-android-share-alt"></i> Share</a> -->
@@ -1026,6 +1035,30 @@
          }
      });    		
 	}
+    
+    
+    
+    
+    function addLikes(e){
+		console.log($(e.target).next().val());
+		$.ajax({
+         url: '<%=request.getContextPath() %>/AddLikes',
+         type: 'POST',
+         data: {
+         	productid: $(e.target).next().val()
+         },
+         dataType: "html",
+         success: function(res){
+             console.log("成功"); 
+             $('#aaaa').replaceWith(res);
+          
+             
+             
+         }
+     });    		
+	}
+    
+    
     
     
     function addComment(e){
