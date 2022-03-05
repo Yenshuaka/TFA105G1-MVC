@@ -48,7 +48,7 @@ public class AdminDAO implements AdminDAOInterface {
 			if (temp != null) {
 				temp.setEname(admin.getEname());
 				temp.setAccount(admin.getAccount());
-				temp.setPassword(admin.getPassword());
+//				temp.setPassword(admin.getPassword());
 				return temp;
 			}
 		}

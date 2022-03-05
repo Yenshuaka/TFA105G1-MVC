@@ -18,12 +18,17 @@ public class AdminService {
 		this.adminDAO = adminDAO;
 	}
 
-	public AdminVO addAdmin(AdminVO admin) {
-		AdminVO result = null;
-		if (admin != null) {
-			result = adminDAO.insert(admin);
+	public boolean addAdmin(AdminVO adminVO) {		
+		try {
+			if (adminVO != null) {
+				adminDAO.insert(adminVO);
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
-		return result;
+		
 	}
 
 	public AdminVO updateAdmin(AdminVO admin) {
@@ -34,10 +39,10 @@ public class AdminService {
 		return result;
 	}
 
-	public boolean deleteAdmin(AdminVO admin) {
+	public boolean deleteAdmin(Integer empno) {
 		boolean result = false;
-		if (admin != null && admin.getEmpno() != null) {
-			result = adminDAO.delete(admin.getEmpno());
+		if (empno != null) {
+			result = adminDAO.delete(empno);
 		}
 		return result;
 	}

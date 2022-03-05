@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,6 @@ import com.admin.model.AdminService;
 import com.admin.model.AdminVO;
 
 @Controller
-@Scope("session")
 @RequestMapping("/adminManagement")
 public class AdminController {
 	@Autowired
@@ -86,17 +84,50 @@ public class AdminController {
 		model.addAttribute("AdminList", list);
 		return "backstage/admin/BS-admin_manage";
 	}
-	
-	@GetMapping("/AddAdmin")
-	public String AddAdmin() {
-		
-		return "backstage/admin/BS-admin_manage";
+
+	@PostMapping("/DeleteAdmin")
+	public String deleteAdmin(String action, String empno) {
+		if ("delete".equals(action)) {
+
+			Integer no = Integer.valueOf(empno.trim());
+			adminService.deleteAdmin(no);
+			System.out.println("已刪除管理員 :" + no + "!");
+		}
+		return "redirect:/MVC/adminManagement/AdminManage";
 	}
-	
-	
-	
-	
-	
+
+	@PostMapping("/UpdateAdmin")
+	public String updateAdmin(String action, String empno, String ename, String account) {
+		if ("update".equals(action)) {
+			AdminVO adminVO = new AdminVO();
+			adminVO.setEmpno(Integer.valueOf(empno.trim()));
+			adminVO.setEname(ename);
+			adminVO.setAccount(account);
+			adminService.updateAdmin(adminVO);
+			System.out.println("更新管理員" + empno + " ok!");
+		}
+		return "redirect:/MVC/adminManagement/AdminManage";
+	}
+
+	@PostMapping("/AddAdmin")
+	public String AddAdmin(String action, String ename, String account, String password) {
+		if ("addAdmin".equals(action)) {
+
+			AdminVO adminVO = new AdminVO();
+			adminVO.setEname(ename);
+			adminVO.setAccount(account);
+			adminVO.setPassword(password);
+			System.out.println("add" + ename + account + password);
+
+			if (adminService.addAdmin(adminVO)) {
+				System.out.println("新增新管理員!");
+			} else {
+				System.out.println("新增失敗!");
+			}
+		}
+		return "redirect:/MVC/adminManagement/AdminManage";
+	}
+
 	@RequestMapping(method = { RequestMethod.GET })
 	public String logout(String action, HttpSession session) {
 		if ("logout".equals(action)) {
