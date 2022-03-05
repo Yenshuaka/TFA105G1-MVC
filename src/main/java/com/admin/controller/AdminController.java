@@ -85,7 +85,7 @@ public class AdminController {
 		List<AdminVO> list = adminService.selectAll();
 		model.addAttribute("AdminList", list);
 		return "backstage/admin/BS-admin_manage";
-	}	
+	}
 	
 	@RequestMapping(method = { RequestMethod.GET })
 	public String logout(String action, HttpSession session) {
