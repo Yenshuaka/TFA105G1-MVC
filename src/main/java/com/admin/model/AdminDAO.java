@@ -8,6 +8,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.order.order.model.OrderBean;
+
 @Repository
 public class AdminDAO implements AdminDAOInterface {
 	@Autowired
@@ -75,7 +77,7 @@ public class AdminDAO implements AdminDAOInterface {
 
 	@Override
 	public List<AdminVO> select() {
-		return this.getSession().createQuery("from AdminVO", AdminVO.class).list();
+		return this.getSession().createQuery("FROM AdminVO", AdminVO.class).list();
 	}
 
 }

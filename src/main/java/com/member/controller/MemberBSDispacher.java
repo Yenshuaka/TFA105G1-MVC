@@ -21,7 +21,7 @@ import com.member.model.MemberVO;
 public class MemberBSDispacher {
 
 	@RequestMapping("/MemberManage")
-	public String memberManage(Model model, MemberService memberSvc, MemberVO memberVO) {
+	public String memberManage(Model model, MemberService memberSvc) {
 		List<MemberVO> list = memberSvc.getAll();
 		model.addAttribute("memberList", list);
 		return "backstage/member/BS-member_manage";

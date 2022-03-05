@@ -65,9 +65,10 @@ public class AdminService {
 		return result;
 	}
 
-	public List<AdminVO> select() {
-		List<AdminVO> result = adminDAO.select();
-		return result;
+	public List<AdminVO> selectAll() {
+		List<AdminVO> results = adminDAO.select();
+		return results;
+
 	}
 
 //	public static void main(String[] args) {

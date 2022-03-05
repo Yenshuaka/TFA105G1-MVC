@@ -81,8 +81,8 @@ public class AdminController {
 	}
 
 	@GetMapping("/AdminManage")
-	public String AdminManage(Model model, AdminService adminSvc, AdminVO adminVO) {
-		List<AdminVO> list = adminSvc.select();
+	public String AdminManage(Model model) {
+		List<AdminVO> list = adminService.selectAll();
 		model.addAttribute("AdminList", list);
 		return "backstage/admin/BS-admin_manage";
 	}	
