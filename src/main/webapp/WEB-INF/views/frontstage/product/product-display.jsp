@@ -558,6 +558,7 @@
 									List<Double> avg = (List<Double>)request.getAttribute("avg");
 									List<String> cities = (List<String>)request.getAttribute("cities");
 									List<Integer> orders = (List<Integer>)request.getAttribute("orders");
+									List<Boolean> exists = (List<Boolean>)request.getAttribute("exists");
 									
 									if(list2.size()==0){ out.print("<h5>查無資料!</h5>");} 
 							    %>      
@@ -569,8 +570,18 @@
 										<div class="col-md-6 no-pad-lr">
 											<div class="trending-img">
 												<img src="<%=request.getContextPath()%>/ProductImageReader?imgid=<%=imgids.get(i) %> " alt="#">
-												<span class="trending-rating-green"><%=avg.get(i) %></span> <span
-													class="save-btn"><i class="icofont-heart"></i></span>
+												<span class="trending-rating-green"><%=avg.get(i) %></span> 
+												<span onclick='addLikes(event)' class="save-btn">
+												
+<!-- 												<i class="icofont-heart"></i> -->
+												<% if(exists.get(i)){%>
+                                            	<i onclick='addLikes(event)' id='aaaa' class="ion-heart"></i> 
+                                            	<% }else {%>
+                                            	<i onclick='addLikes(event)' id='aaaa' class="ion-ios-heart-outline"></i>
+                                            	<% }%>
+                                            	
+												</span>
+												<input type='hidden' value='<%=list2.get(i).getProductid() %>'>
 											</div>
 										</div>
 										<div class="col-md-6 no-pad-lr">
@@ -971,6 +982,26 @@
 	
 	<script>
 	window.addEventListener('load', change);
+	
+	function addLikes(e){
+		console.log($(e.target).next().val());
+		$.ajax({
+         url: '<%=request.getContextPath() %>/AddLikes',
+         type: 'POST',
+         data: {
+         	productid: $(e.target).next().val()
+         },
+         dataType: "html",
+         success: function(res){
+             console.log("成功"); 
+             $(e.target).children().replaceWith(res);
+//              $('#aaaa').replaceWith(res);
+          
+             
+             
+         }
+     });    		
+	}
 	
 	
 	</script>
