@@ -3682,7 +3682,7 @@ ul.list-inline li {
                Footer section
 -----------------------------------------------*/
 .page-wrapper.fixed-footer {
-    margin-bottom: 465px;
+/*     margin-bottom: 465px; */
     position: relative;
     z-index: 1000;
     background-color: #fff;

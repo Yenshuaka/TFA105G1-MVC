@@ -26,7 +26,7 @@
 													<li><a href="<%=request.getContextPath() %>/MVC/ProductDisplayController?type=獨特體驗">獨特體驗</a></li>
 												</ul></li>
 											<li class="has-children"><a style="color: white"
-												href="#">關於我們</a></li>
+												href="<%=request.getContextPath()%>/order/About_us.jsp">關於我們</a></li>
 											<li class="has-children"><a style="color: white"
 												href="<%=request.getContextPath()%>/download/FS-my-profile.jsp">會員專區</a></li>
 											<li class="has-children"><a style="color: white"
