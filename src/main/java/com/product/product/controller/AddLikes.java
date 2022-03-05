@@ -49,10 +49,10 @@ public class AddLikes extends HttpServlet {
 		
 		if(!exist) {
 			jedis.rpush("會員收藏"+memberidstring, productid);	
-			out.write("<i onclick='addLikes(event)' id='aaaa' class=\"ion-heart\"></i>");
+			out.write("<i onclick='clickout(event)' id='aaaa' class=\"ion-heart\"></i>");
 		}else {
 			jedis.lrem("會員收藏"+memberidstring, 0, productid);
-			out.write("<i onclick='addLikes(event)' id='aaaa' class=\"ion-ios-heart-outline\"></i>");
+			out.write("<i onclick='clickout(event)' id='aaaa' class=\"ion-ios-heart-outline\"></i>");
 		}
 		
 		jedis.close();
