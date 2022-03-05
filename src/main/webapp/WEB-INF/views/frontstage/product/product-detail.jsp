@@ -1047,10 +1047,14 @@
          data: {
          	productid: $(e.target).next().val()
          },
-         dataType: "html",
+         dataType: "text",
          success: function(res){
-             console.log("成功"); 
-             $('#aaaa').replaceWith(res);
+             console.log("成功");
+             if(res=='login'){
+            	 window.location.assign("<%=request.getContextPath() %>/download/FS-login.jsp");
+             }else{
+             	$('#aaaa').replaceWith(res);
+             }
           
              
              

@@ -991,11 +991,15 @@
          data: {
          	productid: $(e.target).next().val()
          },
-         dataType: "html",
+         dataType: "text",
          success: function(res){
              console.log("成功"); 
-             $(e.target).children().replaceWith(res);
-//              $('#aaaa').replaceWith(res);
+//              $(e.target).children().replaceWith(res);
+             if(res=='login'){
+            	 window.location.assign("<%=request.getContextPath() %>/download/FS-login.jsp");
+             }else{
+            	 $(e.target).children().replaceWith(res);
+             }
           
              
              
