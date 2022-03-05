@@ -257,7 +257,7 @@
                                     <div class="trending-img">
                                         <img src="<%=request.getContextPath() %>/ProductImageReader?imgid=<%=imgids.get(i) %>" alt="#" style="height:233px">
 <!--                                         <span class="trending-rating-orange">6.5</span> -->
-                                        <span class="save-btn"><i class="icofont-heart"></i></span>
+<!--                                         <span class="save-btn"><i class="icofont-heart"></i></span> -->
                                     </div>
                                     <div class="trending-title-box">
                                         <h4><a href="<%=request.getContextPath() %>/MVC/ProductDetail?productid=<%=list.get(i).getProductid() %>"><%=list.get(i).getProductname() %></a></h4>

@@ -415,7 +415,7 @@
 <!--                                                 <i class="ion-ios-star"></i> -->
 <!--                                                 <i class="ion-ios-star-half"></i> -->
                                             </div>
-                                            <div class="views">Views : <span>325</span></div>
+<!--                                             <div class="views">Views : <span>325</span></div> -->
                                             
                                         </div>
                                         
