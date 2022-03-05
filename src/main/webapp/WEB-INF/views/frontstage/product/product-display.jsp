@@ -575,9 +575,9 @@
 												
 <!-- 												<i class="icofont-heart"></i> -->
 												<% if(exists.get(i)){%>
-                                            	<i onclick='addLikes(event)' id='aaaa' class="ion-heart"></i> 
+                                            	<i onclick='clickout(event)' id='aaaa' class="ion-heart"></i> 
                                             	<% }else {%>
-                                            	<i onclick='addLikes(event)' id='aaaa' class="ion-ios-heart-outline"></i>
+                                            	<i onclick='clickout(event)' id='aaaa' class="ion-ios-heart-outline"></i>
                                             	<% }%>
                                             	
 												</span>
@@ -1004,6 +1004,9 @@
 	}
 	
 	
+	function clickout(e){
+        $(e.target).parent().trigger('click');
+    }    
 	</script>
 
 </body>

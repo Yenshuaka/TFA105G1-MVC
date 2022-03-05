@@ -87,9 +87,9 @@
                                         <div class="save-btn">				<!-- ion-ios-heart-outline, ion-heart -->
                                             <a  onclick='addLikes(event)' class="btn v3 white">
                                             <% if(exist){%>
-                                            <i id='aaaa' class="ion-heart"></i> 
+                                            <i onclick='clickout(event)' id='aaaa' class="ion-heart"></i> 
                                             <% }else {%>
-                                            <i id='aaaa' class="ion-ios-heart-outline"></i>
+                                            <i onclick='clickout(event)' id='aaaa' class="ion-ios-heart-outline"></i>
                                             <% }%>
                                             
                                             Save</a>    
@@ -1123,7 +1123,9 @@
                                                             
     
                                                            
-                                                            
+    function clickout(e){
+        $(e.target).parent().trigger('click');
+    }                                                        
                                                             
     
 
