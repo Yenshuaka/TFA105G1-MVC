@@ -596,8 +596,8 @@ public class ProductDisplayController {
 				+ "                                                    	<form method=\"post\" action=\""+ req.getContextPath()+"/MVC/DeleteComment\">\r\n"
 				+ "<!--                                                         <a href=\"#\" class=\"rate-review float-left\"><i class=\"icofont-thumbs-up\"></i><span>2</span></a> -->\r\n"
 				+ "                                                        <input type=\"submit\" value=\"刪除\" class=\"rate-review float-right\">\r\n"
-				+ "                                                        <a href=\"#\" class=\"rate-review float-right\"><i class=\"icofont-pencil\"></i>修改</a>\r\n"
-				+ "                                                        <input type=\"hidden\" name=\"commentid\" value=\" "+ bean.getCommentid()+"\">\r\n"
+				+ "                                                        <input type=\"button\" value=\"修改\" class=\"rate-review float-right updatecomment\" onclick=\"update(event)\">\r\n"
+				+ "                                                        <input type=\"hidden\" name=\"commentid\" value=\""+ bean.getCommentid()+"\">\r\n"
 				+ "                                                        <input type=\"hidden\" name=\"productid\" value=\""+ productid +"\">\r\n"
 				+ "                                                        \r\n"
 				+ "                                                        </form>\r\n"
@@ -622,7 +622,29 @@ public class ProductDisplayController {
 	
 	
 	
-	
+	@RequestMapping("/UpdateComment")
+	public String updateComment(HttpSession session, String commentid, String productid, String commentcontext,
+			String score) {
+		
+		
+		ProductCommentBean bean = new ProductCommentBean();
+		
+		Integer memberid = (Integer) session.getAttribute("memberid");
+		Integer score1 = Integer.valueOf(score);
+
+		bean.setCommentid(Integer.valueOf(commentid));
+		bean.setMemberid(memberid);
+		bean.setProductid(Integer.valueOf(productid));
+		bean.setCommentcontext(commentcontext);
+		bean.setScore(score1);
+		bean.setCommentrewardpoints(10);
+		bean.setCommenttime(new Timestamp(System.currentTimeMillis()));
+		
+		productCommentService.update(bean);
+		
+		
+		return "redirect:/MVC/ProductDetail?productid=" + productid + "#reviews";
+	}
 	
 	
 	
