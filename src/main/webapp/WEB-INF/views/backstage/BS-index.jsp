@@ -78,7 +78,7 @@
 				<h2>
 					<%=session.getAttribute("adminVO")%>
 				</h2>
-				<img alt="home" src="images/bg/Home-web-icon.svg">
+				<img alt="home" src="<%=request.getContextPath()%>/download/images/bg/Home-web-icon.svg">
 				<!--Dashboard content ends-->
 
 			</div>

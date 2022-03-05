@@ -1,10 +1,6 @@
 package com.admin.controller;
 
-import java.lang.ProcessBuilder.Redirect;
-import java.net.http.HttpRequest;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -63,7 +60,7 @@ public class AdminController {
 			AdminVO adminVO = adminService.loginAdmin(admin);
 			if (adminVO != null) {
 				session.setAttribute("adminVO", adminVO);
-				return "backstage/BS-index";
+				return "redirect:/MVC/adminManagement/Index";
 			} else {
 				errorMsgs.put("result", "帳號密碼錯誤! 請重新輸入");
 				System.out.println("帳號密碼錯");
@@ -78,6 +75,18 @@ public class AdminController {
 		return null;
 	}
 
+	@GetMapping("/Index")
+	public String BSindex() {
+		return "backstage/BS-index";
+	}
+
+	@GetMapping("/AdminManage")
+	public String AdminManage(Model model, AdminService adminSvc, AdminVO adminVO) {
+		List<AdminVO> list = adminSvc.select();
+		model.addAttribute("AdminList", list);
+		return "backstage/admin/BS-admin_manage";
+	}	
+	
 	@RequestMapping(method = { RequestMethod.GET })
 	public String logout(String action, HttpSession session) {
 		if ("logout".equals(action)) {

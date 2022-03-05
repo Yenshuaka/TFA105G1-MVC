@@ -75,7 +75,7 @@ public class AdminDAO implements AdminDAOInterface {
 
 	@Override
 	public List<AdminVO> select() {
-		return this.getSession().createQuery("FROM AdminVO", AdminVO.class).list();
+		return this.getSession().createQuery("from AdminVO", AdminVO.class).list();
 	}
 
 }

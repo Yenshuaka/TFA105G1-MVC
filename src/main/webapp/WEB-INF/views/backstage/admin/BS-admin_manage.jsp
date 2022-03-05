@@ -1,12 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.member.model.*"%>
-<%-- <% --%>
-// MemberService memberSvc = new MemberService();
-// List<MemberVO> list = memberSvc.getAll();
-// pageContext.setAttribute("list", list);
-<%-- %> --%>
+<%@ page import="com.admin.model.*"%>
+
 
 <html lang="en">
 
@@ -67,23 +63,14 @@
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
 											<li class="active"><a href="#">Home</a></li>
-											<li>會員管理</li>
+											<li>管理員管理</li>
 										</ul>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<%-- 錯誤表列 --%>
-				<c:if test="${not empty errorMsgs}">
-					<font style="color: red">請修正以下錯誤:</font>
-					<ul>
-						<c:forEach var="message" items="${errorMsgs}">
-							<li style="color: red">${message}</li>
-						</c:forEach>
-					</ul>
-				</c:if>
+				</div>				
 			</div>
 			<!--Dashboard breadcrumb ends-->
 			<!--Dashboard content starts-->
@@ -94,7 +81,7 @@
 							<div class="invoice-panel">
 								<div class="act-title">
 									<h5>
-										<i class="ion-person"></i>會員資料 <a class="btn v2"
+										<i class="ion-person"></i>管理員列表 <a class="btn v2"
 											href="<%=request.getContextPath()%>/MVC/MemberDispacher/AddMember">新增</a>										
 									</h5>
 								</div>
@@ -104,33 +91,22 @@
 											<thead>
 												<tr class="invoice-headings" style="text-align: center">
 													<th>No.</th>
-													<th>Email</th>
-													<th>頭像</th>
-													<th>姓</th>
-													<th>名</th>
-													<th>性別</th>
-													<th>生日</th>
-													<th>身分證字號</th>
+													<th>姓名</th>
+													<th>帳號</th>							
 												</tr>
 											</thead>
-											<c:forEach var="memberVO" items="${list}">
+											<c:forEach var="adminVO" items="${AdminList}">
 												<tbody>
 													<tr style="text-align: center; padding: 10 0">
-														<td>${memberVO.memberid}</td>
-														<td>${memberVO.email}</td>
-														<td><a href="<%=request.getContextPath()%>/MVC/MemberDispacher/MemberUpdatePic?memberid=${memberVO.memberid}">
-														<img alt="${memberVO.memberid}" src="<%=request.getContextPath()%>/member/member.pic?memberid=${memberVO.memberid}" width="60px"></a></td>
-														<td>${memberVO.lastname}</td>
-														<td>${memberVO.firstname}</td>
-														<td>${memberVO.gender}</td>
-														<td>${memberVO.dateofbirth}</td>
-														<td>${memberVO.idno}</td>
+														<td>${adminVO.empno}</td>
+														<td>${adminVO.ename}</td>
+														<td>${adminVO.account}</td>
 														<td>
 															<FORM METHOD="post"
 																ACTION="<%=request.getContextPath()%>/member/member.do">
 																<input type="submit" class="btn v2" value="編輯">
 																<input type="hidden" name="memberid"
-																	value="${memberVO.memberid}"> <input
+																	value="${adminVO.empno}"> <input
 																	type="hidden" name="action" value="getOne_For_Update">
 															</FORM>
 														</td>
@@ -139,7 +115,7 @@
 																ACTION="<%=request.getContextPath()%>/member/member.do">
 																<input type="submit" class="btn v2" value="刪除">
 																<input type="hidden" name="memberid"
-																	value="${memberVO.memberid}"> <input
+																	value="${adminVO.empno}"> <input
 																	type="hidden" name="action" value="delete">
 															</FORM>
 														</td>

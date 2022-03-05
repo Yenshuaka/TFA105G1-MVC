@@ -48,7 +48,7 @@
                         </li>
 
                         <li>
-                            <a href="db-favourites.html">
+                            <a href="<%=request.getContextPath()%>/MVC/adminManagement/AdminManage">
                                 <i class="ion-ios-heart-outline"></i>admin管理</a>
                         </li>
                         
