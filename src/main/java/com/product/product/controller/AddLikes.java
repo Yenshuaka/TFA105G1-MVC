@@ -26,9 +26,10 @@ public class AddLikes extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
 		if(session.getAttribute("memberid")==null) {		
-			RequestDispatcher failureView = request
-					.getRequestDispatcher("/WEB-INF/views/frontstage/member/FS-login.jsp");
-			failureView.forward(request, response);
+//			RequestDispatcher failureView = request
+//					.getRequestDispatcher("/WEB-INF/views/frontstage/member/FS-login.jsp");
+//			failureView.forward(request, response);
+			response.sendRedirect("/WEB-INF/views/frontstage/member/FS-login.jsp");
 			return;
 		}
 		

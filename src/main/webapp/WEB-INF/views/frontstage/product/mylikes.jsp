@@ -30,7 +30,7 @@
     <!--color switcher css-->
     <link rel="stylesheet" href="css/switcher/skin-aqua.css" media="screen" id="style-colors" />
     <!-- Document Title -->
-    <title>會員中心/我的收藏</title>
+    <title>會員專區/我的收藏</title>
 
 </head>
 
@@ -362,7 +362,7 @@
                                 <div class="dash-breadcrumb-left">
                                     <div class="breadcrumb-menu text-right sm-left">
                                         <ul>
-                                            <li class="active"><a href="#">會員中心</a></li>
+                                            <li class="active"><a href="<%=request.getContextPath() %>/download/FS-my-profile.jsp">會員專區</a></li>
                                             <li class="active"><a href="<%=request.getContextPath() %>/MVC/Mylikes">我的收藏</a></li>
                                             <!-- <li>My Listings</li> -->
                                         </ul>
