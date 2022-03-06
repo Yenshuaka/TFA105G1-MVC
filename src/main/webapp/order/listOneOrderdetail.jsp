@@ -177,7 +177,7 @@ td {
 											<th>商品名稱</th>
 											<th>人數</th>
 											<th>商品價格</th>
-											<th>回饋點數</th>
+<!-- 											<th>回饋點數</th> -->
 											<th>特殊需求</th>
 											<th>團員表</th>
 <!-- 											<th>修改</th> -->
@@ -209,7 +209,7 @@ td {
 												<td><%=productname%></td>
 												<td><%=list.get(i).getNumberoftraveler()%></td>
 												<td><%=list.get(i).getProductprice()%></td>
-												<td><%=list.get(i).getOrderrewardpoints()%></td>
+<%-- 												<td><%=list.get(i).getOrderrewardpoints()%></td> --%>
 												<td><%=list.get(i).getSpecialneeds()%></td>
 
 												<td>

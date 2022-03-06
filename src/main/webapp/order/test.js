@@ -2,6 +2,8 @@ var book_last_name = $("#book_last_name").val();
 var book_first_name = $("#book_first_name").val();
 var book_id = $("#book_id").val();
 
+
+
 $(".same_traveler").on("change", function(e) {
 	// console.log(e.target);
 	$(e.target).closest("div.traveler_infor").find(".traveler_last_name").val(book_last_name);
