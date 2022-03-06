@@ -124,9 +124,10 @@ pageContext.setAttribute("orderBean", orderBean);
 								</h5>
 							</div>
 
+								<%@ include file="page1.file"%>
 
-
-							<c:forEach var="orderBean" items="${orderBean}">
+							<c:forEach var="orderBean" items="${orderBean}" begin="<%=pageIndex%>"
+                                            end="<%=pageIndex+rowsPerPage-1%>">
 
 								<div class="viewd-item-wrap">
 									<div class="most-viewed-item">
@@ -178,9 +179,10 @@ pageContext.setAttribute("orderBean", orderBean);
 
 								</div>
 								<hr>
+								
 
 							</c:forEach>
-
+					<%@ include file="page2.file"%>
 						</div>
 					</div>
 				</div>

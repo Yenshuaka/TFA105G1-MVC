@@ -36,6 +36,8 @@
 <!-- style.css 1575-1585-->
 
 <style>
+
+
 	.form_control {
 		width: 211px;
 		height: 44px;
@@ -131,7 +133,7 @@
 	}
 
 	.buyer_board {
-		height: 500px;
+		height: inherit;
 	}
 
 	.traveler_board {
@@ -192,7 +194,6 @@
 			<div class="buyer_board">
 				<div class="txt">訂購人資料</div>
 				<div>
-								錯誤表列
 								<c:if test="${not empty errorMsgs}">
 									<font style="color: red">請修正以下錯誤:</font>
 									<ul>
@@ -364,7 +365,8 @@
 						class="require_mark">*</span><br> <select
 						style="margin-left: 10px" name="numberoftraveler"
 						id="<%=productname%>" class="numberoftraveler <%=productname%>"
-						productname="<%=productname%>" value="<%= (orderdetailBean==null)? "" : orderdetailBean.getNumberoftraveler()%>">
+						productname="<%=productname%>" 
+						value="<%= (orderdetailBean==null)? "" : orderdetailBean.getNumberoftraveler()%>">
 						<option disabled="disabled" selected>請選擇</option>
 						<option value="1">1</option>
 						<option value="2">2</option>
@@ -418,14 +420,15 @@
 								<label style="margin-left: 10px">姓氏<span
 									class="require_mark">*</span><br></label> <br> <input
 									style="margin-left: 10px" type="text" name="lastname"
-									class="traveler_last_name" id="traveler_last_name${i}">
+									class="traveler_last_name" id="traveler_last_name${i}"
+									value="<%= (travelerlistBean==null)? "" : travelerlistBean.getLastname()%>">
 								<div class="tip_text_danger">此欄位必填</div>
 							</div>
 							<div class="form_group">
 								<label>名字</label><span class="require_mark">*</span><br> <input
 									type="text" name="firstname" class="traveler_first_name"
 									id="traveler_first_name" 
-									>
+									value= "<%= (travelerlistBean==null)? "" : travelerlistBean.getFirstname()%>">
 								<div class="tip_text_danger">此欄位必填</div>
 							</div>
 						</div>

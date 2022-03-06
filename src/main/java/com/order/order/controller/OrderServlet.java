@@ -143,12 +143,12 @@ public class OrderServlet extends HttpServlet implements Serializable {
 						System.out.println("numberoftravelers[i] = " + Integer.valueOf(numberoftravelers[i]));
 
 						String[] lastnames = req.getParameterValues("lastname");
-//							String lnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
-//							if (lastnames[a] == null || lastnames[a].trim().length() == 0) {
-//								errorMsgs.add("旅客姓: 請勿空白");
-//							} else if (!lastnames[a].matches(lnameReg)) { // 以下練習正則(規)表示式(regular-expression)
-//								errorMsgs.add("旅客姓: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
-//							}
+							String lnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+							if (lastnames[a] == null || lastnames[a].trim().length() == 0) {
+								errorMsgs.add("旅客姓: 請勿空白");
+							} else if (!lastnames[a].matches(lnameReg)) { // 以下練習正則(規)表示式(regular-expression)
+								errorMsgs.add("旅客姓: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
+							}
 
 						String[] firstnames = req.getParameterValues("firstname");
 						String fnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
@@ -159,15 +159,19 @@ public class OrderServlet extends HttpServlet implements Serializable {
 						}
 
 						String[] genders = req.getParameterValues("gender");
+						
 						String[] birthdays = req.getParameterValues("birthday");
+						if (birthdays[a] == null || birthdays[a].trim().length() == 0) {
+							errorMsgs.add("身分證字號: 請勿空白");
+						}
 
 						String[] idnos = req.getParameterValues("idno");
-//							String idnoReg = "^[(a-zA-Z0-9)]{10}$";
-//							if (idnos[a] == null || idnos[a].trim().length() == 0) {
-//								errorMsgs.add("身分證字號: 請勿空白");
-//							} else if (!idnos[a].trim().matches(idnoReg)) { // 以下練習正則(規)表示式(regular-expression)
-//								errorMsgs.add("身分證字號: 英文字母、數字 , 且長度必需在10");
-//							}
+							String idnoReg = "^[(a-zA-Z0-9)]{10}$";
+							if (idnos[a] == null || idnos[a].trim().length() == 0) {
+								errorMsgs.add("身分證字號: 請勿空白");
+							} else if (!idnos[a].trim().matches(idnoReg)) { // 以下練習正則(規)表示式(regular-expression)
+								errorMsgs.add("身分證字號: 英文字母、數字 , 且長度必需在10");
+							}
 
 						bean3.setOrderdetailno(bean2.getOrderdetailno());
 						bean3.setLastname(lastnames[a]);

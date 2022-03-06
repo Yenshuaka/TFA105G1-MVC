@@ -1,16 +1,17 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
   <%if (rowsPerPage<rowNumber) {%>
     <%if(pageIndex>=rowsPerPage){%>
-        <A href="<%=request.getRequestURI()%>?whichPage=1">¶‹≤ƒ§@≠∂</A>&nbsp;
-        <A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">§W§@≠∂ </A>&nbsp;
+        <A href="<%=request.getRequestURI()%>?whichPage=1">Ëá≥Á¨¨‰∏ÄÈ†Å</A>&nbsp;
+        <A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">‰∏ä‰∏ÄÈ†Å </A>&nbsp;
     <%}%>
   
     <%if(pageIndex<pageIndexArray[pageNumber-1]){%>
     
         <A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>" 
-        style="margin-left:700px">§U§@≠∂ </A>&nbsp;
-        <A href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>">¶‹≥Ã´·§@≠∂</A>&nbsp;
+        style="margin-left:700px; color:#777;font-weight:400;font-size:16px">‰∏ã‰∏ÄÈ†Å </A>&nbsp;
+        <A href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>"
+        style="color:#777;font-weight:400;font-size:16px">Ëá≥ÊúÄÂæå‰∏ÄÈ†Å</A>&nbsp;
   
     <%}%>
   <%}%>  
@@ -19,11 +20,47 @@
 
   <%if (pageNumber>1) {%>
     <FORM METHOD="post" ACTION="<%=request.getRequestURI()%>">   
-       <select size="1" name="whichPage">
+       <select class="which" size="1" name="whichPage">
          <%for (int i=1; i<=pageNumber; i++){%>
-            <option value="<%=i%>">∏ı¶‹≤ƒ<%=i%>≠∂
+            <option value="<%=i%>">Ë∑≥Ëá≥Á¨¨<%=i%>È†Å
          <%}%> 
        </select>
-       <input type="submit" value="ΩT©w" >  
+       <input type="submit" class="send" value="Á¢∫ÂÆö" >  
     </FORM>
   <%}%>
+  
+  <style>
+  .send{
+    color: #fff;
+    border: 1px solid transparent;
+    padding: 9px 15px;
+    border-radius: 10px;
+    background: #FD901B;
+    line-height: 1;
+    height: 30px;
+  }
+  
+  .send:hover {
+	color: black;
+	border: 1px solid #BDC1CA;
+	font-weight: bold;
+}
+
+.which {
+    background-color: transparent;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+    clear: both;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 40px;
+    padding-left: 60px;
+    padding-right: 10px;
+    position: relative;
+    text-align: left !important;
+    user-select: none;
+    margin-left: 650px;
+    font-weight:400;
+ }   
+  </style>

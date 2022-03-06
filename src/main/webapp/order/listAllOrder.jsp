@@ -177,7 +177,7 @@ border-bottom: 1px solid gray;
 											<th>姓</th>
 											<th>名</th>
 											<th>訂單總金額</th>
-											<th>折抵點數</th>
+<!-- 											<th>折抵點數</th> -->
 											<th>訂單明細</th>
 										</tr>
 
@@ -195,14 +195,19 @@ border-bottom: 1px solid gray;
 												<input type="submit" value="送出" class="send">
 											</div>
 										</FORM>
+										
 
-										<%-- 										<c:forEach var="orderBean" items="${list}"> --%>
-
+										
 										<%
 										List<OrderBean> list = (List) session.getAttribute("list");
 										List<OrderdetailBean> list123 = (List) session.getAttribute("list123");
 										List<MemberVO> allMembers = (List<MemberVO>) session.getAttribute("allMembers");
 										%>
+<%-- 										<%pageContext.setAttribute("list", list); %> --%>
+<%-- 										<%@ include file="page1.file"%> --%>
+<%-- 										<c:forEach var="list" items="${list}" begin="<%=pageIndex%>" --%>
+<%--                                             end="<%=pageIndex+rowsPerPage-1%>"> --%>
+										
 										<%
 										for (int i = 0; i < list.size(); i++) {
 										%>
@@ -253,7 +258,7 @@ border-bottom: 1px solid gray;
 												}
 											}
 											%>
-											<td><%=total%></td>
+<%-- 											<td><%=total%></td> --%>
 
 
 											<td>
@@ -295,8 +300,9 @@ border-bottom: 1px solid gray;
 											<!-- 													</FORM> -->
 											<!-- 												</td> -->
 										</tr>
-										<%-- 										</c:forEach> --%>
+<%-- 									</c:forEach> --%>
 									</table>
+<%-- 									<%@ include file="page2.file"%> --%>
 
 
 
