@@ -165,7 +165,7 @@ td {
 
 								<div class="viewd-item-wrap">
 									<h4>
-										<a class="move" href="listAllOrder.jsp">回訂單首頁</a>
+										<a class="move" href="<%=request.getContextPath()%>/order.do">回訂單首頁</a>
 									</h4>
 
 

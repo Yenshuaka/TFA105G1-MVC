@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="redis.clients.jedis.Jedis"%>
 <header class="header transparent scroll-hide">
 			<!--Main Menu starts-->
 			<div class="site-navbar-wrap v2"
@@ -27,14 +26,13 @@
 													<li><a href="<%=request.getContextPath() %>/MVC/ProductDisplayController?type=獨特體驗">獨特體驗</a></li>
 												</ul></li>
 											<li class="has-children"><a style="color: white"
-												href="#">關於我們</a></li>
+												href="<%=request.getContextPath()%>/order/About_us.jsp">關於我們</a></li>
 											<li class="has-children"><a style="color: white"
 												href="<%=request.getContextPath()%>/download/FS-my-profile.jsp">會員專區</a></li>
-												<li class="has-children">
-												<%=session.getAttribute("memberVO") == null ? 
-													"<a style='color: white' href='" + request.getContextPath() + "/download/FS-login.jsp' >登入/註冊</a>"	:
-													"<a style='color: white' href='" + request.getContextPath() + "/member/member.login?action=logout' >登出</a>"%>
-												</li>
+											<li class="has-children"><a style="color: white"
+												href="<%=session.getAttribute("memberVO") == null ? request.getContextPath() + "/download/FS-login.jsp"
+		: request.getContextPath() + "/member/member.login?action=logout"%>"><%=session.getAttribute("memberVO") == null ? "登入/註冊" : "登出"%></a>
+											</li>
 											<li class="d-lg-none"><a class="btn v1"
 												href="add-listing.html">Add Listing <i
 													class="ion-plus-round"></i></a></li>
@@ -46,21 +44,9 @@
 										class="ion-android-menu"></span>
 									</a>
 								</div>
-								<% 
-									Jedis jedis = new Jedis("localhost", 6379);
-									long xx = 0;
-									if(session.getAttribute("memberid")!=null){
-										Integer memberid = (Integer)session.getAttribute("memberid");
-										String memberidstring = String.valueOf(memberid);
-										xx = jedis.llen("會員"+memberidstring);									
-									}						
-									
-									jedis.close();								
-								
-								%>
 								<div class="add-list float-right">
 									<a class="btn v8" href="<%= request.getContextPath() %>/MVC/ShoppingCart">購物車 <i
-										class="icofont-shopping-cart">&nbsp<span class='cartqty'><%=xx %></span></i></a>
+										class="icofont-shopping-cart">&nbsp3</i></a>
 								</div>
 							</div>
 						</div>

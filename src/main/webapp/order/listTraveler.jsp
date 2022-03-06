@@ -122,7 +122,8 @@ td {
 											<li class="active"><a href="#">Home</a></li>
 											<li class="active"><a
 												href="<%=request.getContextPath()%>/order.do">訂單首頁</a></li>
-											<li class="active"><a href="listOneOrderdetail.jsp">訂單明細</a></li>
+											<li class="active">
+						<a href="<%=request.getContextPath()%>/orderdetail.do">訂單明細</a></li>
 											<li>團員表</li>
 										</ul>
 									</div>
@@ -149,7 +150,7 @@ td {
 
 								<div class="viewd-item-wrap">
 									<h4>
-										<a class="move" href="listAllOrder.jsp">回訂單首頁</a>
+										<a class="move" href="<%=request.getContextPath()%>/order.do">回訂單首頁</a>
 									</h4>
 
 									<table>

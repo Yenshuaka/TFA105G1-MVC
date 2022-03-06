@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -84,12 +85,15 @@ public class OrderServlet extends HttpServlet implements Serializable {
 
 		if ("insert".equals(action)) { // 來自add-post.jsp的請求
 
+			HttpSession session = req.getSession();
+			List<String> errorMsgs = new LinkedList<String>();
+			session.setAttribute("errorMsgs", errorMsgs);
+
 			try {
 				// order
-				HttpSession session = req.getSession();
+				
 				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 				Integer memberid1 = memberVO.getMemberid();
-//				Integer memberid1 = (Integer)session.getAttribute("memberid");//抓session傳入資料庫
 				Integer orderpriceamount = Integer.parseInt(req.getParameter("orderpriceamount").trim());
 //				Integer usedfunpoints = Integer.parseInt(req.getParameter("usedfunpoints").trim());
 
@@ -108,31 +112,24 @@ public class OrderServlet extends HttpServlet implements Serializable {
 
 				/// orderdetail
 
-//				List<OrderdetailBean> orderdetailBeans = new ArrayList();
-
 				String[] productids = req.getParameterValues("productid"); // 跑迴圈裝進bean
 				String[] numberoftravelers = req.getParameterValues("numberoftraveler");
-				for(int i =0;i<numberoftravelers.length;i++) {
+				for (int i = 0; i < numberoftravelers.length; i++) {
 					System.out.println("numberoftravelers = " + numberoftravelers[i]);
 				}
-				
+
 				String[] productprices = req.getParameterValues("productprice");
-//				String[] orderrewardpoints = req.getParameterValues("orderrewardpoints");
+				//String[] orderrewardpoints = req.getParameterValues("orderrewardpoints");
 				String[] specialneeds = req.getParameterValues("specialneeds");
 				String[] imgids = req.getParameterValues("imgid");
-
-//				Integer productid = Integer.parseInt(req.getParameter("productid").trim());
-//				Integer numberoftraveler = Integer.parseInt(req.getParameter("numberoftraveler").trim());
-//				Integer orderrewardpoints = Integer.parseInt(req.getParameter("orderrewardpoints").trim());
-//				String specialneeds = req.getParameter("specialneeds");
-//				Integer productprice = Integer.parseInt(req.getParameter("productprice").trim());
 
 				OrderdetailBean bean2 = new OrderdetailBean();
 				bean2.setOrderid(bean.getOrderid());
 				TravelerlistBean bean3 = new TravelerlistBean();
+				
 				int a = 0;
 				for (int i = 0; i < productids.length; i++) {
-					
+
 					bean2.setProductid(Integer.valueOf(productids[i]));
 					bean2.setNumberoftraveler(Integer.valueOf(numberoftravelers[i]));
 					bean2.setProductprice(Integer.valueOf(productprices[i]));
@@ -142,80 +139,127 @@ public class OrderServlet extends HttpServlet implements Serializable {
 
 					orderdetailService.insert(bean2);
 
-				
+					for (int j = 0; j < Integer.valueOf(numberoftravelers[i]); j++) {
+						System.out.println("numberoftravelers[i] = " + Integer.valueOf(numberoftravelers[i]));
 
-//					TravelerlistBean bean3 = new TravelerlistBean();
-//
-//					bean3.setOrderdetailno(bean2.getOrderdetailno());
+						String[] lastnames = req.getParameterValues("lastname");
+//							String lnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+//							if (lastnames[a] == null || lastnames[a].trim().length() == 0) {
+//								errorMsgs.add("旅客姓: 請勿空白");
+//							} else if (!lastnames[a].matches(lnameReg)) { // 以下練習正則(規)表示式(regular-expression)
+//								errorMsgs.add("旅客姓: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
+//							}
 
-						for (int j = 0; j < Integer.valueOf(numberoftravelers[i]); j++) {
-							System.out.println("numberoftravelers[i] = " + Integer.valueOf(numberoftravelers[i]));
-							String[] lastnames = req.getParameterValues("lastname");
-							System.out.println("lastnames = " + lastnames);
-							String[] firstnames = req.getParameterValues("firstname");
-							String[] genders = req.getParameterValues("gender");
-							String[] birthdays = req.getParameterValues("birthday");
-							String[] idnos = req.getParameterValues("idno");
-							
-							bean3.setOrderdetailno(bean2.getOrderdetailno());
-							bean3.setLastname(lastnames[a]);
-							bean3.setFirstname(firstnames[a]);
-							bean3.setGender(genders[a]);
-							bean3.setBirthday(Date.valueOf(birthdays[a]));
-							bean3.setIdno(idnos[a]);
-							travelerlistService.insert(bean3);
-							System.out.println("a = " + a);
-							System.out.println(lastnames[a]);
-							a++;
+						String[] firstnames = req.getParameterValues("firstname");
+						String fnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+						if (firstnames[a] == null || firstnames[a].trim().length() == 0) {
+							errorMsgs.add("旅客名: 請勿空白");
+						} else if (!firstnames[a].trim().matches(fnameReg)) { // 以下練習正則(規)表示式(regular-expression)
+							errorMsgs.add("旅客名: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
 						}
+
+						String[] genders = req.getParameterValues("gender");
+						String[] birthdays = req.getParameterValues("birthday");
+
+						String[] idnos = req.getParameterValues("idno");
+//							String idnoReg = "^[(a-zA-Z0-9)]{10}$";
+//							if (idnos[a] == null || idnos[a].trim().length() == 0) {
+//								errorMsgs.add("身分證字號: 請勿空白");
+//							} else if (!idnos[a].trim().matches(idnoReg)) { // 以下練習正則(規)表示式(regular-expression)
+//								errorMsgs.add("身分證字號: 英文字母、數字 , 且長度必需在10");
+//							}
+
+						bean3.setOrderdetailno(bean2.getOrderdetailno());
+						bean3.setLastname(lastnames[a]);
+						bean3.setFirstname(firstnames[a]);
+						bean3.setGender(genders[a]);
+						bean3.setBirthday(Date.valueOf(birthdays[a]));
+						bean3.setIdno(idnos[a]);
+						
+//						// Send the use back to the form, if there were errors
+						if (!errorMsgs.isEmpty()) {
+							session.setAttribute("travelernumber", bean2);
+							session.setAttribute("traveler", bean3); // 含有輸入格式錯誤的empVO物件,也存入req
+							RequestDispatcher failureView = req.getRequestDispatcher("/order/orderbooking.jsp");
+							failureView.forward(req, res);
+							return;
+						}
+						
+						
+						travelerlistService.insert(bean3);
+						System.out.println("a = " + a);
+						System.out.println(lastnames[a]);
+						a++;
 					}
+				}
+				String url = ("order.do?action=memberUpdate");
+				RequestDispatcher sucessview = req.getRequestDispatcher(url);
+				sucessview.forward(req, res);
 
-//				}
+			} catch (Exception e) {
+//				e.printStackTrace();
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/order/orderbooking.jsp");
+				failureView.forward(req, res);
+				System.out.print("新增資料失敗");
+			}
+		}
 
-				// traveler
-//				String lastname = req.getParameter("lastname");
-//				String firstname = req.getParameter("firstname");
-//				String gender = req.getParameter("gender");
-//				Date birthday = Date.valueOf(req.getParameter("birthday").trim());
-//				String idno = req.getParameter("idno");
+		if ("memberUpdate".equals(action)) {
 
-//				String[] lastnames = req.getParameterValues("lastname");
-//				String[] firstnames = req.getParameterValues("firstname");
-//				String[] genders = req.getParameterValues("gender");
-//				String[] birthdays = req.getParameterValues("birthday");
-//				String[] idnos = req.getParameterValues("idno");
-//
-//				TravelerlistBean bean3 = new TravelerlistBean();
-//
-//				bean3.setOrderdetailno(bean2.getOrderdetailno());
-//
-//				for (int k = 0; k < productids.length; k++) {
-//					bean3.setOrderdetailno(bean2.getOrderdetailno());
-//					for (int i = 0; i < numberoftravelers.length; i++) {
-//
-//						bean3.setLastname(lastnames[i]);
-//						bean3.setFirstname(firstnames[i]);
-//						bean3.setGender(genders[i]);
-//						bean3.setBirthday(Date.valueOf(birthdays[i]));
-//						bean3.setIdno(idnos[i]);
-//						travelerlistService.insert(bean3);
-//					}
-//				}
+			HttpSession session = req.getSession();
+			List<String> errorMsgs = new LinkedList<String>();
+			session.setAttribute("errorMsgs", errorMsgs);
 
-//				bean3.setOrderdetailno(bean2.getOrderdetailno());
-//				bean3.setLastname(lastname);
-//				bean3.setFirstname(firstname);
-//				bean3.setGender(gender);
-//				bean3.setBirthday(birthday);
-//				bean3.setIdno(idno);
+			try {
 
 				// 更新會員資料
+				
+
+				MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+				Integer memberid1 = memberVO.getMemberid();
+
 				Integer memberid = (Integer) session.getAttribute("memberid");
+
 				String memberLastname = req.getParameter("memberLastname");
+				String lnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+				if (memberLastname == null || memberLastname.trim().length() == 0) {
+					errorMsgs.add("會員姓: 請勿空白");
+				} else if (!memberLastname.trim().matches(lnameReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("會員姓: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
+				}
+
 				String memberFirstname = req.getParameter("memberFirstname");
+				String fnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+				if (memberFirstname == null || memberFirstname.trim().length() == 0) {
+					errorMsgs.add("會員名: 請勿空白");
+				} else if (!memberFirstname.trim().matches(fnameReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("會員姓名: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
+				}
+
 				String memberPhone = req.getParameter("memberPhone");
+				String phoneReg = "^[(0-9)]{10}$";
+				if (memberPhone == null || memberPhone.trim().length() == 0) {
+					errorMsgs.add("手機: 請勿空白");
+				} else if (!memberPhone.trim().matches(phoneReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("手機: 數字 , 且長度必需在10");
+				}
+
 				String memberEmail = req.getParameter("memberEmail");
+				String emailReg = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
+				if (memberEmail == null || memberEmail.trim().length() == 0) {
+					errorMsgs.add("帳號: 請勿空白");
+				} else if (!memberEmail.trim().matches(emailReg)) {
+					errorMsgs.add("帳號: 請輸入英文字母、數字和 _ , - 且含@ + 信箱網域");
+				}
+
 				String memberIdno = req.getParameter("memberIdno");
+				String idnoReg = "^[(a-zA-Z0-9)]{10}$";
+				if (memberIdno == null || memberIdno.trim().length() == 0) {
+					errorMsgs.add("身分證字號: 請勿空白");
+				} else if (!memberIdno.trim().matches(idnoReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("身分證字號: 英文字母、數字 , 且長度必需在10");
+				}
 
 //				System.out.println("memberid = " + memberid);
 //				System.out.println("memberLastname = " + memberLastname);
@@ -240,10 +284,6 @@ public class OrderServlet extends HttpServlet implements Serializable {
 				jedis.del("會員" + memberid);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-//				List<OrderBean> list = orderService.select(bean);//新增完成後，秀出剩餘訂單
-//
-//				HttpSession session = req.getSession();
-//				session.setAttribute("orderBean", list.get(0));//why新增用list.get(0)，但刪除用list就好?
 
 				String url = "order/booking_confirm.jsp";
 				res.sendRedirect(url);
@@ -251,154 +291,12 @@ public class OrderServlet extends HttpServlet implements Serializable {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				e.printStackTrace();
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/emp/addEmp.jsp");
-//				failureView.forward(req, res);
-				System.out.print("新增資料失敗");
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/order/orderbooking.jsp");
+				failureView.forward(req, res);
+				System.out.print("會員更新失敗");
 			}
 		}
-
-//		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
-//
-//			try {
-//				/*************************** 1.接收請求參數 ****************************************/
-//				Integer orderid = new Integer(req.getParameter("orderid"));
-//				System.out.println(orderid);
-//				
-//
-//				/*************************** 2.開始查詢資料 ****************************************/
-//
-//				OrderBean bean = new OrderBean();
-//				bean.setOrderid(orderid);
-//				List<OrderBean> list = orderService.select(bean);
-//
-//				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-//
-//				HttpSession session = req.getSession();
-//				session.setAttribute("orderBean", list.get(0));
-//				session.setAttribute("orderid", req.getParameter("orderid"));
-//
-//				String url = "order/update_order_input.jsp";
-//				res.sendRedirect(url);
-//
-//				/*************************** 其他可能的錯誤處理 **********************************/
-//			} catch (Exception e) {
-//				e.printStackTrace();
-////				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-////				RequestDispatcher failureView = req
-////						.getRequestDispatcher("/emp/listAllEmp.jsp");
-////				failureView.forward(req, res);
-//				System.out.println("尋找單一目標失敗");
-//			}
-//		}
-//
-//		if ("update".equals(action)) { // 來自add-post.jsp的請求
-//
-//			try {
-//				Integer memberid = Integer.parseInt(req.getParameter("memberid").trim());
-//				Integer orderpriceamount = Integer.parseInt(req.getParameter("orderpriceamount").trim());
-//				Integer usedfunpoints = Integer.parseInt(req.getParameter("usedfunpoints").trim());
-//				LocalDateTime orderdate = LocalDateTime.now();
-//				// 以上先拿到參數
-//
-//				/*************************** 2.開始修改資料 ***************************************/
-//
-//				OrderBean bean = new OrderBean();
-//				HttpSession session = req.getSession();
-////				Integer orderid = (Integer)session.getAttribute("orderid");
-//				Integer orderid = Integer.parseInt(req.getParameter("orderid").trim());
-//
-////				System.out.println(orderid);
-//				bean.setOrderid(orderid);
-//				bean.setMemberid(memberid);
-//				bean.setOrderdate(orderdate);
-//				bean.setOrderpriceamount(orderpriceamount);
-//				bean.setUsedfunpoints(usedfunpoints);
-//
-//				orderService.update(bean);
-//
-////				System.out.println(bean);
-//
-//				/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
-//				List<OrderBean> list = orderService.select(bean); //??
-//
-////				System.out.println(list);
-//
-//				session.setAttribute("orderBean", list.get(0));
-//
-//				String url = "order/listOneOrder.jsp";
-//				res.sendRedirect(url);
-//
-//				/*************************** 其他可能的錯誤處理 **********************************/
-//			} catch (Exception e) {
-////				errorMsgs.add(e.getMessage());
-////				RequestDispatcher failureView = req
-////						.getRequestDispatcher("/emp/addEmp.jsp");
-////				failureView.forward(req, res);
-//				System.out.print("修改資料失敗");
-//			}
-//		}
-
-//	if ("delete".equals(action)) {
-		//
-//					try {
-//						/*************************** 1.接收請求參數 ***************************************/
-//						Integer orderid = new Integer(req.getParameter("orderid"));
-		//
-//						/*************************** 2.開始刪除資料 ***************************************/
-		//
-//						OrderBean bean = new OrderBean();
-//						bean.setOrderid(orderid);
-//						orderService.delete(bean);
-		//
-//						/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-//						List<OrderBean> list = orderService.select(bean); //刪除完成後，秀出剩餘訂單
-		//
-//						HttpSession session = req.getSession();
-//						session.setAttribute("list", list);
-		//
-//						String url = "order/listAllOrder.jsp";
-//						res.sendRedirect(url);
-		//
-//						/*************************** 其他可能的錯誤處理 **********************************/
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//						errorMsgs.add("刪除資料失敗:"+e.getMessage());
-//						RequestDispatcher failureView = req
-//								.getRequestDispatcher("/emp/listAllEmp.jsp");
-//						failureView.forward(req, res);
-//						System.out.print("刪除資料失敗");
-//					}
-
-//				}
-
-//		if ("getOne_For_Display".equals(action)) { 
-//
-//			try {
-//				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-//				Integer orderid = Integer.valueOf((String)req.getParameter("orderid"));
-//
-//				/*************************** 2.開始查詢資料 *****************************************/
-//
-//				OrderBean bean = orderService.getOneOrder(orderid);
-//
-//				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-//
-//				HttpSession session2 = req.getSession();
-//				session2.setAttribute("orderBean", bean);
-//				String url = "order/listOneOrder.jsp";
-//				res.sendRedirect(url);
-//
-//				/*************************** 其他可能的錯誤處理 *************************************/
-//			} catch (Exception e) {
-//				e.printStackTrace();
-////				errorMsgs.add("刪除資料失敗:"+e.getMessage());
-////				RequestDispatcher failureView = req
-////						.getRequestDispatcher("/emp/listAllEmp.jsp");
-////				failureView.forward(req, res);
-//				System.out.print("查詢資料失敗");
-//			}
-//		}
 	}
+
 }

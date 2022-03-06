@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <aside class="menu-sidebar js-right-sidebar d-block d-lg-none">
-            <div class="logo"style='background-image: url("<%=request.getContextPath()%>/download/images/header/bright-blue.jpg"); width: 100%; height: 13%'>
+            <div class="logo"style="background-color: rgb(32, 69, 99)">
                 <a href="#">
                     <img src="<%=request.getContextPath()%>/download/images/f.png" alt="Logo" />
                 </a>
             </div>
-            <div class="menu-sidebar__content js-scrollbar2 BS">
+            <div class="menu-sidebar__content js-scrollbar2">
                 <!-- <div class="account-img">
                     <img src="images/clients/reviewer-4.png" alt="Steve Austin" />
                 </div> -->
@@ -48,7 +48,7 @@
                         </li>
 
                         <li>
-                            <a href="<%=request.getContextPath()%>/MVC/adminManagement/AdminManage">
+                            <a href="db-favourites.html">
                                 <i class="ion-ios-heart-outline"></i>admin管理</a>
                         </li>
                         
