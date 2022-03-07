@@ -59,8 +59,8 @@
 					<div class="col-md-6 col-12">
 						<div class="breadcrumb-menu text-right sm-left">
 							<ul>
-								<li class="active"><a href="#">首頁</a></li>
-								<li><a href="#">行程總覽</a></li>
+								<li class="active"><a href="<%=request.getContextPath() %>/download/homepage2.jsp">首頁</a></li>
+								<li><a href="<%=request.getContextPath() %>/MVC/ProductDisplayController">行程總覽</a></li>
 							</ul>
 						</div>
 					</div>
