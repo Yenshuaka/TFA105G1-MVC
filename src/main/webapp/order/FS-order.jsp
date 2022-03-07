@@ -45,6 +45,7 @@ h6 {
 	display: inline;
 }
 
+
 h5 {
 	color: #777;
 	font-size: 18px;

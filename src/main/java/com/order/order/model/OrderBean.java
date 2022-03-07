@@ -25,7 +25,7 @@ public class OrderBean {
 	@Column(name = "MEMBER_ID")
 	private Integer memberid;
 	@Column(name = "ORDER_DATE")
-	private LocalDateTime orderdate;
+	private String orderdate;
 	@Column(name = "ORDER_PRICE_AMOUNT")
 	private Integer orderpriceamount;
 	@Column(name = "USED_FUNPOINTS")
@@ -37,7 +37,7 @@ public class OrderBean {
 	}
 
 
-	public OrderBean(Integer orderid, Integer memberid, LocalDateTime orderdate, Integer orderpriceamount,
+	public OrderBean(Integer orderid, Integer memberid, String orderdate, Integer orderpriceamount,
 			Integer usedfunpoints) {
 		super();
 		this.orderid = orderid;
@@ -83,7 +83,7 @@ public class OrderBean {
 	}
 
 
-	public LocalDateTime getOrderdate() {
+	public String getOrderdate() {
 		return orderdate;
 	}
 
@@ -113,8 +113,8 @@ public class OrderBean {
 	}
 
 
-	public void setOrderdate(LocalDateTime orderdate) {
-		this.orderdate = orderdate;
+	public void setOrderdate(String formatDateTime) {
+		this.orderdate = formatDateTime;
 		
 		
 	}

@@ -60,6 +60,11 @@
 
 <style>
 
+h6{
+font-size:24px;
+font-weight: normal;
+}
+
 .send{
 margin-top:5px;
 }
@@ -184,11 +189,15 @@ td {
 <!-- 											<th>刪除</th> -->
 										</tr>
 										<%
-// 										List<OrderBean> list = (List)session.getAttribute("list");  
+// 										List<OrderBean> list1 = (List)session.getAttribute("list");  
 										List<OrderdetailBean> list = (List)session.getAttribute("list");  
 										List<ProductBean> products = (List<ProductBean>) session.getAttribute("allProducts");
-										%>
-										<%for(int i=0;i<list.size();i++){  %>
+										
+										if(list==null || list.size()==0  ){
+											out.write("<h6 style='color:red'>查無訂單!</h6>");
+										}
+										if(list!=null && list.size()!=0){
+										for(int i=0;i<list.size();i++){  %>
 											
 										
 <%-- 										<c:forEach var="orderdetailBean" items="${list}"> --%>
@@ -242,7 +251,7 @@ td {
 <!-- 													</FORM> -->
 <!-- 												</td> -->
 											</tr>
-											<% } %>
+											<% } }%>
 <%-- 										</c:forEach> --%>
 									</table>
 

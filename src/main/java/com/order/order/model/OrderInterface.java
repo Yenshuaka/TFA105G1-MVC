@@ -12,7 +12,7 @@ public interface OrderInterface {
 	public abstract OrderBean insert(OrderBean bean);
 
 	public abstract OrderBean update(Integer orderid, Integer memberid,
-			LocalDateTime orderdate, Integer orderpriceamount, Integer usedfunpoints);
+			String orderdate, Integer orderpriceamount, Integer usedfunpoints);
 
 	public abstract OrderBean findByPrimaryKey(Integer orderid);
 	

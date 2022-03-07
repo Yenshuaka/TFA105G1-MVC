@@ -69,7 +69,7 @@ public class OrderDAOHibernate implements OrderInterface {
 	
 	@Override
 	public OrderBean update(Integer orderid, Integer memberid,
-			LocalDateTime orderdate, Integer orderpriceamount, Integer usedfunpoints) {
+			String orderdate, Integer orderpriceamount, Integer usedfunpoints) {
 		if(orderid!=null) {
 			OrderBean temp = getSession().get(OrderBean.class, orderid);//用id去取出VO
 			if(temp!=null) {//temp代表整個VO物件

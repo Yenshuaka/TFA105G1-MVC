@@ -210,7 +210,10 @@
 
 							<%
 							OrderdetailBean orderdetailBean = (OrderdetailBean)session.getAttribute("travelernumber");
+							System.out.println(orderdetailBean);
 							TravelerlistBean travelerlistBean = (TravelerlistBean)session.getAttribute("traveler");
+							System.out.println(travelerlistBean);
+							System.out.println("我到這");
 							MemberVO member = (MemberVO) session.getAttribute("member");
 							List<MemberVO> allMember = (List<MemberVO>) session.getAttribute("allMember");
 							String lastname = null;
@@ -367,7 +370,7 @@
 						id="<%=productname%>" class="numberoftraveler <%=productname%>"
 						productname="<%=productname%>" 
 						value="<%= (orderdetailBean==null)? "" : orderdetailBean.getNumberoftraveler()%>">
-						<option disabled="disabled" selected>請選擇</option>
+						<option disabled="disabled">請選擇</option>
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -381,6 +384,15 @@
 
 					</select> <input type="hidden" productname="<%=productname%>"
 						value="<%=productprice%>"></input>
+						<script>
+							var sel = $("numberoftraveler");
+							var num = sel.val();
+							sel.children("option").each(function(index, el){
+								if($(el).val() == num){
+									$(el).attr("selected")
+								}
+							})
+						</script>
 					<div class="tmp">
 						<div class="traveler_infor">
 							<div class="txt">

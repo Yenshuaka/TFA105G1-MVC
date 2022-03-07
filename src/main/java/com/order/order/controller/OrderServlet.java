@@ -97,13 +97,14 @@ public class OrderServlet extends HttpServlet implements Serializable {
 				Integer orderpriceamount = Integer.parseInt(req.getParameter("orderpriceamount").trim());
 //				Integer usedfunpoints = Integer.parseInt(req.getParameter("usedfunpoints").trim());
 
-				DateTimeFormatter dtf4 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
 				LocalDateTime orderdate = LocalDateTime.now();
+				DateTimeFormatter dtf4 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+				String formatDateTime = orderdate.format(dtf4);
 //				String orderdate = dtf4.format(LocalDateTime.now());
 
 				OrderBean bean = new OrderBean();
 				bean.setMemberid(memberid1);
-				bean.setOrderdate(orderdate);
+				bean.setOrderdate(formatDateTime);
 				bean.setOrderpriceamount(orderpriceamount);
 				System.out.println("orderpriceamount = " + orderpriceamount);
 				bean.setUsedfunpoints(50);
@@ -182,6 +183,7 @@ public class OrderServlet extends HttpServlet implements Serializable {
 						
 //						// Send the use back to the form, if there were errors
 						if (!errorMsgs.isEmpty()) {
+							System.out.println("我在這");
 							session.setAttribute("travelernumber", bean2);
 							session.setAttribute("traveler", bean3); // 含有輸入格式錯誤的empVO物件,也存入req
 							RequestDispatcher failureView = req.getRequestDispatcher("/order/orderbooking.jsp");

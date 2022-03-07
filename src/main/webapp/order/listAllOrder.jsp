@@ -64,6 +64,13 @@
 </head>
 
 <style>
+
+h6{
+font-size:24px;
+font-weight: normal;
+margin-left:50px;
+}
+
 .send {
 	background: #BDC1CA;
 	padding: 9px 15px;
@@ -180,15 +187,14 @@ border-bottom: 1px solid gray;
 <!-- 											<th>折抵點數</th> -->
 											<th>訂單明細</th>
 										</tr>
-
+								
 
 
 
 										<FORM METHOD="post"
 											ACTION="<%=request.getContextPath()%>/orderdetail.do">
 											<div class="above">
-												<h10 style="color:brown">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp輸入訂單編號
-												(如1):</h10>
+												<h10 style="color:brown">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp輸入訂單編號:</h10>
 												<h11>&nbsp</h11>
 												<input type="text" name="orderid" class="select"> <input
 													type="hidden" name="action" value="getOne_For_Orderdetail">
@@ -196,10 +202,9 @@ border-bottom: 1px solid gray;
 											</div>
 										</FORM>
 										
-
-										
 										<%
 										List<OrderBean> list = (List) session.getAttribute("list");
+										
 										List<OrderdetailBean> list123 = (List) session.getAttribute("list123");
 										List<MemberVO> allMembers = (List<MemberVO>) session.getAttribute("allMembers");
 										%>
@@ -209,8 +214,14 @@ border-bottom: 1px solid gray;
 <%--                                             end="<%=pageIndex+rowsPerPage-1%>"> --%>
 										
 										<%
+										if(list==null || list.size()==0  ){
+											out.write("<h6 style='color:red'>目前沒有訂單!</h6>");
+										}
+										if(list!=null && list.size()!=0){
 										for (int i = 0; i < list.size(); i++) {
 										%>
+										
+							
 										<tr>
 											<td><%=list.get(i).getOrderid()%></td>
 											<td><%=list.get(i).getOrderdate()%></td>
@@ -280,7 +291,7 @@ border-bottom: 1px solid gray;
 											<%-- 										</c:forEach> --%>
 											<%-- 												<td>${orderBean.orderpriceamount}</td> --%>
 											<%
-											}
+											}}
 											%>
 
 
