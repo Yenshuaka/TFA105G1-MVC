@@ -74,6 +74,22 @@
 			</div>
 			<!--main 上索引ends-->
 			<!--main content starts-->
+			
+			<style>
+				
+				table{
+					width:100%;
+				}
+				
+				.invoice-panel{
+					padding: 2%;			
+				}
+				
+				.form-bottom{
+				width:100%;
+				}
+			</style>
+						
 			<div class="dash-content">
 				<div class="container-fluid">
 					<div class="row">
@@ -81,7 +97,7 @@
 							<div class="invoice-panel">
 								<div class="act-title">
 									<h5>
-										<i class="ion-gear"></i>編輯基本資料
+										<i class="ion-gear"></i>編輯基本資料11
 									</h5>
 								</div>
 								<div class="profile-wrap">
@@ -150,10 +166,12 @@
 															placeholder="請輸入手機" /></td>
 													</tr>
 												</table>
+												<div class="form-bottom">
 												<br> <input type="hidden" name="action" value="update">
 												<input type="hidden" name="memberid"
 													value="${memberVO.memberid}"> <input type="submit"
 													value="送出">
+												</div>
 											</FORM>
 										</div>
 
