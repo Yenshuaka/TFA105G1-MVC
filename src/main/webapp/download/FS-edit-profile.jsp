@@ -119,15 +119,6 @@ select {
 						</div>
 					</div>
 				</div>
-				<%-- 錯誤表列 --%>
-				<c:if test="${not empty errorMsgs}">
-					<font style="color: red">請修正以下錯誤:</font>
-					<ul>
-						<c:forEach var="message" items="${errorMsgs}">
-							<li style="color: red">${message}</li>
-						</c:forEach>
-					</ul>
-				</c:if>
 			</div>
 			<!--main 上索引ends-->
 			<!--main content starts-->
@@ -138,7 +129,8 @@ select {
 							<div class="invoice-panel">
 								<div class="act-title">
 									<h5>
-										<i class="ion-gear"></i>編輯基本資料
+										<i class="ion-gear"></i>編輯基本資料<br> <span
+													class="error errorMsgsOnly">${errorMsgs.exception}</span>
 									</h5>
 								</div>
 								<div class="profile-wrap">
@@ -152,27 +144,32 @@ select {
 													<tr>
 														<td>Email :</td>
 														<td><input type="TEXT" name="email" size="30"
-															value="${memberVO.email}" /></td>
+															value="${memberVO.email}" /><br> <span
+													class="error errorMsgsOnly">${errorMsgs.email}</span></td>
 													</tr>
 													<tr>
 														<td>密碼 :</td>
 														<td><input type="TEXT" name="password" size="30"
-															value="${memberVO.password}" /></td>
+															value="${memberVO.password}" /><br> <span
+													class="error errorMsgsOnly">${errorMsgs.password}</span></td>
 													</tr>
 													<tr>
 														<td>姓氏 :</td>
 														<td><input type="TEXT" name="lastname" size="30"
-															value="${memberVO.lastname}" placeholder="請輸入姓氏" /></td>
+															value="${memberVO.lastname}" placeholder="請輸入姓氏" /><br> <span
+													class="error errorMsgsOnly">${errorMsgs.lastname}</span></td>
 													</tr>
 													<tr>
 														<td>名字 :</td>
 														<td><input type="TEXT" name="firstname" size="30"
-															value="${memberVO.firstname}" placeholder="請輸入名字" /></td>
+															value="${memberVO.firstname}" placeholder="請輸入名字" /><br> <span
+													class="error errorMsgsOnly">${errorMsgs.firstname}</span></td>
 													</tr>
 													<tr>
 														<td>身分證字號 :</td>
 														<td><input type="TEXT" name="idno" size="30"
-															value="${memberVO.idno}" placeholder="請輸入身分證字號" /></td>
+															value="${memberVO.idno}" placeholder="請輸入身分證字號" /><br> <span
+													class="error errorMsgsOnly">${errorMsgs.idno}</span></td>
 													</tr>
 													<tr>
 														<td>性別 :</td>
@@ -197,7 +194,8 @@ select {
 																	class="input-group-addon"><i
 																	class="icofont-ui-calendar"></i></span>
 															</div>
-														</td>
+														<br> <span
+													class="error errorMsgsOnly">${errorMsgs.dateofbirth}</span></td>
 													</tr>
 													<tr>
 														<td>國家 :</td>
@@ -208,7 +206,8 @@ select {
 														<td>手機 :</td>
 														<td><input type="TEXT" name="phone" width="30rpx"
 															height="20rpx" value="${memberVO.phone}"
-															placeholder="請輸入手機" /></td>
+															placeholder="請輸入手機" /><br> <span
+													class="error errorMsgsOnly">${errorMsgs.phone}</span></td>
 													</tr>
 												</table>
 												<div class="bottom">
