@@ -217,12 +217,6 @@
 	<script src="<%=request.getContextPath()%>/download/js/main.js"></script>
 	<!-- Dashboard JS-->
 	<script src="<%=request.getContextPath()%>/download/js/dashboard.js"></script>
-
-	<script>
-		$('input.ename').on('change', function() {
-
-		})
-	</script>
 </body>
 
 </html>

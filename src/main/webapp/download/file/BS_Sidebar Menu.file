@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <aside class="menu-sidebar js-right-sidebar d-block d-lg-none">
-            <div class="logo"style="background-color: rgb(32, 69, 99)">
+           <div class="logo"style='background-image: url("<%=request.getContextPath()%>/download/images/header/bright-blue.jpg"); width: 100%; height: 13%'>
                 <a href="#">
                     <img src="<%=request.getContextPath()%>/download/images/f.png" alt="Logo" />
                 </a>
@@ -12,11 +12,6 @@
                 <!-- <h4 class="name">Howdy, Steve!</h4> -->
                 <nav class="navbar-sidebar2">
                     <ul class="list-unstyled navbar__list">
-                        <li>
-                            <a class="active" href="db.html">
-                                <i class="ion-ios-gear-outline"></i>關於我們
-                            </a>
-                        </li>
                         <li>
                             <a href="<%=request.getContextPath()%>/order.do">
                                 <i class="ion-social-buffer-outline"></i>訂單管理

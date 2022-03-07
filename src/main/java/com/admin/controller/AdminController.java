@@ -59,6 +59,8 @@ public class AdminController {
 			if (adminVO != null) {
 				req.changeSessionId();
 				session.setAttribute("adminVO", adminVO);
+				
+								
 				return "redirect:/MVC/adminManagement/Index";
 			} else {
 				errorMsgs.put("result", "帳號密碼錯誤! 請重新輸入");

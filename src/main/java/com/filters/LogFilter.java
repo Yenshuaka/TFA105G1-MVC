@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.admin.model.AdminVO;
 import com.member.model.MemberVO;
 
-@WebFilter(filterName = "logFilter")
+@WebFilter(filterName = "logFilter", urlPatterns = {
+	    "/download/FS-my-profile.jsp", 
+	    "/download/FS-Index-Demo.jsp",
+	    "/download/FS-edit-profile.jsp"
+})
 public class LogFilter  implements Filter {
 
 	private FilterConfig config;
