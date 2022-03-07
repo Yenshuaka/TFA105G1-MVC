@@ -427,7 +427,7 @@ public class AddProduct extends HttpServlet {
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				res.sendRedirect(req.getContextPath()+"/MVC/UpdateProduct");
+//				res.sendRedirect(req.getContextPath()+"/MVC/UpdateProduct");
 			}
 		}
 		

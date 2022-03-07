@@ -10,7 +10,7 @@
 		List<ProductBean> list = productService.select(null);
 		CityService cityService = context.getBean("cityService", CityService.class);	
 		List<CityBean> cities = cityService.select(null);
-		
+		System.out.print("安安安安安安");
 		
 		List imgids = new ArrayList();
 		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei",
