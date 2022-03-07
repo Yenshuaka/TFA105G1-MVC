@@ -30,7 +30,7 @@
     <!--color switcher css-->
     <link rel="stylesheet" href="css/switcher/skin-aqua.css" media="screen" id="style-colors" />
     <!-- Document Title -->
-    <title>會員專區/購物車</title>
+    <title>會員專區/我的收藏</title>
 
 </head>
 
@@ -363,7 +363,7 @@
                                     <div class="breadcrumb-menu text-right sm-left">
                                         <ul>
                                             <li class="active"><a href="<%=request.getContextPath() %>/download/FS-my-profile.jsp">會員專區</a></li>
-                                            <li class="active"><a href="<%=request.getContextPath() %>/MVC/ShoppingCart">購物車</a></li>
+                                            <li class="active"><a href="<%=request.getContextPath() %>/MVC/Mylikes">我的收藏</a></li>
                                             <!-- <li>My Listings</li> -->
                                         </ul>
                                     </div>
@@ -383,7 +383,7 @@
                         <div class="col-md-12">
                             <div class="recent-activity my-listing">
                                 <div class="act-title">
-                                    <h5><i class="ion-android-cart"></i> 購物車</h5>
+                                    <h5><i class="ion-heart"></i> 我的收藏</h5>
                                 </div>
 
                                 <div class="viewd-item-wrap">
@@ -406,7 +406,7 @@
                                             <span class="list-bg aqua"></span><%=list.get(i).getProducttype() %>
                                             <h3><a href="<%=request.getContextPath() %>/MVC/ProductDetail?productid=<%=list.get(i).getProductid() %>" target="_blank"><%=list.get(i).getProductname() %></a></h3>
                                             <p class="list-address"><i class="icofont-google-map"></i><%=cities.get(i) %></p>
-											<input type='hidden' name='productid' value='<%=list.get(i).getProductid() %>'>
+											<input class='ccccc' type='hidden' name='productid' value='<%=list.get(i).getProductid() %>'>
                                             <div class="ratings">
                                                 <i class="ion-ios-star"></i>
                                                 <%=avg.get(i) %>
@@ -426,7 +426,7 @@
                                         </div>
                                     </div>
                                     
-                                    <% } }else{ out.write("<h5>購物車內暫無商品!</h5>");}
+                                    <% } }else{ out.write("<h5>暫無收藏項目!</h5>");}
                                     
                                     
                                     %>
@@ -501,13 +501,7 @@
 <!--                                             <a href="#" class="btn v5"><i class="ion-android-delete"></i> Delete</a> -->
 <!--                                         </div>     -->
 <!--                                     </div> -->
-                                    <% if(list!=null && list.size()!=0){ %>
-                                    <div>
-                                        <h3>總金額: <span class='totalprice'>${totalprice}</span>元</h3>
-<!--                                         <a href="#" class="btn v5"> 前往結帳</a> -->
-                                        <input type='submit' value='前往結帳' class="btn v5">
-                                    </div>
-                                    <% }%>
+                    
                                     
                                     </form>
                                 </div>
@@ -552,7 +546,7 @@
 //      var productid = $(e.target).next().next().val();
      console.log($(e.target).parent().parent());
 		$.ajax({
-         url: '<%=request.getContextPath() %>/DeleteShoppingCart',
+         url: '<%=request.getContextPath() %>/AddLikes',
          type: 'POST',
          data: {
          	productid: $(e.target).val()
@@ -566,8 +560,8 @@
              $('.totalprice').text(priceafter);
              
              $(e.target).parent().parent().remove();
-             if(priceafter==0){
-            	 $('.viewd-item-wrap').html('<h5>購物車內暫無商品!</h5>');
+             if($('.ccccc').val()==null){
+            	 $('.viewd-item-wrap').html('<h5>暫無收藏商品!</h5>');
              }
              
              
