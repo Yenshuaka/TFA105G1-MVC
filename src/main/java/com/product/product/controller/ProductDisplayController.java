@@ -318,7 +318,31 @@ public class ProductDisplayController {
 
 			introStrings.add(a);
 		}
+		
+		//是否收藏
+		Jedis jedis = new Jedis("localhost", 6379);
+		List<Boolean> exists = new ArrayList<Boolean>();
+		
+		Integer memberid = (Integer)session.getAttribute("memberid");
+		if(memberid!=null) {
+			String memberidstring = String.valueOf(memberid);
+			List<String> range2 = jedis.lrange("會員收藏"+memberidstring, 0, -1);
+			for(int i =0; i < list2.size(); i++) {
+				boolean a = false;
+				for (String product : range2) {
+					if(Integer.valueOf(product) ==list2.get(i).getProductid()){
+						exists.add(true);
+						a = true;
+					}
+				}
+				
+				if(!a)
+				exists.add(false);
+			}
+			
+		}
 
+		model.addAttribute("exists", exists);
 		model.addAttribute("orders", orders);
 		model.addAttribute("cities", cities);
 		model.addAttribute("avg", avg);
@@ -432,12 +456,30 @@ public class ProductDisplayController {
 			}
 
 		}
+		
+		
+		Jedis jedis = new Jedis("localhost", 6379);
+		boolean exist = false;
+		
+		Integer memberid = (Integer)session.getAttribute("memberid");
+		if(memberid!=null) {
+			String memberidstring = String.valueOf(memberid);
+			List<String> range2 = jedis.lrange("會員收藏"+memberidstring, 0, -1);
+			for (String product : range2) {
+				if(product.equals(productid))
+				exist=true;
+			}
+			
+		}
+		
 
 		MemberService memberService = new MemberService();
 		List<MemberVO> members = memberService.getAll();
 		model.addAttribute("members", members);
 
 		model.addAttribute("imgids", imgids);
+		model.addAttribute("exist", exist);
+		
 		model.addAttribute("comments", comments);
 
 		return "frontstage/product/product-detail";
@@ -547,6 +589,7 @@ public class ProductDisplayController {
 		return "frontstage/product/shopping-cart";
 	}
 
+	//以下寄信給網址用
 	@RequestMapping("/AddComment")
 	public String addComment(HttpSession session, String memberid, String productid) {
 
@@ -596,8 +639,8 @@ public class ProductDisplayController {
 				+ "                                                    	<form method=\"post\" action=\""+ req.getContextPath()+"/MVC/DeleteComment\">\r\n"
 				+ "<!--                                                         <a href=\"#\" class=\"rate-review float-left\"><i class=\"icofont-thumbs-up\"></i><span>2</span></a> -->\r\n"
 				+ "                                                        <input type=\"submit\" value=\"刪除\" class=\"rate-review float-right\">\r\n"
-				+ "                                                        <a href=\"#\" class=\"rate-review float-right\"><i class=\"icofont-pencil\"></i>修改</a>\r\n"
-				+ "                                                        <input type=\"hidden\" name=\"commentid\" value=\" "+ bean.getCommentid()+"\">\r\n"
+				+ "                                                        <input type=\"button\" value=\"修改\" class=\"rate-review float-right updatecomment\" onclick=\"update(event)\">\r\n"
+				+ "                                                        <input type=\"hidden\" name=\"commentid\" value=\""+ bean.getCommentid()+"\">\r\n"
 				+ "                                                        <input type=\"hidden\" name=\"productid\" value=\""+ productid +"\">\r\n"
 				+ "                                                        \r\n"
 				+ "                                                        </form>\r\n"
@@ -622,9 +665,138 @@ public class ProductDisplayController {
 	
 	
 	
+	@RequestMapping("/UpdateComment")
+	public String updateComment(HttpSession session, String commentid, String productid, String commentcontext,
+			String score) {
+		
+		
+		ProductCommentBean bean = new ProductCommentBean();
+		
+		Integer memberid = (Integer) session.getAttribute("memberid");
+		Integer score1 = 0 ;
+		if(score!="" && score!=null)
+		Integer.valueOf(score);
+
+		bean.setCommentid(Integer.valueOf(commentid));
+		bean.setMemberid(memberid);
+		bean.setProductid(Integer.valueOf(productid));
+		bean.setCommentcontext(commentcontext);
+		bean.setScore(score1);
+		bean.setCommentrewardpoints(10);
+		bean.setCommenttime(new Timestamp(System.currentTimeMillis()));
+		
+		productCommentService.update(bean);
+		
+		
+		return "redirect:/MVC/ProductDetail?productid=" + productid + "#reviews";
+	}
 	
 	
 	
+	
+	@RequestMapping("/Mylikes")
+	public String myLikes(Model model, HttpSession session) {
+		
+//		session.setAttribute("memberid", 3);
+		
+		if(session.getAttribute("memberid")==null) {	
+			return "frontstage/member/FS-login";
+		};
+
+		
+		Jedis jedis = new Jedis("localhost", 6379);
+		
+		Integer memberid = (Integer)session.getAttribute("memberid");
+		String memberidstring = String.valueOf(memberid);
+		List<Integer> productids = new ArrayList<Integer>();
+		List<ProductBean> list = new ArrayList<ProductBean>();
+		
+		List<String> range2 = jedis.lrange("會員收藏"+memberidstring, 0, -1);
+		
+		if(range2!=null && range2.size()!=0) {
+			for (String product : range2) {
+				productids.add(Integer.valueOf(product));
+			}			
+		}
+		
+		jedis.close();
+
+		Integer totalprice = 0;
+		
+		List<Integer> imgids = new ArrayList<Integer>();
+		
+		for (Integer productid : productids) {
+			//以下找出哪些商品
+			ProductBean bean = new ProductBean();
+			bean.setProductid(productid);
+			list.add(productService.select(bean).get(0));
+			totalprice = totalprice + productService.select(bean).get(0).getProductprice();
+			
+			//以下找出哪些圖片
+			NativeQuery query = this.session.createSQLQuery(
+					"select * from PRODUCT_IMG where PRODUCT_ID = "+ productid +" limit 1"
+				);
+				query.addEntity(ProductImgBean.class);
+				List<ProductImgBean> imgs = (List<ProductImgBean>) query.list();
+				imgids.add(imgs.get(0).getImgid());
+			
+			
+		}
+		
+		//以下找城市跟平均分數
+		List<Double> avg = new ArrayList<Double>();
+		List<String> cities = new ArrayList<String>();
+		Connection connection;
+				try {
+					connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/TFA105G1?serverTimezone=Asia/Taipei",
+							"root", "password");
+
+					for (int i = 0; i < list.size(); i++) {
+						if (list.get(i) != null) {
+	
+							//以下找出平均分數
+							
+							PreparedStatement ps = connection
+									.prepareStatement("SELECT AVG(SCORE) FROM PRODUCT_COMMENT WHERE PRODUCT_ID = ?");
+							ps.setInt(1, list.get(i).getProductid());
+							ResultSet rSet = ps.executeQuery();
+
+							while (rSet.next()) {
+								DecimalFormat df = new DecimalFormat("#.#");
+								avg.add(Double.valueOf(df.format(rSet.getDouble(1))));
+							}
+							
+							
+							//以下找出所在城市
+							ps = connection
+									.prepareStatement("SELECT c.CITY\r\n"
+											+ "FROM PRODUCT p \r\n"
+											+ "	join PRODUCT_LOC pl\r\n"
+											+ "		on p.PRODUCT_ID = pl.PRODUCT_ID\r\n"
+											+ "         join City c \r\n"
+											+ "			on c.CITY_ID = pl.CITY_ID\r\n"
+											+ "where p.PRODUCT_ID = ?");
+							ps.setInt(1, list.get(i).getProductid());
+							rSet = ps.executeQuery();
+
+							while (rSet.next()) {
+								cities.add(rSet.getString(1));
+							}
+						}
+					}
+						}catch (Exception e) {
+							e.printStackTrace();
+						}
+		
+		model.addAttribute("avg", avg);
+		model.addAttribute("cities", cities);	
+		model.addAttribute("imgids", imgids);
+		model.addAttribute("list", list);
+
+	
+	
+		return "frontstage/product/mylikes";
+	}
 	
 	
 	

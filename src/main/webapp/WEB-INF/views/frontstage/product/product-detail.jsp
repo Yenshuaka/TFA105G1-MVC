@@ -83,8 +83,17 @@
                                 </div>
                                 <div class="col-lg-6 col-md-5 col-sm-12">
                                     <div class="list-details-btn text-right sm-left">
-                                        <div class="save-btn">
-                                            <a href="#" class="btn v3 white"><i class="ion-heart"></i> Save</a>
+                                    <% boolean exist = (boolean)request.getAttribute("exist"); %>
+                                        <div class="save-btn">				<!-- ion-ios-heart-outline, ion-heart -->
+                                            <a  onclick='addLikes(event)' class="btn v3 white">
+                                            <% if(exist){%>
+                                            <i onclick='clickout(event)' id='aaaa' class="ion-heart"></i> 
+                                            <% }else {%>
+                                            <i onclick='clickout(event)' id='aaaa' class="ion-ios-heart-outline"></i>
+                                            <% }%>
+                                            
+                                            Save</a>    
+                                    		<input type='hidden' value='${ProductBean.productid}'>
                                         </div>
 <!--                                         <div class="share-btn"> -->
 <!--                                             <a href="#" class="btn v3 white"><i class="ion-android-share-alt"></i> Share</a> -->
@@ -489,15 +498,16 @@
 <!--                                                     <p class="customer-text">I love the hotel here but it is so rare that I get to come here. Tasty Hand-Pulled hotel is the best type of whole in the wall restaurant. The staff are really nice, and you should be seated quickly. -->
 <!--                                                     </p> -->
 													<% MemberVO bean = (MemberVO) session.getAttribute("memberVO");
+														
 														if(bean!=null){
-														if(comments.get(i).getMemberid()==  bean.getMemberid()){
-															
+														if(comments.get(i).getMemberid() == bean.getMemberid()){	
 													%>
                                                     <div class="like-btn mar-top-40">
                                                     	<form method="post" action="<%=request.getContextPath() %>/MVC/DeleteComment">
 <!--                                                         <a href="#" class="rate-review float-left"><i class="icofont-thumbs-up"></i><span>2</span></a> -->
                                                         <input type="submit" value="刪除" class="rate-review float-right">
-                                                        <a href="#" class="rate-review float-right"><i class="icofont-pencil"></i>修改</a>
+                                                        <input type="button" value="修改" class="rate-review float-right updatecomment" onclick="update(event)">
+<!--                                                         <a href="#" class="rate-review float-right updatecomment"><i class="icofont-pencil"></i>修改</a> -->
                                                         <input type="hidden" name="commentid" value="<%=comments.get(i).getCommentid() %>">
                                                         <input type="hidden" name="productid" value="${ProductBean.productid}">
                                                         
@@ -506,7 +516,10 @@
                                                     <%  }} %>
                                                     
                                                 </div>
-                                            </div>                                             
+                                            </div>
+<!--                                             <div> -->
+<!--                                             	<h5>請輸入評論:<input type="text" name="commentcontext"> 請輸入評分(1~5)<input type="number" name="score"></h5> -->
+<!--                                             </div>                                              -->
                                 	</div>
                                 	<% } } %>
                             </div>
@@ -563,103 +576,103 @@
                         </div>
                         <!--Listing Details ends-->
                         <!--Similar Listing Starts-->
-                        <div class="similar-listing">
-                            <div class="similar-listing-title">
-                                <h3>類似的商品</h3>
-                            </div>
-                            <div class="swiper-container similar-list-wrap">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide similar-item">
-                                        <img src="images/single-listing/park-hyatt.jpg" alt="...">
-                                        <div class="similar-title-box">
-                                            <h5><a href="#">Park Hyatt</a></h5>
-                                            <p><span class="price-amt">$89</span>/Avg</p>
-                                        </div>
-                                        <div class="customer-review">
-                                            <div class="rating-summary">
-                                                <div class="rating-result" title="60%">
-                                                    <ul class="product-rating">
-                                                        <li><i class="ion-android-star"></i></li>
-                                                        <li><i class="ion-android-star"></i></li>
-                                                        <li><i class="ion-android-star"></i></li>
-                                                        <li><i class="ion-android-star-half"></i></li>
-                                                        <li><i class="ion-android-star-half"></i></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <p><i class="ion-ios-location"></i> 31st North St, Sydney, Australia</p>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide similar-item">
-                                        <img src="images/single-listing/hilton.jpg" class="img-fluid" alt="...">
-                                        <div class="similar-title-box">
-                                            <h5><a href="#">Hilton Moorea</a></h5>
-                                            <p><span class="price-amt">$109</span>/Avg</p>
-                                        </div>
-                                        <div class="customer-review">
-                                            <div class="rating-summary">
-                                                <div class="rating-result" title="60%">
-                                                    <ul class="product-rating">
-                                                        <li><i class="ion-android-star"></i></li>
-                                                        <li><i class="ion-android-star"></i></li>
-                                                        <li><i class="ion-android-star"></i></li>
-                                                        <li><i class="ion-android-star-half"></i></li>
-                                                        <li><i class="ion-android-star-half"></i></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <p><i class="ion-ios-location"></i> Hilton Ave, Miami, USA</p>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide similar-item">
-                                        <img src="images/single-listing/lagoon-resort.jpg" class="img-fluid" alt="...">
-                                        <div class="similar-title-box">
-                                            <h5><a href="#">Lagoon Resort &amp; Spa</a></h5>
-                                            <p><span class="price-amt">$75</span>/Avg</p>
-                                        </div>
-                                        <div class="customer-review">
-                                            <div class="rating-summary">
-                                                <div class="rating-result" title="60%">
-                                                    <ul class="product-rating">
-                                                        <li><i class="ion-android-star"></i></li>
-                                                        <li><i class="ion-android-star"></i></li>
-                                                        <li><i class="ion-android-star"></i></li>
-                                                        <li><i class="ion-android-star-half"></i></li>
-                                                        <li><i class="ion-android-star-half"></i></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <p><i class="ion-ios-location"></i> 75 Prince St, NY, USA</p>
-                                        </div>
+<!--                         <div class="similar-listing"> -->
+<!--                             <div class="similar-listing-title"> -->
+<!--                                 <h3>類似的商品</h3> -->
+<!--                             </div> -->
+<!--                             <div class="swiper-container similar-list-wrap"> -->
+<!--                                 <div class="swiper-wrapper"> -->
+<!--                                     <div class="swiper-slide similar-item"> -->
+<!--                                         <img src="images/single-listing/park-hyatt.jpg" alt="..."> -->
+<!--                                         <div class="similar-title-box"> -->
+<!--                                             <h5><a href="#">Park Hyatt</a></h5> -->
+<!--                                             <p><span class="price-amt">$89</span>/Avg</p> -->
+<!--                                         </div> -->
+<!--                                         <div class="customer-review"> -->
+<!--                                             <div class="rating-summary"> -->
+<!--                                                 <div class="rating-result" title="60%"> -->
+<!--                                                     <ul class="product-rating"> -->
+<!--                                                         <li><i class="ion-android-star"></i></li> -->
+<!--                                                         <li><i class="ion-android-star"></i></li> -->
+<!--                                                         <li><i class="ion-android-star"></i></li> -->
+<!--                                                         <li><i class="ion-android-star-half"></i></li> -->
+<!--                                                         <li><i class="ion-android-star-half"></i></li> -->
+<!--                                                     </ul> -->
+<!--                                                 </div> -->
+<!--                                             </div> -->
+<!--                                             <p><i class="ion-ios-location"></i> 31st North St, Sydney, Australia</p> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <div class="swiper-slide similar-item"> -->
+<!--                                         <img src="images/single-listing/hilton.jpg" class="img-fluid" alt="..."> -->
+<!--                                         <div class="similar-title-box"> -->
+<!--                                             <h5><a href="#">Hilton Moorea</a></h5> -->
+<!--                                             <p><span class="price-amt">$109</span>/Avg</p> -->
+<!--                                         </div> -->
+<!--                                         <div class="customer-review"> -->
+<!--                                             <div class="rating-summary"> -->
+<!--                                                 <div class="rating-result" title="60%"> -->
+<!--                                                     <ul class="product-rating"> -->
+<!--                                                         <li><i class="ion-android-star"></i></li> -->
+<!--                                                         <li><i class="ion-android-star"></i></li> -->
+<!--                                                         <li><i class="ion-android-star"></i></li> -->
+<!--                                                         <li><i class="ion-android-star-half"></i></li> -->
+<!--                                                         <li><i class="ion-android-star-half"></i></li> -->
+<!--                                                     </ul> -->
+<!--                                                 </div> -->
+<!--                                             </div> -->
+<!--                                             <p><i class="ion-ios-location"></i> Hilton Ave, Miami, USA</p> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <div class="swiper-slide similar-item"> -->
+<!--                                         <img src="images/single-listing/lagoon-resort.jpg" class="img-fluid" alt="..."> -->
+<!--                                         <div class="similar-title-box"> -->
+<!--                                             <h5><a href="#">Lagoon Resort &amp; Spa</a></h5> -->
+<!--                                             <p><span class="price-amt">$75</span>/Avg</p> -->
+<!--                                         </div> -->
+<!--                                         <div class="customer-review"> -->
+<!--                                             <div class="rating-summary"> -->
+<!--                                                 <div class="rating-result" title="60%"> -->
+<!--                                                     <ul class="product-rating"> -->
+<!--                                                         <li><i class="ion-android-star"></i></li> -->
+<!--                                                         <li><i class="ion-android-star"></i></li> -->
+<!--                                                         <li><i class="ion-android-star"></i></li> -->
+<!--                                                         <li><i class="ion-android-star-half"></i></li> -->
+<!--                                                         <li><i class="ion-android-star-half"></i></li> -->
+<!--                                                     </ul> -->
+<!--                                                 </div> -->
+<!--                                             </div> -->
+<!--                                             <p><i class="ion-ios-location"></i> 75 Prince St, NY, USA</p> -->
+<!--                                         </div> -->
 
-                                    </div>
-                                    <div class="swiper-slide similar-item">
-                                        <img src="images/single-listing/westin.jpg" class="img-fluid" alt="...">
-                                        <div class="similar-title-box">
-                                            <h5><a href="#">The Westin Excelsior</a></h5>
-                                            <p><span class="price-amt">$89</span>/Avg</p>
-                                        </div>
-                                        <div class="customer-review">
-                                            <div class="rating-summary">
-                                                <div class="rating-result" title="60%">
-                                                    <ul class="product-rating">
-                                                        <li><i class="ion-android-star"></i></li>
-                                                        <li><i class="ion-android-star"></i></li>
-                                                        <li><i class="ion-android-star"></i></li>
-                                                        <li><i class="ion-android-star-half"></i></li>
-                                                        <li><i class="ion-android-star-half"></i></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <p><i class="ion-ios-location"></i>21st Queens park,London UK</p>
-                                        </div>
+<!--                                     </div> -->
+<!--                                     <div class="swiper-slide similar-item"> -->
+<!--                                         <img src="images/single-listing/westin.jpg" class="img-fluid" alt="..."> -->
+<!--                                         <div class="similar-title-box"> -->
+<!--                                             <h5><a href="#">The Westin Excelsior</a></h5> -->
+<!--                                             <p><span class="price-amt">$89</span>/Avg</p> -->
+<!--                                         </div> -->
+<!--                                         <div class="customer-review"> -->
+<!--                                             <div class="rating-summary"> -->
+<!--                                                 <div class="rating-result" title="60%"> -->
+<!--                                                     <ul class="product-rating"> -->
+<!--                                                         <li><i class="ion-android-star"></i></li> -->
+<!--                                                         <li><i class="ion-android-star"></i></li> -->
+<!--                                                         <li><i class="ion-android-star"></i></li> -->
+<!--                                                         <li><i class="ion-android-star-half"></i></li> -->
+<!--                                                         <li><i class="ion-android-star-half"></i></li> -->
+<!--                                                     </ul> -->
+<!--                                                 </div> -->
+<!--                                             </div> -->
+<!--                                             <p><i class="ion-ios-location"></i>21st Queens park,London UK</p> -->
+<!--                                         </div> -->
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="slider-btn v3 similar-next"><i class="ion-arrow-right-c"></i></div>
-                            <div class="slider-btn v3 similar-prev"><i class="ion-arrow-left-c"></i></div>
-                        </div>
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                             <div class="slider-btn v3 similar-next"><i class="ion-arrow-right-c"></i></div> -->
+<!--                             <div class="slider-btn v3 similar-prev"><i class="ion-arrow-left-c"></i></div> -->
+<!--                         </div> -->
                         <!--Similar Listing ends-->
                     </div>
                     <div class="col-lg-4 col-md-12">
@@ -1010,18 +1023,48 @@
          data: {
          	productid: $(e.target).next().val()
          },
-         dataType: "html",
+         dataType: "text",
          success: function(res){
              console.log("成功");
              $('.showarea').html(res);
-             var i =  parseInt( $('.cartqty').text());
-             i = i+1;
-             var a = i + "";
-             $('.cartqty').text(a);
+             if(res=="<h5 style='color: red'> 已新增至購物車</h5>"){
+	             var i =  parseInt( $('.cartqty').text());
+	             i = i+1;
+	             var a = i + "";
+	             $('.cartqty').text(a);
+         	 }
              
          }
      });    		
 	}
+    
+    
+    
+    
+    function addLikes(e){
+		console.log($(e.target).next().val());
+		$.ajax({
+         url: '<%=request.getContextPath() %>/AddLikes',
+         type: 'POST',
+         data: {
+         	productid: $(e.target).next().val()
+         },
+         dataType: "text",
+         success: function(res){
+             console.log("成功");
+             if(res=='login'){
+            	 window.location.assign("<%=request.getContextPath() %>/download/FS-login.jsp");
+             }else{
+             	$('#aaaa').replaceWith(res);
+             }
+          
+             
+             
+         }
+     });    		
+	}
+    
+    
     
     
     function addComment(e){
@@ -1043,6 +1086,54 @@
          }
      });    		
 	}
+    
+    
+//     $('.updatecomment').on('click', function(e){
+    	
+//     	console.log($(e.target).parent(".review-box"));
+//     	var html = `<div>
+//         	<h5>請輸入評論:<input type="text" name="commentcontext"> 請輸入評分(1~5)<input type="number" name="score"></h5>
+//             </div> ` ;
+//             $(e.target).closest(".review-box").append(html);	
+    	
+//     })
+</script>
+
+<script type="text/javascript">
+    
+    function update(e){
+    	
+    	var commentid = $(e.target).next().val();
+    	var productid = $(e.target).next().next().val();
+	
+    	var html = `<div class='updatearea'>
+    		<form method="post" action="<%=request.getContextPath() %>/MVC/UpdateComment">
+        	<h5>請輸入評論:<input type="text" name="commentcontext"></h5> <h5>請輸入評分(1~5)<input type="number" name="score"></h5>
+        	<input type="submit" value="確定修改" class="rate-review float-right">
+            <input type="button" value="取消" class="rate-review float-right updatecomment" onclick="cancel(event)">
+        	<input class="aaa" type="hidden" name="commentid" >
+            <input class="bbb" type="hidden" name="productid" >
+        	</form>
+            </div> ` ;
+            $(e.target).closest(".review-box").append(html);
+            $('.aaa').val(commentid);
+            $('.bbb').val(productid);
+    	
+    }
+    
+    
+    function cancel(e){
+        $('.updatearea').remove();
+    }
+    
+                                                            
+    
+                                                           
+    function clickout(e){
+        $(e.target).parent().trigger('click');
+    }                                                        
+                                                            
+    
 
     </script>
 </body>
