@@ -1048,6 +1048,7 @@
     
     
     function addLikes(e){
+    	e.stopPropagation();
 		console.log($(e.target).next().val());
 		$.ajax({
          url: '<%=request.getContextPath() %>/AddLikes',
@@ -1059,7 +1060,8 @@
          success: function(res){
              console.log("成功");
              if(res=='login'){
-            	 window.location.assign("<%=request.getContextPath() %>/download/FS-login.jsp");
+<%--             	 window.location.assign("<%=request.getContextPath() %>/download/FS-login.jsp"); --%>
+					 alert('請先登入');
              }else{
              	$('#aaaa').replaceWith(res);
              }
@@ -1136,6 +1138,7 @@
     
                                                            
     function clickout(e){
+    	e.stopPropagation();
         $(e.target).parent().trigger('click');
     }                                                        
                                                             
