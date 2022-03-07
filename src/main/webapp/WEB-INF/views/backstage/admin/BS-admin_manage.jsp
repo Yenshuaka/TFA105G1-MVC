@@ -138,10 +138,8 @@
 													<tr style="text-align: center; padding: 10 0">
 
 														<td>${adminVO.empno}</td>
-														<td><input type="TEXT" name="ename" class="ename"
-															value="${adminVO.ename}" placeholder="請輸入員工姓名" /></td>
-														<td><input type="TEXT" name="account" class="account"
-															value="${adminVO.account}" placeholder="請輸入帳號" /></td>
+														<td>${adminVO.ename}</td>
+														<td>${adminVO.account}</td>
 														<td><input type="button" data-toggle="modal"
 															data-target="#update-admin${adminVO.empno}"
 															class="rate-review btn v2" value="編輯"></td>
@@ -217,12 +215,6 @@
 	<script src="<%=request.getContextPath()%>/download/js/main.js"></script>
 	<!-- Dashboard JS-->
 	<script src="<%=request.getContextPath()%>/download/js/dashboard.js"></script>
-
-	<script>
-		$('input.ename').on('change', function() {
-
-		})
-	</script>
 </body>
 
 </html>
