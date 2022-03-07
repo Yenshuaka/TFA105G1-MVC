@@ -85,9 +85,15 @@ public class MemberLogin extends HttpServlet {
 //				int days = 30;
 //				session.setMaxInactiveInterval(86400 * days);  // 要存幾天?
 //				String reqComeFrom = req.getHeader("referer"); // filter?
-				String location = (String) session.getAttribute("location");
-				System.out.println("來源網站 = " + location);				
-				res.sendRedirect(req.getContextPath() + indexUrl);
+				String sourceURL = (String) session.getAttribute("sourceURL");
+				System.out.println("memberLogin 來源網站? :"+sourceURL);
+				if(sourceURL != null) {
+					session.removeAttribute("sourceURL");
+					res.sendRedirect(sourceURL);
+					return;
+				} else {
+					res.sendRedirect(req.getContextPath() + indexUrl);
+				}
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
