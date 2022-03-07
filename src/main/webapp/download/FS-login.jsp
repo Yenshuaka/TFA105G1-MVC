@@ -32,7 +32,7 @@
 	href="<%=request.getContextPath()%>/download/css/switcher/skin-aqua.css"
 	media="screen" id="style-colors" />
 <!-- Document Title -->
-<title>模擬首頁</title>
+<title>登入</title>
 
 </head>
 
@@ -45,7 +45,7 @@
 
 		<!--User Login section starts-->
 		<div class="user-login-section section-padding bg-fixed"
-			style="background-image: url(images/header/hero-5.jpg)">
+			style="background-image: url(<%=request.getContextPath()%>/download/images/FS-login.jpg)">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-10 offset-md-1  text-center">
