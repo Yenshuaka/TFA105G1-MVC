@@ -1138,6 +1138,7 @@
     
                                                            
     function clickout(e){
+    	e.stopPropagation();
         $(e.target).parent().trigger('click');
     }                                                        
                                                             
