@@ -57,6 +57,7 @@ public class AdminController {
 
 			AdminVO adminVO = adminService.loginAdmin(admin);
 			if (adminVO != null) {
+				req.changeSessionId();
 				session.setAttribute("adminVO", adminVO);
 				return "redirect:/MVC/adminManagement/Index";
 			} else {

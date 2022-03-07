@@ -73,6 +73,12 @@ public class MemberLogin extends HttpServlet {
 
 				HttpSession session = req.getSession();
 				req.changeSessionId();
+				
+				if(session.getAttribute("memberVO")!= null || session.getAttribute("memberid")!= null) {
+					session.removeAttribute("memberVO");
+					session.removeAttribute("memberid");
+				}
+				req.changeSessionId();
 				session.setAttribute("memberVO", memberVO);
 				session.setAttribute("memberid", memberid);
 				System.out.println("儲存memberVO到session! = " + memberVO);
@@ -95,6 +101,7 @@ public class MemberLogin extends HttpServlet {
 		if ("logout".equals(action)) {
 			HttpSession session = req.getSession();
 			session.removeAttribute("memberid");
+			session.removeAttribute("memberVO");
 			session.invalidate();
 			System.out.println("session 已清空!");
 			res.sendRedirect(req.getContextPath() + indexUrl);
