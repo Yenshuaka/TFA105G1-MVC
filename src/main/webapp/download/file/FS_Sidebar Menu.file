@@ -20,11 +20,11 @@
 						</a></li>
 						<li><a href="<%=request.getContextPath() %>/order/FS-order.jsp"> <i class="ion-ios-printer-outline"></i>訂單管理
 						</a></li>
-						<li><a href="#3"> <i class="ion-ios-gear-outline"></i>修改密碼
-						</a></li>
+					<!--	<li><a href="#3"> <i class="ion-ios-gear-outline"></i>修改密碼
+						</a></li> -->
 						<li><a
 							href="<%=request.getContextPath()%>/member/member.login?action=logout">
-								<i class="ion-ios-upload-outline"></i>Logout
+								<i class="ion-ios-upload-outline"></i>登出
 						</a></li>
 					</ul>
 				</nav>

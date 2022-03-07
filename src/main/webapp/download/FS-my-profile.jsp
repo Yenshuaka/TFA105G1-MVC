@@ -62,8 +62,8 @@
 								<div class="dash-breadcrumb-left">
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
-											<li class="active"><a href="#">Home</a></li>
-											<li>My Profiles</li>
+											<li class="active"><a href="<%=request.getContextPath()%>/download/FS-my-profile.jsp">會員專區</a></li>
+											<li> </li>
 										</ul>
 									</div>
 								</div>

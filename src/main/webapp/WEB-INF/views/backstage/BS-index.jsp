@@ -74,11 +74,7 @@
 			</div>
 			<!--Dashboard breadcrumb ends-->
 			<!--Dashboard content starts-->
-			<div>
-				<h2>
-					<%=session.getAttribute("adminVO")%>
-				</h2>
-				<img alt="home" src="<%=request.getContextPath()%>/download/images/bg/Home-web-icon.svg">
+			<div class="hero v2 section-padding" style="background-image: url(<%=request.getContextPath()%>/download/images/FS-login.jpg); width:100% height:100%">
 				<!--Dashboard content ends-->
 
 			</div>
