@@ -674,8 +674,11 @@ public class ProductDisplayController {
 		
 		Integer memberid = (Integer) session.getAttribute("memberid");
 		Integer score1 = 0 ;
-		if(score!="" && score!=null)
-		Integer.valueOf(score);
+		if(score!="" && score!=null) {
+			score1 = Integer.valueOf(score);
+		}
+		
+		System.out.println("有跑這段");
 
 		bean.setCommentid(Integer.valueOf(commentid));
 		bean.setMemberid(memberid);
