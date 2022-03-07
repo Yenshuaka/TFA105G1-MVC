@@ -15,10 +15,12 @@
 		<!-- <welcome-file>default.jsp</welcome-file> -->
 	</welcome-file-list>
 
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>logFilter</filter-name> -->
-<!-- 		<url-pattern>/download/FS-my-profile.jsp</url-pattern> -->
-<!-- 	</filter-mapping> -->
+	<filter-mapping>
+		<filter-name>logFilter</filter-name>
+		<url-pattern>/download/FS-my-profile.jsp</url-pattern>
+		<url-pattern>/download/FS-Index-Demo.jsp</url-pattern>
+		<url-pattern>/download/FS-edit-profile.jsp</url-pattern>
+	</filter-mapping>
 
 <!-- 	<filter-mapping> -->
 <!-- 		<filter-name>REGFilter</filter-name> -->
