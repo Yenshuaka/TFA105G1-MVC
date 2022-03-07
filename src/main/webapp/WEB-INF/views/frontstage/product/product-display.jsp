@@ -574,7 +574,7 @@
 												<span onclick='addLikes(event)' class="save-btn">
 												
 <!-- 												<i class="icofont-heart"></i> -->
-												<% if(exists.size()!=0 && exists.get(i)){%>
+												<% if(exists!= null && exists.size()!=0 && exists.get(i)){%>
                                             	<i onclick='clickout(event)' id='aaaa' class="ion-heart"></i> 
                                             	<% }else {%>
                                             	<i onclick='clickout(event)' id='aaaa' class="ion-ios-heart-outline"></i>

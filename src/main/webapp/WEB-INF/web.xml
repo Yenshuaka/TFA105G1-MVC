@@ -22,12 +22,12 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<filter-mapping>
-		<filter-name>logFilter</filter-name>
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>logFilter</filter-name> -->
 <!-- 		<url-pattern>/MVC/adminManagement/*</url-pattern> -->
-		<url-pattern>/download/FS-my-profile.jsp</url-pattern>
+<!-- 		<url-pattern>/download/FS-my-profile.jsp</url-pattern> -->
 <!-- 		<url-pattern>/download/FS-login.jsp</url-pattern> -->
-	</filter-mapping>
+<!-- 	</filter-mapping> -->
 
 <!-- 	<filter-mapping> -->
 <!-- 		<filter-name>REGFilter</filter-name> -->

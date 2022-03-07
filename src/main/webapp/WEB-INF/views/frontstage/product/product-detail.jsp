@@ -83,7 +83,13 @@
                                 </div>
                                 <div class="col-lg-6 col-md-5 col-sm-12">
                                     <div class="list-details-btn text-right sm-left">
-                                    <% boolean exist = (boolean)request.getAttribute("exist"); %>
+                                    <% boolean exist = false;
+                                    	if(request.getAttribute("exist")!=null){
+                                    		exist =  (boolean)request.getAttribute("exist");
+                                    	}
+                                    
+                                    
+                                    %>
                                         <div class="save-btn">				<!-- ion-ios-heart-outline, ion-heart -->
                                             <a  onclick='addLikes(event)' class="btn v3 white">
                                             <% if(exist){%>
