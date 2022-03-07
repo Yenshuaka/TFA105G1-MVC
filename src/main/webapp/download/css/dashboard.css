@@ -1538,9 +1538,10 @@ ul.buttons li {
 }
 
 .change-photo-btn {
-	position: absolute;
-	width: 200px;
-	left: 10%;
+	position: relative;
+	width: 100%	;
+	padding:10px;
+	
 }
 
 .photoUpload {

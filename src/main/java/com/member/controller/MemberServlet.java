@@ -1,8 +1,10 @@
 package com.member.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,9 +30,9 @@ public class MemberServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		// BS
 		final String MemberManage = "/MVC/MemberDispacher/MemberManage";
-		final String AddMember = "/MVC/MemberDisdacher/AddMember";
-		final String EditMember = "/MVC/MemberDisdacher/EditMember";
-		final String ListOneMember = "/MVC/MemberDisdacher/ListOneMember";
+		final String AddMember = "/MVC/MemberDispacher/AddMember";
+		final String EditMember = "/MVC/MemberDispacher/EditMember";
+		final String ListOneMember = "/MVC/MemberDispacher/ListOneMember";
 		// FS
 		final String UserProfile = "/download/FS-my-profile.jsp";
 		final String FSEditMember = "/download/FS-edit-profile.jsp";
@@ -283,7 +285,8 @@ public class MemberServlet extends HttpServlet {
 
 		if ("insert".equals(action)) {
 
-			List<String> errorMsgs = new LinkedList<String>();
+//			List<String> errorMsgs = new LinkedList<String>();
+			Map<String, String> errorMsgs = new HashMap<String, String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -294,41 +297,41 @@ public class MemberServlet extends HttpServlet {
 				String email = req.getParameter("email").trim();
 				String emailReg = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
 				if (email == null || email.trim().length() == 0) {
-					errorMsgs.add("帳號: 請勿空白");
+					errorMsgs.put("email", "請勿空白");
 				} else if (!email.trim().matches(emailReg)) {
-					errorMsgs.add("帳號: 請輸入英文字母、數字和 _ , - 且含@ + 信箱網域");
+					errorMsgs.put("email", "請輸入英文字母、數字和 _ , - 且含@ + 信箱網域");
 				}
 
 				String password = req.getParameter("password").trim();
 				String pwdReg = "^([A-Za-z0-9]){1,20}$";
 				if (password == null || password.trim().length() == 0) {
-					errorMsgs.add("密碼: 請勿空白");
+					errorMsgs.put("password", "請勿空白");
 				} else if (!password.trim().matches(pwdReg)) {
-					errorMsgs.add("密碼: 請輸入英文字母、數字 且1~20個字");
+					errorMsgs.put("password", "請輸入英文字母、數字 且1~20個字");
 				}
 
 				String lastname = req.getParameter("lastname");
 				String lnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
 				if (lastname == null || lastname.trim().length() == 0) {
-					errorMsgs.add("會員姓: 請勿空白");
+					errorMsgs.put("lastname", "請勿空白");
 				} else if (!lastname.trim().matches(lnameReg)) {
-					errorMsgs.add("會員姓: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
+					errorMsgs.put("lastname", "只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
 				}
 
 				String firstname = req.getParameter("firstname");
 				String fnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
 				if (firstname == null || firstname.trim().length() == 0) {
-					errorMsgs.add("會員名: 請勿空白");
+					errorMsgs.put("firstname", "請勿空白");
 				} else if (!firstname.trim().matches(fnameReg)) {
-					errorMsgs.add("會員姓名: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
+					errorMsgs.put("firstname", "只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
 				}
 
 				String idno = req.getParameter("idno");
 				String idnoReg = "^[(a-zA-Z0-9)]{10}$";
 				if (idno == null || idno.trim().length() == 0) {
-					errorMsgs.add("身分證字號: 請勿空白");
+					errorMsgs.put("idno", "請勿空白");
 				} else if (!idno.trim().matches(idnoReg)) {
-					errorMsgs.add("身分證字號: 英文字母、數字 , 且長度必需在10");
+					errorMsgs.put("idno", "英文字母、數字 , 且長度必需在10");
 				}
 
 				String gender = req.getParameter("gender").trim();
@@ -340,7 +343,7 @@ public class MemberServlet extends HttpServlet {
 
 					dateofbirth = new java.sql.Date(System.currentTimeMillis());
 
-					errorMsgs.add("請輸入日期!");
+					errorMsgs.put("dateofbirth", "請輸入日期!");
 				}
 
 				String country = req.getParameter("country").trim();
@@ -348,9 +351,9 @@ public class MemberServlet extends HttpServlet {
 				String phone = req.getParameter("phone").trim();
 				String phoneReg = "^[(0-9)]{10}$";
 				if (idno == null || idno.trim().length() == 0) {
-					errorMsgs.add("手機: 請勿空白");
+					errorMsgs.put("phone", "請勿空白");
 				} else if (!phone.trim().matches(phoneReg)) {
-					errorMsgs.add("手機: 數字 , 且長度必需在10");
+					errorMsgs.put("phone", "需數字,且長度必需在10");
 				}
 
 				String nickname = req.getParameter("nickname").trim();
@@ -389,7 +392,7 @@ public class MemberServlet extends HttpServlet {
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
+				errorMsgs.put("exception", e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher(AddMember);
 				failureView.forward(req, res);
 			}

@@ -16,6 +16,8 @@ import com.member.model.MemberService;
 import com.member.model.MemberVO;
 
 
+
+
 @WebServlet("/member/member.login")
 public class MemberLogin extends HttpServlet {
 
@@ -60,10 +62,11 @@ public class MemberLogin extends HttpServlet {
 				if (memberVO == null) {
 					errorMsgs.add("查無資料");
 				}
-				System.err.println(errorMsgs); // []
+				System.err.println(errorMsgs);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					String RejectUrl = "/download/FS-login.jsp";
+					req.setAttribute("email", email);
 					RequestDispatcher failureView = req.getRequestDispatcher(RejectUrl);
 					failureView.forward(req, res);
 					return;
@@ -82,15 +85,20 @@ public class MemberLogin extends HttpServlet {
 				session.setAttribute("memberVO", memberVO);
 				session.setAttribute("memberid", memberid);
 				System.out.println("儲存memberVO到session! = " + memberVO);
-//				int days = 30;
-//				session.setMaxInactiveInterval(86400 * days);  // 要存幾天?
-//				String reqComeFrom = req.getHeader("referer"); // filter?
+
 				String sourceURL = (String) session.getAttribute("sourceURL");
-				System.out.println("memberLogin 來源網站? :"+sourceURL);
-				if(sourceURL != null) {
+				System.out.println("使用者 想去哪? :" + sourceURL);
+				String cameFromURL = (String) session.getAttribute("cameFromURL");
+				System.out.println("使用者 登入前哪? :" + cameFromURL);
+
+				if (sourceURL != null) {
 					session.removeAttribute("sourceURL");
 					res.sendRedirect(sourceURL);
 					return;
+				} else if (cameFromURL != null) {
+					session.removeAttribute("cameFromURL");
+					res.sendRedirect(cameFromURL);
+
 				} else {
 					res.sendRedirect(req.getContextPath() + indexUrl);
 				}

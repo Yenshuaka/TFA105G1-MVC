@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.member.model.*"%>
 
-
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -33,24 +33,38 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/download/css/switcher/skin-aqua.css"
 	media="screen" id="style-colors" />
+
+<style type="text/css">
+.item-wrapper {
+	float: right;
+	padding: inherit;
+}
+
+.item-wrapper-a {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	padding: 15px 30px
+}
+</style>
+
+
 <!-- Document Title -->
 <title>基本資料</title>
 
 </head>
 
 <body>
+	<!--Sidebar Menu Starts-->
+	<%@include file="file/FS_Sidebar Menu.file"%>
+	<!--Sidebar Menu ends-->
+
 	<div class="page-wrapper">
-		<!--Sidebar Menu Starts-->
-		<%@include file="file/FS_Sidebar Menu.file"%>
-		<!--Sidebar Menu ends-->
 
 		<!--Dashboard content Wrapper starts-->
 		<div class="dash-content-wrap">
-
 			<!-- Top header starts-->
-
 			<%@include file="file/FS_Header.file"%>
-
 			<!-- Top header ends-->
 
 			<!--main 上索引開始-->
@@ -62,8 +76,9 @@
 								<div class="dash-breadcrumb-left">
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
-											<li class="active"><a href="<%=request.getContextPath()%>/download/FS-my-profile.jsp">會員專區</a></li>
-											<li> </li>
+											<li class="active"><a
+												href="<%=request.getContextPath()%>/download/FS-my-profile.jsp">會員專區</a></li>
+											<li></li>
 										</ul>
 									</div>
 								</div>
@@ -95,13 +110,14 @@
 												</div>
 
 												<div class="change-photo-btn">
-													<a href="#" data-toggle="modal" data-target="#avatar-page" class="rate-review"><i class="ion-log-in"></i>變更圖片</a>
+													<a href="#" data-toggle="modal" data-target="#avatar-page"
+														class="rate-review"><i class="ion-log-in"></i>變更圖片</a>
 													<!-- modal-start -->
 													<div class="modal fade" id="avatar-page">
 														<div class="modal-dialog modal-dialog-centered"
 															role="image">
 															<div class="picBox">
-															
+
 																<div>
 																	<div id="changePic">
 																		<label for="p_file"> <img
@@ -109,20 +125,22 @@
 																		</label>
 																	</div>
 																</div>
-																
+
 																<div>
 																	<div class="contact-form__upload-btn xs-left">
 																		<FORM METHOD="post" enctype="multipart/form-data"
 																			ACTION="<%=request.getContextPath()%>/member/member.upload">
-																			
-																			<input type="file" id="p_file" name="photo-upload" accept="image/jpeg, image/png"
-																				style="display: none;"> 
-																			<input type="hidden" name="memberid" value="${memberVO.memberid}">
-																			<input type="submit" name="action" value="確認">
+
+																			<input type="file" id="p_file" name="photo-upload"
+																				accept="image/jpeg, image/png"
+																				style="display: none;"> <input type="hidden"
+																				name="memberid" value="${memberVO.memberid}">
+																			<input type="submit" name="action" class="btn v5"
+																				value="確認">
 																		</FORM>
 																	</div>
 																</div>
-																
+
 															</div>
 														</div>
 													</div>
@@ -145,11 +163,13 @@
 													<li>
 														<h6>Phone :</h6> <span>${(memberVO.phone == null) ? "連絡電話" : memberVO.phone}</span>
 													</li>
-																					
+
 												</ul>
-												<a
-													href="<%=request.getContextPath()%>/download/FS-edit-profile.jsp"
-													class="btn v5">編輯</a>
+												<div class="item-wrapper">
+													<a
+														href="<%=request.getContextPath()%>/download/FS-edit-profile.jsp"
+														class="btn v5 item-wrapper-a">編輯</a>
+												</div>
 											</div>
 										</div>
 									</div>

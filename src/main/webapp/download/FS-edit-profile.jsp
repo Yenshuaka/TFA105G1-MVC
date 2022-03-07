@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.member.model.*"%>
 
-
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -33,6 +33,53 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/download/css/switcher/skin-aqua.css"
 	media="screen" id="style-colors" />
+<style type="text/css">
+.bottom {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	padding: 15px 30px;
+}
+
+.btn {
+	padding: 0.5rem 2rem;
+	border: none;
+	border-radius: 7px;
+	background-color: #0cbcb7;;
+	color: rgb(255, 255, 255);
+	outline: transparent;
+	cursor: pointer;
+	font-size: 1rem;
+}
+
+table {
+	width: 100%;
+}
+
+.invoice-panel tr td {
+	padding: 20px 0 20px 20px;
+}
+
+input, .input-group {
+	width: 80%;
+}
+
+input {
+	font-size: 15px;
+	height: calc(2.25rem + 2px);
+	padding: 23px 20px;
+	border: 1px solid #ced4da;
+	outline: none;
+}
+
+select {
+	border: 1px solid #ced4da !important;
+}
+</style>
+
+
+
+
 <!-- Document Title -->
 <title>編輯資料</title>
 
@@ -60,9 +107,11 @@
 								<div class="dash-breadcrumb-left">
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
-											<li class="active"><a href="#">Home</a></li>
-											<li class="active"><a href="#">My Profiles</a></li>
-											<li>Edit Profile</li>
+											<li class="active"><a
+												href="<%=request.getContextPath()%>/download/FS-my-profile.jsp">會員專區</a></li>
+											<li class="active"><a
+												href="<%=request.getContextPath()%>/download/FS-edit-profile.jsp">編輯基本資料</a></li>
+
 										</ul>
 									</div>
 								</div>
@@ -130,26 +179,30 @@
 														<td><select class="w-37" name="gender">
 																<option value="">請選擇</option>
 																<option value="男"
-																	${memberVO.gender == "男" ? 'selected="selected"' : ''}>男</option>
+																	${memberVO.gender=="男"
+                                                                            ? 'selected="selected"' : '' }>男</option>
 																<option value="女"
-																	${memberVO.gender == "女" ? 'selected="selected"' : ''}>女</option>
+																	${memberVO.gender=="女"
+                                                                            ? 'selected="selected"' : '' }>女</option>
 														</select></td>
 													</tr>
 													<tr>
 														<td>生日 :</td>
-														<td><div id="datepicker-from"
-																class="input-group date" class="w-37"
-																data-date-format="yyyy-mm-dd">
+														<td>
+															<div id="datepicker-from" class="input-group date"
+																class="w-37" data-date-format="yyyy-mm-dd">
 																<input name="dateofbirth" class="form-control"
 																	type="text" placeholder="請選擇生日" autocomplete="off"
 																	value="${memberVO.dateofbirth}"> <span
 																	class="input-group-addon"><i
 																	class="icofont-ui-calendar"></i></span>
-															</div></td>
+															</div>
+														</td>
 													</tr>
 													<tr>
 														<td>國家 :</td>
-														<td><%@include file="file/select-country.file"%></td>
+														<td><%@include file="file/select-country.file"%>
+														</td>
 													</tr>
 													<tr>
 														<td>手機 :</td>
@@ -158,10 +211,13 @@
 															placeholder="請輸入手機" /></td>
 													</tr>
 												</table>
-												<br> <input type="hidden" name="action" value="update">
-												<input type="hidden" name="memberid"
-													value="${memberVO.memberid}"> <input type="submit"
-													class="btn v3" value="送出">
+												<div class="bottom">
+													<input type="hidden" name="action" value="update">
+													<input type="hidden" name="memberid"
+														value="${memberVO.memberid}">
+													<button type="submit" class="btn v3">送出</button>
+												</div>
+
 											</FORM>
 										</div>
 

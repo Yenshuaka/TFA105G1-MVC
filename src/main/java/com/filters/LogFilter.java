@@ -41,13 +41,14 @@ public class LogFilter  implements Filter {
 		
 		System.out.println("LogFilter work!!!!!!!!");
 		
+		System.out.println("使用者 從來的? filter: "+req.getHeader("referer"));
 
 		
 		
 		MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 		if (memberVO == null) {
 			System.out.println("memberVO is null");
-			System.out.println("來源網站: "+req.getRequestURI());
+			System.out.println("使用者 想去哪? filter: "+req.getRequestURI());
 			
 			session.setAttribute("sourceURL", req.getRequestURI());
 			res.sendRedirect(req.getContextPath() + "/download/FS-login.jsp");

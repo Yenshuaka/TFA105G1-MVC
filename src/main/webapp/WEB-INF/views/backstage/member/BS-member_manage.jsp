@@ -62,8 +62,10 @@
 								<div class="dash-breadcrumb-left">
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
-											<li class="active"><a href="#">Home</a></li>
-											<li>會員管理</li>
+											<li class="active"><a
+												href="<%=request.getContextPath()%>/MVC/adminManagement/Index">後台首頁</a></li>
+											<li class="active"><a
+												href="<%=request.getContextPath()%>/MVC/MemberDispacher/MemberManage">會員管理</a></li>
 										</ul>
 									</div>
 								</div>

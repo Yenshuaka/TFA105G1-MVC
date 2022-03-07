@@ -69,6 +69,7 @@ public class MemberRegister extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					String RejectUrl = "/download/FS-register.jsp";
+					req.setAttribute("email", email);
 					RequestDispatcher failureView = req.getRequestDispatcher(RejectUrl);
 					failureView.forward(req, res);
 					return;
@@ -84,16 +85,21 @@ public class MemberRegister extends HttpServlet {
 				System.out.println("儲存\"新\"memberVO到session! = " + newMember);
 
 				String sourceURL = (String) session.getAttribute("sourceURL");
-				System.out.println("memberRegister 來源網站? :" + sourceURL);
+				System.out.println("使用者 想去哪? :" + sourceURL);
+				String cameFromURL = (String) session.getAttribute("cameFromURL");
+				System.out.println("使用者 登入前哪? :" + cameFromURL);
+
 				if (sourceURL != null) {
 					session.removeAttribute("sourceURL");
 					res.sendRedirect(sourceURL);
 					return;
+				} else if (cameFromURL != null) {
+					session.removeAttribute("cameFromURL");
+					res.sendRedirect(cameFromURL);
 				} else {
 					String indexUrl = "/download/homepage2.jsp";
 					res.sendRedirect(req.getContextPath() + indexUrl);
 				}
-
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {

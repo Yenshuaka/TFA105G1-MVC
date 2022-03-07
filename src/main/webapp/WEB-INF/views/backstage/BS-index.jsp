@@ -3,6 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.admin.model.*"%>
 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -62,8 +63,8 @@
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
 											<li class="active"><a
-												href="<%=request.getContextPath()%>/download/BS-index.jsp">Home</a></li>
-											<li>管理員: ${adminVO.account}</li>
+												href="<%=request.getContextPath()%>/MVC/adminManagement/Index">後台首頁</a></li>
+											<li>管理員: ${adminVO.account} 您好!</li>
 										</ul>
 									</div>
 								</div>
