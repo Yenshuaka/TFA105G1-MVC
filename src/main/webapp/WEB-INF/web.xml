@@ -29,12 +29,12 @@
 <!-- 		<url-pattern>/download/FS-login.jsp</url-pattern> -->
 	</filter-mapping>
 
-	<filter-mapping>
-		<filter-name>REGFilter</filter-name>
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>REGFilter</filter-name> -->
 <!-- 		<url-pattern>/MVC/adminManagement/*</url-pattern> -->
-		<url-pattern>/*</url-pattern>
+<!-- 		<url-pattern>/*</url-pattern> -->
 <!-- 		<url-pattern>/download/FS-login.jsp</url-pattern> -->
-	</filter-mapping>
+<!-- 	</filter-mapping> -->
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>

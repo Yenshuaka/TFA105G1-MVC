@@ -47,7 +47,7 @@ pageContext.setAttribute("memberVO", memberVO);
 <body>
 	<div class="page-wrapper">
 		<!--Sidebar Menu Starts-->
-		<%@include file="/WEB-INF/views/frontstage/file/FS_Sidebar Menu.file"%>
+<%-- 		<%@include file="/WEB-INF/views/frontstage/file/FS_Sidebar Menu.file"%> --%>
 		<!--Sidebar Menu ends-->
 
 		<!--Dashboard content Wrapper starts-->
@@ -55,7 +55,7 @@ pageContext.setAttribute("memberVO", memberVO);
 
 			<!-- Top header starts-->
 
-			<%@include file="/WEB-INF/views/frontstage/file/FS_Header.file"%>
+<%-- 			<%@include file="/WEB-INF/views/frontstage/file/FS_Header.file"%> --%>
 
 			<!-- Top header ends-->
 
@@ -147,7 +147,7 @@ pageContext.setAttribute("memberVO", memberVO);
 			<!--main content ends-->
 
 			<!--Dashboard footer starts-->
-			<%@include file="/WEB-INF/views/frontstage/file/FS_footer.file"%>
+<%-- 			<%@include file="/WEB-INF/views/frontstage/file/FS_footer.file"%> --%>
 			<!--Dashboard footer ends-->
 		</div>
 		<!--Dashboard content Wrapper ends-->
