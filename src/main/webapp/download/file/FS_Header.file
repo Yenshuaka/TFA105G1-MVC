@@ -46,7 +46,7 @@
 								</div>
 								<div class="add-list float-right">
 									<a class="btn v8" href="<%= request.getContextPath() %>/MVC/ShoppingCart">購物車 <i
-										class="icofont-shopping-cart">&nbsp3</i></a>
+										class="icofont-shopping-cart">&nbsp3</i></a> <!--mobile-menu starts -->
 								</div>
 							</div>
 						</div>
