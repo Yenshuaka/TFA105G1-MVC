@@ -32,7 +32,7 @@
 	href="<%=request.getContextPath()%>/download/css/switcher/skin-aqua.css"
 	media="screen" id="style-colors" />
 <!-- Document Title -->
-<title>模擬首頁</title>
+<title>登入</title>
 
 </head>
 
