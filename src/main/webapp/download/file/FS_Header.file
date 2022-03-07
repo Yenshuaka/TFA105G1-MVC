@@ -49,8 +49,8 @@
 									Jedis jedis = new Jedis("localhost", 6379);
 									long xx = 0;
 									if(session.getAttribute("memberid")!=null){
-										Integer memberid = (Integer)session.getAttribute("memberid");
-										String memberidstring = String.valueOf(memberid);
+										Integer memberida = (Integer)session.getAttribute("memberid");
+										String memberidstring = String.valueOf(memberida);
 										xx = jedis.llen("會員"+memberidstring);									
 									}						
 									
