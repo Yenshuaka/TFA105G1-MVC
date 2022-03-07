@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
 
-
 @WebServlet("/member/member.register")
 public class MemberRegister extends HttpServlet {
 
@@ -29,7 +28,7 @@ public class MemberRegister extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
+
 		if ("register".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -44,28 +43,28 @@ public class MemberRegister extends HttpServlet {
 				} else if (!email.trim().matches(emailReg)) {
 					errorMsgs.add("帳號: 請輸入英文字母、數字和 _ , - 且含@ + 信箱網域");
 				}
-				
+
 				String password = req.getParameter("password");
 				String pwdReg = "^([A-Za-z0-9]){1,20}$";
 				if (password == null || password.trim().length() == 0) {
 					errorMsgs.add("密碼: 請勿空白");
 				} else if (!password.trim().matches(pwdReg)) {
 					errorMsgs.add("密碼: 請輸入英文字母、數字 且1~20個字");
-				}				
-				
+				}
+
 				String confirmPWD = req.getParameter("confirm-password");
-				if(!password.equals(confirmPWD)) {
+				if (!password.equals(confirmPWD)) {
 					errorMsgs.add("密碼不一致，請重新輸入!");
 				}
-				
+
 				String agreement = req.getParameter("agreement");
-				if(agreement == null) {
+				if (agreement == null) {
 					errorMsgs.add("尚有條款未確認!");
-				}				
+				}
 				MemberVO memberVO = new MemberVO();
 				memberVO.setEmail(email);
 				memberVO.setPassword(password);
-				
+
 				System.err.println(errorMsgs);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -74,19 +73,27 @@ public class MemberRegister extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
-				/*************************** 2.開始查詢資料 *****************************************/		
+				/*************************** 2.開始查詢資料 *****************************************/
 				MemberService memberSvc = new MemberService();
-				MemberVO newMember = memberSvc.addMember(memberVO);				
+				MemberVO newMember = memberSvc.addMember(memberVO);
 				Integer memberid = memberVO.getMemberid();
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				HttpSession session = req.getSession();
 				session.setAttribute("memberVO", newMember);
 				session.setAttribute("memberid", memberid);
-				System.out.println("儲存\"新\"memberVO到session! = " + newMember);				
-				
-				String ContextPath = req.getContextPath();
-				String indexUrl = "/download/FS-Index-Demo.jsp";
-				res.sendRedirect(ContextPath + indexUrl);
+				System.out.println("儲存\"新\"memberVO到session! = " + newMember);
+
+				String sourceURL = (String) session.getAttribute("sourceURL");
+				System.out.println("memberRegister 來源網站? :" + sourceURL);
+				if (sourceURL != null) {
+					session.removeAttribute("sourceURL");
+					res.sendRedirect(sourceURL);
+					return;
+				} else {
+					String indexUrl = "/download/homepage2.jsp";
+					res.sendRedirect(req.getContextPath() + indexUrl);
+				}
+
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
