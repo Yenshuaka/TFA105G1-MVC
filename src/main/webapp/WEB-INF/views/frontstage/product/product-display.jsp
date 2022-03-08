@@ -603,7 +603,7 @@
 													</div>
 													<div class="review-summury float-right">
 														<p>
-															<a href="#"><%=commentcount.get(i) %> 則評論</a>
+															<%=commentcount.get(i) %> 則評論
 														</p>
 													</div>
 												</div>
