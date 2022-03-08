@@ -88,6 +88,10 @@ public class OrderServlet extends HttpServlet implements Serializable {
 			HttpSession session = req.getSession();
 			List<String> errorMsgs = new LinkedList<String>();
 			session.setAttribute("errorMsgs", errorMsgs);
+			
+			OrderBean finalOrderBean = new OrderBean();
+			List<OrderdetailBean> finalOrderdetailBeans = new ArrayList<OrderdetailBean>();
+			List<TravelerlistBean> finalTravelerlistBeans = new ArrayList<TravelerlistBean>();
 
 			try {
 				// order
@@ -109,40 +113,80 @@ public class OrderServlet extends HttpServlet implements Serializable {
 				System.out.println("orderpriceamount = " + orderpriceamount);
 				bean.setUsedfunpoints(50);
 
-				orderService.insert(bean);
+//				orderService.insert(bean);
+				finalOrderBean = bean;
 
 				/// orderdetail
 
 				String[] productids = req.getParameterValues("productid"); // 跑迴圈裝進bean
-				String[] numberoftravelers = req.getParameterValues("numberoftraveler");
-				for (int i = 0; i < numberoftravelers.length; i++) {
-					System.out.println("numberoftravelers = " + numberoftravelers[i]);
+				for(int i =0; i < productids.length; i++) {
+					System.out.println("productids[i]=" + productids[i]);
 				}
-
+				String[] numberoftravelers = req.getParameterValues("numberoftraveler");
+				String travelerReg = "^[1-9]*$";
+//				for(int i = 0;i<numberoftravelers.length;i++) {
+//					System.out.println(numberoftravelers[i]);
+//					if (!numberoftravelers[i].matches(travelerReg)) { // 以下練習正則(規)表示式(regular-expression)
+//						System.out.println("numberoftravelers[i] = " + numberoftravelers[i]);
+//						errorMsgs.add("團員人數: 請選擇團員人數");
+//					}
+//				}
+			
+			
+				
 				String[] productprices = req.getParameterValues("productprice");
 				//String[] orderrewardpoints = req.getParameterValues("orderrewardpoints");
 				String[] specialneeds = req.getParameterValues("specialneeds");
 				String[] imgids = req.getParameterValues("imgid");
 
-				OrderdetailBean bean2 = new OrderdetailBean();
-				bean2.setOrderid(bean.getOrderid());
-				TravelerlistBean bean3 = new TravelerlistBean();
+//				OrderdetailBean bean2 = new OrderdetailBean();
+//				bean2.setOrderid(bean.getOrderid());
+//				TravelerlistBean bean3 = new TravelerlistBean();
+				
+//				if (!errorMsgs.isEmpty()) {
+//					System.out.println("驗證");
+//					session.setAttribute("travelernumber", bean2);
+//					RequestDispatcher failureView = req.getRequestDispatcher("/order/orderbooking.jsp");
+//					failureView.forward(req, res);
+//					return;
+//				}
 				
 				int a = 0;
 				for (int i = 0; i < productids.length; i++) {
-
+					OrderdetailBean bean2 = new OrderdetailBean();
 					bean2.setProductid(Integer.valueOf(productids[i]));
+					System.out.println("安安安安");
+					System.out.println(productids.length);
 					bean2.setNumberoftraveler(Integer.valueOf(numberoftravelers[i]));
 					bean2.setProductprice(Integer.valueOf(productprices[i]));
 					bean2.setOrderrewardpoints(5);
 					bean2.setSpecialneeds(specialneeds[i]);
 					bean2.setImgid(Integer.valueOf(imgids[i]));
 
-					orderdetailService.insert(bean2);
-
+					if (!numberoftravelers[i].matches(travelerReg)) { // 以下練習正則(規)表示式(regular-expression)
+						System.out.println("numberoftravelers[i] = " + numberoftravelers[i]);
+						errorMsgs.add("團員人數: 請選擇團員人數");
+					}
+					
+					finalOrderdetailBeans.add(bean2);
+					
+//					if (!errorMsgs.isEmpty()) {
+//						System.out.println("驗證");
+//						session.setAttribute("travelernumber", bean2);
+//						RequestDispatcher failureView = req.getRequestDispatcher("/order/orderbooking.jsp");
+//						failureView.forward(req, res);
+//						return;
+//					}
+					
+					
+					
+				
+					
 					for (int j = 0; j < Integer.valueOf(numberoftravelers[i]); j++) {
+						TravelerlistBean bean3 = new TravelerlistBean();
 						System.out.println("numberoftravelers[i] = " + Integer.valueOf(numberoftravelers[i]));
-
+						
+						
 						String[] lastnames = req.getParameterValues("lastname");
 							String lnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
 							if (lastnames[a] == null || lastnames[a].trim().length() == 0) {
@@ -182,29 +226,53 @@ public class OrderServlet extends HttpServlet implements Serializable {
 						bean3.setIdno(idnos[a]);
 						
 //						// Send the use back to the form, if there were errors
-						if (!errorMsgs.isEmpty()) {
-							System.out.println("我在這");
-							session.setAttribute("travelernumber", bean2);
-							session.setAttribute("traveler", bean3); // 含有輸入格式錯誤的empVO物件,也存入req
-							RequestDispatcher failureView = req.getRequestDispatcher("/order/orderbooking.jsp");
-							failureView.forward(req, res);
-							return;
-						}
 						
 						
-						travelerlistService.insert(bean3);
+//						orderdetailService.insert(bean2);
+//						travelerlistService.insert(bean3);
+						finalTravelerlistBeans.add(bean3);
+						
 						System.out.println("a = " + a);
 						System.out.println(lastnames[a]);
 						a++;
 					}
 				}
+				
+				
+				if (!errorMsgs.isEmpty()) {
+					System.out.println("我在這");
+					session.setAttribute("traveler", finalTravelerlistBeans); // 含有輸入格式錯誤的empVO物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("/order/orderbooking.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				orderService.insert(bean);
+				for(int i = 0; i<finalOrderdetailBeans.size();i++) {
+					finalOrderdetailBeans.get(i).setOrderid(bean.getOrderid()) ;
+					orderdetailService.insert(finalOrderdetailBeans.get(i));
+				}
+				
+					int b = 0;
+					for(int j = 0; j < finalOrderdetailBeans.size(); j++) {
+						for(int k = 0; k < finalOrderdetailBeans.get(j).getNumberoftraveler();k++) {
+							
+								finalTravelerlistBeans.get(b).setOrderdetailno(finalOrderdetailBeans.get(j).getOrderdetailno())    ;
+								travelerlistService.insert(finalTravelerlistBeans.get(b));
+								b++;
+							
+						}					
+					}	
+				
+				
 				String url = ("order.do?action=memberUpdate");
 				RequestDispatcher sucessview = req.getRequestDispatcher(url);
 				sucessview.forward(req, res);
 
-			} catch (Exception e) {
-//				e.printStackTrace();
-				errorMsgs.add(e.getMessage());
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+//				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/order/orderbooking.jsp");
 				failureView.forward(req, res);
 				System.out.print("新增資料失敗");

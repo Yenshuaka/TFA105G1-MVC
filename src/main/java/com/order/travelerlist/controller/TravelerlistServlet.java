@@ -8,8 +8,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.mysql.cj.Session;
 import com.order.travelerlist.model.TravelerlistBean;
 import com.order.travelerlist.model.TravelerlistService;
 
@@ -282,22 +285,56 @@ public class TravelerlistServlet extends HttpServlet {
 
 		if ("update".equals(action)) { // 來自add-post.jsp的請求
 
+			HttpSession session = req.getSession();
+			List<String> errorMsgs = new LinkedList<String>();
+			session.setAttribute("errorMsgs", errorMsgs);
+			
 			try {
 				Integer travelerlistno = Integer.parseInt(req.getParameter("travelerlistno").trim());
 				Integer orderdetailno = Integer.parseInt(req.getParameter("orderdetailno").trim());
 				String lastname = req.getParameter("lastname");
+				String lnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+				if (lastname == null || lastname.trim().length() == 0) {
+					errorMsgs.add("姓氏: 請勿空白");
+				} else if (!lastname.trim().matches(lnameReg)) {
+					errorMsgs.add("姓氏: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
+				}
+				System.out.println("我在這");
 				String firstname = req.getParameter("firstname");
+				String fnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+				if (firstname == null || firstname.trim().length() == 0) {
+					errorMsgs.add("名字: 請勿空白");
+				} else if (!firstname.trim().matches(fnameReg)) {
+					errorMsgs.add("名字: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
+				}
+				
 				String gender = req.getParameter("gender");
+				String genderReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+				if (gender == null || gender.trim().length() == 0) {
+					errorMsgs.add("性別: 請勿空白");
+				} else if (!gender.trim().matches(genderReg)) {
+					errorMsgs.add("名字: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
+				}
+				
+				
 				Date birthday = Date.valueOf(req.getParameter("birthday").trim());
+				if (birthday == null) {
+					errorMsgs.add("生日: 請勿空白");
+				}
+				
 				String idno = req.getParameter("idno");
+				String idnoReg = "^[a-zA-Z]\\d{9}$";
+				if (idno == null || idno.trim().length() == 0) {
+					errorMsgs.add("身分證字號: 請勿空白");
+				} else if (!idno.trim().matches(idnoReg)) {
+					errorMsgs.add("身分證字號: 英文字母、數字 , 且長度必需在10");
+				}
 				// 以上先拿到參數
 
 				/*************************** 2.開始修改資料 ***************************************/
 
 				TravelerlistBean bean = new TravelerlistBean();
-				HttpSession session = req.getSession();
 				
-
 				bean.setTravelerlistno(travelerlistno);
 				bean.setOrderdetailno(orderdetailno);
 				bean.setLastname(lastname);
@@ -305,10 +342,21 @@ public class TravelerlistServlet extends HttpServlet {
 				bean.setGender(gender);
 				bean.setBirthday(birthday);
 				bean.setIdno(idno);
+				System.out.println("我在這2");
+				
+				if (!errorMsgs.isEmpty()) {
+					System.out.println(errorMsgs);
+					session.setAttribute("travelerlistBean", bean);
+
+					RequestDispatcher failureView = req.getRequestDispatcher("/order/update_travelerlist_input.jsp");
+					failureView.forward(req, res);
+					return; // 程式中斷
+				}
 
 				travelerlistService.update(bean);
 
 //				System.out.println(bean);
+				
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
 				List<TravelerlistBean> list = travelerlistService.select(bean); // 秀出指定資料
@@ -324,10 +372,11 @@ public class TravelerlistServlet extends HttpServlet {
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/emp/addEmp.jsp");
-//				failureView.forward(req, res);
+				errorMsgs.add(e.getMessage());
+				e.printStackTrace();
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/order/update_travelerlist_input.jsp");
+				failureView.forward(req, res);
 				System.out.print("修改資料失敗");
 			}
 		}

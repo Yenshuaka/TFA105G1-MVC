@@ -177,7 +177,7 @@
 	
 </style>
 
-<body>
+<body onload="clone_form();">
 	<!--Preloader starts-->
 	<!-- <div class="preloader js-preloader">
         <img src="images/preloader.gif" alt="...">
@@ -210,10 +210,7 @@
 
 							<%
 							OrderdetailBean orderdetailBean = (OrderdetailBean)session.getAttribute("travelernumber");
-							System.out.println(orderdetailBean);
-							TravelerlistBean travelerlistBean = (TravelerlistBean)session.getAttribute("traveler");
-							System.out.println(travelerlistBean);
-							System.out.println("我到這");
+							List<TravelerlistBean> travelerlistBean = (List<TravelerlistBean>)session.getAttribute("traveler");
 							MemberVO member = (MemberVO) session.getAttribute("member");
 							List<MemberVO> allMember = (List<MemberVO>) session.getAttribute("allMember");
 							String lastname = null;
@@ -369,8 +366,8 @@
 						style="margin-left: 10px" name="numberoftraveler"
 						id="<%=productname%>" class="numberoftraveler <%=productname%>"
 						productname="<%=productname%>" 
-						value="<%= (orderdetailBean==null)? "" : orderdetailBean.getNumberoftraveler()%>">
-						<option disabled="disabled">請選擇</option>
+						value="<%= (orderdetailBean==null)? "xxx" : orderdetailBean.getNumberoftraveler()%>">
+<!-- 						<option>請選擇</option> -->
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -381,17 +378,11 @@
 						<option value="8">8</option>
 						<option value="9">9</option>
 						<option value="10">10</option>
-
+					<input type="hidden" id="optionNum" value="<%=(orderdetailBean==null)? 1 :orderdetailBean.getNumberoftraveler()%>"></input>
 					</select> <input type="hidden" productname="<%=productname%>"
 						value="<%=productprice%>"></input>
-						<script>
-							var sel = $("numberoftraveler");
-							var num = sel.val();
-							sel.children("option").each(function(index, el){
-								if($(el).val() == num){
-									$(el).attr("selected")
-								}
-							})
+						<script type="text/javascript">
+								// 移掉了
 						</script>
 					<div class="tmp">
 						<div class="traveler_infor">
@@ -416,7 +407,6 @@
 								<label style="margin-left: 10px">性別 <span
 									class="require_mark">*</span><br></label> <br> <select
 									name="gender" class="traveler_gender" id="traveler_gender">
-<!-- 									<option selected>請選擇</option> -->
 									<option value="男">男生</option>
 									<option value="女">女生</option>
 								</select>
@@ -433,14 +423,16 @@
 									class="require_mark">*</span><br></label> <br> <input
 									style="margin-left: 10px" type="text" name="lastname"
 									class="traveler_last_name" id="traveler_last_name${i}"
-									value="<%= (travelerlistBean==null)? "" : travelerlistBean.getLastname()%>">
+<%-- 									value="<%= (travelerlistBean==null)? "" : travelerlistBean.get().getLastname()%>" --%>
+									>
 								<div class="tip_text_danger">此欄位必填</div>
 							</div>
 							<div class="form_group">
 								<label>名字</label><span class="require_mark">*</span><br> <input
 									type="text" name="firstname" class="traveler_first_name"
 									id="traveler_first_name" 
-									value= "<%= (travelerlistBean==null)? "" : travelerlistBean.getFirstname()%>">
+<%-- 									value= "<%= (travelerlistBean==null)? "" : travelerlistBean.getFirstname()%>" --%>
+									>
 								<div class="tip_text_danger">此欄位必填</div>
 							</div>
 						</div>
@@ -456,26 +448,6 @@
 						<div class="tip_text_danger">此欄位必填</div>
 					</div>
 
-					<!-- 				<div class="sub_title">緊急聯絡人</div> -->
-					<!-- 				<div class="urgent_board"> -->
-					<!-- 					<div class="form_group"> -->
-					<!-- 						<label>聯絡人姓</label><span class="require_mark">*</span><br>  -->
-					<!-- 						<input type="text" name="urgent_last_name" class="form_control"> -->
-					<!-- 						<div class="tip_text_danger">此欄位必填</div> -->
-					<!-- 					</div> -->
-					<!-- 					<div class="form_group"> -->
-					<!-- 						<label>聯絡人名</label><span class="require_mark">*</span><br> -->
-					<!-- 						<input -->
-					<!-- 							type="text" name="urgent_first_name" class="form_control"> -->
-					<!-- 						<div class="tip_text_danger">此欄位必填</div> -->
-					<!-- 					</div> -->
-					<!-- 					<div class="form_group"> -->
-					<!-- 						<label>連絡電話</label><span class="require_mark">*</span><br> -->
-					<!-- 						 <input type="text" name="urgent_phone" class="form_control" -->
-					<!-- 							id="urgent_phone"> -->
-					<!-- 						<div class="tip_text_danger">此欄位必填</div> -->
-					<!-- 					</div> -->
-					<!-- 				</div> -->
 
 					<div class="sub_title">特殊需求備註</div>
 					<textarea id="booking_note" name="specialneeds"
@@ -663,12 +635,12 @@
 				<div class="gray_text2">
 					<p class="amount"></p>
 					<%=size%>
-					件商品合計<span class="amount" name="orderpriceamount" value="<%=sum%>">TWD
-						<%=sum%>
+					件商品合計<span class="amount" name="orderpriceamount" value="0">TWD<%=sum%>
+						
 					</span> <input type="submit" value="確認付款" class="btn_ex1"> <input
 						type="hidden" name="action" value="insert">
 				</div>
-				<input id="orderpriceamountid" class="input_add" type="hidden" name="orderpriceamount"
+				<input id="orderpriceamountid" class="input_add" type="hidden" name="orderpriceamount" value="0"
 					size="45"  />
 			</div>
 	</form>

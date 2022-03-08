@@ -21,10 +21,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.member.model.MemberVO;
 import com.order.orderdetail.model.OrderdetailBean;
 import com.order.orderdetail.model.OrderdetailService;
 import com.product.product.model.ProductBean;
 import com.product.product.model.ProductService;
+
 
 
 	@WebServlet("/fsorder.do")
@@ -48,6 +50,14 @@ import com.product.product.model.ProductService;
 
 			req.setCharacterEncoding("UTF-8");
 			String action = req.getParameter("action");
+			
+			HttpSession session2 = req.getSession();
+			MemberVO memberVO = (MemberVO)session2.getAttribute("memberVO");
+			if(memberVO==null) {
+				String url = req.getRequestURI();
+				session2.setAttribute("sourceURL", url);
+				res.sendRedirect(req.getContextPath() +"/download/FS-login.jsp");
+			}
 
 			if ("getOne_For_Orderdetail".equals(action)) {
 

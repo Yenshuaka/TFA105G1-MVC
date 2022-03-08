@@ -141,7 +141,6 @@ td {
 								<div class="dash-breadcrumb-left">
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
-											<li class="active"><a href="#">Home</a></li>
 											<li class="active"><a
 												href="<%=request.getContextPath()%>/order.do">訂單首頁</a></li>
 											<li>訂單明細</li>

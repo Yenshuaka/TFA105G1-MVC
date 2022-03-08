@@ -141,8 +141,7 @@ border-bottom: 1px solid gray;
 								<div class="dash-breadcrumb-left">
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
-											<li class="active"><a href="#">Home</a></li>
-											<li class="active"><a href="listAllOrder.jsp">訂單首頁</a></li>
+											<li class="active"><a href="<%=request.getContextPath()%>/order.do">訂單首頁</a></li>
 
 										</ul>
 									</div>
@@ -168,14 +167,14 @@ border-bottom: 1px solid gray;
 								</div>
 
 								<div class="viewd-item-wrap">
-									<c:if test="${not empty errorMsgs}">
-										<font style="color: red">請修正以下錯誤:</font>
-										<ul>
-											<c:forEach var="message" items="${errorMsgs}">
-												<li style="color: red">${message}</li>
-											</c:forEach>
-										</ul>
-									</c:if>
+<%-- 									<c:if test="${not empty errorMsgs}"> --%>
+<!-- 										<font style="color: red">請修正以下錯誤:</font> -->
+<!-- 										<ul> -->
+<%-- 											<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 												<li style="color: red">${message}</li> --%>
+<%-- 											</c:forEach> --%>
+<!-- 										</ul> -->
+<%-- 									</c:if> --%>
 
 									<table>
 										<tr>

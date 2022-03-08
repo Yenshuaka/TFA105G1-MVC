@@ -60,6 +60,9 @@ public class OrderdetailServlet extends HttpServlet {
 
 			try {
 				Integer orderid = Integer.valueOf(req.getParameter("orderid"));
+				
+				if(orderid!=null) {
+			
 				HttpSession session = req.getSession();
 				session.setAttribute("orderid", req.getParameter("orderid"));
 
@@ -78,45 +81,28 @@ public class OrderdetailServlet extends HttpServlet {
 
 				session.setAttribute("list", list);
 				
-//				MemberService memberService = new MemberService();
-//				List<MemberVO> members = memberService.getAll();
-//				
-//				HttpSession session1 = req.getSession();
-//				session1.setAttribute("members", members);
-				
-//				HttpSession session2 = req.getSession();
-//				String[] productids = req.getParameterValues("productid");//傳來多個productid
-////				String[] productids = (String[]) session.getAttribute("productid");
-//				List<ProductBean> productBeans = new ArrayList<ProductBean>();
-//				for(int i = 0;i<productids.length;i++) {
-//					ProductBean bean = new ProductBean();
-//					bean.setProductid(Integer.valueOf(productids[i]));
-//					productService.select(bean);
-//					productBeans.add(productService.select(bean).get(0));
-//					
-//				}
-//				session2.setAttribute("products", productBeans);
-//				
+
+			
 				List<ProductBean> products = productService.select(null);
 				HttpSession session3 = req.getSession();
 				session3.setAttribute("allProducts", products);
 
 				
 				String url = "order/listOneOrderdetail.jsp";
-//				res.sendRedirect(url);
 				RequestDispatcher sucessView = req.getRequestDispatcher(url);
 				sucessView.forward(req, res);
+				}
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				e.printStackTrace();
 //				errorMsgs.add("刪除資料失敗:"+e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/emp/listAllEmp.jsp");
-//				failureView.forward(req, res);
+				String url = req.getRequestURI();
+				res.sendRedirect(req.getContextPath() +"/order.do");
 				System.out.print("查詢資料失敗detail");
 			}
 		}
+		
 
 		if ("delete".equals(action)) {
 

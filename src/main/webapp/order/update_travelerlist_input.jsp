@@ -20,15 +20,15 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800"
 	rel="stylesheet">
 <!-- Plugins CSS -->
-<link href="css/plugin.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/order/css/plugin.css" rel="stylesheet" />
 <!-- Perfect scrollbar CSS-->
-<link href="css/perfect-scrollbar.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/order/css/perfect-scrollbar.css" rel="stylesheet">
 <!-- style CSS -->
-<link href="css/style.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/order/css/style.css" rel="stylesheet" />
 <!-- Dashboard CSS -->
-<link href="css/dashboard.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/order/css/dashboard.css" rel="stylesheet" />
 <!--color switcher css-->
-<link rel="stylesheet" href="css/switcher/skin-aqua.css" media="screen"
+<link rel="stylesheet" href="<%=request.getContextPath()%>/order/css/switcher/skin-aqua.css" media="screen"
 	id="style-colors" />
 <!-- Document Title -->
 <!-- <title>listagram - Directory Listing HTML Template</title> -->
@@ -81,7 +81,7 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 							<div class="recent-activity my-listing">
 								<div class="act-title">
 									<h5>
-										<i class="ion-social-buffer-outline"></i>修改訂單資料
+										<i class="ion-social-buffer-outline"></i>修改團員資料
 									</h5>
 								</div>
 
@@ -107,9 +107,10 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 											</tr>
 											<tr>
 												<td>訂單明細編號:</td>
-												<td><input class="input_update" type="TEXT"
+												<input class="input_update" type="hidden"
 													name="orderdetailno" size="45"
-													value="<%=travelerlistBean.getOrderdetailno()%>" /></td>
+													value="<%=travelerlistBean.getOrderdetailno()%>" />
+													<td><%=travelerlistBean.getOrderdetailno()%></td>
 											</tr>
 											<tr>
 												<td>姓:</td>
@@ -231,16 +232,14 @@ table {
 }
 
 .send {
-	float: right;
 	color: #fff;
 	border: 1px solid transparent;
 	padding: 9px 15px;
 	border-radius: 10px;
 	font-size: 14px;
-	transition: 0.5s;
 	background: #FD901B;
 	line-height: 1;
-	margin-left: 5px;
+	margin-left: 410px;
 	height: 30px;
 	margin-top: 10px
 }
@@ -275,50 +274,5 @@ table {
 	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
 	});
 
-	// ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
-
-	//      1.以下為某一天之前的日期無法選擇
-	//      var somedate1 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() <  somedate1.getYear() || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
-
-	//      2.以下為某一天之後的日期無法選擇
-	//      var somedate2 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
-
-	//      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
-	//      var somedate1 = new Date('2017-06-15');
-	//      var somedate2 = new Date('2017-06-25');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() <  somedate1.getYear() || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-	//		             ||
-	//		            date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
 </script>
 </html>
