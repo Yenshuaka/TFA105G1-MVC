@@ -59,8 +59,8 @@
 					<div class="col-md-6 col-12">
 						<div class="breadcrumb-menu text-right sm-left">
 							<ul>
-								<li class="active"><a href="#">首頁</a></li>
-								<li><a href="#">行程總覽</a></li>
+								<li class="active"><a href="<%=request.getContextPath() %>/download/homepage2.jsp">首頁</a></li>
+								<li><a href="<%=request.getContextPath() %>/MVC/ProductDisplayController">行程總覽</a></li>
 							</ul>
 						</div>
 					</div>
@@ -574,7 +574,7 @@
 												<span onclick='addLikes(event)' class="save-btn">
 												
 <!-- 												<i class="icofont-heart"></i> -->
-												<% if(exists.size()!=0 && exists.get(i)){%>
+												<% if(exists!= null && exists.size()!=0 && exists.get(i)){%>
                                             	<i onclick='clickout(event)' id='aaaa' class="ion-heart"></i> 
                                             	<% }else {%>
                                             	<i onclick='clickout(event)' id='aaaa' class="ion-ios-heart-outline"></i>
@@ -603,7 +603,7 @@
 													</div>
 													<div class="review-summury float-right">
 														<p>
-															<a href="#"><%=commentcount.get(i) %> 則評論</a>
+															<%=commentcount.get(i) %> 則評論
 														</p>
 													</div>
 												</div>
@@ -821,7 +821,7 @@
 														Integer pageaa = Integer.valueOf((String)request.getAttribute("page"));
 														for(int i =1; i<= totalpage; i++){
 													%>	
-													<li <% if(i==pageaa){out.write("class='active'");} %>><a href="<%=request.getContextPath() %>/MVC/PageHandler?page=<%=i %>"><%=i %></a></li>
+													<li onclick='clickin(event)' <% if(i==pageaa){out.write("class='active'");} %>><a href="<%=request.getContextPath() %>/MVC/PageHandler?page=<%=i %>"><%=i %></a></li>
 													
 													<% } %>
 <!-- 													<li><a href="#">2</a></li> -->
@@ -984,6 +984,7 @@
 	window.addEventListener('load', change);
 	
 	function addLikes(e){
+		e.stopPropagation();
 		console.log($(e.target).next().val());
 		$.ajax({
          url: '<%=request.getContextPath() %>/AddLikes',
@@ -996,7 +997,8 @@
              console.log("成功"); 
 //              $(e.target).children().replaceWith(res);
              if(res=='login'){
-            	 window.location.assign("<%=request.getContextPath() %>/download/FS-login.jsp");
+<%--             	 window.location.assign("<%=request.getContextPath() %>/download/FS-login.jsp"); --%>
+					alert('請先登入');
              }else{
             	 $(e.target).children().replaceWith(res);
              }
@@ -1009,8 +1011,16 @@
 	
 	
 	function clickout(e){
+		e.stopPropagation();
         $(e.target).parent().trigger('click');
     }    
+	
+	
+	function clickin(e){
+    	e.stopPropagation();
+        var a = $(e.target).find('a').attr('href');
+        window.location.href = a;
+    }          
 	</script>
 
 </body>

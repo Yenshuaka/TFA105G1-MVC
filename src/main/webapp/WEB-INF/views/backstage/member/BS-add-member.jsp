@@ -32,6 +32,50 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/download/css/switcher/skin-aqua.css"
 	media="screen" id="style-colors" />
+
+<style type="text/css">
+.bottom {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	padding: 15px 30px;
+}
+
+.btn {
+	padding: 0.5rem 2rem;
+	border: none;
+	border-radius: 7px;
+	background-color: #0cbcb7;;
+	color: rgb(255, 255, 255);
+	outline: transparent;
+	cursor: pointer;
+	font-size: 1rem;
+}
+
+table {
+	width: 100%;
+}
+
+.invoice-panel tr td {
+	padding: 20px 0 20px 20px;
+}
+
+input, .input-group {
+	width: 80%;
+}
+
+input {
+	font-size: 15px;
+	height: calc(2.25rem + 2px);
+	padding: 23px 20px;
+	border: 1px solid #ced4da;
+	outline: none;
+}
+
+select {
+	border: 1px solid #ced4da !important;
+}
+</style>
 <!-- Document Title -->
 <title>新增會員</title>
 
@@ -60,10 +104,13 @@
 								<div class="dash-breadcrumb-left">
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
-											<li class="active"><a href="#">Home</a></li>
 											<li class="active"><a
-												href="<%=request.getContextPath()%>/download/BS-member_manage.jsp">會員管理</a></li>
-											<li>新增會員  ${memberVO} </li>
+												href="<%=request.getContextPath()%>/MVC/adminManagement/Index">後台首頁</a></li>
+											<li class="active"><a
+												href="<%=request.getContextPath()%>/MVC/MemberDispacher/MemberManage">會員管理</a></li>
+											<li class="active"><a
+												href="<%=request.getContextPath()%>/MVC/MemberDispacher/AddMember">新增會員</a>
+											</li>
 										</ul>
 									</div>
 								</div>
@@ -72,17 +119,7 @@
 					</div>
 				</div>
 			</div>
-			<div>
-				<%-- 錯誤表列 --%>
-				<c:if test="${not empty errorMsgs}">
-					<font style="color: red">請修正以下錯誤:</font>
-					<ul>
-						<c:forEach var="message" items="${errorMsgs}">
-							<li style="color: red">${message}</li>
-						</c:forEach>
-					</ul>
-				</c:if>
-			</div>
+
 			<!--Dashboard breadcrumb ends-->
 			<!--Dashboard content starts-->
 
@@ -93,7 +130,8 @@
 							<div class="invoice-panel">
 								<div class="act-title">
 									<h5>
-										<i class="ion-gear"></i>新增會員資料
+										<i class="ion-gear"></i>新增會員資料<br> <span
+													class="error errorMsgsOnly">${errorMsgs.exception}</span>
 									</h5>
 								</div>
 								<div class="col-md-12">
@@ -103,43 +141,60 @@
 										<table>
 											<tr>
 												<td>Email :</td>
-												<td><input type="email" name="email" size="30" required
-													value="${memberVO.email}" placeholder="Email" autofocus /></td>
-											</tr>
-											<tr>
+												<td><input type="email" name="email"
+													required="required" value="${memberVO.email}"
+													placeholder="Email" autofocus /><br> <span
+													class="error errorMsgsOnly">${errorMsgs.email}</span></td>
 												<td>密碼 :</td>
-												<td><input type="password" name="password" size="30"
-													required placeholder="請輸入密碼" /></td>
+												<td><input type="password" name="password"
+													required="required" placeholder="請輸入密碼" /><br> <span
+													class="error errorMsgsOnly">${errorMsgs.password}</span></td>
 											</tr>
-											<!--<tr>
-											<td>確認密碼 : </td>
-											<td><input type="password" name="Confirm Password" size="30"
-												 placeholder="確認密碼"/></td>
-										</tr>	-->
+
+
 											<tr>
 												<td>會員姓 :</td>
-												<td><input type="TEXT" name="lastname" size="30"
-													value="${memberVO.lastname}" placeholder="姓氏" /></td>
-											</tr>
-											<tr>
+												<td><input type="TEXT" name="lastname"
+													value="${memberVO.lastname}" placeholder="姓氏" /><br>
+													<span class="error errorMsgsOnly">${errorMsgs.lastname}</span></td>
 												<td>會員名 :</td>
-												<td><input type="TEXT" name="firstname" size="30"
-													value="${memberVO.firstname}" placeholder="名子" /></td>
+												<td><input type="TEXT" name="firstname"
+													value="${memberVO.firstname}" placeholder="名子" /><br>
+													<span class="error errorMsgsOnly">${errorMsgs.firstname}</span></td>
 											</tr>
+
 											<tr>
+												<td>國家 :</td>
+												<td><%@include file="file/select-country.file"%></td>
 												<td>身分證字號 :</td>
-												<td><input type="text" name="idno" size="30"
-													value="${memberVO.idno}" placeholder="身分證字號" /></td>
+												<td><input type="text" name="idno"
+													value="${memberVO.idno}" placeholder="身分證字號" /><br> <span
+													class="error errorMsgsOnly">${errorMsgs.idno}</span></td>
 											</tr>
+
 											<tr>
 												<td>性別 :</td>
-												<td><select class="w-37" name="gender">
+												<td><select name="gender" >
 														<option value="">請選擇</option>
 														<option value="男"
 															${memberVO.gender == "男" ? 'selected="selected"' : ''}>男</option>
 														<option value="女"
 															${memberVO.gender == "女" ? 'selected="selected"' : ''}>女</option>
 												</select></td>
+												<td>手機 :</td>
+												<td><input type="text" name="phone"
+													value="${memberVO.phone}" placeholder="手機" /><br> <span
+													class="error errorMsgsOnly">${errorMsgs.phone}</span></td>
+											</tr>
+
+
+											<tr>
+												<td>綽號 :</td>
+												<td><input type="text" name="nickname"
+													value="${memberVO.nickname}" placeholder="綽號" /></td>
+												<td>自我介紹 :</td>
+												<td><input type="text" name="selfintro"
+													value="${memberVO.selfintro}" placeholder="自我介紹" /></td>
 											</tr>
 											<tr>
 												<td>生日 :</td>
@@ -149,31 +204,17 @@
 															placeholder="請選擇生日" autocomplete="off"
 															value="${memberVO.dateofbirth}"> <span
 															class="input-group-addon"><i
-															class="icofont-ui-calendar"></i></span>
+															class="icofont-ui-calendar"></i><br> <span
+															class="error errorMsgsOnly">${errorMsgs.dateofbirth}</span></span>
 													</div></td>
 											</tr>
-											<tr>
-												<td>國家 :</td>
-												<td><%@include file="file/select-country.file"%></td>
-											</tr>
-											<tr>
-												<td>手機 :</td>
-												<td><input type="text" name="phone" size="30"
-													value="${memberVO.phone}" placeholder="手機" /></td>
-											</tr>
-											<tr>
-												<td>綽號 :</td>
-												<td><input type="text" name="nickname" size="30"
-													value="${memberVO.nickname}" placeholder="綽號" /></td>
-											</tr>
-											<tr>
-												<td>自我介紹 :</td>
-												<td><input type="text" name="selfintro" size="45"
-													value="${memberVO.selfintro}" placeholder="自我介紹" /></td>
-											</tr>
 										</table>
-										<br> <input type="hidden" name="action" value="insert">
-										<input type="submit" value="送出新增">
+										<div class="button">
+											<br> <input type="hidden" name="action" value="insert">
+											<button type="submit" class="btn v3">送出新增</button>
+										</div>
+
+										<br>
 									</FORM>
 								</div>
 							</div>

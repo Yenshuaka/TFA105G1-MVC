@@ -2,9 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.member.model.*"%>
 
-<%-- <% --%>
-// MemberVO memberVO = (MemberVO) request.getAttribute("memberVO"); //MemberServlet.java(Controller), 存入req的memberVO物件
-<%-- %> --%>
+
 
 <html lang="en">
 <head>
@@ -62,9 +60,10 @@
 								<div class="dash-breadcrumb-left">
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
-											<li class="active"><a href="#">Home</a></li>
 											<li class="active"><a
-												href="<%=request.getContextPath()%>/download/BS-member_manage.jsp">會員管理</a></li>
+												href="<%=request.getContextPath()%>/MVC/adminManagement/Index">後台首頁</a></li>
+											<li class="active"><a
+												href="<%=request.getContextPath()%>/MVC/MemberDispacher/MemberManage">會員管理</a></li>
 											<li>編輯會員資料</li>
 										</ul>
 									</div>

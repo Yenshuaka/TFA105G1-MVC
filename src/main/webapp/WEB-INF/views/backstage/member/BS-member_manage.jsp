@@ -62,8 +62,10 @@
 								<div class="dash-breadcrumb-left">
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
-											<li class="active"><a href="#">Home</a></li>
-											<li>會員管理</li>
+											<li class="active"><a
+												href="<%=request.getContextPath()%>/MVC/adminManagement/Index">後台首頁</a></li>
+											<li class="active"><a
+												href="<%=request.getContextPath()%>/MVC/MemberDispacher/MemberManage">會員管理</a></li>
 										</ul>
 									</div>
 								</div>
@@ -91,7 +93,7 @@
 								<div class="act-title">
 									<h5>
 										<i class="ion-person"></i>會員資料 <a class="btn v2"
-											href="<%=request.getContextPath()%>/MVC/MemberDispacher/AddMember">新增</a>										
+											href="<%=request.getContextPath()%>/MVC/MemberDispacher/AddMember"><i class="ion-log-in"></i>新增</a>										
 									</h5>
 								</div>
 								<div class="invoice-body">

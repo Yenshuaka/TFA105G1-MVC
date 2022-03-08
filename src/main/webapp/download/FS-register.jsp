@@ -2,6 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.member.model.*"%>
 
+<%
+Object loginsCameFromURL = session.getAttribute("cameFromURL");
+if (loginsCameFromURL == null) {
+	String cameFromURL = request.getHeader("referer");
+	session.setAttribute("cameFromURL", cameFromURL);
+}
+%>
+
 <html lang="en">
 <head>
 <!-- Metas -->
@@ -78,7 +86,8 @@
 										method="post">
 										<div class="form-group">
 											<input type="email" name="email" id="email" tabindex="1"
-												class="form-control" placeholder="Email" value="" required>
+												class="form-control" placeholder="Email" value="${email}"
+												required>
 										</div>
 										<div class="form-group">
 											<input type="password" name="password" id="password"

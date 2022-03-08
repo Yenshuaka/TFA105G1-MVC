@@ -2,6 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.member.model.*"%>
 
+<%
+String cameFromURL = request.getHeader("referer");
+session.setAttribute("cameFromURL", cameFromURL);
+%>
+
 <html lang="en">
 <head>
 <!-- Metas -->
@@ -59,17 +64,7 @@
 									data-toggle="tab" href="#login" role="tab" aria-selected="true">登入</a>
 								</li>
 							</ul>
-							<div>
-								<%-- 錯誤表列 --%>
-								<c:if test="${not empty errorMsgs}">
-									<font style="color: red">請修正以下錯誤:</font>
-									<ul>
-										<c:forEach var="message" items="${errorMsgs}">
-											<li style="color: red">${message}</li>
-										</c:forEach>
-									</ul>
-								</c:if>
-							</div>
+
 							<div class="ui-dash tab-content">
 								<div class="tab-pane fade show active" id="login"
 									role="tabpanel">
@@ -78,13 +73,15 @@
 										action="<%=request.getContextPath()%>/member/member.login"
 										method="post">
 										<div class="form-group">
+											<span class="error errorMsgsOnly">${errorMsgs.result}</span>
 											<input type="text" name="email" id="username" tabindex="1"
-												class="form-control" placeholder="email" value="" required autofocus>
+												class="form-control" placeholder="email" value="${email}"
+												required autofocus><span class="error errorMsgsOnly">${errorMsgs.email}</span>
 										</div>
 										<div class="form-group">
 											<input type="password" name="password" id="password"
 												tabindex="2" class="form-control" placeholder="Password"
-												required>
+												required><span class="error errorMsgsOnly">${errorMsgs.password}</span>
 										</div>
 										<div class="row mar-top-20">
 											<div class="col-md-6 col-12 text-left">
@@ -96,7 +93,9 @@
 											</div>
 											<div class="col-md-6 col-12 text-right">
 												<div class="res-box sm-left">
-													<a href="#" tabindex="4" class="forgot-password">忘記密碼</a>
+													<a href="#" data-toggle="modal"
+														data-target="#forgot-password" class="forgot-password"><i
+														class="ion-log-in"></i>忘記密碼</a>
 												</div>
 											</div>
 										</div>
@@ -116,12 +115,6 @@
 										</div>
 									</div>
 									<div class="social-profile-login text-center mar-top-30">
-										<!-- <h5>使用社交平台帳戶登入</h5> -->
-										<!-- <ul class="social-btn"> -->
-										<!-- <li class="bg-fb"><a href="#"><i class="ion-social-facebook"></i></a></li> -->
-										<!-- <li class="bg-tt"><a href="#"><i class="ion-social-twitter"></i></a></li> -->
-										<!-- <li class="bg-ig"><a href="#"><i class="ion-social-instagram"></i></a></li> -->
-										<!-- </ul> -->
 									</div>
 								</div>
 							</div>
@@ -134,13 +127,34 @@
 		<!--User login section ends-->
 	</div>
 	<!--Page Wrapper ends-->
+	<!-- modal-start -->
+	<div class="modal fade" id="forgot-password">
+		<div class="modal-dialog modal-dialog-centered" role="image">
+			<div class="picBox">
+				<h2>忘記密碼 :</h2>
 
-
-
-
-
-
-
+				<div id="add-form">
+					<FORM METHOD="post"
+						ACTION="<%=request.getContextPath()%>/MVC/MemberInfo/PwdForget"
+						name="form1">
+						<table>
+							<tr>
+								<td><input type="text" name="FGemail" id="modalUsername"
+									tabindex="1" class="form-control" placeholder="email" required
+									autofocus></td>
+							</tr>
+						</table>
+						<br> <input type="hidden" name="FGaction" value="forgotPWD">
+						<button type="submit" class="btn v3" name="emailaction"
+							value="login">
+							<i class="ion-android-email"></i>送出
+						</button>
+					</FORM>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- modal-ends -->
 
 	<!--Dashboard footer starts-->
 	<%@include file="file/FS_footer.file"%>
@@ -158,6 +172,9 @@
 	<!-- Dashboard JS-->
 	<script src="<%=request.getContextPath()%>/download/js/dashboard.js"></script>
 
+	<script>
+		// 		$()
+	</script>
 
 </body>
 

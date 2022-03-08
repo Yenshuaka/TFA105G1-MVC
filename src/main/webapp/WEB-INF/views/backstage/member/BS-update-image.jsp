@@ -40,6 +40,14 @@ Integer id = Integer.valueOf(request.getParameter("memberid"));
 	display: block;
 	margin: auto;
 }
+
+.bottom {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	padding: 15px 30px;
+	flex-direction: column-reverse;
+}
 </style>
 <!-- Document Title -->
 <title>更新頭像</title>
@@ -69,9 +77,10 @@ Integer id = Integer.valueOf(request.getParameter("memberid"));
 								<div class="dash-breadcrumb-left">
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
-											<li class="active"><a href="#">Home</a></li>
 											<li class="active"><a
-												href="<%=request.getContextPath()%>/download/BS-member_manage.jsp">會員管理</a></li>
+												href="<%=request.getContextPath()%>/MVC/adminManagement/Index">後台首頁</a></li>
+											<li class="active"><a
+												href="<%=request.getContextPath()%>/MVC/MemberDispacher/MemberManage">會員管理</a></li>
 											<li>更新頭像</li>
 										</ul>
 									</div>
@@ -112,6 +121,7 @@ Integer id = Integer.valueOf(request.getParameter("memberid"));
 
 
 											<div id="changePic">
+
 												<img class="picBox"
 													src="<%=request.getContextPath()%>/member/member.pic?memberid=<%=id%>">
 											</div>
@@ -122,10 +132,19 @@ Integer id = Integer.valueOf(request.getParameter("memberid"));
 													<FORM METHOD="post"
 														ACTION="<%=request.getContextPath()%>/member/member.upload"
 														enctype="multipart/form-data">
-														<input type="file" id="p_file" name="photo-upload" accept="image/jpeg, image/png"/> 
-															
-															<input type="hidden" name="memberid" value="<%=id%>"> 
-															<input type="submit" name="action" value="上傳">
+														<div class="bottom">
+															<label for="p_file" class="btn v2">請選擇檔案 <input
+																type="file" id="p_file" name="photo-upload"
+																style="display: none;" accept="image/jpeg, image/png" />
+																<input type="hidden" name="memberid" value="<%=id%>">
+															</label>
+														</div>
+
+														<div class="bottom">
+															<input type="submit" name="action" class="btn v3"
+																value="上傳">
+														</div>
+
 													</FORM>
 
 												</div>
