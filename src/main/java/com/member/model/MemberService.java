@@ -38,7 +38,8 @@ public class MemberService {
 		memberVO1.setNickname(memberVO.getNickname());
 		memberVO1.setSelfintro(memberVO.getSelfintro());
 		dao.insert(memberVO1);
-
+		Integer newId = dao.checkEmail(memberVO.getEmail());
+		memberVO1.setMemberid(newId);
 		return memberVO1;
 	}
 
