@@ -87,9 +87,6 @@
                                                 </div> -->
 											</div>
 											<div class="col-md-6 col-12 text-right">
-												<div class="res-box sm-left">
-													<a href="#" tabindex="4" class="forgot-password">忘記密碼</a>
-												</div>
 											</div>
 										</div>
 										<div class="res-box text-center mar-top-30">

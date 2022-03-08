@@ -14,13 +14,12 @@ public class MemberService {
 		return dao.login(email, password);
 	}
 
-	public MemberVO memberRegister(String email, String password) {
-		MemberVO memberVO = new MemberVO();
-		memberVO.setEmail(email);
-		memberVO.setPassword(password);
-//		dao.register(memberVO);
+	public void changePWD(Integer memberid, String password) {
+		dao.changePWD(memberid, password);
+	}
 
-		return memberVO;
+	public Integer checkEmail(String email) {
+		return dao.checkEmail(email);
 	}
 
 	public MemberVO addMember(MemberVO memberVO) {

@@ -10,11 +10,17 @@ import javax.servlet.http.HttpSession;
 
 import com.member.model.MemberVO;
 
-@WebFilter(filterName = "logFilter", urlPatterns = { "/download/FS-my-profile.jsp", "/download/FS-Index-Demo.jsp",
-		"/download/FS-edit-profile.jsp", "/MVC/ShoppingCart", "/order/FS-order.jsp",
-		"/order/FS-update_travelerlist.jsp", "/MVC/Mylikes", "/booking.do"
-
+@WebFilter(filterName = "logFilter", urlPatterns = { 
+		"/download/FS-my-profile.jsp",
+		"/download/FS-Index-Demo.jsp",
+		"/download/FS-edit-profile.jsp",
+		"/MVC/ShoppingCart",
+		"/order/FS-order.jsp",
+		"/order/FS-update_travelerlist.jsp",
+		"/MVC/Mylikes",
+		"/booking.do"
 })
+
 public class LogFilter implements Filter {
 
 	private FilterConfig config;
@@ -41,16 +47,15 @@ public class LogFilter implements Filter {
 		MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 		if (memberVO == null) {
 			System.out.println("memberVO is null");
-			
+
 			StringBuffer SBdestinationUrl = new StringBuffer(req.getRequestURI());
 			if (req.getQueryString() != null && !"".equals(req.getQueryString())) {
 				SBdestinationUrl.append("?" + req.getQueryString());
 			}
 			String destinationUrl = SBdestinationUrl.toString();
-
 			System.out.println("使用者 想去哪? filter: " + destinationUrl);
-
 			session.setAttribute("sourceURL", destinationUrl);
+
 			res.sendRedirect(req.getContextPath() + "/download/FS-login.jsp");
 			return;
 		}

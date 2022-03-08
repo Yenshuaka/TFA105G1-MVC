@@ -1,8 +1,10 @@
 package com.member.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,10 +30,11 @@ public class MemberLogin extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		String indexUrl = "/download/homepage2.jsp";
+		final String indexUrl = "/download/homepage2.jsp";
 		
 		if ("login".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
+//			List<String> errorMsgs = new LinkedList<String>();
+			Map<String, String> errorMsgs = new HashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
@@ -40,24 +43,31 @@ public class MemberLogin extends HttpServlet {
 				String email = req.getParameter("email");
 				String emailReg = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
 				if (email == null || email.trim().length() == 0) {
-					errorMsgs.add("帳號: 請勿空白");
+					errorMsgs.put("email", "帳號: 請勿空白");
 				} else if (!email.trim().matches(emailReg)) {
-					errorMsgs.add("帳號: 請輸入英文字母、數字和 _ , - 且含@ + 信箱網域");
+					errorMsgs.put("email", "請輸入英文字母、數字和 _ , - 且含@ + 信箱網域");
 				}
 				String password = req.getParameter("password");
 				String pwdReg = "^([A-Za-z0-9]){1,20}$";
 				if (password == null || password.trim().length() == 0) {
-					errorMsgs.add("密碼: 請勿空白");
+					errorMsgs.put("password", "請勿空白");
 				} else if (!password.trim().matches(pwdReg)) {
-					errorMsgs.add("密碼: 請輸入英文字母、數字 且1~20個字");
+					errorMsgs.put("password", "請輸入英文字母、數字 且1~20個字");
 				}
 				System.out.println(email + password);
+				if (!errorMsgs.isEmpty()) {
+					String RejectUrl = "/download/FS-login.jsp";
+					req.setAttribute("email", email);
+					RequestDispatcher failureView = req.getRequestDispatcher(RejectUrl);
+					failureView.forward(req, res);
+					return;
+				}
 				/*************************** 2.開始查詢資料 *****************************************/
 				MemberService memberSvc = new MemberService();
 				MemberVO memberVO = memberSvc.memberLogin(email, password);	
 
 				if (memberVO == null) {
-					errorMsgs.add("查無資料");
+					errorMsgs.put("result", "帳號 或 密碼 錯誤!");
 				}
 				System.err.println(errorMsgs);
 				// Send the use back to the form, if there were errors
@@ -102,7 +112,7 @@ public class MemberLogin extends HttpServlet {
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("無法取得資料:" + e.getMessage());
+				errorMsgs.put("result", "無法取得資料:" + e.getMessage());
 				String RejectUrl = "/download/FS-login.jsp";
 				RequestDispatcher failureView = req.getRequestDispatcher(RejectUrl);
 				failureView.forward(req, res);

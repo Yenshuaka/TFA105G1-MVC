@@ -38,7 +38,7 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.setString(1, email);
 			pstmt.setString(2, password);
 
-			ResultSet rs = pstmt.executeQuery();			
+			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				memberVO = new MemberVO();
@@ -249,6 +249,40 @@ public class MemberDAO implements MemberDAO_interface {
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		}
+	}
+
+	private static final String changePWD = "UPDATE MEMBER SET password = ? WHERE MEMBER_ID = ?";
+
+	@Override
+	public void changePWD(Integer memberid, String password) {
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(changePWD)) {
+
+			pstmt.setString(1, password);
+			pstmt.setInt(2, memberid);
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		}
+	}
+
+	private static final String checkEmail = "SELECT MEMBER_ID FROM MEMBER WHERE EMAIL = ?";
+
+	@Override
+	public Integer checkEmail(String email) {
+		Integer memberid = null;
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(checkEmail)) {
+			pstmt.setString(1, email);
+
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			memberid = rs.getInt("MEMBER_ID");
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		}
+		return memberid;
 	}
 
 }

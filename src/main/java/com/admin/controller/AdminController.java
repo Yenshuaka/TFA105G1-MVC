@@ -134,7 +134,7 @@ public class AdminController {
 	@RequestMapping(method = { RequestMethod.GET })
 	public String logout(String action, HttpSession session) {
 		if ("logout".equals(action)) {
-			session.removeAttribute("memberid");
+			session.removeAttribute("adminVO");
 			session.invalidate();
 			System.out.println("Admin session 已清空");
 			return "redirect:/download/BS-login.jsp";

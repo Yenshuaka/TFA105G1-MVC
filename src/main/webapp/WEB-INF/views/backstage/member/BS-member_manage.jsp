@@ -93,7 +93,7 @@
 								<div class="act-title">
 									<h5>
 										<i class="ion-person"></i>會員資料 <a class="btn v2"
-											href="<%=request.getContextPath()%>/MVC/MemberDispacher/AddMember">新增</a>										
+											href="<%=request.getContextPath()%>/MVC/MemberDispacher/AddMember"><i class="ion-log-in"></i>新增</a>										
 									</h5>
 								</div>
 								<div class="invoice-body">
