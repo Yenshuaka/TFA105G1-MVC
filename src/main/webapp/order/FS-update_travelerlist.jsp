@@ -76,8 +76,8 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 											href="<%=request.getContextPath()%>/download/FS-my-profile.jsp">會員中心</a></li>
 										<li class="active"><a
 											href="<%=request.getContextPath()%>/order/FS-order.jsp">訂單</a></li>
-										<li class="active"><a
-											href="<%=request.getContextPath()%>/fsorder.do">訂單明細</a></li>
+<!-- 										<li class="active"><a -->
+<%-- 											href="<%=request.getContextPath()%>/fsorder.do">訂單明細</a></li> --%>
 										<li class="active">團員表修改</li>
 										</ul>
 									</div>
