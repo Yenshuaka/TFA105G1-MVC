@@ -1,5 +1,8 @@
 package com.member.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -21,13 +24,29 @@ public class MemberForPWD {
 
 	@PostMapping("/PwdForget")
 	public String PwdForget(String FGaction, String FGemail, GenerateAlphaNumericString AlphaNumericString,
-			MemberService memberService, MailService mailService) {
+			MemberService memberService, MailService mailService, HttpServletRequest req, HttpSession session) {
 		String email = FGemail.trim();
 		if ("forgotPWD".equals(FGaction)) {
-			int expireTime = 3;
+			Map<String, String> errorCheck = new HashMap<String, String>();
+			session.setAttribute("errorCheck", errorCheck);
+			
+			int expireTime = 1;
 
 			// check email exit
-			Integer memberid = memberService.checkEmail(email);
+			Integer memberid = null;
+			try {
+				memberid = memberService.checkEmail(email);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+				System.out.println("查無此email");
+				errorCheck.put("checkEmail", "alert(\'查無此email 請重新輸入');");
+			}
+			
+			if (errorCheck != null && !errorCheck.isEmpty()) {
+				System.out.println(errorCheck);
+				return "forward:/download/FS-login.jsp";
+			}
+			
 			System.out.println("memberid : " + memberid);
 
 			// Generate temp PWD
@@ -43,15 +62,20 @@ public class MemberForPWD {
 				e.printStackTrace();
 			}
 			// Email
-			String hostStr = "localhost:8094"; // 到時候要改!!
 
-			String FGUrl = "請在" + expireTime + "天內點擊連結，否則失效! " + "\n" + "http://" + hostStr
-					+ "/TFA105G1-MVC/MVC/MemberInfo/return?reAction=forgotPWD&mail=" + email + "&No=" + memberid
-					+ "&temPWD=" + temPWD;
-
-			String messageText = "Hello! " + email + " 請謹記此密碼: " + temPWD + "\n" + " (注意事項 !!)";
-
-			mailService.sendMail(FGemail, "忘記密碼通知", messageText + "\n" + FGUrl);
+			String messageText = 
+					"Hello! " + email + " 請謹記此密碼: " + temPWD + "\n" 
+				  + " (注意事項 !!)" + "\n" 
+				  + "請在" + expireTime + "天內點擊連結，否則失效! " + "\n";
+			
+			String suffixUrl = "/TFA105G1-MVC/MVC/MemberInfo/return?reAction=forgotPWD&mail=" + email + 
+					"&No=" + memberid + "&temPWD=" + temPWD;
+			StringBuffer SBUrl = new StringBuffer(suffixUrl);			
+			SBUrl.insert(0, req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort());
+			
+			String wholeUrl = SBUrl.toString();
+			
+			mailService.sendMail(FGemail, "忘記密碼通知", messageText + wholeUrl);
 			System.out.println("驗證信已寄出!");
 			return "redirect:/download/FS-login.jsp";
 		}
@@ -75,9 +99,11 @@ public class MemberForPWD {
 				userTempPWD = jedis.get(mail);
 
 				if (userTempPWD == null) {
+					System.out.println("Email驗證失敗!");
 					return "";
 				} else {
 					jedis.del(mail);
+					System.out.println("redis 清除Email!");
 				}
 
 			} catch (Exception e) {
@@ -86,7 +112,7 @@ public class MemberForPWD {
 
 			// 更新舊密碼為新密碼
 			if (receivePWD.equals(userTempPWD)) {
-
+				System.out.println("驗證碼正確!");
 				Integer memberid = Integer.valueOf(No);
 				memberService.changePWD(memberid, temPWD);
 

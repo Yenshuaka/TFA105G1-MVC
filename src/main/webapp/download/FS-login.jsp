@@ -173,7 +173,8 @@ session.setAttribute("cameFromURL", cameFromURL);
 	<script src="<%=request.getContextPath()%>/download/js/dashboard.js"></script>
 
 	<script>
-		// 		$()
+	${errorCheck.checkEmail}
+	<%session.removeAttribute("errorCheck"); %>
 	</script>
 
 </body>

@@ -77,12 +77,13 @@ public class MemberRegister extends HttpServlet {
 				/*************************** 2.開始查詢資料 *****************************************/
 				MemberService memberSvc = new MemberService();
 				MemberVO newMember = memberSvc.addMember(memberVO);
-				Integer memberid = memberVO.getMemberid();
+				Integer memberid = newMember.getMemberid();
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				HttpSession session = req.getSession();
 				session.setAttribute("memberVO", newMember);
 				session.setAttribute("memberid", memberid);
 				System.out.println("儲存\"新\"memberVO到session! = " + newMember);
+				System.out.println("new memberid = " + memberid);
 
 				String sourceURL = (String) session.getAttribute("sourceURL");
 				System.out.println("使用者 想去哪? :" + sourceURL);
