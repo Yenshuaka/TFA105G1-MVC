@@ -15,9 +15,6 @@ import javax.servlet.http.HttpSession;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
 
-
-
-
 @WebServlet("/member/member.login")
 public class MemberLogin extends HttpServlet {
 
@@ -89,7 +86,7 @@ public class MemberLogin extends HttpServlet {
 				String sourceURL = (String) session.getAttribute("sourceURL");
 				System.out.println("使用者 想去哪? :" + sourceURL);
 				String cameFromURL = (String) session.getAttribute("cameFromURL");
-				System.out.println("使用者 登入前哪? :" + cameFromURL);
+				System.out.println("使用者 登入前在哪? :" + cameFromURL);
 
 				if (sourceURL != null) {
 					session.removeAttribute("sourceURL");
