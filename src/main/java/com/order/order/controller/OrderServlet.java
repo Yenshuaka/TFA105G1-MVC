@@ -131,9 +131,38 @@ public class OrderServlet extends HttpServlet implements Serializable {
 //						errorMsgs.add("團員人數: 請選擇團員人數");
 //					}
 //				}
-			
-			
 				
+				String credit = req.getParameter("credit");
+				System.out.println("credit length = " + credit.length());
+				String creditReg = "^[(0-9)\\s\\d]{19}$";
+				if (credit == null || credit.trim().length() == 0) {
+					errorMsgs.add("信用卡卡號: 請勿空白");
+				} else if (!credit.trim().matches(creditReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("信用卡卡號長度不為16碼");
+				}
+				
+				String expire = req.getParameter("expire");
+				String expireReg = "^[(0-9)\\s\\d]{5}$";
+				if (expire == null || expire.trim().length() == 0) {
+					errorMsgs.add("有效期限: 請勿空白");
+				} else if (!expire.trim().matches(expireReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("有效期限長度不為MM/YY");
+				}
+				
+				String CVC = req.getParameter("CVC");
+				String cvcReg = "^[(0-9)]{3}$";
+				if (CVC == null || CVC.trim().length() == 0) {
+					errorMsgs.add("背面末3碼: 請勿空白");
+				} else if (!CVC.trim().matches(cvcReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("背面末3碼長度不為3");
+				}
+				
+				
+//				String language = req.getParameter("language");
+//				if (language.equals("請選擇") ) {
+//					errorMsgs.add("請選擇導覽語言");
+//				}
+//				
 				String[] productprices = req.getParameterValues("productprice");
 				//String[] orderrewardpoints = req.getParameterValues("orderrewardpoints");
 				String[] specialneeds = req.getParameterValues("specialneeds");

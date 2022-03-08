@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -109,7 +110,7 @@ public class FS_Travelerlist extends HttpServlet {
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 
 				HttpSession session = req.getSession();
-				session.setAttribute("travelerlistBean", list.get(0));
+				session.setAttribute("travelerlistBeanFS", list.get(0));
 
 				String url = "order/FS-update_travelerlist.jsp";
 				res.sendRedirect(url);
@@ -126,43 +127,73 @@ public class FS_Travelerlist extends HttpServlet {
 		}
 
 		if ("update".equals(action)) { // 來自add-post.jsp的請求
+			
+			HttpSession session = req.getSession();
+			List<String> errorMsgs = new LinkedList<String>();
+			session.setAttribute("errorMsgsFS", errorMsgs);
 
 			try {
 				Integer travelerlistno = Integer.parseInt(req.getParameter("travelerlistno").trim());
-				System.out.println(travelerlistno);
 				Integer orderdetailno = Integer.parseInt(req.getParameter("orderdetailno").trim());
-				System.out.println(orderdetailno);
-				String lastname = req.getParameter("lastname");
-				System.out.println(lastname);
+				
 				String firstname = req.getParameter("firstname");
-				System.out.println(firstname);
+				String fnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+				if (firstname == null || firstname.trim().length() == 0) {
+					errorMsgs.add("名字: 請勿空白");
+				} else if (!firstname.trim().matches(fnameReg)) {
+					errorMsgs.add("名字: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
+				}
+				
+				String lastname = req.getParameter("lastname");
+				String lnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+				if (lastname == null || lastname.trim().length() == 0) {
+					errorMsgs.add("姓氏: 請勿空白");
+				} else if (!lastname.trim().matches(lnameReg)) {
+					errorMsgs.add("姓氏: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
+				}
+				
 				String gender = req.getParameter("gender");
-				System.out.println(gender);
+				String genderReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+				if (gender == null || gender.trim().length() == 0) {
+					errorMsgs.add("性別: 請勿空白");
+				} else if (!gender.trim().matches(genderReg)) {
+					errorMsgs.add("名字: 只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
+				}
+				
 				Date birthday = Date.valueOf(req.getParameter("birthday").trim());
-				System.out.println(birthday);
+				if (birthday == null) {
+					errorMsgs.add("生日: 請勿空白");
+				}
+				
 				String idno = req.getParameter("idno");
-				System.out.println(idno);
+				String idnoReg = "^[a-zA-Z]\\d{9}$";
+				if (idno == null || idno.trim().length() == 0) {
+					errorMsgs.add("身分證字號: 請勿空白");
+				} else if (!idno.trim().matches(idnoReg)) {
+					errorMsgs.add("身分證字號: 英文字母、數字 , 且長度必需在10");
+				}
 				// 以上先拿到參數
 				
 				/*************************** 2.開始修改資料 ***************************************/
 
 				TravelerlistBean bean = new TravelerlistBean();
-				HttpSession session = req.getSession();
 
 				bean.setTravelerlistno(travelerlistno);
-				System.out.println("1");
 				bean.setOrderdetailno(orderdetailno);
-				System.out.println("2");
 				bean.setLastname(lastname);
-				System.out.println("3");
 				bean.setFirstname(firstname);
-				System.out.println("4");
 				bean.setGender(gender);
-				System.out.println("5");
 				bean.setBirthday(birthday);
-				System.out.println("6");
 				bean.setIdno(idno);
-				System.out.println("7");
+				
+				if (!errorMsgs.isEmpty()) {
+					System.out.println(errorMsgs);
+					session.setAttribute("travelerlistBeanFS", bean);
+
+					RequestDispatcher failureView = req.getRequestDispatcher("/order/FS-update_travelerlist.jsp");
+					failureView.forward(req, res);
+					return; // 程式中斷
+				}
 				
 				travelerlistService.update(bean);
 
@@ -171,7 +202,7 @@ public class FS_Travelerlist extends HttpServlet {
 				List<TravelerlistBean> list = travelerlistService.select(bean); // 秀出指定資料
 
 
-				session.setAttribute("travelerlistBean", list.get(0));//list裡的第一筆資料
+				session.setAttribute("travelerlistBeanFS", list.get(0));//list裡的第一筆資料
 
 				
 				String url = "traveler.do?action=update2";
@@ -180,10 +211,11 @@ public class FS_Travelerlist extends HttpServlet {
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/emp/addEmp.jsp");
-//				failureView.forward(req, res);
+				errorMsgs.add(e.getMessage());
+				e.printStackTrace();
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/order/FS-update_travelerlist.jsp");
+				failureView.forward(req, res);
 				System.out.print("修改資料失敗FS");
 			}
 		}

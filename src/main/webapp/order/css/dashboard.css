@@ -446,7 +446,7 @@
 }
 
 .menu-sidebar__content {
-    height: calc(100vh - 71px);
+    height: 100%;
     border-right: 1px solid #e5e5e5;
     position: relative;
     background: #2B333E;

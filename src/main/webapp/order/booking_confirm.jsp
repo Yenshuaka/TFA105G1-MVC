@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="css_scuess/switcher/skin-aqua.css"
 	media="screen" id="style-colors" />
 <!-- Document Title -->
-<title>listagram - Directory Listing HTML Template</title>
+<title>付款成功</title>
 </head>
 
 <style>

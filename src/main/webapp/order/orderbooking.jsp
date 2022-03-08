@@ -441,7 +441,7 @@
 					<div class="sub_title">導覽語言</div>
 					<div class="form_group">
 						<label>行程導覽語言</label><span class="require_mark">*</span><br>
-						<select name="" id="booking_guide_language" class="form_control">
+						<select name="language" id="booking_guide_language" class="form_control" >
 							<option disabled="disabled" selected>請選擇</option>
 							<option value="zh-tw">中文</option>
 						</select>
@@ -473,22 +473,22 @@
 							<div class="inner_block">
 								<hr>
 								<div class="">
-									<input type="radio" class="credit"> <span
+									<input type="radio" class="credit" > <span
 										class="chekc_box_title">信用卡/簽帳金融卡</span>
 									<hr>
 									<div class="form_group2">
 										<label class="gray_text3">信用卡號碼</label><br> <input
-											type="text" class="card_number"
+											type="text" class="card_number" name="credit"
 											placeholder="oooo oooo oooo oooo">
 									</div>
 									<div class="form_group2">
 										<label class="gray_text3">有效期限</label><br> <input
-											type="text" class="card_number" id="expire_date"
+											type="text" class="card_number" id="expire_date" name="expire"
 											placeholder="MM YY">
 									</div>
 									<div class="form_group2">
 										<label class="gray_text3">背面末3碼</label><br> <input
-											type="text" class="card_number" id="back_number"
+											type="text" class="card_number" id="back_number" name="CVC"
 											placeholder="CVC/CVV">
 									</div>
 								</div>

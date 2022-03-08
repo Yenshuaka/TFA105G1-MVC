@@ -5,9 +5,10 @@
 
 
 <%
-TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("travelerlistBean"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
+TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("travelerlistBeanFS"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
 %>
 
+<!DOCTYPE html>
 <head>
 <!-- Metas -->
 <meta charset="UTF-8" />
@@ -42,6 +43,12 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 
 </head>
 
+<style>
+.menu-sidebar__content {
+    height: 100%;
+}
+</style>
+
 <body>
 	<div class="page-wrapper">
 
@@ -65,9 +72,13 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 								<div class="dash-breadcrumb-left">
 									<div class="breadcrumb-menu text-right sm-left">
 										<ul>
-											<li class="active"><a href="#">Home</a></li>
-											<li class="active"><a href="listAllOrder.jsp">訂單首頁</a></li>
-											<li>團員表</li>
+										<li class="active"><a
+											href="<%=request.getContextPath()%>/download/FS-my-profile.jsp">會員中心</a></li>
+										<li class="active"><a
+											href="<%=request.getContextPath()%>/order/FS-order.jsp">訂單</a></li>
+										<li class="active"><a
+											href="<%=request.getContextPath()%>/fsorder.do">訂單明細</a></li>
+										<li class="active">團員表修改</li>
 										</ul>
 									</div>
 								</div>
@@ -92,10 +103,10 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 								</div>
 
 								<div class="viewd-item-wrap">
-									<c:if test="${not empty errorMsgs}">
+									<c:if test="${not empty errorMsgsFS}">
 										<font style="color: red">請修正以下錯誤:</font>
 										<ul>
-											<c:forEach var="message" items="${errorMsgs}">
+											<c:forEach var="message" items="${errorMsgsFS}">
 												<li style="color: red; font-size: 16px">${message}</li>
 											</c:forEach>
 										</ul>
@@ -113,6 +124,9 @@ TravelerlistBean travelerlistBean = (TravelerlistBean) session.getAttribute("tra
 											</tr>
 											<tr>
 												<td>訂單明細編號:</td>
+													<input class="input_update" type="hidden"
+													name="orderdetailno" size="45"
+													value="<%=travelerlistBean.getOrderdetailno()%>" />
 												<td><%=travelerlistBean.getOrderdetailno()%></td>
 											</tr>
 											<tr>
