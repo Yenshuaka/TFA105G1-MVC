@@ -200,7 +200,7 @@
 														Integer pageaa = Integer.valueOf((String)request.getAttribute("page"));
 														for(int i =1; i<= totalpage; i++){
 													%>	
-													<li <% if(i==pageaa){out.write("class='active'");} %>><a href="<%=request.getContextPath() %>/MVC/ManagePageHandler?page=<%=i %>"><%=i %></a></li>
+													<li onclick='clickin(event)' <% if(i==pageaa){out.write("class='active'");} %>><a href="<%=request.getContextPath() %>/MVC/ManagePageHandler?page=<%=i %>"><%=i %></a></li>
 													
 													<% } %>
 <!-- 													<li><a href="#">2</a></li> -->
@@ -314,6 +314,13 @@
             });    		
      	}
 
+     	
+     	
+     	function clickin(e){
+        	e.stopPropagation();
+            var a = $(e.target).find('a').attr('href');
+            window.location.href = a;
+        }       
    </script>
 </body>
 
