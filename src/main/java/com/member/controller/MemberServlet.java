@@ -139,7 +139,15 @@ public class MemberServlet extends HttpServlet {
 				} else if (!phone.trim().matches(phoneReg)) {
 					errorMsgs.put("phone", "需數字,且長度必需在10");
 				}
-
+				
+				String nickname = req.getParameter("nickname").trim();
+				String nicknameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+				if (nickname == null || nickname.trim().length() == 0) {
+					errorMsgs.put("nickname", "請勿空白");
+				} else if (!nickname.trim().matches(nicknameReg)) {
+					errorMsgs.put("nickname", "只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
+				}
+				
 				MemberVO memberVO = new MemberVO();
 				memberVO.setMemberid(memberid);
 				memberVO.setEmail(email);
@@ -151,6 +159,7 @@ public class MemberServlet extends HttpServlet {
 				memberVO.setDateofbirth(dateofbirth);
 				memberVO.setCountry(country);
 				memberVO.setPhone(phone);
+				memberVO.setNickname(nickname);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -392,7 +401,8 @@ public class MemberServlet extends HttpServlet {
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
-				errorMsgs.put("exception", e.getMessage());
+				errorMsgs.put("exception", "無法新增，輸入的email已存在!");
+				System.out.println(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher(AddMember);
 				failureView.forward(req, res);
 			}

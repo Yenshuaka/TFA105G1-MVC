@@ -130,14 +130,14 @@ select {
 							<div class="invoice-panel">
 								<div class="act-title">
 									<h5>
-										<i class="ion-gear"></i>新增會員資料<br> <span
-													class="error errorMsgsOnly">${errorMsgs.exception}</span>
+										<i class="ion-gear"></i>新增會員資料<br>
 									</h5>
 								</div>
 								<div class="col-md-12">
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/member/member.do"
 										name="form1">
+										<span class="error errorMsgsOnly">${errorMsgs.exception}</span>
 										<table>
 											<tr>
 												<td>Email :</td>

@@ -140,14 +140,14 @@ session.setAttribute("cameFromURL", cameFromURL);
 						<table>
 							<tr>
 								<td><input type="text" name="FGemail" id="modalUsername"
-									tabindex="1" class="form-control" placeholder="email" required
-									autofocus></td>
+									tabindex="1" class="form-control" placeholder="請輸入email"
+									required autofocus></td>
 							</tr>
 						</table>
 						<br> <input type="hidden" name="FGaction" value="forgotPWD">
 						<button type="submit" class="btn v3" name="emailaction"
 							value="login">
-							<i class="ion-android-email"></i>送出
+							<i class="ion-ios-email"></i>發送驗證碼
 						</button>
 					</FORM>
 				</div>
@@ -173,8 +173,12 @@ session.setAttribute("cameFromURL", cameFromURL);
 	<script src="<%=request.getContextPath()%>/download/js/dashboard.js"></script>
 
 	<script>
-	${errorCheck.checkEmail}
-	<%session.removeAttribute("errorCheck"); %>
+		$
+		{
+			errorCheck.checkEmail
+		}
+	<%session.removeAttribute("errorCheck");%>
+		
 	</script>
 
 </body>

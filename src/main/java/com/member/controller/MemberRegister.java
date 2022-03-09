@@ -1,8 +1,10 @@
 package com.member.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,7 +32,7 @@ public class MemberRegister extends HttpServlet {
 		String action = req.getParameter("action");
 
 		if ("register".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String, String> errorMsgs = new HashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
@@ -39,27 +41,27 @@ public class MemberRegister extends HttpServlet {
 				String email = req.getParameter("email");
 				String emailReg = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
 				if (email == null || email.trim().length() == 0) {
-					errorMsgs.add("帳號: 請勿空白");
+					errorMsgs.put("email", "請勿空白");
 				} else if (!email.trim().matches(emailReg)) {
-					errorMsgs.add("帳號: 請輸入英文字母、數字和 _ , - 且含@ + 信箱網域");
+					errorMsgs.put("email", "請輸入英文字母、數字和 _ , - 且含@ + 信箱網域");
 				}
 
 				String password = req.getParameter("password");
 				String pwdReg = "^([A-Za-z0-9]){1,20}$";
 				if (password == null || password.trim().length() == 0) {
-					errorMsgs.add("密碼: 請勿空白");
+					errorMsgs.put("password", "請勿空白");
 				} else if (!password.trim().matches(pwdReg)) {
-					errorMsgs.add("密碼: 請輸入英文字母、數字 且1~20個字");
+					errorMsgs.put("password", "請輸入英文字母、數字 且1~20個字");
 				}
 
 				String confirmPWD = req.getParameter("confirm-password");
 				if (!password.equals(confirmPWD)) {
-					errorMsgs.add("密碼不一致，請重新輸入!");
+					errorMsgs.put("confirmPWD","密碼不一致，請重新輸入!");
 				}
 
 				String agreement = req.getParameter("agreement");
 				if (agreement == null) {
-					errorMsgs.add("尚有條款未確認!");
+					errorMsgs.put("agreement","尚有條款未確認!");
 				}
 				MemberVO memberVO = new MemberVO();
 				memberVO.setEmail(email);
@@ -104,8 +106,9 @@ public class MemberRegister extends HttpServlet {
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("無法取得資料:" + e.getMessage());
-				String RejectUrl = "/download/FS-login.jsp";
+				errorMsgs.put("exception", "無法新增，輸入的email已存在!");
+				System.out.println(e.getMessage());
+				String RejectUrl = "/download/FS-register.jsp";
 				RequestDispatcher failureView = req.getRequestDispatcher(RejectUrl);
 				failureView.forward(req, res);
 			}

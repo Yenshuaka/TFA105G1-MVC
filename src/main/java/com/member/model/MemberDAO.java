@@ -92,10 +92,10 @@ public class MemberDAO implements MemberDAO_interface {
 	}
 
 	private static final String UPDATE = "UPDATE MEMBER\r\n" + "SET\r\n"
-			+ " EMAIL = ?, `PASSWORD` = ?, FIRST_NAME = ?, LAST_NAME = ?, ID_NO = ?, GENDER = ?, DATE_OF_BIRTH = ?, COUNTRY = ?, PHONE = ?\r\n"
+			+ " EMAIL = ?, `PASSWORD` = ?, FIRST_NAME = ?, LAST_NAME = ?, ID_NO = ?, GENDER = ?, DATE_OF_BIRTH = ?, COUNTRY = ?, NICKNAME = ?, PHONE = ?\r\n"
 			+ "WHERE MEMBER_ID = ?";
 	private static final String UPDATEBS = "UPDATE MEMBER\r\n" + "SET\r\n"
-			+ " EMAIL = ?, FIRST_NAME = ?, LAST_NAME = ?, ID_NO = ?, GENDER = ?, DATE_OF_BIRTH = ?, COUNTRY = ?, PHONE = ?\r\n"
+			+ " EMAIL = ?, FIRST_NAME = ?, LAST_NAME = ?, ID_NO = ?, GENDER = ?, DATE_OF_BIRTH = ?, COUNTRY = ?, NICKNAME = ?, PHONE = ?\r\n"
 			+ "WHERE MEMBER_ID = ?";
 
 	@Override
@@ -112,8 +112,9 @@ public class MemberDAO implements MemberDAO_interface {
 					pstmt.setString(6, memberVO.getGender());
 					pstmt.setDate(7, memberVO.getDateofbirth());
 					pstmt.setString(8, memberVO.getCountry());
-					pstmt.setString(9, memberVO.getPhone());
-					pstmt.setInt(10, memberVO.getMemberid());
+					pstmt.setString(9, memberVO.getNickname());
+					pstmt.setString(10, memberVO.getPhone());
+					pstmt.setInt(11, memberVO.getMemberid());
 
 					pstmt.executeUpdate();
 				}
@@ -126,8 +127,9 @@ public class MemberDAO implements MemberDAO_interface {
 					pstmt.setString(5, memberVO.getGender());
 					pstmt.setDate(6, memberVO.getDateofbirth());
 					pstmt.setString(7, memberVO.getCountry());
-					pstmt.setString(8, memberVO.getPhone());
-					pstmt.setInt(9, memberVO.getMemberid());
+					pstmt.setString(8, memberVO.getNickname());
+					pstmt.setString(9, memberVO.getPhone());
+					pstmt.setInt(10, memberVO.getMemberid());
 
 					pstmt.executeUpdate();
 				}

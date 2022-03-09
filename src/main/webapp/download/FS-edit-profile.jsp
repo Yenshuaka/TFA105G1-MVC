@@ -74,7 +74,11 @@ input {
 
 select {
 	border: 1px solid #ced4da !important;
+	padding: 14px 20px;
+	border: 1px solid #ced4da;
+	outline: none;
 }
+
 </style>
 
 
@@ -208,6 +212,13 @@ select {
 															height="20rpx" value="${memberVO.phone}"
 															placeholder="請輸入手機" /><br> <span
 													class="error errorMsgsOnly">${errorMsgs.phone}</span></td>
+													</tr>
+													<tr>
+														<td>暱稱 :</td>
+														<td><input type="TEXT" name="nickname" width="30rpx"
+															height="20rpx" value="${memberVO.nickname}"
+															placeholder="請輸入暱稱" /><br> <span
+													class="error errorMsgsOnly">${errorMsgs.nickname}</span></td>
 													</tr>
 												</table>
 												<div class="bottom">
