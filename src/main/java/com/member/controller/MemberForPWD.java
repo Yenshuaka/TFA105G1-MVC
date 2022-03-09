@@ -7,14 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.member.model.GenerateAlphaNumericString;
+import com.Util.AESUtil;
+import com.Util.GenerateAlphaNumericString;
+import com.Util.MailService;
 import com.member.model.MemberService;
-import com.order.order.MailService;
 
 import redis.clients.jedis.Jedis;
 
@@ -24,7 +24,7 @@ public class MemberForPWD {
 
 	@PostMapping("/PwdForget")
 	public String PwdForget(String FGaction, String FGemail, GenerateAlphaNumericString AlphaNumericString,
-			MemberService memberService, MailService mailService, HttpServletRequest req, HttpSession session) {
+			MemberService memberService, MailService mailService, HttpServletRequest req, HttpSession session, AESUtil aes) {
 		String email = FGemail.trim();
 		if ("forgotPWD".equals(FGaction)) {
 			Map<String, String> errorCheck = new HashMap<String, String>();
@@ -67,15 +67,26 @@ public class MemberForPWD {
 					"Hello! " + email + " 請謹記此密碼: " + temPWD + "\n" 
 				  + " (注意事項 !!)" + "\n" 
 				  + "請在" + expireTime + "天內點擊連結，否則失效! " + "\n";
+			// prefixUrl
+			String prefixUrl = "/TFA105G1-MVC/MVC/MemberInfo/return?";
+			// suffixUrl
+			String suffixUrl = "reAction=forgotPWD&mail=" + email + "&No=" + memberid + "&temPWD=" + temPWD;
+			// suffixUrl 加密
+			String pwd = "tfa105g1";
+			String suffixUrlAES = aes.encode(suffixUrl,pwd);
 			
-			String suffixUrl = "/TFA105G1-MVC/MVC/MemberInfo/return?reAction=forgotPWD&mail=" + email + 
-					"&No=" + memberid + "&temPWD=" + temPWD;
-			StringBuffer SBUrl = new StringBuffer(suffixUrl);			
+			
+			
+			
+			String wholeUrl = prefixUrl + suffixUrlAES;
+			
+			
+			StringBuffer SBUrl = new StringBuffer(wholeUrl);			
 			SBUrl.insert(0, req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort());
 			
-			String wholeUrl = SBUrl.toString();
+			String Url = SBUrl.toString();
 			
-			mailService.sendMail(FGemail, "忘記密碼通知", messageText + wholeUrl);
+			mailService.sendMail(FGemail, "忘記密碼通知", messageText + Url);
 			System.out.println("驗證信已寄出!");
 			return "redirect:/download/FS-login.jsp";
 		}
@@ -83,8 +94,16 @@ public class MemberForPWD {
 	}
 
 	@GetMapping("/return")
-	public String returnURL(String reAction, String No, String temPWD, String mail, MemberService memberService) {
+	public String returnURL(HttpServletRequest req, AESUtil aes) {
+				
+		String pwd = "tfa105g1";
+		String QueryString = aes.decode(req.getQueryString(),pwd);		
 
+		return "redirect:/MVC/MemberInfo/changepWD?" + QueryString;
+	}
+	@GetMapping("/changepWD")
+	public String changepWD(String reAction, String No, String temPWD, String mail, MemberService memberService) {
+		
 		if ("forgotPWD".equals(reAction)) {
 			System.out.println("驗證連結接收!");
 			System.out.println("memberid :" + No);
@@ -121,5 +140,4 @@ public class MemberForPWD {
 		}
 		return "";
 	}
-
 }

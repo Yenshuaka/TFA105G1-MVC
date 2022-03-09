@@ -1,4 +1,4 @@
-package com.order.order;
+package com.Util;
 	
 	import java.util.Properties;
 	import javax.mail.Authenticator;
