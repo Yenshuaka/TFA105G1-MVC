@@ -4,7 +4,10 @@
 
 <%
 String cameFromURL = request.getHeader("referer");
-session.setAttribute("cameFromURL", cameFromURL);
+String loginURL = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getRequestURI();
+if(!loginURL.equals(cameFromURL)){
+	session.setAttribute("cameFromURL", cameFromURL);
+}
 %>
 
 <html lang="en">
@@ -73,7 +76,7 @@ session.setAttribute("cameFromURL", cameFromURL);
 										action="<%=request.getContextPath()%>/member/member.login"
 										method="post">
 										<div class="form-group">
-											<span class="error errorMsgsOnly">${errorMsgs.result}</span>
+											<span class="error errorMsgsOnly">${errorMsgs.result} ${verificationFailed}</span>
 											<input type="text" name="email" id="username" tabindex="1"
 												class="form-control" placeholder="email" value="${email}${rtEmail}"
 												required autofocus><span class="error errorMsgsOnly">${errorMsgs.email}</span>
@@ -115,6 +118,7 @@ session.setAttribute("cameFromURL", cameFromURL);
 										</div>
 									</div>
 									<div class="social-profile-login text-center mar-top-30">
+						
 									</div>
 								</div>
 							</div>

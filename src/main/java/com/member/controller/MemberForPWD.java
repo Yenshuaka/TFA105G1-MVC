@@ -100,10 +100,10 @@ public class MemberForPWD {
 		String pwd = "tfa105g1";
 		String QueryString = aes.decode(req.getQueryString(),pwd);		
 
-		return "redirect:/MVC/MemberInfo/changepWD?" + QueryString;
+		return "redirect:/MVC/MemberInfo/changePWD?" + QueryString;
 	}
-	@GetMapping("/changepWD")
-	public String changepWD(String reAction, String No, String temPWD, String mail, MemberService memberService, HttpSession session) {
+	@GetMapping("/changePWD")
+	public String changePWD(String reAction, String No, String temPWD, String mail, MemberService memberService, HttpSession session, Model model) {
 		
 		if ("forgotPWD".equals(reAction)) {
 			System.out.println("驗證連結接收!");
@@ -120,7 +120,8 @@ public class MemberForPWD {
 
 				if (userTempPWD == null) {
 					System.out.println("Email驗證失敗!");
-					return "";
+					model.addAttribute("verificationFailed", "驗證碼已過期!");
+					return "forward:/download/FS-login.jsp";
 				}
 
 			} catch (Exception e) {
