@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -102,7 +103,7 @@ public class MemberForPWD {
 		return "redirect:/MVC/MemberInfo/changepWD?" + QueryString;
 	}
 	@GetMapping("/changepWD")
-	public String changepWD(String reAction, String No, String temPWD, String mail, MemberService memberService) {
+	public String changepWD(String reAction, String No, String temPWD, String mail, MemberService memberService, HttpSession session) {
 		
 		if ("forgotPWD".equals(reAction)) {
 			System.out.println("驗證連結接收!");
@@ -120,9 +121,6 @@ public class MemberForPWD {
 				if (userTempPWD == null) {
 					System.out.println("Email驗證失敗!");
 					return "";
-				} else {
-					jedis.del(mail);
-					System.out.println("redis 清除Email!");
 				}
 
 			} catch (Exception e) {
@@ -134,7 +132,8 @@ public class MemberForPWD {
 				System.out.println("驗證碼正確!");
 				Integer memberid = Integer.valueOf(No);
 				memberService.changePWD(memberid, temPWD);
-
+				System.out.println("rtEmail = " + mail);
+				session.setAttribute("rtEmail", mail);
 				return "redirect:/download/FS-login.jsp";
 			}
 		}

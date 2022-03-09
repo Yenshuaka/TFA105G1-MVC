@@ -45,11 +45,10 @@ public class MemberBSDispacher {
 	
 //	@RequestMapping(value = "/MemberUpdatePic", method=RequestMethod.GET)
 	@GetMapping("/MemberUpdatePic")
-	public String MemberUpdatePic(HttpServletRequest req , Model model) {
-		String action = req.getParameter("action");
-		Integer memberid = Integer.valueOf(req.getParameter("memberid"));
+	public String MemberUpdatePic(HttpServletRequest req , Model model, String action, String memberid) {
+		Integer id = Integer.valueOf(memberid);
 		model.addAttribute("action", action);
-		model.addAttribute("memberid", memberid);
+		model.addAttribute("memberid", id);
 		
 		return "backstage/member/BS-update-image";
 	}

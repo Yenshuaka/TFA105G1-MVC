@@ -75,7 +75,7 @@ session.setAttribute("cameFromURL", cameFromURL);
 										<div class="form-group">
 											<span class="error errorMsgsOnly">${errorMsgs.result}</span>
 											<input type="text" name="email" id="username" tabindex="1"
-												class="form-control" placeholder="email" value="${email}"
+												class="form-control" placeholder="email" value="${email}${rtEmail}"
 												required autofocus><span class="error errorMsgsOnly">${errorMsgs.email}</span>
 										</div>
 										<div class="form-group">

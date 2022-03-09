@@ -17,6 +17,8 @@ import javax.servlet.http.HttpSession;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
 
+import redis.clients.jedis.Jedis;
+
 @WebServlet("/member/member.login")
 public class MemberLogin extends HttpServlet {
 
@@ -31,7 +33,7 @@ public class MemberLogin extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		final String indexUrl = "/download/homepage2.jsp";
-		
+
 		if ("login".equals(action)) {
 //			List<String> errorMsgs = new LinkedList<String>();
 			Map<String, String> errorMsgs = new HashMap<String, String>();
@@ -64,7 +66,7 @@ public class MemberLogin extends HttpServlet {
 				}
 				/*************************** 2.開始查詢資料 *****************************************/
 				MemberService memberSvc = new MemberService();
-				MemberVO memberVO = memberSvc.memberLogin(email, password);	
+				MemberVO memberVO = memberSvc.memberLogin(email, password);
 
 				if (memberVO == null) {
 					errorMsgs.put("result", "帳號 或 密碼 錯誤!");
@@ -83,12 +85,26 @@ public class MemberLogin extends HttpServlet {
 
 				HttpSession session = req.getSession();
 				req.changeSessionId();
-				
-				if(session.getAttribute("memberVO")!= null || session.getAttribute("memberid")!= null) {
+
+				if (session.getAttribute("memberVO") != null || session.getAttribute("memberid") != null) {
 					session.removeAttribute("memberVO");
 					session.removeAttribute("memberid");
+				} else if (session.getAttribute("rtEmail") != null) {
+					session.removeAttribute("rtEmail");
 				}
-				req.changeSessionId();
+
+				try (Jedis jedis = new Jedis("localhost", 6379);) {
+					System.out.println("redis驗證 ping! ~ " + jedis.ping());
+
+					if (jedis.get(email) != null) {
+						jedis.del(email);
+						System.out.println("redis 清除Email!");
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
 				session.setAttribute("memberVO", memberVO);
 				session.setAttribute("memberid", memberid);
 				System.out.println("儲存memberVO到session! = " + memberVO);

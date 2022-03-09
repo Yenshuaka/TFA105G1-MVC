@@ -99,7 +99,7 @@ if (loginsCameFromURL == null) {
 										</div>
 										<div class="res-box text-center mar-top-30">
 											<button type="submit" class="btn v3" name="action"
-												value="register">
+												value="register" tabindex="4">
 												<i class="ion-android-checkmark-circle"></i>註冊
 											</button>
 										</div>
