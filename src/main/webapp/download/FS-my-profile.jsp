@@ -46,6 +46,9 @@
 	justify-content: flex-end;
 	padding: 15px 30px
 }
+.avatar_area{
+	cursor: pointer;
+}
 </style>
 
 
@@ -120,7 +123,7 @@
 
 																<div>
 																	<div id="changePic">
-																		<label for="p_file"> <img
+																		<label for="p_file" class="avatar_area"> <img
 																			src="<%=request.getContextPath()%>/member/member.pic?memberid=${memberVO.memberid}">
 																		</label>
 																	</div>
@@ -135,8 +138,9 @@
 																				accept="image/jpeg, image/png"
 																				style="display: none;"> <input type="hidden"
 																				name="memberid" value="${memberVO.memberid}">
-																			<input type="submit" name="action" class="btn v5"
-																				value="確認">
+																			<button type="submit" name="action" class="btn v5">確認</button>															
+<!-- 																			<input type="submit" name="action" class="btn v5" -->
+<!-- 																				value=""> -->
 																		</FORM>
 																	</div>
 																</div>

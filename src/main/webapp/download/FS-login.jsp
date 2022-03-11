@@ -4,8 +4,10 @@
 
 <%
 String cameFromURL = request.getHeader("referer");
-String loginURL = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getRequestURI();
-if(!loginURL.equals(cameFromURL)){
+String login = request.getRequestURI();
+String register = "/TFA105G1-MVC/download/FS-register.jsp";
+String preSubDomain = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+if(!(preSubDomain+login).equals(cameFromURL) && !(preSubDomain+register).equals(cameFromURL)){
 	session.setAttribute("cameFromURL", cameFromURL);
 }
 %>
@@ -78,12 +80,12 @@ if(!loginURL.equals(cameFromURL)){
 										<div class="form-group">
 											<span class="error errorMsgsOnly">${errorMsgs.result} ${verificationFailed}</span>
 											<input type="text" name="email" id="username" tabindex="1"
-												class="form-control" placeholder="email" value="${email}${rtEmail}"
+												class="form-control" placeholder="請輸入電子信箱" value="${email}${rtEmail}"
 												required autofocus><span class="error errorMsgsOnly">${errorMsgs.email}</span>
 										</div>
 										<div class="form-group">
 											<input type="password" name="password" id="password"
-												tabindex="2" class="form-control" placeholder="Password"
+												tabindex="2" class="form-control" placeholder="請輸入密碼"
 												required><span class="error errorMsgsOnly">${errorMsgs.password}</span>
 										</div>
 										<div class="row mar-top-20">

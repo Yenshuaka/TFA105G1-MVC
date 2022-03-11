@@ -108,7 +108,7 @@ public class MemberRegister extends HttpServlet {
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
-				errorMsgs.put("exception", "無法新增，輸入的email已存在!");
+				errorMsgs.put("exception", "註冊異常，輸入的email已存在!");
 				System.out.println(e.getMessage());
 				String RejectUrl = "/download/FS-register.jsp";
 				RequestDispatcher failureView = req.getRequestDispatcher(RejectUrl);

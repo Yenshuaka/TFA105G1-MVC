@@ -3,11 +3,11 @@
 <%@ page import="com.member.model.*"%>
 
 <%
-Object loginsCameFromURL = session.getAttribute("cameFromURL");
-if (loginsCameFromURL == null) {
-	String cameFromURL = request.getHeader("referer");
-	session.setAttribute("cameFromURL", cameFromURL);
-}
+// String cameFromURL = request.getHeader("referer");
+// String loginURL = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getRequestURI();
+// if(!loginURL.equals(cameFromURL)){
+// 	session.setAttribute("cameFromURL", cameFromURL);
+// }
 %>
 
 <html lang="en">
@@ -40,7 +40,7 @@ if (loginsCameFromURL == null) {
 	href="<%=request.getContextPath()%>/download/css/switcher/skin-aqua.css"
 	media="screen" id="style-colors" />
 <!-- Document Title -->
-<title>模擬首頁</title>
+<title>更改密碼</title>
 
 </head>
 
@@ -53,7 +53,7 @@ if (loginsCameFromURL == null) {
 
 		<!--User Login section starts-->
 		<div class="user-login-section section-padding bg-fixed"
-			style="background-image: url(<%=request.getContextPath()%>/download/images/FS-login.jpg)"">
+			style="background-image: url(<%=request.getContextPath()%>/download/images/FS-login.jpg)">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-10 offset-md-1  text-center">
@@ -64,61 +64,57 @@ if (loginsCameFromURL == null) {
 								class="ui-list nav nav-tabs justify-content-center mar-bot-30"
 								role="tablist">
 								<li class="nav-item"><a class="nav-link active"
-									data-toggle="tab" href="#register" role="tab"
-									aria-selected="false">註冊</a></li>
+									data-toggle="tab" href="#login" role="tab" aria-selected="true">更改密碼</a>
+								</li>
 							</ul>
+
 							<div class="ui-dash tab-content">
-								<div class="tab-pane fade show active" id="register"
+								<div class="tab-pane fade show active" id="login"
 									role="tabpanel">
-									<form id="register-form"
-										action="<%=request.getContextPath()%>/member/member.register"
+
+									<form id="login-form"
+										action="<%=request.getContextPath()%>/MVC/MemberInfo/checkPWD"
 										method="post">
 										<div class="form-group">
-										<span class="error errorMsgsOnly">${errorMsgs.exception}</span>
-											<input type="email" name="email" id="email" tabindex="1"
-												class="form-control" placeholder="請輸入電子信箱" value="${email}"
-												required><span class="error errorMsgsOnly">${errorMsgs.email}</span>
+											<span class="error errorMsgsOnly">${errorMsgs.result}
+												${verificationFailed}</span>												
+										</div>
+										<div class="form-group">																						
+											<span>${rtEmail}</span>				
+										</div>										
+										<div class="form-group">
+											<input type="password" name="newPWD" id="newPWD" tabindex="1"
+												class="form-control" placeholder="請輸入新密碼" required autofocus><span
+												class="error errorMsgsOnly">${errorMsgs.password}</span>
 										</div>
 										<div class="form-group">
-											<input type="password" name="password" id="password"
-												tabindex="2" class="form-control" placeholder="請輸入密碼"
-												required><span class="error errorMsgsOnly">${errorMsgs.password}</span>
-										</div>
-										<div class="form-group">
-											<input type="password" name="confirm-password"
+											<input type="password" name="confirm_password"
 												id="confirm-password" tabindex="2" class="form-control"
-												placeholder="確認密碼" required><span
+												placeholder="確認新密碼" required><span
 												class="error errorMsgsOnly">${errorMsgs.confirmPWD}</span>
 										</div>
-										<div class="res-box text-left">
-											<input type="checkbox" tabindex="3" class="" name="agreement"
-												id="agreement" value="agreement" required> <label
-												for="agreement">我已詳閱並同意 <a
-												href="#TermsAndConditions">使用者條款</a> &amp; <a
-												href="#Privacy">隱私權保護政策</a></label><span class="error errorMsgsOnly">${errorMsgs.agreement}</span>
+										<div class="row mar-top-20">
+											<div class="col-md-6 col-12 text-left"></div>
+											<div class="col-md-6 col-12 text-right"></div>
 										</div>
 										<div class="res-box text-center mar-top-30">
+											<input type="hidden" name="id" value="${no}">
 											<button type="submit" class="btn v3" name="action"
-												value="register" tabindex="4">
-												<i class="ion-android-checkmark-circle"></i>註冊
+												value="checkPWD">
+												<i class="ion-log-in"></i>確認送出
 											</button>
+
 										</div>
 									</form>
-									<div class="col-md-8 col-12 text-left">
+									<div class="col-md-6 col-12 text-left">
 										<div class="res-box sm-left">
-											已經有帳號了？<a
-												href="<%=request.getContextPath()%>/download/FS-login.jsp"
-												tabindex="5" class="register"><i class="ion-log-in"></i>
-												登入</a>
+											<!-- <a -->
+											<%-- href="<%=request.getContextPath()%>/download/FS-login.jsp" --%>
+											<!-- tabindex="5" class=""></a> -->
 										</div>
 									</div>
 									<div class="social-profile-login text-center mar-top-30">
-										<!-- <h5>使用社交平台帳戶登入</h5>
-                                        <ul class="social-btn">
-                                            <li class="bg-fb"><a href="#"><i class="ion-social-facebook"></i></a></li>
-                                            <li class="bg-tt"><a href="#"><i class="ion-social-twitter"></i></a></li>
-                                            <li class="bg-ig"><a href="#"><i class="ion-social-instagram"></i></a></li>
-                                        </ul> -->
+
 									</div>
 								</div>
 							</div>
@@ -131,13 +127,34 @@ if (loginsCameFromURL == null) {
 		<!--User login section ends-->
 	</div>
 	<!--Page Wrapper ends-->
+	<!-- modal-start -->
+	<div class="modal fade" id="forgot-password">
+		<div class="modal-dialog modal-dialog-centered" role="image">
+			<div class="picBox">
+				<h2>忘記密碼 :</h2>
 
-
-
-
-
-
-
+				<div id="add-form">
+					<FORM METHOD="post"
+						ACTION="<%=request.getContextPath()%>/MVC/MemberInfo/PwdForget"
+						name="form1">
+						<table>
+							<tr>
+								<td><input type="text" name="FGemail" id="modalUsername"
+									tabindex="1" class="form-control" placeholder="請輸入email"
+									required autofocus></td>
+							</tr>
+						</table>
+						<br> <input type="hidden" name="FGaction" value="forgotPWD">
+						<button type="submit" class="btn v3" name="emailaction"
+							value="login">
+							<i class="ion-ios-email"></i>發送驗證碼
+						</button>
+					</FORM>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- modal-ends -->
 
 	<!--Dashboard footer starts-->
 	<%@include file="file/FS_footer.file"%>
@@ -155,6 +172,14 @@ if (loginsCameFromURL == null) {
 	<!-- Dashboard JS-->
 	<script src="<%=request.getContextPath()%>/download/js/dashboard.js"></script>
 
+	<script>
+		$
+		{
+			errorCheck.checkEmail
+		}
+	<%session.removeAttribute("errorCheck");%>
+		
+	</script>
 
 </body>
 
