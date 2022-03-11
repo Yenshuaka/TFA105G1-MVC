@@ -109,7 +109,7 @@ public class BookingServlet extends HttpServlet {
 
 				List<MemberVO> memberVOs = new ArrayList<MemberVO>();
 				memberVOs.add(memberService.getOneMember(memberid));
-				session.setAttribute("member", memberVO);
+				req.setAttribute("member", memberVO);
 
 				List<MemberVO> allMember = memberService.getAll();
 				HttpSession session4 = req.getSession();

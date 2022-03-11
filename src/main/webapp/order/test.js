@@ -1,27 +1,36 @@
+
 var book_last_name = $("#book_last_name").val();
 var book_first_name = $("#book_first_name").val();
 var book_id = $("#book_id").val();
 
 
 
-$(".same_traveler").on("change", function (e) {
-	// console.log(e.target);
-	$(e.target).closest("div.traveler_infor").find(".traveler_last_name").val(book_last_name);
-	$(e.target).closest("div.traveler_infor").find(".traveler_first_name").val(book_first_name);
-	$(e.target).closest("div.traveler_infor").find(".traveler_id").val(book_id);
-})
+addNewMembwe();
 
-function clone_form() {
-	var opnum = $("#optionNum").val();
-	var sel = $(".numberoftraveler");
-	sel.val(opnum);
-	sel.children("option").each(function (index, el) {
-		if ($(el).val() == opnum) {
-			$(el).attr("selected")
-		}
+// 同訂購人資料
+function addNewMembwe() {
+	$(".same_traveler").on("change", function (e) {
+		// console.log("aaa");
+		book_last_name = $("#book_last_name").val();
+		book_first_name = $("#book_first_name").val();
+		book_id = $("#book_id").val();
+		$(e.target).closest("div.traveler_infor").find(".traveler_last_name").val(book_last_name);
+		$(e.target).closest("div.traveler_infor").find(".traveler_first_name").val(book_first_name);
+		$(e.target).closest("div.traveler_infor").find(".traveler_id").val(book_id);
 	})
-	$('.numberoftraveler').change();
 }
+
+// function clone_form() {
+// 	var opnum = $("#optionNum").val();
+// 	var sel = $(".numberoftraveler");
+// 	sel.val(opnum);
+// 	sel.children("option").each(function (index, el) {
+// 		if ($(el).val() == opnum) {
+// 			$(el).attr("selected")
+// 		}
+// 	})
+// 	$('.numberoftraveler').change();
+// }
 
 $(document).ready(function () {
 	var sel = $(".numberoftraveler");
@@ -34,7 +43,7 @@ $(document).ready(function () {
 
 	$('.numberoftraveler').on('change', function (e) {
 		var numberoftraveler = $(this).val();
-
+		
 		var tmp = $(this).siblings("div.tmp");
 		tmp.empty();
 		for (var i = 0; i < numberoftraveler; i++) {
@@ -95,16 +104,6 @@ $(document).ready(function () {
 });
 
 
-
-// 同訂購人資料
-function addNewMembwe() {
-	$(".same_traveler").on("change", function (e) {
-		// console.log(e.target);
-		$(e.target).closest("div.traveler_infor").find(".traveler_last_name").val(book_last_name);
-		$(e.target).closest("div.traveler_infor").find(".traveler_first_name").val(book_first_name);
-		$(e.target).closest("div.traveler_infor").find(".traveler_id").val(book_id);
-	})
-}
 
 function dateFormat() {
 	$.datetimepicker.setLocale('zh');

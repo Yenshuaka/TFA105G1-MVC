@@ -211,7 +211,7 @@
 							<%
 							OrderdetailBean orderdetailBean = (OrderdetailBean)session.getAttribute("travelernumber");
 							List<TravelerlistBean> travelerlistBean = (List<TravelerlistBean>)session.getAttribute("traveler");
-							MemberVO member = (MemberVO) session.getAttribute("member");
+							MemberVO member = (MemberVO) request.getAttribute("member");
 							List<MemberVO> allMember = (List<MemberVO>) session.getAttribute("allMember");
 							String lastname = null;
 							Integer sum = 0;
@@ -251,12 +251,14 @@
 
 							<label>姓氏<span class="require_mark">*</span></label> <br> <input
 								type="text" name="memberLastname" class="form_control"
-								id="book_last_name" value="<%=lastname%>">
+								id="book_last_name" value='${(member==null)? "" : member.lastname }'>
+<%-- 								id="book_last_name" value="<%=(member==null)? "" :member.getLastname()%>"> --%>
+								
 						</div>
 						<div class="form_group">
 							<label>名字<span class="require_mark">*</span></label> <br> <input
 								type="text" name="memberFirstname" class="form_control"
-								id="book_first_name" value="<%=firstname%>">
+								id="book_first_name" value='${(member==null)? "" : member.firstname}'>
 						</div>
 					</div>
 				</div>
@@ -265,11 +267,11 @@
 						<div class="form_group">
 							<label>身分證號碼 <span class="require_mark">*</span><br></label>
 							<br> <input type="text" name="memberIdno"
-								class="form_control" id="book_id" value="<%=memberid%>">
+								class="form_control" id="book_id" value='${(member==null)? "" : member.idno}'>
 						</div>
 						<div class="form_group">
 							<label>連絡電話<span class="require_mark">*</span><br></label> <br>
-							<input value="<%=phone%>" type="text" name="memberPhone"
+							<input value='${(member==null)? "" : member.phone}' type="text" name="memberPhone"
 								class="form_control" id="contact_phone">
 						</div>
 					</div>
@@ -277,7 +279,7 @@
 				<div class="row">
 					<div class="email_move">
 						<label>電子郵件信箱<span class="require_mark">*</span><br></label>
-						<br> <input value="<%=email%>" type="email"
+						<br> <input value='${(member==null)? "" : member.email}' type="email"
 							name="memberEmail" class="form_control_email">
 						<div class="tip_text_danger">請輸入正確的Email的格式！</div>
 					</div>
